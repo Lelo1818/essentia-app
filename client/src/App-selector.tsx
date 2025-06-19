@@ -1,0 +1,131 @@
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { DollarSign, Heart, ArrowRight } from "lucide-react";
+import FlowApp from "./App";
+import PurposeApp from "./App-purpose";
+
+type AppType = "selector" | "flow" | "purpose";
+
+function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">Seus Aplicativos</h1>
+          <p className="text-xl text-gray-600">Escolha qual aplicativo deseja usar hoje</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Flow App */}
+          <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
+            <CardHeader className="text-center pb-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <DollarSign className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-2xl text-gray-900">Flow</CardTitle>
+              <p className="text-gray-600">Gestão Financeira Inteligente</p>
+            </CardHeader>
+            
+            <CardContent className="text-center space-y-4">
+              <div className="space-y-2 text-sm text-gray-600">
+                <p>✓ Controle de receitas e despesas</p>
+                <p>✓ Scanner de notas fiscais (OCR)</p>
+                <p>✓ Planejamento orçamentário</p>
+                <p>✓ Metas financeiras</p>
+                <p>✓ Análise de gastos</p>
+                <p>✓ Sistema de conquistas</p>
+              </div>
+              
+              <Button 
+                onClick={() => onSelectApp("flow")}
+                className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-lg py-6"
+              >
+                Abrir Flow
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Purpose App */}
+          <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
+            <CardHeader className="text-center pb-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <Heart className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-2xl text-gray-900">Desperte Seu Propósito</CardTitle>
+              <p className="text-gray-600">Jornada de Autodescoberta</p>
+            </CardHeader>
+            
+            <CardContent className="text-center space-y-4">
+              <div className="space-y-2 text-sm text-gray-600">
+                <p>✓ Jornada guiada em 4 módulos</p>
+                <p>✓ Diário pessoal e reflexivo</p>
+                <p>✓ Mapa visual do propósito</p>
+                <p>✓ Conteúdo inspiracional</p>
+                <p>✓ Meditações guiadas</p>
+                <p>✓ Sistema de evolução pessoal</p>
+              </div>
+              
+              <Button 
+                onClick={() => onSelectApp("purpose")}
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-lg py-6"
+              >
+                Abrir Desperte Seu Propósito
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+        
+        <div className="text-center mt-12">
+          <p className="text-gray-500">
+            Criado especialmente para você - dois apps poderosos para transformar sua vida financeira e espiritual
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AppContainer() {
+  const [currentApp, setCurrentApp] = useState<AppType>("selector");
+
+  if (currentApp === "flow") {
+    return (
+      <div>
+        <div className="fixed top-4 left-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            className="bg-white/90 backdrop-blur-sm"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <FlowApp />
+      </div>
+    );
+  }
+
+  if (currentApp === "purpose") {
+    return (
+      <div>
+        <div className="fixed top-4 left-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            className="bg-white/90 backdrop-blur-sm"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <PurposeApp />
+      </div>
+    );
+  }
+
+  return <AppSelector onSelectApp={setCurrentApp} />;
+}
+
+export default AppContainer;
