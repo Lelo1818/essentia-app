@@ -1,0 +1,170 @@
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertGoalSchema } from "@shared/schema";
+import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+
+interface GoalsModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+const formSchema = insertGoalSchema.extend({
+  targetAmount: z.string().min(1, "Valor da meta é obrigatório"),
+  currentAmount: z.string(),
+  targetDate: z.string().optional(),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      targetAmount: "",
+      currentAmount: "0",
+      targetDate: "",
+    },
+  });
+
+  const createGoalMutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      const payload = {
+        name: data.name,
+        targetAmount: parseFloat(data.targetAmount),
+        currentAmount: parseFloat(data.currentAmount || "0"),
+        targetDate: data.targetDate ? new Date(data.targetDate).toISOString() : null,
+        userId: 1 // Mock user ID
+      };
+      return apiRequest("POST", "/api/goals", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/goals"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
+      toast({
+        title: "Meta criada",
+        description: "Sua meta foi criada com sucesso!",
+      });
+      form.reset();
+      onOpenChange(false);
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível criar a meta. Tente novamente.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    createGoalMutation.mutate(data);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Criar Nova Meta</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome da Meta</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ex: Viagem para Europa, Carro Novo..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="targetAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Valor da Meta (R$)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="number" 
+                      step="0.01" 
+                      placeholder="0,00" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="currentAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Valor Atual (R$)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="number" 
+                      step="0.01" 
+                      placeholder="0,00" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="targetDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Data Alvo (Opcional)</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <div className="flex space-x-3 pt-4">
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="flex-1"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancelar
+              </Button>
+              <Button 
+                type="submit" 
+                className="flex-1 gradient-primary"
+                disabled={createGoalMutation.isPending}
+              >
+                {createGoalMutation.isPending ? "Criando..." : "Criar Meta"}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}
