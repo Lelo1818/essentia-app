@@ -66,6 +66,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
               <p className="text-blue-300 font-semibold text-lg">Seu Caminho para a Prosperidade</p>
             </CardHeader>
             <CardContent className="relative z-10">
+
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Motor de IA que analisa padrões, prediz gastos e otimiza investimentos. 
                 <strong className="text-cyan-400"> OCR inteligente</strong> digitaliza notas fiscais instantaneamente. 
