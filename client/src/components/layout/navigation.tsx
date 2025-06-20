@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
+import UserAvatar from "@/components/ui/user-avatar";
 
 export default function Navigation() {
   const [location] = useLocation();
@@ -51,7 +52,8 @@ export default function Navigation() {
               ))}
             </div>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
+            <UserAvatar size="sm" showEditButton={true} />
             <Link href="/profile">
               <Button variant="default" className="gradient-primary">
                 <User className="w-4 h-4 mr-2" />

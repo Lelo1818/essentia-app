@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { User, Mail, Calendar, Trophy, Target, TrendingUp, Edit, Save, X } from "lucide-react";
+import UserAvatar from "@/components/ui/user-avatar";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { formatCurrency, formatDate } from "@/lib/financial-utils";
