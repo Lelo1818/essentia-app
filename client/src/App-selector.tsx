@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { AuthGuard } from "@/components/auth-guard";
 import flowLogo from "@assets/image_1750383244339.png";
 import essentiaLogo from "@assets/image_1750383794230.png";
 import eduvibeLogo from "@assets/image_1750383852695.png";
@@ -127,56 +128,66 @@ function AppContainer() {
 
   if (currentApp === "flow") {
     return (
-      <div>
-        <div className="fixed top-4 left-4 z-50">
-          <Button 
-            onClick={() => setCurrentApp("selector")}
-            variant="outline"
-            className="bg-white/90 backdrop-blur-sm"
-          >
-            ← Voltar aos Apps
-          </Button>
+      <AuthGuard>
+        <div>
+          <div className="fixed top-4 left-4 z-50">
+            <Button 
+              onClick={() => setCurrentApp("selector")}
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              ← Voltar aos Apps
+            </Button>
+          </div>
+          <FlowApp />
         </div>
-        <FlowApp />
-      </div>
+      </AuthGuard>
     );
   }
 
   if (currentApp === "purpose") {
     return (
-      <div>
-        <div className="fixed top-4 left-4 z-50">
-          <Button 
-            onClick={() => setCurrentApp("selector")}
-            variant="outline"
-            className="bg-white/90 backdrop-blur-sm"
-          >
-            ← Voltar aos Apps
-          </Button>
+      <AuthGuard>
+        <div>
+          <div className="fixed top-4 left-4 z-50">
+            <Button 
+              onClick={() => setCurrentApp("selector")}
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              ← Voltar aos Apps
+            </Button>
+          </div>
+          <PurposeApp />
         </div>
-        <PurposeApp />
-      </div>
+      </AuthGuard>
     );
   }
 
   if (currentApp === "edu") {
     return (
-      <div>
-        <div className="fixed top-4 left-4 z-50">
-          <Button 
-            onClick={() => setCurrentApp("selector")}
-            variant="outline"
-            className="bg-white/90 backdrop-blur-sm"
-          >
-            ← Voltar aos Apps
-          </Button>
+      <AuthGuard>
+        <div>
+          <div className="fixed top-4 left-4 z-50">
+            <Button 
+              onClick={() => setCurrentApp("selector")}
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              ← Voltar aos Apps
+            </Button>
+          </div>
+          <EduApp />
         </div>
-        <EduApp />
-      </div>
+      </AuthGuard>
     );
   }
 
-  return <AppSelector onSelectApp={setCurrentApp} />;
+  return (
+    <AuthGuard>
+      <AppSelector onSelectApp={setCurrentApp} />
+    </AuthGuard>
+  );
 }
 
 export default AppContainer;
