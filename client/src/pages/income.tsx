@@ -12,6 +12,10 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Income() {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -171,7 +175,7 @@ export default function Income() {
         </CardContent>
       </Card>
 
-      <IncomeModal open={modalOpen} onOpenChange={setModalOpen} />
+      <IncomeModal open={modalOpen} onOpenChange={handleModalClose} />
     </div>
   );
 }

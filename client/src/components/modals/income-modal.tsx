@@ -58,10 +58,16 @@ export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
         title: "Renda adicionada",
         description: "Sua renda foi registrada com sucesso!",
       });
-      form.reset();
+      form.reset({
+        description: "",
+        amount: "",
+        frequency: "unica",
+        date: new Date().toISOString().split('T')[0],
+      });
       onOpenChange(false);
     },
-    onError: () => {
+    onError: (error) => {
+      console.error("Error creating income:", error);
       toast({
         title: "Erro",
         description: "Não foi possível adicionar a renda. Tente novamente.",
