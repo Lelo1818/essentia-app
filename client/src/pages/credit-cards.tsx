@@ -26,12 +26,15 @@ import {
 import { formatCurrency } from "@/lib/financial-utils";
 import { BankLogos, CardFlags } from "@/assets/bank-logos";
 import DocumentCamera from "@/components/camera/document-camera";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CreditCards() {
   const [showCardNumbers, setShowCardNumbers] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [cameraOpen, setCameraOpen] = useState(false);
+
+  const { toast } = useToast();
 
   const handleBillData = (data: any) => {
     toast({

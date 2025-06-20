@@ -23,13 +23,18 @@ import { formatCurrency } from "@/lib/financial-utils";
 export default function Investments() {
   const [portfolioView, setPortfolioView] = useState("overview");
 
-  // Dados simulados de investimentos baseados na renda do usuário
+  // Dados realistas de investimentos baseados na renda mensal de R$ 11.235
   const portfolio = {
     totalValue: 128450,
     totalInvested: 115200,
     totalGain: 13250,
     gainPercentage: 11.5,
-    monthlyContribution: 2500
+    monthlyContribution: 2500,
+    monthlyGoal: 2800, // 25% da renda líquida
+    emergencyFund: 33705, // 3x gastos mensais (R$ 11.235)
+    emergencyFundGoal: 33705,
+    riskProfile: "Moderado",
+    investmentHorizon: "Longo Prazo (10+ anos)"
   };
 
   const investments = [
@@ -43,11 +48,57 @@ export default function Investments() {
       gainPercent: 7.14,
       allocation: 35.1,
       risk: "Baixo",
-      maturity: "2029-01-01"
+      maturity: "2029-01-01",
+      institution: "Tesouro Nacional",
+      liquidity: "Diária"
     },
     {
       id: 2,
-      name: "CDB Banco Inter",
+      name: "CDB Banco Inter 110% CDI",
+      type: "Renda Fixa",
+      amount: 28500,
+      invested: 26000,
+      gain: 2500,
+      gainPercent: 9.62,
+      allocation: 22.2,
+      risk: "Baixo",
+      maturity: "2026-08-15",
+      institution: "Banco Inter",
+      liquidity: "No vencimento"
+    },
+    {
+      id: 3,
+      name: "FII XP Malls",
+      type: "Fundos Imobiliários",
+      amount: 22800,
+      invested: 20000,
+      gain: 2800,
+      gainPercent: 14.0,
+      allocation: 17.8,
+      risk: "Médio",
+      maturity: "Indefinido",
+      institution: "XP Investimentos",
+      liquidity: "Diária",
+      dividend: 0.85 // yield mensal
+    },
+    {
+      id: 4,
+      name: "Itaú Unibanco (ITUB4)",
+      type: "Ações",
+      amount: 18200,
+      invested: 15000,
+      gain: 3200,
+      gainPercent: 21.33,
+      allocation: 14.2,
+      risk: "Alto",
+      maturity: "Indefinido",
+      institution: "B3",
+      liquidity: "Diária"
+    },
+    {
+      id: 5,
+      name: "FIDC Kinea Crédito",
+      type: "Crédito Privado",
       type: "Renda Fixa", 
       amount: 32500,
       invested: 30000,
