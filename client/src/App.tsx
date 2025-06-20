@@ -26,6 +26,7 @@ import CashbackMarketplacePage from "@/pages/cashback-marketplace";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
+import KidsApp from "./App-kids";
 
 function Router() {
   return (
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/agendar-pagamentos" component={AgendarPagamentos} />
       <Route path="/simular-cenarios" component={SimularCenarios} />
       <Route path="/renegociar-dividas" component={RenegociarDividas} />
+      <Route path="/kids" component={KidsApp} />
       <Route path="/ofertas" component={Ofertas} />
       <Route path="/cupons" component={Cupons} />
       <Route path="/educacao" component={Educacao} />

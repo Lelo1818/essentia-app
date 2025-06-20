@@ -18,6 +18,7 @@ export default function Navigation() {
     { path: "/cupons", label: "Cupons" },
     { path: "/milhas", label: "Milhas" },
     { path: "/educacao", label: "Educação" },
+    { path: "/kids", label: "Flow Kids" },
     { path: "/feedback-ia", label: "IA Insights" },
     { path: "/familias", label: "Família" },
     { path: "/ocr-avancado", label: "OCR Foto" },
