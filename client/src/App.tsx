@@ -20,6 +20,7 @@ import FeedbackIA from "@/pages/feedback-ia";
 import Familias from "@/pages/familias";
 import OcrAvancado from "@/pages/ocr-avancado";
 import NotFound from "@/pages/not-found";
+import NFTAchievements from "@/pages/nft-achievements";
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/expenses" component={Expenses} />
       <Route path="/planning" component={Planning} />
       <Route path="/goals" component={Goals} />
+      <Route path="/nft-achievements" component={NFTAchievements} />
       <Route path="/ofertas" component={Ofertas} />
       <Route path="/cupons" component={Cupons} />
       <Route path="/educacao" component={Educacao} />
