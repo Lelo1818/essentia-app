@@ -225,7 +225,7 @@ export default function PersonalizedSuggestions() {
                 <h4 class="font-semibold text-green-800 mb-3">✅ Plano de Ajuste Personalizado</h4>
                 <div class="space-y-3">
                   <label class="flex items-start space-x-3 cursor-pointer">
-                    <input type="checkbox" class="mt-1" onchange="updateSavings()">
+                    <input type="checkbox" class="mt-1">
                     <div class="text-sm">
                       <div class="font-medium">Reduzir delivery para 2x por semana</div>
                       <div class="text-green-600">💰 Economia: R$ 70/mês</div>

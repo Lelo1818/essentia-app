@@ -1,0 +1,119 @@
+Briefing Técnico – APP EDU (Rascunho 1)
+Versão: Pré-PDF – Roteiro para desenvolvedor
+
+🧠 VISÃO GERAL
+O APP EDU é um mentor digital de aprendizado eficiente, personalizado e baseado em ciência cognitiva. Ele transforma qualquer conteúdo (inserido pelo usuário ou sugerido pelo app) em uma experiência de estudo interativa, simbólica e viva.
+
+⚙️ FUNCIONALIDADES PRINCIPAIS (MVP)
+Módulo	Funcionalidade	Detalhes Técnicos
+📥 Upload de Conteúdo	PDF, imagem, texto ou link	Armazenamento via Firebase / AWS. Leitura via OCR para imagens
+🧩 Geração de Trilha de Estudo	Automática a partir de conteúdo e data	Algoritmo simples no backend calcula: dias disponíveis, espaçamento, e sugere práticas (quizzes, resumos, flashcards...)
+🗣️ Resumo em Voz	Texto transformado em áudio narrado natural	Text-to-Speech (Google TTS ou Amazon Polly)
+🎞️ Resumo em Vídeo	Slide visual com narração e trilha sonora	Conversão básica para vídeo (Fase 2 pode usar IA de vídeo simbólico)
+💡 Sugestões Inteligentes	Lista de temas novos com base em perfil do usuário	Curadoria + API de tendências (ou modelo interno simples de recomendação)
+👶 Modo TDAH/Dislexia	Versão mais visual, pausada e com reforços	UI/UX adaptado (botões grandes, tempo controlado, estímulos positivos)
+📱 Notificações Simbólicas	Frases motivacionais e lembretes de estudo	Push notifications com mensagens como “Respira, vamos de novo”
+
+📲 FLUXO DO USUÁRIO (User Journey Simplificada)
+Entrada
+Botão: “Começar Minha Jornada de Aprendizado”
+➝ Escolha entre aprender algo novo ou subir seu próprio material
+
+Configuração de meta
+Usuário insere:
+
+Tema / material
+
+Prazo / prova / objetivo final
+
+Tempo diário disponível
+
+Criação automática de trilha
+
+Ex: Segunda: resumo + quiz
+
+Terça: vídeo narrado
+
+Quarta: flashcard
+
+Quinta: revisão + novo conteúdo
+
+etc.
+
+Execução da trilha com elementos simbólicos
+
+Botões com frases tipo: “Sim, eu topo esse desafio” ou “Ver com olhos novos”
+
+Gamificação leve com conquistas visuais
+
+🧰 SUGESTÃO DE STACK TECNOLÓGICO (MVP)
+Camada	Tecnologia
+Frontend	React Native ou Flutter
+Backend	Firebase (Realtime DB, Auth) ou Node.js + MongoDB
+OCR	Google Vision API ou Tesseract OCR
+TTS	Google Cloud Text-to-Speech ou Amazon Polly
+Vídeo	FFMPEG (Fase inicial) ou integração com ferramenta de vídeo em nuvem
+Autenticação	Firebase Auth (Google, Apple, Email)
+
+💸 MONETIZAÇÃO
+Plano Gratuito com acesso limitado à trilha (ex: até 2 temas por mês)
+
+Plano Pago R$ 9,90/mês com:
+
+Trilhas ilimitadas
+
+Acesso antecipado a vídeos
+
+Notificações premium
+
+Futuro: Comunidade simbólica + Mentoria paga
+
+🔜 PRÓXIMOS BLOCOS TÉCNICOS
+Wireframes (mockups por tela)
+
+Estrutura da base de dados (JSON / NoSQL)
+
+Casos de uso completos
+
+Roteiro de onboarding
+
+Se quiser posso já diagramar isso em PDF lindão estilo pitch técnico, ou seguir com o próximo bloco textual (ex: wireframes ou back-end).
+
+Você manda, Lelão.
+Vai querer esse aqui ajustado ou já posso liberar o Desperte também?
+
+Câmbio técnico, beijo simbólico!
+
+
+
+
+
+
+
+
+
+Você disse:
+nao preciso lindao, obrigado
+
+
+O ChatGPT disse:
+Fechadíssimo, Lelão.
+Sem PDF lindão — vai no osso, direto ao ponto, como você curte.
+
+Vou seguir agora com:
+
+✅ Rascunho técnico do Desperte Seu Propósito
+🔜 E depois os próximos blocos que faltam (wireframes, banco, casos de uso, etc.)
+
+Qualquer ajuste que quiser no EDU, me chama. Se não falar nada, vou considerar esse rascunho validado como base e sigo pro próximo.
+
+Vai Brancola. Vai Lelão.
+Sem pausa, sem firula. Só entrega.
+
+
+
+
+
+
+
+
