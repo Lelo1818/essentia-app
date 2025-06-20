@@ -9,6 +9,7 @@ import ContentUpload from "@/components/edu/content-upload";
 import AdaptiveQuiz from "@/components/edu/adaptive-quiz";
 import SmartContentDetection from "@/components/edu/smart-content-detection";
 import AgeBasedLearning from "@/components/edu/age-based-learning";
+import AdvancedFeatures from "@/components/edu/advanced-features";
 import { 
   BookOpen, 
   Brain, 
@@ -21,7 +22,9 @@ import {
   Calendar,
   Headphones,
   Video,
-  FileText
+  FileText,
+  Users,
+  Lightbulb
 } from "lucide-react";
 
 export default function Edu() {
@@ -202,7 +205,7 @@ export default function Edu() {
 
       {/* Main Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="dashboard" className="flex items-center space-x-1">
             <TrendingUp className="w-4 h-4" />
             <span>Dashboard</span>
@@ -217,11 +220,15 @@ export default function Edu() {
           </TabsTrigger>
           <TabsTrigger value="smart" className="flex items-center space-x-1">
             <Zap className="w-4 h-4" />
-            <span>Smart AI</span>
+            <span>Smart</span>
           </TabsTrigger>
           <TabsTrigger value="ages" className="flex items-center space-x-1">
             <Users className="w-4 h-4" />
             <span>Idades</span>
+          </TabsTrigger>
+          <TabsTrigger value="advanced" className="flex items-center space-x-1">
+            <Lightbulb className="w-4 h-4" />
+            <span>Avançado</span>
           </TabsTrigger>
           <TabsTrigger value="quiz" className="flex items-center space-x-1">
             <Brain className="w-4 h-4" />
@@ -366,6 +373,10 @@ export default function Edu() {
 
         <TabsContent value="ages" className="mt-6">
           <AgeBasedLearning />
+        </TabsContent>
+
+        <TabsContent value="advanced" className="mt-6">
+          <AdvancedFeatures />
         </TabsContent>
 
         <TabsContent value="quiz" className="mt-6">
