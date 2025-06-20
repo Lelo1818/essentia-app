@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Camera, Upload, X, CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { OCRSuccessAnimation } from "@/components/ui/success-animation";
 
 interface DocumentCameraProps {
   open: boolean;
@@ -15,6 +16,7 @@ export default function DocumentCamera({ open, onOpenChange, documentType, onDat
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [extractedData, setExtractedData] = useState<any>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -180,11 +182,7 @@ export default function DocumentCamera({ open, onOpenChange, documentType, onDat
       }
       
       setExtractedData(mockData);
-      
-      toast({
-        title: "Documento processado!",
-        description: `Dados extraídos do ${documentLabels[documentType]} com sucesso`,
-      });
+      setShowSuccess(true);
       
     } catch (error) {
       toast({
@@ -208,6 +206,7 @@ export default function DocumentCamera({ open, onOpenChange, documentType, onDat
     setCapturedImage(null);
     setExtractedData(null);
     setIsProcessing(false);
+    setShowSuccess(false);
     
     // Stop camera if running
     if (videoRef.current?.srcObject) {
@@ -400,6 +399,18 @@ export default function DocumentCamera({ open, onOpenChange, documentType, onDat
             </div>
           )}
         </div>
+
+        <OCRSuccessAnimation
+          show={showSuccess}
+          extractedData={extractedData}
+          onComplete={() => {
+            setShowSuccess(false);
+            toast({
+              title: "Documento processado!",
+              description: `Dados extraídos do ${documentLabels[documentType]} com sucesso`,
+            });
+          }}
+        />
       </DialogContent>
     </Dialog>
   );
