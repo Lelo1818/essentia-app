@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -119,17 +119,24 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
             Criado especialmente para você - três apps poderosos para transformar sua vida financeira, espiritual e educacional
           </p>
           
-          <div className="border-t pt-6">
+          <div className="border-t pt-6 space-y-4">
             <Button 
               onClick={() => onSelectApp("presentation")}
               variant="outline"
               className="bg-gradient-to-r from-purple-600 to-blue-600 text-white border-none hover:from-purple-700 hover:to-blue-700 px-8 py-3"
             >
-              📊 Ver Pitch Deck Interativo
+              Ver Pitch Deck Interativo
             </Button>
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-xs text-gray-400">
               Apresentação profissional para investidores
             </p>
+            
+            <div className="text-xs text-gray-400 space-y-1">
+              <p><strong>URLs Diretas:</strong></p>
+              <p>Flow: <a href="/?app=flow" className="text-blue-600 hover:underline">/?app=flow</a></p>
+              <p>Essentia: <a href="/?app=purpose" className="text-blue-600 hover:underline">/?app=purpose</a></p>
+              <p>EduVibe: <a href="/?app=edu" className="text-blue-600 hover:underline">/?app=edu</a></p>
+            </div>
           </div>
         </div>
       </div>
@@ -138,7 +145,25 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
 }
 
 function AppContainer() {
-  const [currentApp, setCurrentApp] = useState<AppType>("selector");
+  const [currentApp, setCurrentApp] = useState<AppType>(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const appParam = urlParams.get('app');
+    if (appParam && ['flow', 'purpose', 'edu', 'presentation'].includes(appParam)) {
+      return appParam as AppType;
+    }
+    return "selector";
+  });
+
+  // Update URL when app changes
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (currentApp === "selector") {
+      url.searchParams.delete('app');
+    } else {
+      url.searchParams.set('app', currentApp);
+    }
+    window.history.replaceState({}, '', url.toString());
+  }, [currentApp]);
 
   if (currentApp === "flow") {
     return (
