@@ -35,6 +35,14 @@ export default function PurposeMapPage() {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/purpose-map"] });
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });
       toast({ title: "Mapa salvo!", description: "Seu mapa do propósito foi atualizado." });
+    },
+    onError: (error) => {
+      console.error("Erro ao salvar mapa:", error);
+      toast({ 
+        title: "Erro", 
+        description: "Não foi possível salvar o mapa. Tente novamente.",
+        variant: "destructive"
+      });
     }
   });
 

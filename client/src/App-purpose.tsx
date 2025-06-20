@@ -10,6 +10,7 @@ import Journey from "@/pages/purpose/journey";
 import Diary from "@/pages/purpose/diary";
 import PurposeMap from "@/pages/purpose/purpose-map";
 import Inspiration from "@/pages/purpose/inspiration";
+import PurposeProfile from "@/pages/purpose/profile";
 import PurposeNotFound from "@/pages/purpose/not-found";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/diario" component={Diary} />
       <Route path="/mapa" component={PurposeMap} />
       <Route path="/inspiracao" component={Inspiration} />
+      <Route path="/perfil" component={PurposeProfile} />
       <Route component={PurposeNotFound} />
     </Switch>
   );

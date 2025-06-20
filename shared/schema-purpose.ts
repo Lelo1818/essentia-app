@@ -6,6 +6,7 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
+  bio: text("bio"),
   level: integer("level").notNull().default(1),
   experience: integer("experience").notNull().default(0),
   currentModule: varchar("current_module", { length: 50 }).notNull().default("despertar"),

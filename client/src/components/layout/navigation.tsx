@@ -40,10 +40,12 @@ export default function Navigation() {
             </div>
           </div>
           <div className="flex items-center">
-            <Button variant="default" className="gradient-primary">
-              <User className="w-4 h-4 mr-2" />
-              Perfil
-            </Button>
+            <Link href="/profile">
+              <Button variant="default" className="gradient-primary">
+                <User className="w-4 h-4 mr-2" />
+                Perfil
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

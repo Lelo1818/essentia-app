@@ -47,10 +47,12 @@ export default function PurposeNavigation() {
           </div>
           
           <div className="flex items-center">
-            <Button variant="default" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
-              <User className="w-4 h-4 mr-2" />
-              Perfil
-            </Button>
+            <Link href="/perfil">
+              <Button variant="default" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                <User className="w-4 h-4 mr-2" />
+                Perfil
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

@@ -67,7 +67,8 @@ export class PurposeMemStorage implements IPurposeStorage {
     // Create a default user for development
     this.createUser({
       name: "Sofia",
-      email: "sofia@exemplo.com"
+      email: "sofia@exemplo.com",
+      bio: "Em busca do meu propósito de vida através da jornada de autoconhecimento."
     });
 
     // Seed inspiration content
@@ -130,6 +131,7 @@ export class PurposeMemStorage implements IPurposeStorage {
     const user: User = { 
       ...insertUser, 
       id,
+      bio: insertUser.bio || null,
       level: insertUser.level || 1,
       experience: insertUser.experience || 0,
       currentModule: insertUser.currentModule || "despertar",

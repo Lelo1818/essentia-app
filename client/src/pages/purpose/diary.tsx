@@ -37,6 +37,14 @@ export default function Diary() {
       resetForm();
       setIsCreateOpen(false);
       toast({ title: "Entrada salva!", description: "Suas reflexões foram registradas no diário." });
+    },
+    onError: (error) => {
+      console.error("Erro ao criar entrada:", error);
+      toast({ 
+        title: "Erro", 
+        description: "Não foi possível salvar a entrada. Tente novamente.",
+        variant: "destructive"
+      });
     }
   });
 

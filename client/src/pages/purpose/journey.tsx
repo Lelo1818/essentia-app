@@ -95,6 +95,14 @@ export default function Journey() {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/modules"] });
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });
       toast({ title: "Módulo iniciado!", description: "Sua jornada continua..." });
+    },
+    onError: (error) => {
+      console.error("Erro ao iniciar módulo:", error);
+      toast({ 
+        title: "Erro", 
+        description: "Não foi possível iniciar o módulo. Tente novamente.",
+        variant: "destructive"
+      });
     }
   });
 

@@ -34,6 +34,22 @@ export async function registerPurposeRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update user profile
+  app.put("/api/purpose/user/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      const user = await purposeStorage.updateUser(id, updates);
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).json({ message: "Usuário não encontrado" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao atualizar usuário" });
+    }
+  });
+
   // Journey modules routes
   app.get("/api/purpose/modules", async (req, res) => {
     try {
