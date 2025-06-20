@@ -5,10 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { SmartLoading } from "@/components/ui/smart-loading";
 import { 
   Heart, Star, BookOpen, Map, Compass, Sparkles, 
   Target, Clock, TrendingUp, Award
 } from "lucide-react";
+import { AIAssistant } from "@/components/enhanced/ai-assistant";
+import { GamificationSystem } from "@/components/enhanced/gamification-system";
 import { formatDateRelative, getLevelTitle, suggestNextSteps } from "@/lib/purpose-utils";
 import type { UserProfile, InspirationContent } from "@/types/purpose";
 
@@ -28,10 +31,7 @@ export default function PurposeDashboard() {
   if (profileLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Conectando com sua essência...</p>
-        </div>
+        <SmartLoading type="spiritual" />
       </div>
     );
   }
@@ -44,6 +44,62 @@ export default function PurposeDashboard() {
 
   const recentInspiration = inspirations[0];
   const nextSteps = profile ? suggestNextSteps(profile) : [];
+
+  // Mock spiritual gamification data
+  const spiritualUserLevel = {
+    current: 4,
+    xp: 1800,
+    xpToNext: 200,
+    title: "Alma Iluminada",
+    perks: [
+      "Jornada personalizada completa",
+      "Guia espiritual IA avançado",
+      "Meditações exclusivas",
+      "Comunidade de mestres"
+    ]
+  };
+
+  const spiritualAchievements = [
+    {
+      id: "1",
+      title: "Despertar Interior",
+      description: "Iniciou sua jornada de autoconhecimento",
+      icon: Sparkles,
+      category: "spiritual" as const,
+      rarity: "common" as const,
+      progress: 1,
+      maxProgress: 1,
+      reward: { xp: 150 },
+      unlocked: true,
+      dateUnlocked: new Date()
+    },
+    {
+      id: "2",
+      title: "Reflexão Profunda",
+      description: "Complete 21 dias de reflexões diárias",
+      icon: Heart,
+      category: "spiritual" as const,
+      rarity: "epic" as const,
+      progress: 15,
+      maxProgress: 21,
+      reward: { xp: 500 },
+      unlocked: false
+    }
+  ];
+
+  const spiritualQuests = [
+    {
+      id: "1",
+      title: "Gratidão Diária",
+      description: "Liste 3 coisas pelas quais é grato hoje",
+      category: "spiritual",
+      difficulty: "easy" as const,
+      reward: { xp: 75 },
+      progress: 2,
+      maxProgress: 3,
+      completed: false
+    }
+  ];
 
   return (
     <div className="space-y-8">
@@ -234,6 +290,24 @@ export default function PurposeDashboard() {
           </Card>
         </div>
       </div>
+
+      {/* Gamification Section */}
+      <div className="mb-8">
+        <GamificationSystem
+          context="spiritual"
+          userLevel={spiritualUserLevel}
+          achievements={spiritualAchievements}
+          quests={spiritualQuests}
+        />
+      </div>
+
+      <AIAssistant 
+        context="spiritual" 
+        userData={user}
+        onAction={(action, data) => {
+          console.log("Spiritual AI Action:", action, data);
+        }}
+      />
     </div>
   );
 }

@@ -4,10 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { SmartLoading } from "@/components/ui/smart-loading";
 import { 
   BookOpen, Brain, TrendingUp, Target, Clock, Award,
   PlayCircle, Plus, FileText, BarChart3, Lightbulb, Users
 } from "lucide-react";
+import { AIAssistant } from "@/components/enhanced/ai-assistant";
+import { GamificationSystem } from "@/components/enhanced/gamification-system";
 import eduvibeLogo from "@assets/image_1750383852695.png";
 import type { User, LearningPath, Achievement, ContentSuggestion } from "../../../../../shared/schema-edu";
 
@@ -31,10 +34,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando dashboard...</p>
-        </div>
+        <SmartLoading type="educational" />
       </div>
     );
   }
@@ -42,6 +42,62 @@ export default function Dashboard() {
   const user = profileData?.user;
   const activePaths = learningPaths?.filter(path => !path.isCompleted) || [];
   const completedPaths = learningPaths?.filter(path => path.isCompleted) || [];
+
+  // Mock gamification data for education
+  const eduUserLevel = {
+    current: 2,
+    xp: 750,
+    xpToNext: 250,
+    title: "Estudioso Dedicado",
+    perks: [
+      "Trilhas personalizadas liberadas",
+      "Tutor IA especializado",
+      "Recursos para ADHD/Dislexia",
+      "Análise de progresso avançada"
+    ]
+  };
+
+  const eduAchievements = [
+    {
+      id: "1",
+      title: "Primeiro Passo",
+      description: "Completou sua primeira trilha de aprendizado",
+      icon: BookOpen,
+      category: "educational" as const,
+      rarity: "common" as const,
+      progress: 1,
+      maxProgress: 1,
+      reward: { xp: 100 },
+      unlocked: true,
+      dateUnlocked: new Date()
+    },
+    {
+      id: "2",
+      title: "Sequência de Estudo",
+      description: "Estude por 7 dias consecutivos",
+      icon: TrendingUp,
+      category: "educational" as const,
+      rarity: "rare" as const,
+      progress: 5,
+      maxProgress: 7,
+      reward: { xp: 300 },
+      unlocked: false
+    }
+  ];
+
+  const eduQuests = [
+    {
+      id: "1",
+      title: "Completar Módulo de Matemática",
+      description: "Finalize todos os exercícios do módulo atual",
+      category: "educational",
+      difficulty: "medium" as const,
+      reward: { xp: 150 },
+      progress: 3,
+      maxProgress: 5,
+      completed: false
+    }
+  ];
 
   const getGreeting = () => {
     const hour = new Date().getHours();

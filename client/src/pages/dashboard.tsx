@@ -13,8 +13,13 @@ import PlanningModal from "@/components/modals/planning-modal";
 import GoalsModal from "@/components/modals/goals-modal";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SmartLoading } from "@/components/ui/smart-loading";
 import { formatCurrency, calculateGoalProgress } from "@/lib/financial-utils";
-import { Trophy, Medal } from "lucide-react";
+import { AIAssistant } from "@/components/enhanced/ai-assistant";
+import { GamificationSystem } from "@/components/enhanced/gamification-system";
+import { PredictiveDashboard } from "@/components/enhanced/predictive-dashboard";
+import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
+import { Trophy, Medal, Target, TrendingUp, Zap } from "lucide-react";
 import type { FinancialSummary } from "@/types";
 
 export default function Dashboard() {
@@ -22,6 +27,17 @@ export default function Dashboard() {
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [planningModalOpen, setPlanningModalOpen] = useState(false);
   const [goalsModalOpen, setGoalsModalOpen] = useState(false);
+
+  // Enhanced keyboard shortcuts with modal controls
+  const shortcuts = FINANCIAL_SHORTCUTS.map(shortcut => ({
+    ...shortcut,
+    callback: shortcut.key === 'r' && shortcut.ctrl ? () => setIncomeModalOpen(true) :
+              shortcut.key === 'e' && shortcut.ctrl ? () => setExpenseModalOpen(true) :
+              shortcut.key === 'g' && shortcut.ctrl ? () => setGoalsModalOpen(true) :
+              shortcut.callback
+  }));
+
+  useKeyboardShortcuts(shortcuts);
 
   const { data: summary, isLoading } = useQuery<FinancialSummary>({
     queryKey: ["/api/financial-summary"],
@@ -38,10 +54,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-          <p className="text-gray-500">Carregando dashboard...</p>
-        </div>
+        <SmartLoading type="financial" />
       </div>
     );
   }
@@ -166,10 +179,32 @@ export default function Dashboard() {
 
       <RecentTransactions transactions={recentTransactions} />
 
+      <div className="grid grid-cols-1 gap-8 mb-8">
+        <PredictiveDashboard 
+          context="financial" 
+          userData={summary} 
+        />
+        
+        <GamificationSystem
+          context="financial"
+          userLevel={userLevel}
+          achievements={mockAchievements}
+          quests={mockQuests}
+        />
+      </div>
+
       <IncomeModal open={incomeModalOpen} onOpenChange={setIncomeModalOpen} />
       <ExpenseCameraModal open={expenseModalOpen} onOpenChange={setExpenseModalOpen} />
       <PlanningModal open={planningModalOpen} onOpenChange={setPlanningModalOpen} />
       <GoalsModal open={goalsModalOpen} onOpenChange={setGoalsModalOpen} />
+      
+      <AIAssistant 
+        context="financial" 
+        userData={summary}
+        onAction={(action, data) => {
+          console.log("AI Action:", action, data);
+        }}
+      />
     </>
   );
 }

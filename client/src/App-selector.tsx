@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PerformanceMonitor } from "@/components/enhanced/performance-monitor";
+import { NotificationProvider } from "@/components/enhanced/notification-system";
+import { AccessibilityManager } from "@/components/enhanced/accessibility-manager";
 import { ArrowRight } from "lucide-react";
 import { AuthGuard } from "@/components/auth-guard";
 import flowLogo from "@assets/image_1750383244339.png";
@@ -167,61 +170,70 @@ function AppContainer() {
 
   if (currentApp === "flow") {
     return (
-      <AuthGuard>
-        <div>
-          <div className="absolute top-4 right-4 z-50">
-            <Button 
-              onClick={() => setCurrentApp("selector")}
-              variant="outline"
-              size="sm"
-              className="bg-white/90 backdrop-blur-sm shadow-lg"
-            >
-              ← Voltar aos Apps
-            </Button>
+      <NotificationProvider>
+        <AuthGuard>
+          <div>
+            <div className="absolute top-4 right-4 z-50">
+              <Button 
+                onClick={() => setCurrentApp("selector")}
+                variant="outline"
+                size="sm"
+                className="bg-white/90 backdrop-blur-sm shadow-lg"
+              >
+                ← Voltar aos Apps
+              </Button>
+            </div>
+            <FlowApp />
+            <PerformanceMonitor />
           </div>
-          <FlowApp />
-        </div>
-      </AuthGuard>
+        </AuthGuard>
+      </NotificationProvider>
     );
   }
 
   if (currentApp === "purpose") {
     return (
-      <AuthGuard>
-        <div>
-          <div className="absolute top-4 right-4 z-50">
-            <Button 
-              onClick={() => setCurrentApp("selector")}
-              variant="outline"
-              size="sm"
-              className="bg-white/90 backdrop-blur-sm shadow-lg"
-            >
-              ← Voltar aos Apps
-            </Button>
+      <NotificationProvider>
+        <AuthGuard>
+          <div>
+            <div className="absolute top-4 right-4 z-50">
+              <Button 
+                onClick={() => setCurrentApp("selector")}
+                variant="outline"
+                size="sm"
+                className="bg-white/90 backdrop-blur-sm shadow-lg"
+              >
+                ← Voltar aos Apps
+              </Button>
+            </div>
+            <PurposeApp />
+            <PerformanceMonitor />
           </div>
-          <PurposeApp />
-        </div>
-      </AuthGuard>
+        </AuthGuard>
+      </NotificationProvider>
     );
   }
 
   if (currentApp === "edu") {
     return (
-      <AuthGuard>
-        <div>
-          <div className="absolute top-4 right-4 z-50">
-            <Button 
-              onClick={() => setCurrentApp("selector")}
-              variant="outline"
-              size="sm"
-              className="bg-white/90 backdrop-blur-sm shadow-lg"
-            >
-              ← Voltar aos Apps
-            </Button>
+      <NotificationProvider>
+        <AuthGuard>
+          <div>
+            <div className="absolute top-4 right-4 z-50">
+              <Button 
+                onClick={() => setCurrentApp("selector")}
+                variant="outline"
+                size="sm"
+                className="bg-white/90 backdrop-blur-sm shadow-lg"
+              >
+                ← Voltar aos Apps
+              </Button>
+            </div>
+            <EduApp />
+            <PerformanceMonitor />
           </div>
-          <EduApp />
-        </div>
-      </AuthGuard>
+        </AuthGuard>
+      </NotificationProvider>
     );
   }
 
@@ -243,9 +255,13 @@ function AppContainer() {
   }
 
   return (
-    <AuthGuard>
-      <AppSelector onSelectApp={setCurrentApp} />
-    </AuthGuard>
+    <NotificationProvider>
+      <AuthGuard>
+        <AppSelector onSelectApp={setCurrentApp} />
+        <PerformanceMonitor />
+        <AccessibilityManager />
+      </AuthGuard>
+    </NotificationProvider>
   );
 }
 

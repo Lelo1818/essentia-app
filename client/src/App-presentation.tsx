@@ -26,17 +26,17 @@ type SlideType =
   | "contato";
 
 const slides: { id: SlideType; title: string; subtitle?: string }[] = [
-  { id: "intro", title: "Portfólio Estratégico", subtitle: "Três Apps • Três Mercados • Uma Oportunidade" },
-  { id: "problema", title: "O Problema", subtitle: "Lacunas no Mercado Digital Brasileiro" },
-  { id: "solucao", title: "Nossa Solução", subtitle: "Três Apps Complementares e Validados" },
-  { id: "apps", title: "Demonstração", subtitle: "Produtos Funcionais e Prontos" },
-  { id: "mercado", title: "Mercado & Oportunidade", subtitle: "Mercados Bilionários em Crescimento" },
-  { id: "tecnologia", title: "Tecnologia", subtitle: "Stack Moderno e Escalável" },
-  { id: "modelo", title: "Modelo de Negócio", subtitle: "Múltiplas Fontes de Receita" },
-  { id: "financeiro", title: "Projeções Financeiras", subtitle: "ROI Atrativo e Sustentável" },
-  { id: "parceria", title: "Parceria Proposta", subtitle: "55% Desenvolvedor • 45% Parceiro" },
-  { id: "roadmap", title: "Roadmap", subtitle: "Estratégia de Crescimento 36 Meses" },
-  { id: "contato", title: "Próximos Passos", subtitle: "Vamos Transformar Juntos" }
+  { id: "intro", title: "Ecossistema Digital Integrado", subtitle: "3 Apps • 3 Verticais • Sinergia Exponencial" },
+  { id: "problema", title: "Oportunidade de Mercado", subtitle: "Gaps Estratégicos no Mercado Digital BR" },
+  { id: "solucao", title: "Solução Disruptiva", subtitle: "Portfólio Diversificado e Validado" },
+  { id: "apps", title: "Demo Interactive", subtitle: "Produtos Live e Market-Ready" },
+  { id: "mercado", title: "TAM & Opportunity", subtitle: "R$ 2.8B+ em Mercados Convergentes" },
+  { id: "tecnologia", title: "Tech Stack", subtitle: "Arquitetura Escalável e Moderna" },
+  { id: "modelo", title: "Revenue Streams", subtitle: "Monetização Multi-Canal" },
+  { id: "financeiro", title: "Financial Projections", subtitle: "ROI 380% em 36 Meses" },
+  { id: "parceria", title: "Partnership Structure", subtitle: "Equity Split: 55% Tech • 45% Capital" },
+  { id: "roadmap", title: "Growth Strategy", subtitle: "Roadmap Execution 3 Anos" },
+  { id: "contato", title: "Call to Action", subtitle: "Ready to Scale Together" }
 ];
 
 export default function PresentationApp() {
