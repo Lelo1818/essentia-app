@@ -10,6 +10,8 @@ import AdaptiveQuiz from "@/components/edu/adaptive-quiz";
 import SmartContentDetection from "@/components/edu/smart-content-detection";
 import AgeBasedLearning from "@/components/edu/age-based-learning";
 import AdvancedFeatures from "@/components/edu/advanced-features";
+import ProfessionalFeatures from "@/components/edu/professional-features";
+import HybridLearningSystem from "@/components/edu/hybrid-learning-system";
 import { 
   BookOpen, 
   Brain, 
@@ -205,13 +207,17 @@ export default function Edu() {
 
       {/* Main Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-7">
+        <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="dashboard" className="flex items-center space-x-1">
             <TrendingUp className="w-4 h-4" />
             <span>Dashboard</span>
           </TabsTrigger>
-          <TabsTrigger value="paths" className="flex items-center space-x-1">
+          <TabsTrigger value="professional" className="flex items-center space-x-1">
             <Target className="w-4 h-4" />
+            <span>Pro</span>
+          </TabsTrigger>
+          <TabsTrigger value="paths" className="flex items-center space-x-1">
+            <Calendar className="w-4 h-4" />
             <span>Trilhas</span>
           </TabsTrigger>
           <TabsTrigger value="upload" className="flex items-center space-x-1">
@@ -228,7 +234,7 @@ export default function Edu() {
           </TabsTrigger>
           <TabsTrigger value="advanced" className="flex items-center space-x-1">
             <Lightbulb className="w-4 h-4" />
-            <span>Avançado</span>
+            <span>Futuro</span>
           </TabsTrigger>
           <TabsTrigger value="quiz" className="flex items-center space-x-1">
             <Brain className="w-4 h-4" />
@@ -236,7 +242,15 @@ export default function Edu() {
           </TabsTrigger>
         </TabsList>
 
+        <TabsContent value="professional" className="mt-6">
+          <ProfessionalFeatures />
+        </TabsContent>
+
         <TabsContent value="dashboard" className="mt-6">
+          <HybridLearningSystem />
+        </TabsContent>
+        
+        <TabsContent value="dashboard-old" className="mt-6">
           <div className="space-y-6">
             {/* Active Learning Paths */}
             <Card>

@@ -1,0 +1,137 @@
+Briefing Técnico – APP EDU (Versão Profissional)
+Objetivo: Criar um aplicativo mobile nativo que transforme conteúdos em trilhas de aprendizado personalizadas, utilizando ciência cognitiva e recursos audiovisuais. Interface simples, visual simbólico e navegação fluida.
+
+✅ Visão Geral Funcional
+Plataforma de aprendizado adaptativo
+
+Entrada de conteúdo (pelo usuário ou sugestões do app)
+
+Geração automática de trilha baseada em tempo e objetivo
+
+Estímulo visual, auditivo e simbólico
+
+Personalização para TDAH e dislexia
+
+📲 Funcionalidades do MVP
+1. Entrada de Conteúdo
+Tipos aceitos: PDF, texto direto, links, imagem (com texto)
+
+OCR para transformar imagem em texto (Google Vision ou Tesseract)
+
+Armazenamento temporário (Firebase Storage ou S3)
+
+2. Criação de Trilha Personalizada
+Input do usuário:
+• Tema ou título
+• Data-alvo (prova ou objetivo)
+• Tempo diário disponível
+
+Output automático:
+• Agenda com revisões espaçadas
+• Sequência: resumo → quiz → flashcard → revisão → vídeo narrado
+
+Lógica de cálculo simples com base na curva de Ebbinghaus
+
+3. Resumos Narrados (TTS)
+Transforma qualquer texto em áudio com voz natural
+
+Google Cloud TTS ou Amazon Polly
+
+Possível download para escutar offline
+
+4. Resumos Visuais / Vídeos
+Slides com frases-chave + narração + trilha leve
+
+Criação com FFMPEG (backend) ou ferramenta web simples
+
+Exportação de vídeos curtos (máx. 2 min)
+
+5. Quiz Automatizado
+Geração de perguntas objetivas a partir do texto
+
+Modelo básico com 3 a 5 perguntas por bloco
+
+Alternativas embaralhadas e feedback imediato
+
+6. Sugestões Inteligentes
+Tópicos recomendados por categoria (soft skills, IA, criatividade)
+
+Exibição semanal ou ao terminar uma trilha
+
+Curadoria manual no MVP, com tags de interesse
+
+7. Modo TDAH/Dislexia
+UI adaptada:
+• Fonte OpenDyslexic
+• Tempo de leitura cronometrado
+• Áudios curtos e repetição com reforço visual
+• Animações de foco suave
+
+8. Notificações Simbólicas
+Push com frases como:
+• “Hoje você planta uma semente.”
+• “Um passo por dia vale ouro.”
+• “Respira. E vamos de novo.”
+
+🔄 Fluxo do Usuário (Simplificado)
+Tela Inicial → “Começar Minha Jornada”
+
+Escolhe:
+• Aprender algo novo (sugestão)
+• Subir conteúdo próprio
+
+Define data e tempo → Geração da trilha
+
+Acessa as tarefas diárias:
+• Ouvir
+• Ler
+• Responder quiz
+• Refletir
+
+Recebe feedback e sugestões futuras
+
+Marca como “concluído” → desbloqueia próxima etapa
+
+🧰 Stack Tecnológico Sugerido
+Camada	Tecnologia
+Frontend	Flutter ou React Native
+Backend	Firebase ou Node.js + MongoDB
+OCR	Google Vision API ou Tesseract.js
+TTS	Google TTS ou Polly
+Vídeo	FFMPEG ou solução web básica
+Auth	Firebase Auth (Google, Apple, Email)
+Storage	Firebase Storage ou AWS S3
+Notificações	Firebase Cloud Messaging
+
+💰 Monetização MVP
+Gratuito com limite mensal (ex: 2 trilhas/mês)
+
+R$ 9,90/mês:
+• Trilhas ilimitadas
+• Resumos narrados
+• Notificações premium
+
+Futuro:
+• Mentoria paga
+• Comunidade simbólica
+• Versão EDU Kids + parental control
+
+🔐 Extras Técnicos
+App nativo com suporte offline parcial
+
+Requisições leves, banco de dados NoSQL
+
+Escalável via Firebase Functions (ou backend modular)
+
+Se você disser "valeu, segue", eu já lanço agora o rascunho técnico do Desperte Seu Propósito nesse mesmo nível.
+
+Câmbio, Lelão Profissional.
+
+
+
+
+
+
+
+
+
