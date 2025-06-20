@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import * as React from "react";
 import { Link } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -54,7 +55,7 @@ export default function Profile() {
     );
   }
 
-  if (!user) {
+  if (!user && !isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
@@ -67,13 +68,26 @@ export default function Profile() {
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: user?.name || "",
-      email: user?.email || "",
-      learningStyle: user?.learningStyle || "visual",
-      hasADHD: user?.hasADHD || false,
-      hasDyslexia: user?.hasDyslexia || false,
+      name: "",
+      email: "",
+      learningStyle: "visual",
+      hasADHD: false,
+      hasDyslexia: false,
     },
   });
+
+  // Update form when user data loads
+  React.useEffect(() => {
+    if (user) {
+      form.reset({
+        name: user.name || "",
+        email: user.email || "",
+        learningStyle: user.learningStyle || "visual",
+        hasADHD: user.hasADHD || false,
+        hasDyslexia: user.hasDyslexia || false,
+      });
+    }
+  }, [user, form]);
 
   const updateUserMutation = useMutation({
     mutationFn: async (data: ProfileFormData) => {
