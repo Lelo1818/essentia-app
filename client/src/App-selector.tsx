@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { DollarSign, Heart, ArrowRight } from "lucide-react";
+import { DollarSign, Heart, Brain, ArrowRight } from "lucide-react";
 import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
+import EduApp from "./App-edu";
 
-type AppType = "selector" | "flow" | "purpose";
+type AppType = "selector" | "flow" | "purpose" | "edu";
 
 function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
+      <div className="max-w-6xl w-full">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">Seus Aplicativos</h1>
-          <p className="text-xl text-gray-600">Escolha qual aplicativo deseja usar hoje</p>
+          <p className="text-xl text-gray-600">Três aplicativos poderosos para transformar sua vida</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Flow App */}
           <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
             <CardHeader className="text-center pb-4">
@@ -76,11 +77,41 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
               </Button>
             </CardContent>
           </Card>
+
+          {/* EDU App */}
+          <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
+            <CardHeader className="text-center pb-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <Brain className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-2xl text-gray-900">EDU</CardTitle>
+              <p className="text-gray-600">Aprendizado Personalizado</p>
+            </CardHeader>
+            
+            <CardContent className="text-center space-y-4">
+              <div className="space-y-2 text-sm text-gray-600">
+                <p>✓ Trilhas de aprendizado personalizadas</p>
+                <p>✓ Upload e processamento de materiais</p>
+                <p>✓ Suporte para TDAH e Dislexia</p>
+                <p>✓ Conteúdo em alta adaptado</p>
+                <p>✓ Gamificação científica</p>
+                <p>✓ Sistema de evolução educacional</p>
+              </div>
+              
+              <Button 
+                onClick={() => onSelectApp("edu")}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-6"
+              >
+                Abrir EDU
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </CardContent>
+          </Card>
         </div>
         
         <div className="text-center mt-12">
           <p className="text-gray-500">
-            Criado especialmente para você - dois apps poderosos para transformar sua vida financeira e espiritual
+            Criado especialmente para você - três apps poderosos para transformar sua vida financeira, espiritual e educacional
           </p>
         </div>
       </div>
