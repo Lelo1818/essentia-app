@@ -8,7 +8,7 @@ import {
   BookOpen, Brain, TrendingUp, Target, Clock, Award,
   PlayCircle, Plus, FileText, BarChart3, Lightbulb, Users
 } from "lucide-react";
-import type { User, LearningPath, Achievement, ContentSuggestion } from "../../../../../../shared/schema-edu";
+import type { User, LearningPath, Achievement, ContentSuggestion } from "../../../../../shared/schema-edu";
 
 export default function Dashboard() {
   const { data: profileData } = useQuery<{ user: User }>({

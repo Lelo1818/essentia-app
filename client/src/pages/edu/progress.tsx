@@ -8,7 +8,7 @@ import {
   ArrowLeft, TrendingUp, Target, Calendar, Award, 
   BookOpen, Clock, Brain, BarChart3, Trophy
 } from "lucide-react";
-import type { User, LearningPath, Achievement, ProgressAnalytics } from "../../../../../../shared/schema-edu";
+import type { User, LearningPath, Achievement, ProgressAnalytics } from "../../../../../shared/schema-edu";
 
 export default function ProgressPage() {
   const { data: profileData } = useQuery<{ user: User }>({

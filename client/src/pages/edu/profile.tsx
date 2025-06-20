@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { User as UserType, Achievement } from "../../../../../../shared/schema-edu";
+import type { User as UserType, Achievement } from "../../../../../shared/schema-edu";
 
 const profileSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),

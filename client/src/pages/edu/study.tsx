@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { LearningPath, LearningSession } from "../../../../../../shared/schema-edu";
+import type { LearningPath, LearningSession } from "../../../../../shared/schema-edu";
 
 export default function Study() {
   const { pathId } = useParams();
