@@ -26,7 +26,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
           {/* Flow App */}
           <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden">
+              <div className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden bg-white shadow-lg p-2">
                 <img src={flowLogo} alt="Flow Logo" className="w-full h-full object-contain" />
               </div>
               <CardTitle className="text-2xl text-gray-900">Flow</CardTitle>
