@@ -1,0 +1,64 @@
+APP EDU — Onde aprender não é tarefa, é experiência.
+🎯 O que é
+Um aplicativo de aprendizado eficiente, vivo e adaptável, que transforma qualquer conteúdo em uma jornada personalizada, lúdica e baseada em ciência. O Edu é mais que um app: é um mentor simbólico, um “titio sabichão do bem”, que orienta com carinho e inteligência.
+
+🔧 Principais funcionalidades
+Trilha de Aprendizado Personalizada
+O usuário insere o que precisa aprender e o prazo disponível. O app gera uma trilha com práticas comprovadas (como flashcards, testes, revisões espaçadas, microvídeos, resumos narrados e prompts).
+
+Sugestões de Aprendizado Inteligentes
+Edu recomenda conteúdos novos e relevantes, com base em tendências (ex: IA, meditação, soft skills) e interesses do usuário.
+
+Upload de Materiais Próprios
+O usuário pode subir PDFs, links, imagens, trechos de livros, áudios — o app transforma isso em estudo ativo (quizzes, resumos, vídeos, etc.).
+
+Resumos Narrados e Vídeos Simbólicos
+Textos viram vídeos curtos e impactantes com voz natural, trilha suave e visual agradável, tornando o estudo audiovisual e emocional.
+
+Lente EDU (futuramente)
+Foto de um livro ou trecho = identificação por OCR + acesso ao conteúdo + resumos, voz, quiz e aprendizado guiado.
+
+Dicas adaptadas para TDAH e Dislexia
+Trilhas mais visuais, interativas, pausadas, com reforço de estímulo e foco gradual. Abordagem sensível e prática.
+
+Mentoria (futura)
+Possibilidade de conectar com mentores, tutores, professores ou especialistas — pagos ou gratuitos — dentro da plataforma.
+
+APP EDU Kids (futura)
+Versão para crianças com gamificação leve, conexão opcional com os pais (acompanhamento do progresso sem ser invasivo).
+
+💡 Diferenciais
+Baseado em ciência cognitiva real (ex: Daniel Willingham, Ebbinghaus).
+
+Visual simbólico acolhedor, sem cara de escola tradicional.
+
+Integra aprendizado com bem-estar (ex: lembretes com frases motivacionais, respiração curta, microvitórias).
+
+Slogan forte: “Onde aprender não é tarefa, é experiência.”
+
+💰 Modelo de Negócio (MVP)
+Acesso gratuito com valor real (muito acima da média).
+
+Plano acessível de R$ 9,90 a R$ 14,90/mês.
+
+Premium com vídeos extra, mentoria ou comunidade simbólica.
+
+Parcerias com escolas, ONGs e projetos sociais com preço simbólico.
+
+🧩 Parcerias estratégicas visadas
+Escolas e universidades
+
+ONGs e projetos sociais de educação
+
+Plataformas de cursos (Udemy, Hotmart)
+
+Influenciadores educacionais
+
+Clubes como Hebraica, onde Lelo tem acesso
+
+🔮 Visão de futuro
+Inteligência artificial proativa (que ajusta sua trilha conforme seu desempenho e emoções)
+
+Experiência gamificada simbólica (com avatar, conquistas e mapas de progresso)
+
+Comunidade colaborativa de aprendizes e mentores
