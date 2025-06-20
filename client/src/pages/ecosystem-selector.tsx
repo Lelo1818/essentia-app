@@ -1,7 +1,8 @@
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, GraduationCap, TrendingUp, Baby } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart } from "lucide-react";
 
 export default function EcosystemSelector() {
   const apps = [
@@ -10,101 +11,196 @@ export default function EcosystemSelector() {
       name: "Essentia",
       subtitle: "Desperte Seu Propósito",
       description: "Jornada de autodescoberta com rituais, respiração e transformação pessoal.",
+      features: ["Avatar 3D Evolutivo", "18 Módulos Simbólicos", "Conteúdo Rômulo Nomad", "Rituais Interativos"],
+      metrics: "72% clareza | 89 dias | 12 conquistas",
       icon: Sparkles,
       color: "from-purple-600 to-pink-600",
       route: "/purpose",
-      status: "Completo"
+      status: "Completo",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"
     },
     {
       id: "eduvie",
-      name: "EduVie",
+      name: "EduVie", 
       subtitle: "Educação Personalizada",
       description: "Aprendizado adaptativo com IA, trilhas personalizadas e gamificação.",
+      features: ["IA Adaptativa", "Trilhas Personalizadas", "Gamificação", "Analytics Avançado"],
+      metrics: "85% retenção | 150+ cursos | 12k usuários",
       icon: GraduationCap,
-      color: "from-blue-600 to-indigo-600",
+      color: "from-blue-600 to-indigo-600", 
       route: "/edu",
-      status: "Completo"
+      status: "Completo",
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop"
     },
     {
       id: "flow",
       name: "Flow",
       subtitle: "Gestão Financeira",
       description: "Controle financeiro inteligente com análise preditiva e metas automatizadas.",
+      features: ["Análise Preditiva", "Automação Inteligente", "Metas Personalizadas", "Dashboard Avançado"],
+      metrics: "Q3 2025 | MVP em testes | 500+ beta users",
       icon: TrendingUp,
       color: "from-green-600 to-emerald-600",
-      route: "/flow",
-      status: "Em desenvolvimento"
+      route: "/flow", 
+      status: "Em desenvolvimento",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop"
     },
     {
       id: "flow-kids",
       name: "Flow Kids",
-      subtitle: "Educação Financeira Infantil",
+      subtitle: "Educação Financeira Infantil", 
       description: "Ensino lúdico de finanças para crianças com jogos e atividades interativas.",
+      features: ["Gamificação Total", "Realidade Aumentada", "Pais & Filhos", "Certificação Digital"],
+      metrics: "Conceito validado | Protótipo Q4 2025",
       icon: Baby,
       color: "from-orange-600 to-yellow-600",
       route: "/flow-kids",
-      status: "Conceito"
+      status: "Conceito", 
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/4 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
+      </div>
+
       {/* Header */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        <div className="text-center mb-16">
+          <Badge className="mb-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 text-lg">
+            Apresentação Exclusiva - Daniel Allegri
+          </Badge>
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
             Ecossistema Digital
           </h1>
-          <p className="text-xl text-gray-300 mb-8">
-            Quatro aplicativos revolucionários para transformar vida, educação e finanças
+          <p className="text-2xl text-gray-300 mb-4 max-w-4xl mx-auto">
+            Quatro aplicativos revolucionários que transformam vida, educação e finanças
           </p>
+          <p className="text-lg text-purple-300 mb-8">
+            Tecnologia de ponta + Conteúdo transformacional = Impacto social massivo
+          </p>
+          
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-8 mb-12">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-white flex items-center gap-2">
+                <Users className="w-8 h-8 text-purple-400" />
+                50K+
+              </div>
+              <p className="text-gray-400">Usuários Potenciais</p>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-white flex items-center gap-2">
+                <Award className="w-8 h-8 text-blue-400" />
+                4 Apps
+              </div>
+              <p className="text-gray-400">Verticais de Mercado</p>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-white flex items-center gap-2">
+                <Zap className="w-8 h-8 text-green-400" />
+                85%
+              </div>
+              <p className="text-gray-400">Retenção Média</p>
+            </div>
+          </div>
+
           <div className="flex justify-center gap-4 mb-8">
-            <Button variant="outline" className="text-purple-400 border-purple-400">
-              <Link href="/investor-demo">Demo Investidor</Link>
-            </Button>
-            <Button variant="outline" className="text-purple-400 border-purple-400">
+            <Link href="/investor-demo">
+              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg">
+                <Play className="w-5 h-5 mr-2" />
+                Ver Demo Completa
+              </Button>
+            </Link>
+            <Button variant="outline" className="text-purple-400 border-purple-400 px-8 py-4 text-lg">
               Acesso: danielallegri2025
             </Button>
           </div>
         </div>
 
         {/* Apps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
           {apps.map((app) => {
             const IconComponent = app.icon;
             return (
-              <Card key={app.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                <CardContent className="p-8">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${app.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                    <IconComponent className="w-8 h-8 text-white" />
-                  </div>
-                  
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-bold text-white mb-2">{app.name}</h3>
-                    <h4 className="text-lg text-purple-300 mb-3">{app.subtitle}</h4>
-                    <p className="text-gray-300 leading-relaxed">{app.description}</p>
+              <Card key={app.id} className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/20 transition-all duration-500 group hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20">
+                <CardContent className="p-0 overflow-hidden">
+                  {/* Image Header */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={app.image} 
+                      alt={app.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className={`absolute inset-0 bg-gradient-to-r ${app.color} opacity-80`}></div>
+                    <div className="absolute top-4 left-4">
+                      <div className={`w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center`}>
+                        <IconComponent className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
+                        app.status === 'Completo' ? 'bg-green-500/30 text-green-100' :
+                        app.status === 'Em desenvolvimento' ? 'bg-yellow-500/30 text-yellow-100' :
+                        'bg-blue-500/30 text-blue-100'
+                      }`}>
+                        {app.status}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      app.status === 'Completo' ? 'bg-green-500/20 text-green-300' :
-                      app.status === 'Em desenvolvimento' ? 'bg-yellow-500/20 text-yellow-300' :
-                      'bg-blue-500/20 text-blue-300'
-                    }`}>
-                      {app.status}
-                    </span>
-                    
-                    {app.status === 'Completo' ? (
-                      <Link href={app.route}>
-                        <Button className={`bg-gradient-to-r ${app.color} hover:opacity-90 text-white`}>
-                          Acessar App
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-bold text-white mb-2">{app.name}</h3>
+                      <h4 className="text-lg text-purple-300 mb-3">{app.subtitle}</h4>
+                      <p className="text-gray-300 leading-relaxed mb-4">{app.description}</p>
+                    </div>
+
+                    {/* Features */}
+                    <div className="mb-4">
+                      <h5 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+                        <Brain className="w-4 h-4" />
+                        Funcionalidades
+                      </h5>
+                      <div className="flex flex-wrap gap-2">
+                        {app.features.map((feature, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs bg-white/10 text-gray-300">
+                            {feature}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Metrics */}
+                    <div className="mb-6">
+                      <h5 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+                        <Heart className="w-4 h-4" />
+                        Métricas
+                      </h5>
+                      <p className="text-purple-300 text-sm">{app.metrics}</p>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="flex justify-center">
+                      {app.status === 'Completo' ? (
+                        <Link href={app.route}>
+                          <Button className={`bg-gradient-to-r ${app.color} hover:opacity-90 text-white w-full py-3 text-lg font-semibold`}>
+                            <Play className="w-5 h-5 mr-2" />
+                            Testar Agora
+                          </Button>
+                        </Link>
+                      ) : (
+                        <Button disabled className="bg-gray-600 text-gray-400 w-full py-3 text-lg">
+                          Em Breve
                         </Button>
-                      </Link>
-                    ) : (
-                      <Button disabled className="bg-gray-600 text-gray-400">
-                        Em Breve
-                      </Button>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -112,13 +208,37 @@ export default function EcosystemSelector() {
           })}
         </div>
 
+        {/* Investment Highlight */}
+        <div className="mt-20 text-center">
+          <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-xl rounded-2xl p-8 border border-white/10 max-w-4xl mx-auto">
+            <h3 className="text-3xl font-bold text-white mb-4">Oportunidade de Investimento</h3>
+            <p className="text-lg text-gray-300 mb-6">
+              Ecossistema completo que combina tecnologia de ponta com conteúdo transformacional para impacto social massivo
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+              <div>
+                <div className="text-2xl font-bold text-purple-300">R$ 2.5M</div>
+                <p className="text-gray-400">Valuation Proposto</p>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-green-300">3-5x ROI</div>
+                <p className="text-gray-400">Projeção 24 meses</p>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-300">Q4 2025</div>
+                <p className="text-gray-400">Break-even Point</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Info */}
-        <div className="text-center mt-16">
-          <p className="text-gray-400 mb-4">
-            Desenvolvido para a apresentação com Daniel Allegri
+        <div className="text-center mt-12">
+          <p className="text-gray-400 mb-2">
+            Apresentação Exclusiva - Daniel Allegri | Junho 2025
           </p>
           <p className="text-sm text-gray-500">
-            Ecossistema completo de aplicativos revolucionários | Junho 2025
+            Ecossistema Digital Revolucionário - Tecnologia + Propósito = Transformação
           </p>
         </div>
       </div>
