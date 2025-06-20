@@ -20,6 +20,7 @@ import {
   Heart,
   Zap
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface KidsAchievement {
   id: string;
@@ -46,6 +47,7 @@ function KidsDashboard() {
   const [currentCoins, setCurrentCoins] = useState(1250);
   const [level, setLevel] = useState(5);
   const [xpProgress, setXpProgress] = useState(65);
+  const { toast } = useToast();
 
   const achievements: KidsAchievement[] = [
     {
@@ -128,6 +130,39 @@ function KidsDashboard() {
 
   const completedTasks = weeklyTasks.filter(task => task.completed).length;
   const totalTasks = weeklyTasks.length;
+
+  const addMoney = (goalId: string, amount: number) => {
+    setCurrentCoins(prev => prev + amount);
+    toast({
+      title: "Dinheiro Adicionado!",
+      description: `Você ganhou ${amount} Flow Coins!`,
+      variant: "default"
+    });
+  };
+
+  const playGame = (gameName: string) => {
+    toast({
+      title: `Jogando ${gameName}!`,
+      description: "Divirta-se aprendendo sobre dinheiro!",
+      variant: "default"
+    });
+  };
+
+  const viewProgress = () => {
+    toast({
+      title: "Relatório dos Pais",
+      description: "Visualizando progresso da criança...",
+      variant: "default"
+    });
+  };
+
+  const configureMesada = () => {
+    toast({
+      title: "Configurar Mesada",
+      description: "Ajustando valor da mesada semanal...",
+      variant: "default"
+    });
+  };
 
   return (
     <div className="min-h-screen p-6 pt-16">
@@ -249,6 +284,7 @@ function KidsDashboard() {
                       <InteractiveButton
                         className="w-full bg-gradient-to-r from-pink-500 to-purple-500"
                         soundType="success"
+                        onClick={() => addMoney(goal.id, 25)}
                       >
                         <Coins className="w-4 h-4 mr-2" />
                         Adicionar Dinheiro
@@ -314,7 +350,12 @@ function KidsDashboard() {
                   <div className="text-4xl mb-3">🏪</div>
                   <h3 className="font-bold">Lojinha Virtual</h3>
                   <p className="text-sm text-gray-600 mt-1">Aprenda a fazer compras inteligentes</p>
-                  <InteractiveButton className="w-full mt-3" variant="outline" soundType="click">
+                  <InteractiveButton 
+                    className="w-full mt-3" 
+                    variant="outline" 
+                    soundType="click"
+                    onClick={() => playGame("Lojinha Virtual")}
+                  >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Jogar
                   </InteractiveButton>
@@ -326,7 +367,12 @@ function KidsDashboard() {
                   <div className="text-4xl mb-3">🏦</div>
                   <h3 className="font-bold">Banco do Flow</h3>
                   <p className="text-sm text-gray-600 mt-1">Descubra como funciona um banco</p>
-                  <InteractiveButton className="w-full mt-3" variant="outline" soundType="click">
+                  <InteractiveButton 
+                    className="w-full mt-3" 
+                    variant="outline" 
+                    soundType="click"
+                    onClick={() => playGame("Banco do Flow")}
+                  >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Explorar
                   </InteractiveButton>
@@ -338,7 +384,12 @@ function KidsDashboard() {
                   <div className="text-4xl mb-3">📈</div>
                   <h3 className="font-bold">Investidor Mirim</h3>
                   <p className="text-sm text-gray-600 mt-1">Primeiros passos nos investimentos</p>
-                  <InteractiveButton className="w-full mt-3" variant="outline" soundType="click">
+                  <InteractiveButton 
+                    className="w-full mt-3" 
+                    variant="outline" 
+                    soundType="click"
+                    onClick={() => playGame("Investidor Mirim")}
+                  >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Começar
                   </InteractiveButton>
@@ -361,6 +412,7 @@ function KidsDashboard() {
               <InteractiveButton 
                 className="bg-orange-600 hover:bg-orange-700"
                 soundType="click"
+                onClick={viewProgress}
               >
                 Ver Progresso da Criança
               </InteractiveButton>
@@ -368,6 +420,7 @@ function KidsDashboard() {
                 variant="outline"
                 className="border-orange-600 text-orange-600"
                 soundType="click"
+                onClick={configureMesada}
               >
                 Configurar Mesada
               </InteractiveButton>
