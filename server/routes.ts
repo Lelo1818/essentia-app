@@ -25,7 +25,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/incomes", async (req, res) => {
     try {
       const userId = getCurrentUserId();
-      const validatedData = insertIncomeSchema.parse({ ...req.body, userId });
+      const processedData = {
+        ...req.body,
+        userId,
+        date: req.body.date ? new Date(req.body.date) : new Date(),
+      };
+      const validatedData = insertIncomeSchema.parse(processedData);
       const income = await storage.createIncome(validatedData);
       res.status(201).json(income);
     } catch (error) {
@@ -65,7 +70,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/expenses", async (req, res) => {
     try {
       const userId = getCurrentUserId();
-      const validatedData = insertExpenseSchema.parse({ ...req.body, userId });
+      const processedData = {
+        ...req.body,
+        userId,
+        date: req.body.date ? new Date(req.body.date) : new Date(),
+      };
+      const validatedData = insertExpenseSchema.parse(processedData);
       const expense = await storage.createExpense(validatedData);
       res.status(201).json(expense);
     } catch (error) {
@@ -178,7 +188,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/goals", async (req, res) => {
     try {
       const userId = getCurrentUserId();
-      const validatedData = insertGoalSchema.parse({ ...req.body, userId });
+      const processedData = {
+        ...req.body,
+        userId,
+        targetDate: req.body.targetDate ? new Date(req.body.targetDate) : null,
+      };
+      const validatedData = insertGoalSchema.parse(processedData);
       const goal = await storage.createGoal(validatedData);
       res.status(201).json(goal);
     } catch (error) {
