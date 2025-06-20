@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import flowLogo from "@assets/image_1750383244339.png";
-import essentiaLogo from "@assets/image_1750383794230.png";
-import eduvibeLogo from "@assets/image_1750383852695.png";
+// Removed problematic imports for now
 import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
 import EduApp from "./App-edu";
@@ -53,7 +51,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
             
             <CardHeader className="relative z-10 text-center">
               <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-blue-500 via-cyan-500 to-blue-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
-                <img src={flowLogo} alt="Flow Logo" className="w-full h-full object-contain filter brightness-0 invert" />
+                <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">F</div>
               </div>
               <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Flow
@@ -96,7 +94,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
             
             <CardHeader className="relative z-10 text-center">
               <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-violet-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
-                <img src={essentiaLogo} alt="Essentia Logo" className="w-full h-full object-contain filter brightness-0 invert" />
+                <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">E</div>
               </div>
               <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Essentia
@@ -138,7 +136,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
             
             <CardHeader className="relative z-10 text-center">
               <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-green-500 via-blue-500 to-teal-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
-                <img src={eduvibeLogo} alt="EduVibe Logo" className="w-full h-full object-contain filter brightness-0 invert" />
+                <div className="w-full h-full flex items-center justify-center text-white text-xl font-bold">EV</div>
               </div>
               <CardTitle className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
                 EduVibe
