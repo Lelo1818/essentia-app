@@ -281,14 +281,13 @@ function KidsDashboard() {
                         <div>Faltam {goal.weeksNeeded} semanas</div>
                       </div>
                       
-                      <InteractiveButton
-                        className="w-full bg-gradient-to-r from-pink-500 to-purple-500"
-                        soundType="success"
+                      <button
+                        className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-pink-600 hover:to-purple-600 transition-all duration-300 flex items-center justify-center"
                         onClick={() => addMoney(goal.id, 25)}
                       >
                         <Coins className="w-4 h-4 mr-2" />
                         Adicionar Dinheiro
-                      </InteractiveButton>
+                      </button>
                     </div>
                   </CardContent>
                 </Card>
@@ -350,15 +349,13 @@ function KidsDashboard() {
                   <div className="text-4xl mb-3">🏪</div>
                   <h3 className="font-bold">Lojinha Virtual</h3>
                   <p className="text-sm text-gray-600 mt-1">Aprenda a fazer compras inteligentes</p>
-                  <InteractiveButton 
-                    className="w-full mt-3" 
-                    variant="outline" 
-                    soundType="click"
+                  <button 
+                    className="w-full mt-3 border-2 border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center"
                     onClick={() => playGame("Lojinha Virtual")}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Jogar
-                  </InteractiveButton>
+                  </button>
                 </CardContent>
               </Card>
               
@@ -367,15 +364,13 @@ function KidsDashboard() {
                   <div className="text-4xl mb-3">🏦</div>
                   <h3 className="font-bold">Banco do Flow</h3>
                   <p className="text-sm text-gray-600 mt-1">Descubra como funciona um banco</p>
-                  <InteractiveButton 
-                    className="w-full mt-3" 
-                    variant="outline" 
-                    soundType="click"
+                  <button 
+                    className="w-full mt-3 border-2 border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center"
                     onClick={() => playGame("Banco do Flow")}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Explorar
-                  </InteractiveButton>
+                  </button>
                 </CardContent>
               </Card>
               
@@ -384,15 +379,13 @@ function KidsDashboard() {
                   <div className="text-4xl mb-3">📈</div>
                   <h3 className="font-bold">Investidor Mirim</h3>
                   <p className="text-sm text-gray-600 mt-1">Primeiros passos nos investimentos</p>
-                  <InteractiveButton 
-                    className="w-full mt-3" 
-                    variant="outline" 
-                    soundType="click"
+                  <button 
+                    className="w-full mt-3 border-2 border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center"
                     onClick={() => playGame("Investidor Mirim")}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
                     Começar
-                  </InteractiveButton>
+                  </button>
                 </CardContent>
               </Card>
             </div>
@@ -409,21 +402,18 @@ function KidsDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InteractiveButton 
-                className="bg-orange-600 hover:bg-orange-700"
-                soundType="click"
+              <button 
+                className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-all duration-300"
                 onClick={viewProgress}
               >
                 Ver Progresso da Criança
-              </InteractiveButton>
-              <InteractiveButton 
-                variant="outline"
-                className="border-orange-600 text-orange-600"
-                soundType="click"
+              </button>
+              <button 
+                className="border-2 border-orange-600 text-orange-600 hover:bg-orange-50 px-4 py-2 rounded-lg transition-all duration-300"
                 onClick={configureMesada}
               >
                 Configurar Mesada
-              </InteractiveButton>
+              </button>
             </div>
           </CardContent>
         </Card>
