@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { InteractiveButton } from "@/components/ui/interactive-button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -154,13 +155,14 @@ export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
               >
                 Cancelar
               </Button>
-              <Button 
+              <InteractiveButton 
                 type="submit" 
                 className="flex-1 gradient-primary"
                 disabled={createGoalMutation.isPending}
+                soundType="success"
               >
                 {createGoalMutation.isPending ? "Criando..." : "Criar Meta"}
-              </Button>
+              </InteractiveButton>
             </div>
           </form>
         </Form>

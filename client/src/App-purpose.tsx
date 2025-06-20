@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { InteractiveButton } from "@/components/ui/interactive-button";
 import PurposeNavigation from "@/components/purpose/layout/navigation";
 import PurposeMobileNavigation from "@/components/purpose/layout/mobile-navigation";
 import PurposeDashboard from "@/pages/purpose/dashboard";

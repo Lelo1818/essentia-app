@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { InteractiveButton } from "@/components/ui/interactive-button";
 import { ArrowRight } from "lucide-react";
 // Removed problematic imports for now
 import FlowApp from "./App";
@@ -79,11 +80,11 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
                   <strong>Gamificação Total:</strong> Níveis, conquistas e recompensas
                 </div>
               </div>
-              <Button className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
-                onClick={() => onSelectApp("flow")}>
+              <InteractiveButton className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={() => onSelectApp("flow")} soundType="success">
                 Abrir Flow
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              </InteractiveButton>
             </CardContent>
           </Card>
 
@@ -163,11 +164,11 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
                   <strong>Trilhas Épicas:</strong> Aprendizado como RPG com conquistas reais
                 </div>
               </div>
-              <Button className="w-full bg-gradient-to-r from-green-600 via-blue-600 to-teal-600 hover:from-green-500 hover:to-blue-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
-                onClick={() => onSelectApp("edu")}>
+              <InteractiveButton className="w-full bg-gradient-to-r from-green-600 via-blue-600 to-teal-600 hover:from-green-500 hover:to-blue-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={() => onSelectApp("edu")} soundType="success">
                 Abrir EduVibe
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              </InteractiveButton>
             </CardContent>
           </Card>
         </div>
