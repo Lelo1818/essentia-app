@@ -22,6 +22,7 @@ import Familias from "@/pages/familias";
 import OcrAvancado from "@/pages/ocr-avancado";
 import Purpose from "@/pages/purpose";
 import Edu from "@/pages/edu";
+import InvestorDemo from "@/pages/investor-demo";
 import NotFound from "@/pages/not-found";
 import NFTAchievements from "@/pages/nft-achievements";
 import MoodAnalysisPage from "@/pages/mood-analysis";
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/ocr-avancado" component={OcrAvancado} />
       <Route path="/purpose" component={Purpose} />
       <Route path="/edu" component={Edu} />
+      <Route path="/investor-demo" component={InvestorDemo} />
       <Route path="/profile" component={Profile} />
       <Route>
         <NotFound />

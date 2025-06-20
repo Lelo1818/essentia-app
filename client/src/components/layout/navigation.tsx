@@ -47,6 +47,14 @@ export default function Navigation() {
       app: "edu" as const
     },
     {
+      href: "/investor-demo",
+      label: "Demo Investidor",
+      icon: Crown,
+      badge: "VIP",
+      description: "Apresentação para investidores",
+      app: "demo" as const
+    },
+    {
       href: "/purpose",
       label: "Essentia",
       icon: Heart,
