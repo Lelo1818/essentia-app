@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { PerformanceMonitor } from "@/components/enhanced/performance-monitor";
-import { NotificationProvider } from "@/components/enhanced/notification-system";
-import { AccessibilityManager } from "@/components/enhanced/accessibility-manager";
 import { ArrowRight } from "lucide-react";
-import { AuthGuard } from "@/components/auth-guard";
 import flowLogo from "@assets/image_1750383244339.png";
 import essentiaLogo from "@assets/image_1750383794230.png";
 import eduvibeLogo from "@assets/image_1750383852695.png";
-import { ModernStats } from "@/components/ui/modern-stats";
 import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
 import EduApp from "./App-edu";
@@ -180,7 +175,20 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
         </div>
         
         <div className="mt-16 space-y-12">
-          <ModernStats />
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
+              <div className="text-gray-300">Funcional e Responsivo</div>
+            </div>
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold text-green-400 mb-2">3</div>
+              <div className="text-gray-300">Apps Enterprise-Ready</div>
+            </div>
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold text-purple-400 mb-2">∞</div>
+              <div className="text-gray-300">Potencial de Escala</div>
+            </div>
+          </div>
           
           <div className="text-center">
             <div className="bg-gradient-to-r from-slate-800/80 to-gray-900/80 backdrop-blur-sm border border-white/10 rounded-2xl p-8 max-w-4xl mx-auto">
@@ -199,21 +207,6 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
               </Button>
             </div>
           </div>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-              <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
-              <div className="text-gray-300">Funcional e Responsivo</div>
-            </div>
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-              <div className="text-3xl font-bold text-green-400 mb-2">3</div>
-              <div className="text-gray-300">Apps Enterprise-Ready</div>
-            </div>
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-              <div className="text-3xl font-bold text-purple-400 mb-2">∞</div>
-              <div className="text-gray-300">Potencial de Escala</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -222,91 +215,84 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
 
 function AppContainer() {
   const [currentApp, setCurrentApp] = useState<AppType>(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const appParam = urlParams.get('app');
-    if (appParam && ['flow', 'purpose', 'edu', 'presentation'].includes(appParam)) {
-      return appParam as AppType;
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const appParam = urlParams.get('app');
+      if (appParam && ['flow', 'purpose', 'edu', 'presentation'].includes(appParam)) {
+        return appParam as AppType;
+      }
+    } catch (error) {
+      console.log('URL parsing error, defaulting to selector');
     }
     return "selector";
   });
 
   // Update URL when app changes
   useEffect(() => {
-    const url = new URL(window.location.href);
-    if (currentApp === "selector") {
-      url.searchParams.delete('app');
-    } else {
-      url.searchParams.set('app', currentApp);
+    try {
+      const url = new URL(window.location.href);
+      if (currentApp === "selector") {
+        url.searchParams.delete('app');
+      } else {
+        url.searchParams.set('app', currentApp);
+      }
+      window.history.replaceState({}, '', url.toString());
+    } catch (error) {
+      console.log('URL update error');
     }
-    window.history.replaceState({}, '', url.toString());
   }, [currentApp]);
 
   if (currentApp === "flow") {
     return (
-      <NotificationProvider>
-        <AuthGuard>
-          <div>
-            <div className="absolute top-4 right-4 z-50">
-              <Button 
-                onClick={() => setCurrentApp("selector")}
-                variant="outline"
-                size="sm"
-                className="bg-white/90 backdrop-blur-sm shadow-lg"
-              >
-                ← Voltar aos Apps
-              </Button>
-            </div>
-            <FlowApp />
-            <PerformanceMonitor />
-          </div>
-        </AuthGuard>
-      </NotificationProvider>
+      <div>
+        <div className="absolute top-4 right-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            size="sm"
+            className="bg-white/90 backdrop-blur-sm shadow-lg"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <FlowApp />
+      </div>
     );
   }
 
   if (currentApp === "purpose") {
     return (
-      <NotificationProvider>
-        <AuthGuard>
-          <div>
-            <div className="absolute top-4 right-4 z-50">
-              <Button 
-                onClick={() => setCurrentApp("selector")}
-                variant="outline"
-                size="sm"
-                className="bg-white/90 backdrop-blur-sm shadow-lg"
-              >
-                ← Voltar aos Apps
-              </Button>
-            </div>
-            <PurposeApp />
-            <PerformanceMonitor />
-          </div>
-        </AuthGuard>
-      </NotificationProvider>
+      <div>
+        <div className="absolute top-4 right-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            size="sm"
+            className="bg-white/90 backdrop-blur-sm shadow-lg"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <PurposeApp />
+      </div>
     );
   }
 
   if (currentApp === "edu") {
     return (
-      <NotificationProvider>
-        <AuthGuard>
-          <div>
-            <div className="absolute top-4 right-4 z-50">
-              <Button 
-                onClick={() => setCurrentApp("selector")}
-                variant="outline"
-                size="sm"
-                className="bg-white/90 backdrop-blur-sm shadow-lg"
-              >
-                ← Voltar aos Apps
-              </Button>
-            </div>
-            <EduApp />
-            <PerformanceMonitor />
-          </div>
-        </AuthGuard>
-      </NotificationProvider>
+      <div>
+        <div className="absolute top-4 right-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            size="sm"
+            className="bg-white/90 backdrop-blur-sm shadow-lg"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <EduApp />
+      </div>
     );
   }
 
@@ -328,13 +314,9 @@ function AppContainer() {
   }
 
   return (
-    <NotificationProvider>
-      <AuthGuard>
-        <AppSelector onSelectApp={setCurrentApp} />
-        <PerformanceMonitor />
-        <AccessibilityManager />
-      </AuthGuard>
-    </NotificationProvider>
+    <div>
+      <AppSelector onSelectApp={setCurrentApp} />
+    </div>
   );
 }
 
