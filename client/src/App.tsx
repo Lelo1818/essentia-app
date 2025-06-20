@@ -21,6 +21,8 @@ import Familias from "@/pages/familias";
 import OcrAvancado from "@/pages/ocr-avancado";
 import NotFound from "@/pages/not-found";
 import NFTAchievements from "@/pages/nft-achievements";
+import MoodAnalysisPage from "@/pages/mood-analysis";
+import CashbackMarketplacePage from "@/pages/cashback-marketplace";
 
 function Router() {
   return (
@@ -31,6 +33,8 @@ function Router() {
       <Route path="/planning" component={Planning} />
       <Route path="/goals" component={Goals} />
       <Route path="/nft-achievements" component={NFTAchievements} />
+      <Route path="/mood-analysis" component={MoodAnalysisPage} />
+      <Route path="/cashback-marketplace" component={CashbackMarketplacePage} />
       <Route path="/ofertas" component={Ofertas} />
       <Route path="/cupons" component={Cupons} />
       <Route path="/educacao" component={Educacao} />

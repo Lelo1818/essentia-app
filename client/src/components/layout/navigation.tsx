@@ -13,6 +13,8 @@ export default function Navigation() {
     { path: "/planning", label: "Planejamento" },
     { path: "/goals", label: "Metas" },
     { path: "/nft-achievements", label: "NFT Conquistas" },
+    { path: "/mood-analysis", label: "Análise Humor" },
+    { path: "/cashback-marketplace", label: "Cashback" },
     { path: "/cupons", label: "Cupons" },
     { path: "/milhas", label: "Milhas" },
     { path: "/educacao", label: "Educação" },

@@ -8,8 +8,9 @@ import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
 import EduApp from "./App-edu";
 import PresentationApp from "./App-presentation";
+import FlowKidsApp from "./App-kids";
 
-type AppType = "selector" | "flow" | "purpose" | "edu" | "presentation";
+type AppType = "selector" | "flow" | "purpose" | "edu" | "presentation" | "kids";
 
 function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
   return (
@@ -138,6 +139,46 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
                 Abrir Essentia
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
+            </CardContent>
+          </Card>
+
+          {/* KIDS App */}
+          <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:scale-105 bg-gradient-to-br from-pink-800/50 to-purple-900/50 border border-pink-500/30 backdrop-blur-sm overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-500/50 via-purple-500/50 to-pink-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-[1px] bg-gradient-to-br from-pink-800/90 to-purple-900/90 rounded-lg"></div>
+            
+            <CardHeader className="relative z-10 text-center">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-pink-500 via-purple-500 to-pink-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
+                <div className="w-full h-full flex items-center justify-center text-white text-2xl">🐷</div>
+              </div>
+              <CardTitle className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-purple-200 group-hover:from-pink-100 group-hover:to-purple-100 transition-all duration-500">
+                Flow Kids
+              </CardTitle>
+              <p className="text-pink-300 group-hover:text-pink-200 transition-colors duration-500">
+                Educação Financeira Gamificada
+              </p>
+            </CardHeader>
+            
+            <CardContent className="relative z-10 space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center text-sm text-pink-300 bg-pink-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-3 animate-bounce"></span>
+                  <strong>Cofrinho Virtual:</strong> Sistema de metas gamificado
+                </div>
+                <div className="flex items-center text-sm text-pink-300 bg-pink-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Jogos Educativos:</strong> Aprenda brincando
+                </div>
+                <div className="flex items-center text-sm text-pink-300 bg-pink-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-3 animate-bounce"></span>
+                  <strong>Controle Parental:</strong> Acompanhamento seguro
+                </div>
+              </div>
+              <InteractiveButton className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={() => onSelectApp("kids")} soundType="success">
+                Abrir Flow Kids
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </InteractiveButton>
             </CardContent>
           </Card>
 
@@ -320,6 +361,23 @@ function AppContainer() {
           </Button>
         </div>
         <PresentationApp />
+      </div>
+    );
+  }
+
+  if (currentApp === "kids") {
+    return (
+      <div>
+        <div className="fixed top-4 right-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            className="bg-white/90 backdrop-blur-sm"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <FlowKidsApp />
       </div>
     );
   }

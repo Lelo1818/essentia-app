@@ -13,6 +13,8 @@ import SocialGoals from "@/components/future-features/social-goals";
 import InvestmentSuggestions from "@/components/future-features/investment-suggestions";
 import AICoach from "@/components/future-features/ai-coach";
 import NFTPreview from "@/components/dashboard/nft-preview";
+import MoodAnalyzer from "@/components/mood/mood-analyzer";
+import CashbackMarketplace from "@/components/cashback/marketplace";
 import IncomeModal from "@/components/modals/income-modal";
 import ExpenseCameraModal from "@/components/modals/expense-camera-modal";
 import PlanningModal from "@/components/modals/planning-modal";
