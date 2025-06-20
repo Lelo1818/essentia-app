@@ -69,6 +69,62 @@ export default function Dashboard() {
   // Calculate user progress (mock calculation)
   const progress = Math.min((totalIncome > 0 ? (balance / totalIncome) * 100 : 0) + 25, 100);
 
+  // Mock gamification data
+  const userLevel = {
+    current: 3,
+    xp: 1250,
+    xpToNext: 750,
+    title: "Investidor Consciente",
+    perks: [
+      "Análises avançadas desbloqueadas",
+      "Consultor IA personalizado",
+      "Alertas inteligentes de economia",
+      "Acesso a investimentos premium"
+    ]
+  };
+
+  const mockAchievements = [
+    {
+      id: "1",
+      title: "Primeiro Orçamento",
+      description: "Criou seu primeiro planejamento mensal",
+      icon: Target,
+      category: "financial" as const,
+      rarity: "common" as const,
+      progress: 1,
+      maxProgress: 1,
+      reward: { xp: 100 },
+      unlocked: true,
+      dateUnlocked: new Date()
+    },
+    {
+      id: "2", 
+      title: "Poupador Disciplinado",
+      description: "Economize por 3 meses consecutivos",
+      icon: TrendingUp,
+      category: "financial" as const,
+      rarity: "rare" as const,
+      progress: 2,
+      maxProgress: 3,
+      reward: { xp: 250 },
+      unlocked: false
+    }
+  ];
+
+  const mockQuests = [
+    {
+      id: "1",
+      title: "Revisar Gastos da Semana",
+      description: "Analise e categorize todos os gastos dos últimos 7 dias",
+      category: "financial",
+      difficulty: "easy" as const,
+      reward: { xp: 50, coins: 10 },
+      progress: 5,
+      maxProgress: 7,
+      completed: false
+    }
+  ];
+
   return (
     <>
       <WelcomeHeader userName="Maria" level={3} progress={progress} />
