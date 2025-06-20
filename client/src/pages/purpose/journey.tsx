@@ -90,7 +90,10 @@ export default function Journey() {
   });
 
   const createModuleMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/purpose/modules", { method: "POST", body: data }),
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("POST", "/api/purpose/modules", data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/modules"] });
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });
@@ -107,7 +110,10 @@ export default function Journey() {
   });
 
   const updateModuleMutation = useMutation({
-    mutationFn: ({ id, ...data }: any) => apiRequest(`/api/purpose/modules/${id}`, { method: "PUT", body: data }),
+    mutationFn: async ({ id, ...data }: any) => {
+      const response = await apiRequest("PUT", `/api/purpose/modules/${id}`, data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/modules"] });
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });
@@ -116,7 +122,10 @@ export default function Journey() {
   });
 
   const createReflectionMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/purpose/reflections", { method: "POST", body: data }),
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("POST", "/api/purpose/reflections", data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/reflections"] });
       setReflection("");

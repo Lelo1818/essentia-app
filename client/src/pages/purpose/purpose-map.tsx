@@ -30,7 +30,10 @@ export default function PurposeMapPage() {
   });
 
   const savePurposeMapMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/purpose/purpose-map", { method: "POST", body: data }),
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("POST", "/api/purpose/purpose-map", data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/purpose-map"] });
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });

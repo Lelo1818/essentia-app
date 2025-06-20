@@ -42,7 +42,10 @@ export default function PurposeProfile() {
   });
 
   const updateUserMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/purpose/user/1", { method: "PUT", body: data }),
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("PUT", "/api/purpose/user/1", data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });
       setIsEditing(false);

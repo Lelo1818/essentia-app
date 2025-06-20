@@ -30,7 +30,10 @@ export default function Diary() {
   });
 
   const createEntryMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/purpose/diary", { method: "POST", body: data }),
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("POST", "/api/purpose/diary", data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/diary"] });
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/profile"] });
@@ -49,7 +52,10 @@ export default function Diary() {
   });
 
   const updateEntryMutation = useMutation({
-    mutationFn: ({ id, ...data }: any) => apiRequest(`/api/purpose/diary/${id}`, { method: "PUT", body: data }),
+    mutationFn: async ({ id, ...data }: any) => {
+      const response = await apiRequest("PUT", `/api/purpose/diary/${id}`, data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/purpose/diary"] });
       resetForm();
