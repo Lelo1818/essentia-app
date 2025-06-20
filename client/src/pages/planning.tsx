@@ -60,8 +60,9 @@ export default function Planning() {
   // Watch form values to calculate total
   const watchedValues = form.watch();
   React.useEffect(() => {
-    const total = Object.values(watchedValues).reduce((sum, value) => {
-      return sum + (parseFloat(String(value)) || 0);
+    const total = Object.values(watchedValues).reduce((sum: number, value) => {
+      const numValue = parseFloat(String(value)) || 0;
+      return sum + numValue;
     }, 0);
     setTotalAllocation(total);
   }, [watchedValues]);
