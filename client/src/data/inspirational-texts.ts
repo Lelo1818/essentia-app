@@ -1033,6 +1033,7 @@ export const getTextsByTheme = (theme: string): InspirationalText[] => {
 };
 
 export const getTextsByPhase = (phase: string): InspirationalText[] => {
+  if (!phase) return [];
   return inspirationalTexts.filter(text => text.phase.includes(phase));
 };
 

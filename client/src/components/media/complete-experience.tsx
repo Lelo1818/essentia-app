@@ -51,7 +51,7 @@ export function CompleteExperience({
     immersiveMode: false
   });
 
-  const phaseTexts = getTextsByPhase(phase);
+  const phaseTexts = getTextsByPhase(phase || "");
 
   useEffect(() => {
     if (phaseTexts.length > 0 && !selectedText) {
