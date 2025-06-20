@@ -13,6 +13,9 @@ import InspirationHub from "@/components/purpose/inspiration-hub";
 import ActionPlanner from "@/components/purpose/action-planner";
 import CommunityConnect from "@/components/purpose/community-connect";
 import AICoach from "@/components/purpose/ai-coach";
+import JourneyPhases from "@/pages/purpose/journey-phases";
+import { TransitionJourney } from "@/components/purpose/transition-journey";
+import { AvatarJourney } from "@/components/purpose/avatar-journey";
 import { 
   Compass, 
   Heart, 
@@ -21,7 +24,8 @@ import {
   Users,
   Lightbulb,
   Brain,
-  Star
+  Star,
+  User
 } from "lucide-react";
 
 export default function Purpose() {
@@ -204,10 +208,18 @@ export default function Purpose() {
 
       {/* Main Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="journey" className="flex items-center space-x-1">
             <Compass className="w-4 h-4" />
             <span>Jornada</span>
+          </TabsTrigger>
+          <TabsTrigger value="transition" className="flex items-center space-x-1">
+            <TrendingUp className="w-4 h-4" />
+            <span>Transição</span>
+          </TabsTrigger>
+          <TabsTrigger value="avatar" className="flex items-center space-x-1">
+            <User className="w-4 h-4" />
+            <span>Avatar 3D</span>
           </TabsTrigger>
           <TabsTrigger value="wheel" className="flex items-center space-x-1">
             <Target className="w-4 h-4" />
@@ -228,7 +240,15 @@ export default function Purpose() {
         </TabsList>
 
         <TabsContent value="journey" className="mt-6">
-          <AICoach />
+          <JourneyPhases />
+        </TabsContent>
+
+        <TabsContent value="transition" className="mt-6">
+          <TransitionJourney />
+        </TabsContent>
+
+        <TabsContent value="avatar" className="mt-6">
+          <AvatarJourney />
         </TabsContent>
 
         <TabsContent value="wheel" className="mt-6">
