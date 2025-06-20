@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { AppLogo, AppName } from "@/components/ui/app-logo";
+import { UserAvatar } from "@/components/ui/user-avatar";
+import { getCurrentUser } from "@/data/mock-users";
+import { mockEduData } from "@/data/mock-edu-data";
+import { mockPurposeData } from "@/data/mock-purpose-data";
 import WelcomeHeader from "@/components/dashboard/welcome-header";
 import QuickActions from "@/components/dashboard/quick-actions";
 import FinancialOverview from "@/components/dashboard/financial-overview";
@@ -30,6 +35,8 @@ import { formatCurrency, calculateGoalProgress } from "@/lib/financial-utils";
 import { AIAssistant } from "@/components/enhanced/ai-assistant";
 import { GamificationSystem } from "@/components/enhanced/gamification-system";
 import { PredictiveDashboard } from "@/components/enhanced/predictive-dashboard";
+import EcosystemStats from "@/components/dashboard/ecosystem-stats";
+import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
 import { Trophy, Medal, Target, TrendingUp, Zap } from "lucide-react";
 import type { FinancialSummary } from "@/types";
@@ -39,6 +46,7 @@ export default function Dashboard() {
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [planningModalOpen, setPlanningModalOpen] = useState(false);
   const [goalsModalOpen, setGoalsModalOpen] = useState(false);
+  const currentUser = getCurrentUser();
 
   // Enhanced keyboard shortcuts with modal controls
   const shortcuts = FINANCIAL_SHORTCUTS.map(shortcut => ({
@@ -139,7 +147,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <WelcomeHeader userName="Ana" level={3} progress={progress} />
+      <div className="mb-8">
+        <AppShowcase />
+      </div>
+      
+      <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
       <QuickActions
         onOpenIncomeModal={() => setIncomeModalOpen(true)}
