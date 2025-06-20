@@ -9,7 +9,7 @@ interface AuthGuardProps {
   children: React.ReactNode;
 }
 
-const AUTH_PASSWORD = "MeusApps2025"; // Senha para acessar os apps
+const AUTH_PASSWORD = "123456"; // Senha simples para acessar os apps
 
 export function AuthGuard({ children }: AuthGuardProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -101,8 +101,8 @@ export function AuthGuard({ children }: AuthGuardProps) {
           </Button>
           
           <div className="text-center text-sm text-gray-500 pt-4 border-t">
-            <p>Três aplicativos disponíveis:</p>
-            <p className="font-medium">Flow • Essentia • EduVibe</p>
+            <p>Senha: <span className="font-mono bg-gray-100 px-2 py-1 rounded">123456</span></p>
+            <p className="mt-2 font-medium">Flow • Essentia • EduVibe</p>
           </div>
         </CardContent>
       </Card>
