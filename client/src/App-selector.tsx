@@ -42,6 +42,17 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
             <span className="text-purple-400 font-semibold"> gamificação avançada</span> e 
             <span className="text-pink-400 font-semibold"> design de nível mundial</span> para transformar completamente sua experiência digital.
           </p>
+          
+          <div className="text-center mt-8">
+            <InteractiveButton 
+              className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white px-8 py-4 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300"
+              onClick={() => onSelectApp("presentation")}
+              soundType="notification"
+            >
+              🚀 Ver Visão de Futuro & Roadmap Completo
+            </InteractiveButton>
+            <p className="text-gray-400 text-sm mt-2">Demonstração especial para investidores</p>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -291,6 +302,24 @@ function AppContainer() {
           </Button>
         </div>
         <EduApp />
+      </div>
+    );
+  }
+
+  if (currentApp === "presentation") {
+    return (
+      <div>
+        <div className="absolute top-4 right-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            size="sm"
+            className="bg-white/90 backdrop-blur-sm shadow-lg"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <PresentationApp />
       </div>
     );
   }
