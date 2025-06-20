@@ -159,6 +159,23 @@ function AppContainer() {
     );
   }
 
+  if (currentApp === "edu") {
+    return (
+      <div>
+        <div className="fixed top-4 left-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            className="bg-white/90 backdrop-blur-sm"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <EduApp />
+      </div>
+    );
+  }
+
   return <AppSelector onSelectApp={setCurrentApp} />;
 }
 
