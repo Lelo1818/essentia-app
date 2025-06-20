@@ -12,6 +12,9 @@ import Planning from "@/pages/planning";
 import Goals from "@/pages/goals";
 import Profile from "@/pages/profile";
 import Ofertas from "@/pages/ofertas";
+import Cupons from "@/pages/cupons";
+import Educacao from "@/pages/educacao";
+import Dividas from "@/pages/dividas";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -23,6 +26,9 @@ function Router() {
       <Route path="/planning" component={Planning} />
       <Route path="/goals" component={Goals} />
       <Route path="/ofertas" component={Ofertas} />
+      <Route path="/cupons" component={Cupons} />
+      <Route path="/educacao" component={Educacao} />
+      <Route path="/dividas" component={Dividas} />
       <Route path="/profile" component={Profile} />
       <Route component={NotFound} />
     </Switch>

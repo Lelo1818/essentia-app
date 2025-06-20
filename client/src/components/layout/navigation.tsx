@@ -9,8 +9,11 @@ export default function Navigation() {
     { path: "/", label: "Dashboard" },
     { path: "/income", label: "Renda" },
     { path: "/expenses", label: "Gastos" },
+    { path: "/dividas", label: "Dívidas" },
     { path: "/planning", label: "Planejamento" },
     { path: "/goals", label: "Metas" },
+    { path: "/cupons", label: "Cupons" },
+    { path: "/educacao", label: "Educação" },
     { path: "/ofertas", label: "Ofertas" }
   ];
 
