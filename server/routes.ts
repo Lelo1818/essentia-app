@@ -69,20 +69,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/expenses", async (req, res) => {
     try {
-      const userId = getCurrentUserId();
+      console.log("Received expense data:", req.body);
+      
+      const userId = 1;
       const processedData = {
-        ...req.body,
         userId,
+        description: req.body.description,
+        amount: String(req.body.amount), // Convert to string for storage
+        category: req.body.category,
         date: req.body.date ? new Date(req.body.date) : new Date(),
+        isFromPhoto: req.body.isFromPhoto || false,
       };
+      
+      console.log("Processed data:", processedData);
+      
       const validatedData = insertExpenseSchema.parse(processedData);
       const expense = await storage.createExpense(validatedData);
+      
+      console.log("Created expense:", expense);
       res.status(201).json(expense);
     } catch (error) {
+      console.error("Error creating expense:", error);
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Dados inválidos", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Erro ao criar gasto" });
+        res.status(500).json({ message: "Erro ao criar gasto", error: error.message });
       }
     }
   });
@@ -187,20 +198,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/goals", async (req, res) => {
     try {
-      const userId = getCurrentUserId();
+      console.log("Received goal data:", req.body);
+      
+      const userId = 1; // Use hardcoded user ID for now
       const processedData = {
         ...req.body,
         userId,
+        targetAmount: parseFloat(req.body.targetAmount),
+        currentAmount: parseFloat(req.body.currentAmount || 0),
         targetDate: req.body.targetDate ? new Date(req.body.targetDate) : null,
       };
+      
+      console.log("Processed goal data:", processedData);
+      
       const validatedData = insertGoalSchema.parse(processedData);
       const goal = await storage.createGoal(validatedData);
+      
+      console.log("Created goal:", goal);
       res.status(201).json(goal);
     } catch (error) {
+      console.error("Error creating goal:", error);
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Dados inválidos", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Erro ao criar meta" });
+        res.status(500).json({ message: "Erro ao criar meta", error: error.message });
       }
     }
   });

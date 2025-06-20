@@ -92,11 +92,12 @@ export class MemStorage implements IStorage {
 
     // Add realistic incomes for Marcelo (user 1)
     const incomesData = [
-      { userId: 1, description: "Salário CLT", amount: 8500, category: "salario", date: new Date('2024-06-01') },
-      { userId: 1, description: "Freelance Design", amount: 2200, category: "freelance", date: new Date('2024-06-15') },
-      { userId: 1, description: "Dividendos Ações", amount: 450, category: "investimentos", date: new Date('2024-06-20') },
-      { userId: 2, description: "Salário", amount: 6800, category: "salario", date: new Date('2024-06-01') },
-      { userId: 3, description: "Salário", amount: 4500, category: "salario", date: new Date('2024-06-01') }
+      { userId: 1, description: "Salário CLT", amount: 8500, frequency: "mensal", date: new Date('2024-06-01') },
+      { userId: 1, description: "Freelance Design", amount: 2200, frequency: "unica", date: new Date('2024-06-15') },
+      { userId: 1, description: "Dividendos Ações", amount: 450, frequency: "mensal", date: new Date('2024-06-20') },
+      { userId: 1, description: "Cashback Cartão", amount: 85, frequency: "mensal", date: new Date('2024-06-05') },
+      { userId: 2, description: "Salário", amount: 6800, frequency: "mensal", date: new Date('2024-06-01') },
+      { userId: 3, description: "Salário", amount: 4500, frequency: "mensal", date: new Date('2024-06-01') }
     ];
 
     incomesData.forEach(incomeData => {
@@ -111,13 +112,18 @@ export class MemStorage implements IStorage {
 
     // Add realistic expenses for Marcelo (user 1)
     const expensesData = [
-      { userId: 1, description: "Supermercado Extra", amount: 320.50, category: "alimentacao", date: new Date('2024-06-18') },
-      { userId: 1, description: "Gasolina Posto Shell", amount: 180.00, category: "transporte", date: new Date('2024-06-17') },
-      { userId: 1, description: "Aluguel Apartamento", amount: 2200.00, category: "moradia", date: new Date('2024-06-01') },
-      { userId: 1, description: "Netflix + Spotify", amount: 45.90, category: "entretenimento", date: new Date('2024-06-01') },
-      { userId: 1, description: "Restaurante Japonês", amount: 280.00, category: "alimentacao", date: new Date('2024-06-15') },
-      { userId: 1, description: "Farmácia", amount: 85.30, category: "saude", date: new Date('2024-06-12') },
-      { userId: 1, description: "Uber", amount: 35.50, category: "transporte", date: new Date('2024-06-16') }
+      { userId: 1, description: "Supermercado Extra", amount: "320.50", category: "alimentacao", date: new Date('2024-06-18') },
+      { userId: 1, description: "Gasolina Posto Shell", amount: "180.00", category: "transporte", date: new Date('2024-06-17') },
+      { userId: 1, description: "Aluguel Apartamento", amount: "2200.00", category: "moradia", date: new Date('2024-06-01') },
+      { userId: 1, description: "Netflix + Spotify", amount: "45.90", category: "entretenimento", date: new Date('2024-06-01') },
+      { userId: 1, description: "Restaurante Japonês", amount: "280.00", category: "alimentacao", date: new Date('2024-06-15') },
+      { userId: 1, description: "Farmácia", amount: "85.30", category: "saude", date: new Date('2024-06-12') },
+      { userId: 1, description: "Uber", amount: "35.50", category: "transporte", date: new Date('2024-06-16') },
+      { userId: 1, description: "Padaria do Bairro", amount: "25.80", category: "alimentacao", date: new Date('2024-06-19') },
+      { userId: 1, description: "Posto Ipiranga", amount: "165.00", category: "transporte", date: new Date('2024-06-14') },
+      { userId: 1, description: "Mercado Livre", amount: "89.90", category: "compras", date: new Date('2024-06-13') },
+      { userId: 1, description: "Dentista", amount: "350.00", category: "saude", date: new Date('2024-06-11') },
+      { userId: 1, description: "Cinema", amount: "45.00", category: "entretenimento", date: new Date('2024-06-10') }
     ];
 
     expensesData.forEach(expenseData => {

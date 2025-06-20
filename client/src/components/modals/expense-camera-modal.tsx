@@ -46,11 +46,14 @@ export default function ExpenseCameraModal({ open, onOpenChange }: ExpenseCamera
   const createExpenseMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const payload = {
-        ...data,
+        description: data.description,
         amount: parseFloat(data.amount),
-        date: new Date(data.date).toISOString(),
-        userId: 1 // Mock user ID
+        category: data.category,
+        date: data.date,
+        userId: 1,
+        isFromPhoto: data.isFromPhoto || false
       };
+      console.log("Sending expense payload:", payload);
       return apiRequest("POST", "/api/expenses", payload);
     },
     onSuccess: () => {

@@ -25,11 +25,12 @@ export const expenses = pgTable("expenses", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull(),
   description: text("description").notNull(),
-  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  amount: text("amount").notNull(), // Changed to text to match storage
   category: varchar("category", { length: 50 }).notNull(),
   date: timestamp("date").notNull(),
   isFromPhoto: boolean("is_from_photo").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const budgets = pgTable("budgets", {
@@ -84,6 +85,7 @@ export const insertIncomeSchema = createInsertSchema(incomes).omit({
 export const insertExpenseSchema = createInsertSchema(expenses).omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
 });
 
 export const insertBudgetSchema = createInsertSchema(budgets).omit({
