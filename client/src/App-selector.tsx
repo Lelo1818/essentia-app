@@ -19,127 +19,197 @@ type AppType = "selector" | "flow" | "purpose" | "edu" | "presentation";
 
 function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 flex items-center justify-center p-4">
-      <div className="max-w-6xl w-full">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Seus Aplicativos</h1>
-          <p className="text-xl text-gray-600">Três aplicativos poderosos para transformar sua vida</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+      </div>
+      
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-white/10 rounded-full px-6 py-2 mb-6">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-green-400 font-medium">Sistema Online • Pronto para Deploy</span>
+          </div>
+          
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-6">
+            Ecossistema Digital
+            <br />
+            <span className="text-4xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              de Próxima Geração
+            </span>
+          </h1>
+          
+          <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            Três aplicações revolucionárias que combinam <span className="text-blue-400 font-semibold">inteligência artificial</span>, 
+            <span className="text-purple-400 font-semibold"> gamificação avançada</span> e 
+            <span className="text-pink-400 font-semibold"> design de nível mundial</span> para transformar completamente sua experiência digital.
+          </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Flow App */}
-          <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden bg-white shadow-lg p-2">
-                <img src={flowLogo} alt="Flow Logo" className="w-full h-full object-contain" />
-              </div>
-              <CardTitle className="text-2xl text-gray-900">Flow</CardTitle>
-              <p className="text-gray-600">Your Path to Prosperity</p>
-            </CardHeader>
+          <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:scale-105 bg-gradient-to-br from-slate-800/50 to-blue-900/50 border border-blue-500/30 backdrop-blur-sm overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/50 via-cyan-500/50 to-blue-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-[1px] bg-gradient-to-br from-slate-800/90 to-blue-900/90 rounded-lg"></div>
             
-            <CardContent className="text-center space-y-4">
-              <div className="space-y-2 text-sm text-gray-600">
-                <p>✓ Controle de receitas e despesas</p>
-                <p>✓ Scanner de notas fiscais (OCR)</p>
-                <p>✓ Planejamento orçamentário</p>
-                <p>✓ Metas financeiras</p>
-                <p>✓ Análise de gastos</p>
-                <p>✓ Sistema de conquistas</p>
+            <CardHeader className="relative z-10 text-center">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-blue-500 via-cyan-500 to-blue-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
+                <img src={flowLogo} alt="Flow Logo" className="w-full h-full object-contain filter brightness-0 invert" />
               </div>
-              
-              <Button 
-                onClick={() => onSelectApp("flow")}
-                className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-lg py-6"
-              >
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                Flow
+              </CardTitle>
+              <p className="text-blue-300 font-semibold text-lg">Seu Caminho para a Prosperidade</p>
+            </CardHeader>
+            <CardContent className="relative z-10">
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                Motor de IA que analisa padrões, prediz gastos e otimiza investimentos. 
+                <strong className="text-cyan-400"> OCR inteligente</strong> digitaliza notas fiscais instantaneamente. 
+                <strong className="text-purple-400">Sistema de conquistas</strong> torna finanças um jogo viciante.
+              </p>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm text-gray-300 bg-blue-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Análise Preditiva:</strong> IA prevê seus gastos futuros
+                </div>
+                <div className="flex items-center text-sm text-gray-300 bg-cyan-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>OCR Avançado:</strong> Fotografe e digitalize notas instantaneamente
+                </div>
+                <div className="flex items-center text-sm text-gray-300 bg-purple-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Gamificação Total:</strong> Níveis, conquistas e recompensas
+                </div>
+              </div>
+              <Button className="w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={() => onSelectApp("flow")}>
                 Abrir Flow
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </CardContent>
           </Card>
 
           {/* Purpose App */}
-          <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden bg-white shadow-lg p-2">
-                <img src={essentiaLogo} alt="Essentia Logo" className="w-full h-full object-contain" />
-              </div>
-              <CardTitle className="text-2xl text-gray-900">Essentia</CardTitle>
-              <p className="text-gray-600">Desperte se Propósito</p>
-            </CardHeader>
+          <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:scale-105 bg-gradient-to-br from-slate-800/50 to-purple-900/50 border border-purple-500/30 backdrop-blur-sm overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/50 via-pink-500/50 to-purple-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-[1px] bg-gradient-to-br from-slate-800/90 to-purple-900/90 rounded-lg"></div>
             
-            <CardContent className="text-center space-y-4">
-              <div className="space-y-2 text-sm text-gray-600">
-                <p>✓ Jornada guiada em 4 módulos</p>
-                <p>✓ Diário pessoal e reflexivo</p>
-                <p>✓ Mapa visual do propósito</p>
-                <p>✓ Conteúdo inspiracional</p>
-                <p>✓ Meditações guiadas</p>
-                <p>✓ Sistema de evolução pessoal</p>
+            <CardHeader className="relative z-10 text-center">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-violet-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
+                <img src={essentiaLogo} alt="Essentia Logo" className="w-full h-full object-contain filter brightness-0 invert" />
               </div>
-              
-              <Button 
-                onClick={() => onSelectApp("purpose")}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-lg py-6"
-              >
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Essentia
+              </CardTitle>
+              <p className="text-purple-300 font-semibold text-lg">Desperte seu Propósito</p>
+            </CardHeader>
+            <CardContent className="relative z-10">
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                <strong className="text-purple-400">Jornada transformadora</strong> em 4 dimensões sagradas. 
+                <strong className="text-pink-400">IA empática</strong> como guia espiritual pessoal. 
+                <strong className="text-violet-400">Mapa do propósito</strong> revela sua missão de vida única.
+              </p>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm text-gray-300 bg-purple-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-purple-400 to-violet-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>4 Estágios Sagrados:</strong> Descoberta → Reflexão → Integração → Transcendência
+                </div>
+                <div className="flex items-center text-sm text-gray-300 bg-pink-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-pink-400 to-rose-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Guia IA Empático:</strong> Conversas profundas sobre propósito e valores
+                </div>
+                <div className="flex items-center text-sm text-gray-300 bg-indigo-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Mapa do Propósito:</strong> Visualização interativa da sua jornada
+                </div>
+              </div>
+              <Button className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-violet-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={() => onSelectApp("purpose")}>
                 Abrir Essentia
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </CardContent>
           </Card>
 
           {/* EDU App */}
-          <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden bg-white shadow-lg p-2">
-                <img src={eduvibeLogo} alt="EduVibe Logo" className="w-full h-full object-contain" />
-              </div>
-              <CardTitle className="text-2xl text-gray-900">EduVibe</CardTitle>
-              <p className="text-gray-600">Onde aprender não é tarefa, é experiência</p>
-            </CardHeader>
+          <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:scale-105 bg-gradient-to-br from-slate-800/50 to-green-900/50 border border-green-500/30 backdrop-blur-sm overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-green-500/50 via-blue-500/50 to-green-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-[1px] bg-gradient-to-br from-slate-800/90 to-green-900/90 rounded-lg"></div>
             
-            <CardContent className="text-center space-y-4">
-              <div className="space-y-2 text-sm text-gray-600">
-                <p>✓ Trilhas de aprendizado personalizadas</p>
-                <p>✓ Upload e processamento de materiais</p>
-                <p>✓ Suporte para TDAH e Dislexia</p>
-                <p>✓ Conteúdo em alta adaptado</p>
-                <p>✓ Gamificação científica</p>
-                <p>✓ Sistema de evolução educacional</p>
+            <CardHeader className="relative z-10 text-center">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-green-500 via-blue-500 to-teal-600 p-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-2xl">
+                <img src={eduvibeLogo} alt="EduVibe Logo" className="w-full h-full object-contain filter brightness-0 invert" />
               </div>
-              
-              <Button 
-                onClick={() => onSelectApp("edu")}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-6"
-              >
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                EduVibe
+              </CardTitle>
+              <p className="text-green-300 font-semibold text-lg">Onde aprender não é tarefa, é experiência</p>
+            </CardHeader>
+            <CardContent className="relative z-10">
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                <strong className="text-green-400">IA neuroadaptativa</strong> que mapeia como você aprende melhor. 
+                <strong className="text-blue-400">Suporte especializado</strong> para ADHD/Dislexia com técnicas comprovadas. 
+                <strong className="text-teal-400">Gamificação educacional</strong> viciante e recompensadora.
+              </p>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm text-gray-300 bg-green-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>IA Neuroadaptativa:</strong> Adapta conteúdo ao seu perfil cognitivo único
+                </div>
+                <div className="flex items-center text-sm text-gray-300 bg-blue-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Inclusão Total:</strong> Ferramentas especializadas ADHD/Dislexia
+                </div>
+                <div className="flex items-center text-sm text-gray-300 bg-teal-500/10 rounded-lg p-2">
+                  <span className="w-3 h-3 bg-gradient-to-r from-teal-400 to-green-500 rounded-full mr-3 animate-pulse"></span>
+                  <strong>Trilhas Épicas:</strong> Aprendizado como RPG com conquistas reais
+                </div>
+              </div>
+              <Button className="w-full bg-gradient-to-r from-green-600 via-blue-600 to-teal-600 hover:from-green-500 hover:to-blue-500 text-white font-bold py-3 text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                onClick={() => onSelectApp("edu")}>
                 Abrir EduVibe
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </CardContent>
           </Card>
         </div>
         
-        <div className="text-center mt-12 space-y-6">
-          <p className="text-gray-500">
-            Criado especialmente para você - três apps poderosos para transformar sua vida financeira, espiritual e educacional
-          </p>
+        <div className="mt-16 space-y-12">
+          <ModernStats />
           
-          <div className="border-t pt-6 space-y-4">
-            <Button 
-              onClick={() => onSelectApp("presentation")}
-              variant="outline"
-              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white border-none hover:from-purple-700 hover:to-blue-700 px-8 py-3"
-            >
-              Ver Pitch Deck Interativo
-            </Button>
-            <p className="text-xs text-gray-400">
-              Apresentação profissional para investidores
-            </p>
-            
-            <div className="text-xs text-gray-400 space-y-1">
-              <p><strong>URLs Diretas:</strong></p>
-              <p>Flow: <a href="/?app=flow" className="text-blue-600 hover:underline">/?app=flow</a></p>
-              <p>Essentia: <a href="/?app=purpose" className="text-blue-600 hover:underline">/?app=purpose</a></p>
-              <p>EduVibe: <a href="/?app=edu" className="text-blue-600 hover:underline">/?app=edu</a></p>
+          <div className="text-center">
+            <div className="bg-gradient-to-r from-slate-800/80 to-gray-900/80 backdrop-blur-sm border border-white/10 rounded-2xl p-8 max-w-4xl mx-auto">
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-4">
+                Pitch Deck Interativo
+              </h3>
+              <p className="text-gray-300 mb-6 text-lg">
+                Apresentação completa com métricas, roadmap, análise de mercado e proposta de investimento
+              </p>
+              <Button 
+                onClick={() => onSelectApp("presentation")}
+                className="bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white px-10 py-4 text-xl font-bold shadow-2xl hover:shadow-yellow-500/25 transition-all duration-300"
+              >
+                Ver Pitch Deck Completo
+                <ArrowRight className="ml-3 w-6 h-6" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
+              <div className="text-gray-300">Funcional e Responsivo</div>
+            </div>
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold text-green-400 mb-2">3</div>
+              <div className="text-gray-300">Apps Enterprise-Ready</div>
+            </div>
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold text-purple-400 mb-2">∞</div>
+              <div className="text-gray-300">Potencial de Escala</div>
             </div>
           </div>
         </div>
