@@ -130,7 +130,7 @@ function KidsDashboard() {
   const totalTasks = weeklyTasks.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 p-4">
+    <div className="min-h-screen p-4 pt-20">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
@@ -390,7 +390,7 @@ function Router() {
 export default function FlowKidsApp() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
         <Router />
         <Toaster />
       </div>

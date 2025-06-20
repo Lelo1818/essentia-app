@@ -367,12 +367,12 @@ function AppContainer() {
 
   if (currentApp === "kids") {
     return (
-      <div>
+      <div className="min-h-screen">
         <div className="fixed top-4 right-4 z-50">
           <Button 
             onClick={() => setCurrentApp("selector")}
             variant="outline"
-            className="bg-white/90 backdrop-blur-sm"
+            className="bg-white/90 backdrop-blur-sm shadow-lg"
           >
             ← Voltar aos Apps
           </Button>
