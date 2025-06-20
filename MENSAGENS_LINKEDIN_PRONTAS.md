@@ -1,22 +1,24 @@
 # MENSAGENS LINKEDIN - PRONTAS PARA ENVIAR
 
-## 🎯 DANIEL ALLEGRI (MAGNETIS)
+## 🎯 DANIEL ALLEGRI (MAGNETIS) - ★ PRIORITY TARGET ★
 
-### Para Copiar/Colar:
+### MENSAGEM FINAL REVISADA - COPY/PASTE:
 ```
 Olá Daniel,
 
-Acompanho o trabalho da Magnetis há um tempo e fico impressionado como vocês tornaram investimento acessível através de UX excepcional.
+Sempre admirei como a Magnetis democratizou investimentos através de UX excepcional. Vocês provaram que fintech de qualidade pode ser acessível e engajante.
 
-Estou trabalhando na convergência de fintech, wellness e edtech - 3 mercados que vejo se fundindo nos próximos anos. Tenho produtos funcionando e gostaria muito da sua opinião sobre o timing dessa convergência no Brasil.
+Estou na convergência de fintech, wellness e edtech - 3 mercados que vejo se fundindo rapidamente no Brasil. Tenho produtos funcionando com métricas sólidas e gostaria muito da sua opinião sobre o timing dessa convergência.
 
-Vale um café de 15 minutos? Não estou captando agora, mas sua visão sobre mercado seria muito valiosa.
+Vale um café de 15 minutos? Não estou captando agora, mas sua visão sobre esse movimento de mercado seria muito valiosa.
 
 Abraço!
 ```
 
-**Link do perfil**: https://www.linkedin.com/in/danielallegri/
-**Melhor horário**: Manhã (empresário ativo)
+**Link VERIFICADO**: https://www.linkedin.com/in/danielallegri/
+**Status**: ✅ PERFIL ATIVO 
+**Melhor horário**: 9h-11h (manhã, empresário ativo)
+**Conexões em comum**: Verificar antes de enviar
 
 ---
 
@@ -35,8 +37,10 @@ Gostaria muito da sua opinião sobre esse mercado. Vale um café de 15 minutos? 
 Abraço!
 ```
 
-**Link do perfil**: https://www.linkedin.com/in/felipematos/
-**Melhor horário**: Tarde/noite (mais ativo em posts)
+**Link VERIFICADO**: https://www.linkedin.com/in/felipematos/
+**Status**: ✅ PERFIL ATIVO
+**Melhor horário**: 14h-16h (tarde, mais ativo em posts)
+**Conexões em comum**: Verificar antes de enviar
 
 ---
 
