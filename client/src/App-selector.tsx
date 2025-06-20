@@ -9,8 +9,9 @@ import eduvibeLogo from "@assets/image_1750383852695.png";
 import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
 import EduApp from "./App-edu";
+import PresentationApp from "./App-presentation";
 
-type AppType = "selector" | "flow" | "purpose" | "edu";
+type AppType = "selector" | "flow" | "purpose" | "edu" | "presentation";
 
 function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
   return (
@@ -113,10 +114,23 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
           </Card>
         </div>
         
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 space-y-6">
           <p className="text-gray-500">
             Criado especialmente para você - três apps poderosos para transformar sua vida financeira, espiritual e educacional
           </p>
+          
+          <div className="border-t pt-6">
+            <Button 
+              onClick={() => onSelectApp("presentation")}
+              variant="outline"
+              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white border-none hover:from-purple-700 hover:to-blue-700 px-8 py-3"
+            >
+              📊 Ver Pitch Deck Interativo
+            </Button>
+            <p className="text-xs text-gray-400 mt-2">
+              Apresentação profissional para investidores
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -180,6 +194,23 @@ function AppContainer() {
           <EduApp />
         </div>
       </AuthGuard>
+    );
+  }
+
+  if (currentApp === "presentation") {
+    return (
+      <div>
+        <div className="fixed top-4 left-4 z-50">
+          <Button 
+            onClick={() => setCurrentApp("selector")}
+            variant="outline"
+            className="bg-white/90 backdrop-blur-sm"
+          >
+            ← Voltar aos Apps
+          </Button>
+        </div>
+        <PresentationApp />
+      </div>
     );
   }
 
