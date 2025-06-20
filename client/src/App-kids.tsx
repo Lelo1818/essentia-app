@@ -146,6 +146,7 @@ function KidsDashboard() {
   };
 
   const playGame = (gameName: string) => {
+    console.log('Clicou no jogo:', gameName);
     setCurrentCoins(prev => prev + 10);
     setXpProgress(prev => Math.min(prev + 3, 100));
     setCurrentGame(gameName);
@@ -172,17 +173,35 @@ function KidsDashboard() {
     });
   };
 
-  // Game Navigation
+  // Debug log
+  console.log('Current game state:', currentGame);
+
+  // Game Navigation - render games directly
   if (currentGame === "Lojinha Virtual") {
-    return <LojinhaVirtual onBack={() => setCurrentGame(null)} />;
+    return (
+      <QueryClientProvider client={queryClient}>
+        <LojinhaVirtual onBack={() => setCurrentGame(null)} />
+        <Toaster />
+      </QueryClientProvider>
+    );
   }
   
   if (currentGame === "Banco do Flow") {
-    return <BancoFlow onBack={() => setCurrentGame(null)} />;
+    return (
+      <QueryClientProvider client={queryClient}>
+        <BancoFlow onBack={() => setCurrentGame(null)} />
+        <Toaster />
+      </QueryClientProvider>
+    );
   }
   
   if (currentGame === "Investidor Mirim") {
-    return <InvestidorMirim onBack={() => setCurrentGame(null)} />;
+    return (
+      <QueryClientProvider client={queryClient}>
+        <InvestidorMirim onBack={() => setCurrentGame(null)} />
+        <Toaster />
+      </QueryClientProvider>
+    );
   }
 
   return (
@@ -371,11 +390,14 @@ function KidsDashboard() {
                   <h3 className="font-bold">Lojinha Virtual</h3>
                   <p className="text-sm text-gray-600 mt-1">Aprenda a fazer compras inteligentes</p>
                   <button 
-                    className="w-full mt-3 border-2 border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center"
-                    onClick={() => playGame("Lojinha Virtual")}
+                    className="w-full mt-3 border-2 border-green-400 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center font-semibold"
+                    onClick={() => {
+                      console.log('Clicando em Lojinha Virtual');
+                      playGame("Lojinha Virtual");
+                    }}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Jogar
+                    Jogar Agora
                   </button>
                 </CardContent>
               </Card>
@@ -386,11 +408,14 @@ function KidsDashboard() {
                   <h3 className="font-bold">Banco do Flow</h3>
                   <p className="text-sm text-gray-600 mt-1">Descubra como funciona um banco</p>
                   <button 
-                    className="w-full mt-3 border-2 border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center"
-                    onClick={() => playGame("Banco do Flow")}
+                    className="w-full mt-3 border-2 border-blue-400 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center font-semibold"
+                    onClick={() => {
+                      console.log('Clicando em Banco do Flow');
+                      playGame("Banco do Flow");
+                    }}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Explorar
+                    Explorar Agora
                   </button>
                 </CardContent>
               </Card>
@@ -401,11 +426,14 @@ function KidsDashboard() {
                   <h3 className="font-bold">Investidor Mirim</h3>
                   <p className="text-sm text-gray-600 mt-1">Primeiros passos nos investimentos</p>
                   <button 
-                    className="w-full mt-3 border-2 border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center"
-                    onClick={() => playGame("Investidor Mirim")}
+                    className="w-full mt-3 border-2 border-purple-400 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center font-semibold"
+                    onClick={() => {
+                      console.log('Clicando em Investidor Mirim');
+                      playGame("Investidor Mirim");
+                    }}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Começar
+                    Começar Agora
                   </button>
                 </CardContent>
               </Card>
