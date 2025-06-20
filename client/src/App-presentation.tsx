@@ -18,7 +18,9 @@ import {
   Banknote,
   Target,
   Zap,
-  Rocket
+  Rocket,
+  ShoppingCart,
+  Bitcoin
 } from "lucide-react";
 
 interface Feature {
