@@ -87,8 +87,23 @@ export default function Expenses() {
     ? expenses 
     : expenses.filter((expense: any) => expense.category === selectedCategory);
 
-  const totalExpenses = expenses.reduce((sum: number, expense: any) => sum + parseFloat(expense.amount), 0);
-  const expensesByCategory = summary?.expensesByCategory || {};
+  const totalExpenses = expenses.reduce((sum: number, expense: any) => {
+    const amount = typeof expense.amount === 'string' ? parseFloat(expense.amount) : expense.amount;
+    return sum + (isNaN(amount) ? 0 : amount);
+  }, 0);
+
+  // Calculate expenses by category from actual data
+  const expensesByCategory = expenses.reduce((acc: Record<string, { total: number; count: number }>, expense: any) => {
+    const amount = typeof expense.amount === 'string' ? parseFloat(expense.amount) : expense.amount;
+    if (!isNaN(amount)) {
+      if (!acc[expense.category]) {
+        acc[expense.category] = { total: 0, count: 0 };
+      }
+      acc[expense.category].total += amount;
+      acc[expense.category].count += 1;
+    }
+    return acc;
+  }, {});
 
   return (
     <div className="space-y-6">

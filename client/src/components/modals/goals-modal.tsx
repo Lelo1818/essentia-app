@@ -41,12 +41,15 @@ export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
   const createGoalMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const payload = {
-        name: data.name,
-        targetAmount: parseFloat(data.targetAmount),
-        currentAmount: parseFloat(data.currentAmount || "0"),
-        targetDate: data.targetDate ? new Date(data.targetDate).toISOString() : null,
-        userId: 1 // Mock user ID
+        title: data.name,
+        description: data.description || "",
+        targetAmount: data.targetAmount,
+        currentAmount: data.currentAmount || "0",
+        targetDate: data.targetDate,
+        category: data.category || "outros",
+        userId: 1
       };
+      console.log("Creating goal with payload:", payload);
       return apiRequest("POST", "/api/goals", payload);
     },
     onSuccess: () => {
