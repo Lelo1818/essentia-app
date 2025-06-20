@@ -69,12 +69,133 @@ export class MemStorage implements IStorage {
     this.goals = new Map();
     this.achievements = new Map();
     this.currentId = 1;
-    
-    // Create a default user for development
-    this.createUser({
-      username: "maria",
-      password: "password",
-      name: "Maria Silva"
+    this.seedRealisticData();
+  }
+
+  private seedRealisticData() {
+    // Create 3 realistic users first
+    const usersData = [
+      { username: "Marcelo Rymer", email: "marcelo@flowapp.com" },
+      { username: "Ana Silva", email: "ana.silva@gmail.com" },
+      { username: "Carlos Santos", email: "carlos.santos@outlook.com" }
+    ];
+
+    usersData.forEach(userData => {
+      const user: User = { 
+        id: this.currentId++, 
+        ...userData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.users.set(user.id, user);
+    });
+
+    // Add realistic incomes for Marcelo (user 1)
+    const incomesData = [
+      { userId: 1, description: "Salário CLT", amount: 8500, category: "salario", date: new Date('2024-06-01') },
+      { userId: 1, description: "Freelance Design", amount: 2200, category: "freelance", date: new Date('2024-06-15') },
+      { userId: 1, description: "Dividendos Ações", amount: 450, category: "investimentos", date: new Date('2024-06-20') },
+      { userId: 2, description: "Salário", amount: 6800, category: "salario", date: new Date('2024-06-01') },
+      { userId: 3, description: "Salário", amount: 4500, category: "salario", date: new Date('2024-06-01') }
+    ];
+
+    incomesData.forEach(incomeData => {
+      const income: Income = {
+        id: this.currentId++,
+        ...incomeData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.incomes.set(income.id, income);
+    });
+
+    // Add realistic expenses for Marcelo (user 1)
+    const expensesData = [
+      { userId: 1, description: "Supermercado Extra", amount: 320.50, category: "alimentacao", date: new Date('2024-06-18') },
+      { userId: 1, description: "Gasolina Posto Shell", amount: 180.00, category: "transporte", date: new Date('2024-06-17') },
+      { userId: 1, description: "Aluguel Apartamento", amount: 2200.00, category: "moradia", date: new Date('2024-06-01') },
+      { userId: 1, description: "Netflix + Spotify", amount: 45.90, category: "entretenimento", date: new Date('2024-06-01') },
+      { userId: 1, description: "Restaurante Japonês", amount: 280.00, category: "alimentacao", date: new Date('2024-06-15') },
+      { userId: 1, description: "Farmácia", amount: 85.30, category: "saude", date: new Date('2024-06-12') },
+      { userId: 1, description: "Uber", amount: 35.50, category: "transporte", date: new Date('2024-06-16') }
+    ];
+
+    expensesData.forEach(expenseData => {
+      const expense: Expense = {
+        id: this.currentId++,
+        ...expenseData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.expenses.set(expense.id, expense);
+    });
+
+    // Add realistic goals for Marcelo (user 1)
+    const goalsData = [
+      { userId: 1, title: "Viagem para Europa", description: "15 dias pela França e Itália", targetAmount: 18000, currentAmount: 12500, targetDate: new Date('2024-12-15'), category: "viagem" },
+      { userId: 1, title: "Reserva de Emergência", description: "6 meses de gastos", targetAmount: 25000, currentAmount: 8900, targetDate: new Date('2025-03-01'), category: "emergencia" }
+    ];
+
+    goalsData.forEach(goalData => {
+      const goal: Goal = {
+        id: this.currentId++,
+        ...goalData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.goals.set(goal.id, goal);
+    });
+
+    // Add budget for Marcelo (user 1)
+    const budget: Budget = {
+      id: this.currentId++,
+      userId: 1,
+      totalBudget: 8000,
+      categories: { 
+        alimentacao: 1200, 
+        transporte: 800, 
+        moradia: 2200, 
+        entretenimento: 400, 
+        compras: 600, 
+        saude: 300, 
+        outros: 500 
+      },
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.budgets.set(budget.id, budget);
+
+    // Add debt for Marcelo (user 1)
+    const debt: Debt = {
+      id: this.currentId++,
+      userId: 1,
+      description: "Cartão de Crédito Nubank",
+      amount: 2800,
+      interestRate: 12.5,
+      minimumPayment: 280,
+      dueDate: new Date('2024-07-10'),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.debts.set(debt.id, debt);
+
+    // Add achievements for Marcelo (user 1)
+    const achievementsData = [
+      { userId: 1, title: "Primeiro Orçamento", description: "Criou seu primeiro planejamento mensal", category: "financial", earnedAt: new Date('2024-01-20') },
+      { userId: 1, title: "Meta Alcançada", description: "Atingiu 50% de uma meta financeira", category: "goals", earnedAt: new Date('2024-03-15') },
+      { userId: 1, title: "Poupador Expert", description: "Economizou mais que o planejado por 3 meses", category: "savings", earnedAt: new Date('2024-05-01') }
+    ];
+
+    achievementsData.forEach(achievementData => {
+      const achievement: Achievement = {
+        id: this.currentId++,
+        ...achievementData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.achievements.set(achievement.id, achievement);
     });
   }
 

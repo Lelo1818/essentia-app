@@ -33,7 +33,12 @@ export default function Navigation() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <h1 className="text-2xl font-bold text-gradient cursor-pointer">Flow</h1>
+                <div className="flex items-center space-x-2 cursor-pointer">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-xl">F</span>
+                  </div>
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Flow</h1>
+                </div>
               </Link>
             </div>
           </div>
