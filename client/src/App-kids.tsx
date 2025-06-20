@@ -21,6 +21,9 @@ import {
   Zap
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import LojinhaVirtual from "./pages/kids/lojinha-virtual";
+import BancoFlow from "./pages/kids/banco-flow";
+import InvestidorMirim from "./pages/kids/investidor-mirim";
 
 interface KidsAchievement {
   id: string;
@@ -47,6 +50,7 @@ function KidsDashboard() {
   const [currentCoins, setCurrentCoins] = useState(1250);
   const [level, setLevel] = useState(5);
   const [xpProgress, setXpProgress] = useState(65);
+  const [currentGame, setCurrentGame] = useState<string | null>(null);
   const { toast } = useToast();
 
   const achievements: KidsAchievement[] = [
@@ -144,8 +148,9 @@ function KidsDashboard() {
   const playGame = (gameName: string) => {
     setCurrentCoins(prev => prev + 10);
     setXpProgress(prev => Math.min(prev + 3, 100));
+    setCurrentGame(gameName);
     toast({
-      title: `🎮 Jogando ${gameName}!`,
+      title: `🎮 Abrindo ${gameName}!`,
       description: "Ganhou 10 Flow Coins por jogar! Continue aprendendo!",
       variant: "default"
     });
@@ -166,6 +171,19 @@ function KidsDashboard() {
       variant: "default"
     });
   };
+
+  // Game Navigation
+  if (currentGame === "Lojinha Virtual") {
+    return <LojinhaVirtual onBack={() => setCurrentGame(null)} />;
+  }
+  
+  if (currentGame === "Banco do Flow") {
+    return <BancoFlow onBack={() => setCurrentGame(null)} />;
+  }
+  
+  if (currentGame === "Investidor Mirim") {
+    return <InvestidorMirim onBack={() => setCurrentGame(null)} />;
+  }
 
   return (
     <div className="min-h-screen p-6 pt-16">
