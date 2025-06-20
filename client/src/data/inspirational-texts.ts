@@ -9,6 +9,8 @@ export interface InspirationalText {
   backgroundMusic?: string;
   estimatedReadTime: number; // in minutes
   keyQuotes: string[];
+  author?: string;
+  originalSource?: string;
 }
 
 export const inspirationalTexts: InspirationalText[] = [
@@ -414,7 +416,9 @@ Cada momento desafiador é uma oportunidade de crescimento. Não é sobre o que 
       "Momentos desafiadores nos fazem ser melhores",
       "Aceitar o que aconteceu sem se penalizar",
       "Cada momento desafiador é uma oportunidade de crescimento"
-    ]
+    ],
+    author: "Paulo de Souza",
+    originalSource: "Reflexões durante corrida"
   },
   {
     id: "three-doors-story",
@@ -444,7 +448,9 @@ O medo de perder oportunidades pode nos impedir de realmente aproveitar as oport
       "Nosso cérebro sente mais a dor de perda do que o ganho",
       "Às vezes é melhor escolher uma porta e explorá-la completamente",
       "O medo de perder pode nos impedir de aproveitar o que temos"
-    ]
+    ],
+    author: "Paulo de Souza",
+    originalSource: "Reflexões sobre economia comportamental"
   },
   {
     id: "preparing-for-the-leap",
@@ -725,9 +731,195 @@ Porque você é sempre uma escolha de distância de quem quer se tornar.`,
     backgroundMusic: "[MÚSICA_REFLEXÃO_ESPERANÇA]",
     estimatedReadTime: 3,
     keyQuotes: [
-      "Para ter uma, é preciso deixir a outra",
+      "Para ter uma, é preciso deixar a outra",
       "Qualquer um pode começar agora e fazer um novo fim",
       "Você é sempre uma escolha de distância de quem quer se tornar"
+    ]
+  },
+  {
+    id: "karma-dharma-transformation",
+    title: "Karma, Dharma e Você",
+    content: `Karma e Dharma não são apenas conceitos antigos. São ferramentas vivas. Estratégicas. Nos ajudam a entender o que nos move — e o que nos trava.
+
+Karma não é o que o mundo faz com você. É o que você faz com você mesmo. É reação sem consciência. É repetir padrões por medo, por inércia, por ignorância.
+
+Dharma é o oposto. É presença. É intenção alinhada. É quando sua ação vibra com tudo aquilo que você nasceu pra ser.
+
+Dharma não exige prontidão. Exige verdade. Não é sobre estar preparado. É sobre fazer o que precisa ser feito — mesmo com dúvida, mesmo com medo.
+
+Karma + Dharma = alquimia. Quando você age com consciência, transforma o peso em movimento. A dor vira propósito. A queda vira impulso. A repetição vira caminho.
+
+É um sistema natural de causa e efeito. Quando você age inconscientemente, reage com medo ou ignorância, karma se acumula e você fica preso nos mesmos ciclos.
+
+Mas quando você escolhe a consciência, quando alinha intenção com ação, você transforma karma em dharma. Peso em movimento. Estagnação em força.
+
+A grande virada não acontece em datas. Ela acontece quando você escolhe agir com intenção. Quando decide transformar a repetição em caminho.
+
+Essa escolha está nas suas mãos. A partir de agora.`,
+    theme: "transformation",
+    mood: "empowering",
+    phase: ["portais", "rituais", "encerramento"],
+    audioNarration: "[NARRAÇÃO_KARMA_DHARMA]",
+    backgroundMusic: "[MÚSICA_SABEDORIA_ORIENTAL]",
+    estimatedReadTime: 4,
+    keyQuotes: [
+      "Karma é o que você faz com você mesmo",
+      "Dharma é quando sua ação vibra com tudo que você nasceu pra ser",
+      "Transforma o peso em movimento, a dor em propósito"
+    ]
+  },
+  {
+    id: "pain-and-path-reflection",
+    title: "Reflexão - Sobre a Dor e o Caminho",
+    content: `Pensando em como lidei com as dores neste ano… Dores internas, dores externas. Dores de crédito, dores sociais, dores econômicas.
+
+Como vivemos, não é? Tantas expectativas, necessidades, demandas dos outros — e nossas também.
+
+E essas dores… Essas dores são superadas por algumas coisas.
+
+Resiliência. A nossa capacidade de perseverar, de persistir. Isso é essencial.
+
+E a capacidade de aprender. Porque quanto mais a gente aprende, mais preparado fica. Preparado para o ambiente, para o contexto, para os desafios.
+
+Essas duas forças — resiliência e aprendizado — são a base. Precisamos evoluir.
+
+A dor não é inútil. Ela nos ensina. Nos fortalece. Nos prepara para enfrentar o que vier. Mas só se a gente escolher aprender com ela ao invés de apenas suportá-la.
+
+A combinação de resistir e aprender é o que nos faz crescer. É o que nos torna mais preparados para viver plenamente, mesmo em meio às tempestades.`,
+    theme: "growth",
+    mood: "reflective",
+    phase: ["transicao", "bem-estar", "encerramento"],
+    audioNarration: "[NARRAÇÃO_DOR_CAMINHO]",
+    backgroundMusic: "[MÚSICA_REFLEXÃO_PROFUNDA]",
+    estimatedReadTime: 3,
+    keyQuotes: [
+      "Essas dores são superadas por resiliência e aprendizado",
+      "Quanto mais a gente aprende, mais preparado fica",
+      "A dor nos ensina, nos fortalece, nos prepara"
+    ],
+    author: "Paulo de Souza",
+    originalSource: "Reflexões pessoais"
+  },
+  {
+    id: "manifesto-the-time-is-now",
+    title: "MANIFESTO - A Hora é Agora",
+    content: `A vida que você vive hoje, as coisas que você faz, os sonhos que você tem… São realmente seus?
+
+Ou você está no piloto automático, acreditando que "um dia" vai ser o dia?
+
+A verdade é que um dia nunca chega. O futuro não acontece — ele é construído. E toda decisão que você adia, entrega sua vida nas mãos de algo que não tem nada a ver com a sua história.
+
+Chegou a hora de mudar esse jogo. De parar de aceitar o mínimo, quando você nasceu pra viver o máximo. Sua história é uma obra-prima inacabada — e só você pode completá-la.
+
+O medo é real. A dúvida também. Mas a coragem… a coragem é agir mesmo com medo.
+
+Você não precisa ser perfeito. Você só precisa começar. Um passo. Uma escolha. Uma ação.
+
+Tudo o que você quer está do outro lado da zona de conforto.
+
+Hoje. Agora. Não depois. Levante-se. Decida-se. A vida não é sobre encontrar quem você é. É sobre criar quem você escolhe ser.`,
+    theme: "courage",
+    mood: "motivational",
+    phase: ["chamado", "portais", "rituais"],
+    audioNarration: "[NARRAÇÃO_MANIFESTO_AGORA]",
+    backgroundMusic: "[MÚSICA_ÉPICA_TRANSFORMAÇÃO]",
+    estimatedReadTime: 3,
+    keyQuotes: [
+      "O futuro não acontece — ele é construído",
+      "A coragem é agir mesmo com medo",
+      "É sobre criar quem você escolhe ser"
+    ]
+  },
+  {
+    id: "five-truths-that-anchor-us",
+    title: "5 Verdades que nos Ancoram",
+    content: `Vamos morrer um dia. Todos nós. Tudo é passageiro — inclusive a nossa própria vida. Isso não é triste. Isso é urgência com sentido.
+
+O mais importante da vida são as pessoas que amamos e que nos amam. No fim das contas, é isso que vai importar. É isso que sustenta.
+
+Todos temos um propósito. Uma missão, um chamado. Algo que pulsa dentro. Nosso papel é descobrir, redescobrir e realizar isso todos os dias, de forma melhor, mais alinhada, mais real.
+
+Vamos nos decepcionar. Com os outros. Com nós mesmos. Mas são justamente nesses momentos que a sensibilidade pode nascer. É quando a cortina cai que a janela se abre.
+
+Fazemos parte de um universo inacreditável. E ainda assim, nos achamos o centro. Não somos mais, nem menos. Somos parte. E nisso está o verdadeiro valor.
+
+Pensa nisso. Respira isso. Volta aqui sempre que esquecer.
+
+Essas verdades não são deprimentes - são libertadoras. Elas nos ancoram no que realmente importa e nos liberam do que é superficial.`,
+    theme: "wisdom",
+    mood: "reflective",
+    phase: ["bem-estar", "encerramento", "respiracao"],
+    audioNarration: "[NARRAÇÃO_CINCO_VERDADES_ANCORA]",
+    backgroundMusic: "[MÚSICA_ÂNCORA_CONTEMPLATIVA]",
+    estimatedReadTime: 3,
+    keyQuotes: [
+      "Isso não é triste. Isso é urgência com sentido",
+      "É quando a cortina cai que a janela se abre",
+      "Não somos mais, nem menos. Somos parte"
+    ]
+  },
+  {
+    id: "letter-from-impossible-practitioner",
+    title: "Carta de um Praticante do Impossível",
+    content: `Eu acredito na dignidade como direito de todos. Acredito no afeto, no cuidado, no amor — não como privilégio, mas como base da vida.
+
+E também acredito que a vida não é uma linha reta, nem uma sucessão de vitórias. A vida, pra mim, é feita de quedas, erros, desafios e frustrações. Mas isso não a torna menos plena. Pelo contrário. É exatamente aí que mora a plenitude.
+
+É de vazio em vazio que a vida vai se enchendo. De gente verdadeira. Gente que olha no olho, que abraça com alma, que caminha junto nos altos e baixos. É nesse encontro que eu vejo algo divino — não num Deus distante, mas na humanidade compartilhada.
+
+Einstein disse que há duas formas de viver: como se nada fosse milagre, ou como se tudo fosse. Eu escolho viver como se tudo fosse.
+
+Por isso eu sou, com orgulho, um praticante do impossível. Porque não é sobre já saber viver. É sobre continuar aprendendo, mesmo depois de tudo. É sobre se abrir para o novo, mesmo quando o velho parece mais seguro.
+
+É sobre sair do padrão, acreditar no milagre, e fazer da própria vida uma obra em construção.
+
+Não estou no fim da jornada. Estou no começo de uma nova. E talvez seja isso que mais me move: saber que sempre dá pra recomeçar. Sempre dá pra viver de um jeito mais verdadeiro.
+
+Assinado: Lelo, praticante do impossível.`,
+    theme: "transformation",
+    mood: "uplifting",
+    phase: ["portais", "rituais", "encerramento"],
+    audioNarration: "[NARRAÇÃO_CARTA_LELO]",
+    backgroundMusic: "[MÚSICA_CARTA_PESSOAL]",
+    estimatedReadTime: 4,
+    keyQuotes: [
+      "É de vazio em vazio que a vida vai se enchendo",
+      "Sou, com orgulho, um praticante do impossível",
+      "Sempre dá pra viver de um jeito mais verdadeiro"
+    ],
+    author: "Lelo (Daniel Allegri)",
+    originalSource: "Carta pessoal"
+  },
+  {
+    id: "this-too-shall-pass",
+    title: "Isso Também Passará",
+    content: `Antes de receber uma imagem emocional, um rei venceu uma batalha e sentiu-se invencível. Quando uma onda de elogios o cercava entre esses espelhos, pensando nessa instabilidade, ele pediu ajuda de um sábio.
+
+O mestre entregou um anel com uma inscrição simples: "Isso também passará."
+
+Lui ficou intrigado. O mestre explicou: "Use este anel em todos os momentos. Ele lembrará que nem a glória nem a dor duram para sempre."
+
+Com o tempo, Lui aprendeu a agir com equilíbrio. Nas vitórias, lembrou-se de ser humilde. Nas crises, encontrou força para seguir em frente.
+
+Essa lição vale até hoje, especialmente no esporte e na vida. Um exemplo marcante é Rafael Nadal. Com sua trajetória de resiliência, em 2009, após dominar o tênis mundial, ele enfrentou lesões graves e uma derrota inesperada e prolongada. Muitos acreditaram que sua carreira chegaria ao fim.
+
+Mas quando surgiu a dificuldade, Nadal entendeu que as adversidades eram temporárias. Aceitou o momento ruim, ajustou a técnica e trabalhou incansavelmente.
+
+Em 2013, ele retornou triunfal, vencendo dois Grand Slams e retornando ao posto de número um.
+
+A lição, tanto na vida quanto no esporte: tudo é transitório. O segredo está no equilíbrio. Agir com modéstia nas vitórias e resiliência nas adversidades.
+
+Porque isso também passará - tanto a dor quanto a glória.`,
+    theme: "wisdom",
+    mood: "peaceful",
+    phase: ["transicao", "bem-estar", "encerramento"],
+    audioNarration: "[NARRAÇÃO_ISSO_PASSARÁ]",
+    backgroundMusic: "[MÚSICA_SABEDORIA_ATEMPORAL]",
+    estimatedReadTime: 4,
+    keyQuotes: [
+      "Nem a glória nem a dor duram para sempre",
+      "Tudo é transitório. O segredo está no equilíbrio",
+      "Isso também passará - tanto a dor quanto a glória"
     ]
   }
 ];
