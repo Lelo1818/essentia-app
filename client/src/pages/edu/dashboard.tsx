@@ -12,7 +12,7 @@ import eduvibeLogo from "@assets/image_1750383852695.png";
 import type { User, LearningPath, Achievement, ContentSuggestion } from "../../../../../shared/schema-edu";
 
 export default function Dashboard() {
-  const { data: profileData } = useQuery<{ user: User }>({
+  const { data: profileData, isLoading } = useQuery<{ user: User }>({
     queryKey: ["/api/edu/profile"],
   });
 
@@ -28,9 +28,20 @@ export default function Dashboard() {
     queryKey: ["/api/edu/suggestions", { trending: true }],
   });
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   const user = profileData?.user;
-  const activePaths = learningPaths.filter(path => !path.isCompleted);
-  const completedPaths = learningPaths.filter(path => path.isCompleted);
+  const activePaths = learningPaths?.filter(path => !path.isCompleted) || [];
+  const completedPaths = learningPaths?.filter(path => path.isCompleted) || [];
 
   const getGreeting = () => {
     const hour = new Date().getHours();
