@@ -42,11 +42,13 @@ export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
   const createIncomeMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const payload = {
-        ...data,
-        amount: parseFloat(data.amount),
-        date: new Date(data.date).toISOString(),
-        userId: 1 // Mock user ID
+        description: data.description,
+        amount: data.amount,
+        frequency: data.frequency,
+        date: data.date,
+        userId: 1
       };
+      console.log("Sending income payload:", payload);
       return apiRequest("POST", "/api/incomes", payload);
     },
     onSuccess: () => {

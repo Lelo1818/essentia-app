@@ -14,11 +14,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Income routes
   app.get("/api/incomes", async (req, res) => {
     try {
-      const userId = getCurrentUserId();
+      const userId = 1; // Fixed user ID
       const incomes = await storage.getIncomesByUserId(userId);
       res.json(incomes);
     } catch (error) {
       res.status(500).json({ message: "Erro ao buscar rendas" });
+    }
+  });
+
+  app.post("/api/incomes", async (req, res) => {
+    try {
+      console.log("Received income data:", req.body);
+      
+      const userId = 1;
+      const processedData = {
+        userId,
+        description: req.body.description,
+        amount: typeof req.body.amount === 'string' ? parseFloat(req.body.amount) : req.body.amount,
+        frequency: req.body.frequency || "unica",
+        date: req.body.date ? new Date(req.body.date) : new Date(),
+      };
+      
+      console.log("Processed income data:", processedData);
+      
+      const validatedData = insertIncomeSchema.parse(processedData);
+      const income = await storage.createIncome(validatedData);
+      
+      console.log("Created income:", income);
+      res.status(201).json(income);
+    } catch (error) {
+      console.error("Error creating income:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Erro ao criar renda", error: error.message });
+      }
     }
   });
 
