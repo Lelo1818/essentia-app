@@ -989,6 +989,42 @@ Pensa nisso e utilize essa estratégia a seu favor. Você está subindo sua pró
       "Encontrar o ritmo certo entre movimento e descanso",
       "Não é sobre correr mais rápido, é sobre encontrar seu ritmo sustentável"
     ]
+  },
+  {
+    id: "hidden-assets",
+    title: "Ativos Ocultos",
+    content: `As pessoas e empresas precisarão redefinir seu processo produtivo na próxima década. Isso significa que não apenas terão que adaptar as coisas, mas superar grandes mudanças ao mesmo tempo.
+
+Para fazer isso bem, é preciso que essas pessoas e empresas encontrem os seus ativos ocultos. Ativos que podem gerar valor: conhecimento, habilidade, ideias, equipamentos... Você tem vários.
+
+A curiosidade e a capacidade de fazer perguntas, por exemplo, é um ativo oculto. Conectado à inteligência artificial, pode produzir novas possibilidades com ativos que gerem valor real.
+
+Os ativos estão por aí, ocultos, esperando serem utilizados.
+
+Como então se defender e aproveitar as oportunidades nesse momento?
+
+Como estrategista, recomendo que entenda primeiro o seu foco. Para onde está olhando pode definir se você enxerga ou não o ativo.
+
+Não seja a consequência do que foi, mas a causa do que será e a consciência do que é.
+
+Olhe para a expansão. Seja curioso, colaborativo. Ativos nascem dessa combinação. A soma das partes pode ser maior do que o todo.
+
+E recreação. Temos o dom de criar realidades através de pensamentos, emoções e ações. Olhe para essas três dimensões e faça do futuro esse ativo oculto que será sua bússola.
+
+Lembre-se: não existe escuro. Existe ausência de luz. Crise é risco, mas também é oportunidade.
+
+Pensa nisso e vamos em frente.`,
+    theme: "growth",
+    mood: "motivational",
+    phase: ["portais", "chamado", "bem-estar"],
+    audioNarration: "[NARRAÇÃO_ATIVOS_OCULTOS]",
+    backgroundMusic: "[MÚSICA_INOVAÇÃO_FUTURO]",
+    estimatedReadTime: 4,
+    keyQuotes: [
+      "A curiosidade é um ativo oculto",
+      "Não seja consequência do que foi, mas causa do que será",
+      "Não existe escuro. Existe ausência de luz"
+    ]
   }
 ];
 

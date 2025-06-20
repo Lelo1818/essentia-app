@@ -20,7 +20,8 @@ export const contentSections: ContentSection[] = [
       "intelligent-posture", 
       "time-and-presence",
       "ma-japanese-void",
-      "now-is-innovation"
+      "now-is-innovation",
+      "hidden-assets"
     ],
     purpose: "Abertura de jornada - estabelece fundamentos de presença consciente",
     placement: "journey-opener"
