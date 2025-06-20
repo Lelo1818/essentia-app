@@ -133,17 +133,20 @@ function KidsDashboard() {
 
   const addMoney = (goalId: string, amount: number) => {
     setCurrentCoins(prev => prev + amount);
+    setXpProgress(prev => Math.min(prev + 5, 100));
     toast({
-      title: "Dinheiro Adicionado!",
-      description: `Você ganhou ${amount} Flow Coins!`,
+      title: "💰 Dinheiro Adicionado!",
+      description: `Você ganhou ${amount} Flow Coins! Total: ${currentCoins + amount}`,
       variant: "default"
     });
   };
 
   const playGame = (gameName: string) => {
+    setCurrentCoins(prev => prev + 10);
+    setXpProgress(prev => Math.min(prev + 3, 100));
     toast({
-      title: `Jogando ${gameName}!`,
-      description: "Divirta-se aprendendo sobre dinheiro!",
+      title: `🎮 Jogando ${gameName}!`,
+      description: "Ganhou 10 Flow Coins por jogar! Continue aprendendo!",
       variant: "default"
     });
   };
@@ -196,7 +199,7 @@ function KidsDashboard() {
               <div className="text-center">
                 <div className="flex items-center justify-center space-x-2">
                   <Coins className="w-6 h-6 text-yellow-500" />
-                  <div className="text-3xl font-bold text-yellow-600">{currentCoins}</div>
+                  <div className="text-3xl font-bold text-yellow-600">{currentCoins.toLocaleString()}</div>
                 </div>
                 <div className="text-yellow-500">Flow Coins</div>
               </div>
