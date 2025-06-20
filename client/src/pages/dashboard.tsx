@@ -127,7 +127,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <WelcomeHeader userName="Maria" level={3} progress={progress} />
+      <WelcomeHeader userName="Ana" level={3} progress={progress} />
       
       <QuickActions
         onOpenIncomeModal={() => setIncomeModalOpen(true)}

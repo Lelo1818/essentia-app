@@ -9,6 +9,7 @@ import { AuthGuard } from "@/components/auth-guard";
 import flowLogo from "@assets/image_1750383244339.png";
 import essentiaLogo from "@assets/image_1750383794230.png";
 import eduvibeLogo from "@assets/image_1750383852695.png";
+import { ModernStats } from "@/components/ui/modern-stats";
 import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
 import EduApp from "./App-edu";
