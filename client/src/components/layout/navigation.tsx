@@ -10,7 +10,8 @@ export default function Navigation() {
     { path: "/income", label: "Renda" },
     { path: "/expenses", label: "Gastos" },
     { path: "/planning", label: "Planejamento" },
-    { path: "/goals", label: "Metas" }
+    { path: "/goals", label: "Metas" },
+    { path: "/ofertas", label: "Ofertas" }
   ];
 
   return (

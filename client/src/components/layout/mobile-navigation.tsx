@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, Plus, Camera, PieChart, Trophy } from "lucide-react";
+import { Home, Plus, Camera, PieChart, Trophy, Gift } from "lucide-react";
 
 export default function MobileNavigation() {
   const [location] = useLocation();
@@ -9,12 +9,13 @@ export default function MobileNavigation() {
     { path: "/income", icon: Plus, label: "Renda" },
     { path: "/expenses", icon: Camera, label: "Gastos" },
     { path: "/planning", icon: PieChart, label: "Planos" },
-    { path: "/goals", icon: Trophy, label: "Metas" }
+    { path: "/goals", icon: Trophy, label: "Metas" },
+    { path: "/ofertas", icon: Gift, label: "Ofertas" }
   ];
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
-      <div className="grid grid-cols-5 py-2">
+      <div className="grid grid-cols-6 py-2">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.path;

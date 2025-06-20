@@ -11,6 +11,7 @@ import Expenses from "@/pages/expenses";
 import Planning from "@/pages/planning";
 import Goals from "@/pages/goals";
 import Profile from "@/pages/profile";
+import Ofertas from "@/pages/ofertas";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/expenses" component={Expenses} />
       <Route path="/planning" component={Planning} />
       <Route path="/goals" component={Goals} />
+      <Route path="/ofertas" component={Ofertas} />
       <Route path="/profile" component={Profile} />
       <Route component={NotFound} />
     </Switch>
