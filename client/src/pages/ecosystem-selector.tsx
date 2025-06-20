@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart } from "lucide-react";
+import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart, Calendar, CheckCircle, Clock, Lightbulb } from "lucide-react";
 
 export default function EcosystemSelector() {
   const apps = [
@@ -206,6 +206,97 @@ export default function EcosystemSelector() {
               </Card>
             );
           })}
+        </div>
+
+        {/* Roadmap */}
+        <div className="mt-20">
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold text-white mb-4 flex items-center justify-center gap-3">
+              <Calendar className="w-10 h-10 text-purple-400" />
+              Roadmap 2025-2026
+            </h3>
+            <p className="text-xl text-gray-300">Cronograma de desenvolvimento e lançamentos</p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {/* Q2 2025 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 backdrop-blur-xl rounded-xl p-6 border border-green-400/20 h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-400" />
+                    <div>
+                      <h4 className="text-xl font-bold text-white">Q2 2025</h4>
+                      <p className="text-green-300 text-sm">Finalizado</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>✓ Essentia MVP completo</li>
+                    <li>✓ EduVie beta release</li>
+                    <li>✓ Conteúdo Rômulo Nomad</li>
+                    <li>✓ Avatar 3D sistema</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Q3 2025 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 backdrop-blur-xl rounded-xl p-6 border border-blue-400/20 h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Clock className="w-8 h-8 text-blue-400" />
+                    <div>
+                      <h4 className="text-xl font-bold text-white">Q3 2025</h4>
+                      <p className="text-blue-300 text-sm">Em Desenvolvimento</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>→ Flow MVP launch</li>
+                    <li>→ Essentia scale-up</li>
+                    <li>→ EduVie v2.0</li>
+                    <li>→ Primeiros 10K usuários</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Q4 2025 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl rounded-xl p-6 border border-purple-400/20 h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Zap className="w-8 h-8 text-purple-400" />
+                    <div>
+                      <h4 className="text-xl font-bold text-white">Q4 2025</h4>
+                      <p className="text-purple-300 text-sm">Planejado</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>→ Flow Kids protótipo</li>
+                    <li>→ Integração completa</li>
+                    <li>→ Break-even point</li>
+                    <li>→ Expansão internacional</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Q1 2026 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-orange-600/20 to-yellow-600/20 backdrop-blur-xl rounded-xl p-6 border border-orange-400/20 h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Lightbulb className="w-8 h-8 text-orange-400" />
+                    <div>
+                      <h4 className="text-xl font-bold text-white">Q1 2026</h4>
+                      <p className="text-orange-300 text-sm">Visão</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>→ Flow Kids launch</li>
+                    <li>→ 50K+ usuários ativos</li>
+                    <li>→ Série A funding</li>
+                    <li>→ Nova verticais</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Investment Highlight */}
