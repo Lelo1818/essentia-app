@@ -16,6 +16,9 @@ import AICoach from "@/components/purpose/ai-coach";
 import JourneyPhases from "@/pages/purpose/journey-phases";
 import { TransitionJourney } from "@/components/purpose/transition-journey";
 import { AvatarJourney } from "@/components/purpose/avatar-journey";
+import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
+import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
+import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
 import { 
   Compass, 
   Heart, 
@@ -30,6 +33,7 @@ import {
 
 export default function Purpose() {
   const [activeTab, setActiveTab] = useState("journey");
+  const { activeWindow, openWindow, closeWindow } = useEssentiaWindows();
 
   const userJourney = {
     stage: "Descoberta de Paixões",
@@ -208,34 +212,38 @@ export default function Purpose() {
 
       {/* Main Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-7">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
           <TabsTrigger value="journey" className="flex items-center space-x-1">
             <Compass className="w-4 h-4" />
-            <span>Jornada</span>
+            <span className="hidden sm:inline">Jornada</span>
           </TabsTrigger>
           <TabsTrigger value="transition" className="flex items-center space-x-1">
             <TrendingUp className="w-4 h-4" />
-            <span>Transição</span>
+            <span className="hidden sm:inline">Transição</span>
           </TabsTrigger>
           <TabsTrigger value="avatar" className="flex items-center space-x-1">
             <User className="w-4 h-4" />
-            <span>Avatar 3D</span>
+            <span className="hidden sm:inline">Avatar 3D</span>
+          </TabsTrigger>
+          <TabsTrigger value="breathing" className="flex items-center space-x-1">
+            <Brain className="w-4 h-4" />
+            <span className="hidden sm:inline">Respiração</span>
+          </TabsTrigger>
+          <TabsTrigger value="rituals" className="flex items-center space-x-1">
+            <Star className="w-4 h-4" />
+            <span className="hidden sm:inline">Rituais</span>
           </TabsTrigger>
           <TabsTrigger value="wheel" className="flex items-center space-x-1">
             <Target className="w-4 h-4" />
-            <span>Roda da Vida</span>
-          </TabsTrigger>
-          <TabsTrigger value="actions" className="flex items-center space-x-1">
-            <Star className="w-4 h-4" />
-            <span>Ações</span>
+            <span className="hidden sm:inline">Roda</span>
           </TabsTrigger>
           <TabsTrigger value="inspiration" className="flex items-center space-x-1">
             <Heart className="w-4 h-4" />
-            <span>Inspiração</span>
+            <span className="hidden sm:inline">Inspiração</span>
           </TabsTrigger>
           <TabsTrigger value="community" className="flex items-center space-x-1">
             <Users className="w-4 h-4" />
-            <span>Comunidade</span>
+            <span className="hidden sm:inline">Comunidade</span>
           </TabsTrigger>
         </TabsList>
 
@@ -251,12 +259,16 @@ export default function Purpose() {
           <AvatarJourney />
         </TabsContent>
 
-        <TabsContent value="wheel" className="mt-6">
-          <LifeWheel />
+        <TabsContent value="breathing" className="mt-6">
+          <GuidedBreathingComponent />
         </TabsContent>
 
-        <TabsContent value="actions" className="mt-6">
-          <ActionPlanner />
+        <TabsContent value="rituals" className="mt-6">
+          <DailyRitualsComponent />
+        </TabsContent>
+
+        <TabsContent value="wheel" className="mt-6">
+          <LifeWheel />
         </TabsContent>
 
         <TabsContent value="inspiration" className="mt-6">
@@ -275,28 +287,53 @@ export default function Purpose() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-auto p-4 flex-col space-y-2">
+            <Button 
+              variant="outline" 
+              className="h-auto p-4 flex-col space-y-2"
+              onClick={() => openWindow("study_start")}
+            >
               <Brain className="w-6 h-6 text-blue-600" />
-              <span className="text-sm">Reflexão Diária</span>
+              <span className="text-sm">Janela Essentia</span>
             </Button>
             
-            <Button variant="outline" className="h-auto p-4 flex-col space-y-2">
+            <Button 
+              variant="outline" 
+              className="h-auto p-4 flex-col space-y-2"
+              onClick={() => setActiveTab("breathing")}
+            >
               <Target className="w-6 h-6 text-green-600" />
-              <span className="text-sm">Nova Meta</span>
+              <span className="text-sm">Respiração Guiada</span>
             </Button>
             
-            <Button variant="outline" className="h-auto p-4 flex-col space-y-2">
+            <Button 
+              variant="outline" 
+              className="h-auto p-4 flex-col space-y-2"
+              onClick={() => setActiveTab("rituals")}
+            >
               <Heart className="w-6 h-6 text-red-600" />
-              <span className="text-sm">Gratidão</span>
+              <span className="text-sm">Rituais Diários</span>
             </Button>
             
-            <Button variant="outline" className="h-auto p-4 flex-col space-y-2">
+            <Button 
+              variant="outline" 
+              className="h-auto p-4 flex-col space-y-2"
+              onClick={() => setActiveTab("community")}
+            >
               <Users className="w-6 h-6 text-purple-600" />
               <span className="text-sm">Conectar</span>
             </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Essentia Window */}
+      {activeWindow && (
+        <EssentiaWindowComponent
+          trigger={activeWindow}
+          onClose={closeWindow}
+          autoClose={true}
+        />
+      )}
     </div>
   );
 }
