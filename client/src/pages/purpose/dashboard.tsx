@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -102,14 +103,16 @@ export default function PurposeDashboard() {
           };
           
           return (
-            <Card key={action.label} className="cursor-pointer hover:shadow-md transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 ${colorClasses[action.color as keyof typeof colorClasses]}`}>
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="font-medium text-gray-900 text-sm">{action.label}</h3>
-              </CardContent>
-            </Card>
+            <Link key={action.label} href={action.href}>
+              <Card className="cursor-pointer hover:shadow-md transition-shadow">
+                <CardContent className="p-6 text-center">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 ${colorClasses[action.color as keyof typeof colorClasses]}`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-medium text-gray-900 text-sm">{action.label}</h3>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </div>
