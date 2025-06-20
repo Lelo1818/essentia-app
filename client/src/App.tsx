@@ -38,7 +38,9 @@ function Router() {
       <Route path="/familias" component={Familias} />
       <Route path="/ocr-avancado" component={OcrAvancado} />
       <Route path="/profile" component={Profile} />
-      <Route component={NotFound} />
+      <Route>
+        <NotFound />
+      </Route>
     </Switch>
   );
 }
