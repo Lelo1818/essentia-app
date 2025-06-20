@@ -130,7 +130,7 @@ function KidsDashboard() {
   const totalTasks = weeklyTasks.length;
 
   return (
-    <div className="min-h-screen p-4 pt-20">
+    <div className="min-h-screen p-6 pt-16">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
@@ -379,19 +379,13 @@ function KidsDashboard() {
   );
 }
 
-function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={KidsDashboard} />
-    </Switch>
-  );
-}
+// Removed Router function since we're directly rendering KidsDashboard
 
 export default function FlowKidsApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
-        <Router />
+        <KidsDashboard />
         <Toaster />
       </div>
     </QueryClientProvider>
