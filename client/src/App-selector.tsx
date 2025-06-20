@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { DollarSign, Heart, Brain, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import flowLogo from "@assets/image_1750383244339.png";
+import essentiaLogo from "@assets/image_1750383794230.png";
+import eduvibeLogo from "@assets/image_1750383852695.png";
 import FlowApp from "./App";
 import PurposeApp from "./App-purpose";
 import EduApp from "./App-edu";
@@ -21,11 +24,11 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
           {/* Flow App */}
           <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <DollarSign className="w-10 h-10 text-white" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden">
+                <img src={flowLogo} alt="Flow Logo" className="w-full h-full object-contain" />
               </div>
               <CardTitle className="text-2xl text-gray-900">Flow</CardTitle>
-              <p className="text-gray-600">Gestão Financeira Inteligente</p>
+              <p className="text-gray-600">Your Path to Prosperity</p>
             </CardHeader>
             
             <CardContent className="text-center space-y-4">
@@ -51,11 +54,11 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
           {/* Purpose App */}
           <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Heart className="w-10 h-10 text-white" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden bg-white">
+                <img src={essentiaLogo} alt="Essentia Logo" className="w-full h-full object-contain" />
               </div>
-              <CardTitle className="text-2xl text-gray-900">Desperte Seu Propósito</CardTitle>
-              <p className="text-gray-600">Jornada de Autodescoberta</p>
+              <CardTitle className="text-2xl text-gray-900">Essentia</CardTitle>
+              <p className="text-gray-600">Desperte se Propósito</p>
             </CardHeader>
             
             <CardContent className="text-center space-y-4">
@@ -72,7 +75,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
                 onClick={() => onSelectApp("purpose")}
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-lg py-6"
               >
-                Abrir Desperte Seu Propósito
+                Abrir Essentia
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </CardContent>
@@ -81,11 +84,11 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
           {/* EDU App */}
           <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Brain className="w-10 h-10 text-white" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform overflow-hidden bg-white">
+                <img src={eduvibeLogo} alt="EduVibe Logo" className="w-full h-full object-contain" />
               </div>
-              <CardTitle className="text-2xl text-gray-900">EDU</CardTitle>
-              <p className="text-gray-600">Aprendizado Personalizado</p>
+              <CardTitle className="text-2xl text-gray-900">EduVibe</CardTitle>
+              <p className="text-gray-600">Onde aprender não é tarefa, é experiência</p>
             </CardHeader>
             
             <CardContent className="text-center space-y-4">
@@ -102,7 +105,7 @@ function AppSelector({ onSelectApp }: { onSelectApp: (app: AppType) => void }) {
                 onClick={() => onSelectApp("edu")}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-6"
               >
-                Abrir EDU
+                Abrir EduVibe
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </CardContent>
