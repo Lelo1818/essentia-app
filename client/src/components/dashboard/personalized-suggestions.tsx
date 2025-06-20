@@ -5,31 +5,34 @@ import { Percent, Fuel, TrendingUp } from "lucide-react";
 export default function PersonalizedSuggestions() {
   const suggestions = [
     {
-      title: "Cupom Supermercado",
-      subtitle: "20% OFF",
-      description: "Baseado nos seus gastos com alimentação, encontramos este desconto no Extra.",
-      icon: Percent,
-      color: "green",
-      buttonText: "Usar Cupom",
-      buttonColor: "bg-green-500 hover:bg-green-600"
-    },
-    {
-      title: "Posto mais barato",
-      subtitle: "R$ 0,15/L menor",
-      description: "Shell da Av. Paulista tem combustível R$ 0,15 mais barato que sua média.",
-      icon: Fuel,
-      color: "blue",
-      buttonText: "Ver Localização",
-      buttonColor: "bg-blue-500 hover:bg-blue-600"
-    },
-    {
-      title: "Investimento CDB",
-      subtitle: "120% CDI",
-      description: "Com seu perfil, recomendamos este CDB que rende mais que poupança.",
+      title: "Meta de Economia",
+      subtitle: "R$ 500/mês",
+      description: "Baseado no seu histórico, você pode economizar R$ 500 mensais cortando gastos supérfluos.",
       icon: TrendingUp,
+      color: "green",
+      buttonText: "Ver Detalhes",
+      buttonColor: "bg-green-500 hover:bg-green-600",
+      action: () => window.location.href = '/goals'
+    },
+    {
+      title: "Categoria em Alerta",
+      subtitle: "Alimentação 120%",
+      description: "Seus gastos com alimentação ultrapassaram o orçamento planejado em 20%.",
+      icon: Percent,
+      color: "blue",
+      buttonText: "Revisar Orçamento",
+      buttonColor: "bg-blue-500 hover:bg-blue-600", 
+      action: () => window.location.href = '/planning'
+    },
+    {
+      title: "Oportunidade de Renda",
+      subtitle: "Nova Fonte",
+      description: "Considere adicionar uma fonte de renda extra para atingir suas metas mais rapidamente.",
+      icon: Fuel,
       color: "purple",
-      buttonText: "Saiba Mais",
-      buttonColor: "bg-purple-500 hover:bg-purple-600"
+      buttonText: "Adicionar Renda",
+      buttonColor: "bg-purple-500 hover:bg-purple-600",
+      action: () => window.location.href = '/income'
     }
   ];
 
@@ -63,7 +66,10 @@ export default function PersonalizedSuggestions() {
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 mb-3">{suggestion.description}</p>
-                <Button className={`w-full text-white transition-colors ${suggestion.buttonColor}`}>
+                <Button 
+                  onClick={suggestion.action}
+                  className={`w-full text-white transition-colors ${suggestion.buttonColor}`}
+                >
                   {suggestion.buttonText}
                 </Button>
               </div>

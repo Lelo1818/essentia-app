@@ -169,11 +169,12 @@ function AppContainer() {
     return (
       <AuthGuard>
         <div>
-          <div className="fixed top-4 left-4 z-50">
+          <div className="absolute top-4 right-4 z-50">
             <Button 
               onClick={() => setCurrentApp("selector")}
               variant="outline"
-              className="bg-white/90 backdrop-blur-sm"
+              size="sm"
+              className="bg-white/90 backdrop-blur-sm shadow-lg"
             >
               ← Voltar aos Apps
             </Button>
@@ -188,11 +189,12 @@ function AppContainer() {
     return (
       <AuthGuard>
         <div>
-          <div className="fixed top-4 left-4 z-50">
+          <div className="absolute top-4 right-4 z-50">
             <Button 
               onClick={() => setCurrentApp("selector")}
               variant="outline"
-              className="bg-white/90 backdrop-blur-sm"
+              size="sm"
+              className="bg-white/90 backdrop-blur-sm shadow-lg"
             >
               ← Voltar aos Apps
             </Button>
@@ -207,11 +209,12 @@ function AppContainer() {
     return (
       <AuthGuard>
         <div>
-          <div className="fixed top-4 left-4 z-50">
+          <div className="absolute top-4 right-4 z-50">
             <Button 
               onClick={() => setCurrentApp("selector")}
               variant="outline"
-              className="bg-white/90 backdrop-blur-sm"
+              size="sm"
+              className="bg-white/90 backdrop-blur-sm shadow-lg"
             >
               ← Voltar aos Apps
             </Button>
