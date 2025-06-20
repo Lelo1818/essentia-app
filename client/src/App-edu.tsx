@@ -1,7 +1,6 @@
 import { Route, Switch } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
 
 // Import pages
 import Dashboard from "@/pages/edu/dashboard";
@@ -45,12 +44,10 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-          <Router />
-          <Toaster />
-        </div>
-      </ThemeProvider>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <Router />
+        <Toaster />
+      </div>
     </QueryClientProvider>
   );
 }
