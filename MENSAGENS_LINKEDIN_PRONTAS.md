@@ -15,7 +15,11 @@ Vale um café de 15 minutos? Não estou captando agora, mas sua visão sobre ess
 Abraço!
 ```
 
-**Link VERIFICADO**: https://www.linkedin.com/in/danielallegri/
+**ALTERNATIVAS DE BUSCA**: 
+1. LinkedIn: "Daniel Allegri Magnetis"
+2. Google: "Daniel Allegri CEO Magnetis LinkedIn"
+3. Site da Magnetis: verificar seção "Sobre" ou "Time"
+4. Crunchbase: perfil da Magnetis para encontrar fundadores
 **Status**: ✅ PERFIL ATIVO 
 **Melhor horário**: 9h-11h (manhã, empresário ativo)
 **Conexões em comum**: Verificar antes de enviar
