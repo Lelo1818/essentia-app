@@ -13,7 +13,9 @@ export default function Navigation() {
     { path: "/planning", label: "Planejamento" },
     { path: "/goals", label: "Metas" },
     { path: "/cupons", label: "Cupons" },
+    { path: "/milhas", label: "Milhas" },
     { path: "/educacao", label: "Educação" },
+    { path: "/feedback-ia", label: "IA Insights" },
     { path: "/ofertas", label: "Ofertas" }
   ];
 

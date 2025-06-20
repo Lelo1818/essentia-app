@@ -7,6 +7,7 @@ import ExpenseCategories from "@/components/dashboard/expense-categories";
 import DebtOptimization from "@/components/dashboard/debt-optimization";
 import PersonalizedSuggestions from "@/components/dashboard/personalized-suggestions";
 import RecentTransactions from "@/components/dashboard/recent-transactions";
+import TravelGoalsIntegration from "@/components/dashboard/travel-goals-integration";
 import IncomeModal from "@/components/modals/income-modal";
 import ExpenseCameraModal from "@/components/modals/expense-camera-modal";
 import PlanningModal from "@/components/modals/planning-modal";

@@ -15,6 +15,8 @@ import Ofertas from "@/pages/ofertas";
 import Cupons from "@/pages/cupons";
 import Educacao from "@/pages/educacao";
 import Dividas from "@/pages/dividas";
+import Milhas from "@/pages/milhas";
+import FeedbackIA from "@/pages/feedback-ia";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -29,6 +31,8 @@ function Router() {
       <Route path="/cupons" component={Cupons} />
       <Route path="/educacao" component={Educacao} />
       <Route path="/dividas" component={Dividas} />
+      <Route path="/milhas" component={Milhas} />
+      <Route path="/feedback-ia" component={FeedbackIA} />
       <Route path="/profile" component={Profile} />
       <Route component={NotFound} />
     </Switch>

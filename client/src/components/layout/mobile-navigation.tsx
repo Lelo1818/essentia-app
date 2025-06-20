@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, Plus, Camera, PieChart, Trophy, Gift, CreditCard, BookOpen, Percent } from "lucide-react";
+import { Home, Plus, Camera, PieChart, Trophy, Gift, CreditCard, BookOpen, Percent, Plane, Brain } from "lucide-react";
 
 export default function MobileNavigation() {
   const [location] = useLocation();
@@ -7,9 +7,9 @@ export default function MobileNavigation() {
   const navItems = [
     { path: "/", icon: Home, label: "Home" },
     { path: "/expenses", icon: Camera, label: "Gastos" },
-    { path: "/dividas", icon: CreditCard, label: "Dívidas" },
+    { path: "/milhas", icon: Plane, label: "Milhas" },
     { path: "/cupons", icon: Percent, label: "Cupons" },
-    { path: "/educacao", icon: BookOpen, label: "Educação" },
+    { path: "/feedback-ia", icon: Brain, label: "IA" },
     { path: "/goals", icon: Trophy, label: "Metas" }
   ];
 
