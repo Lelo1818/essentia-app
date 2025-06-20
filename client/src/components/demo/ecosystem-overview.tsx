@@ -351,10 +351,17 @@ export default function EcosystemOverview() {
             Ecossistema completo aguardando investimento para expansão global
           </p>
           <div className="flex justify-center space-x-4">
-            <Button className="bg-white text-indigo-600 hover:bg-gray-100">
-              Ver Demonstração
+            <Button 
+              className="bg-white text-indigo-600 hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+              onClick={() => window.location.href = '/dashboard'}
+            >
+              Ver Demonstração Ao Vivo
             </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white/10">
+            <Button 
+              variant="outline" 
+              className="border-white text-white hover:bg-white/10 transition-all duration-200"
+              onClick={() => window.open('/pitch-deck.pdf', '_blank')}
+            >
               Baixar Pitch Deck
             </Button>
           </div>

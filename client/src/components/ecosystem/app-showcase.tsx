@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,9 @@ import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
 import { mockEduData } from "@/data/mock-edu-data";
 import { mockPurposeData } from "@/data/mock-purpose-data";
+import { SwipeableCard } from "@/components/enhanced/gesture-interactions";
+import { GlowEffect, CounterAnimation, SparkleEffect } from "@/components/enhanced/micro-interactions";
+import { InteractiveButton } from "@/components/enhanced/interactive-buttons";
 import { 
   ArrowRight,
   Clock,
@@ -18,6 +22,7 @@ import {
 
 export default function AppShowcase() {
   const currentUser = getCurrentUser();
+  const [sparkleStates, setSparkleStates] = useState([false, false, false]);
 
   const showcaseData = [
     {
@@ -84,18 +89,25 @@ export default function AppShowcase() {
       {/* Apps Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {showcaseData.map((appData, i) => (
-          <Card key={i} className={`bg-gradient-to-br ${appData.bgGradient} border-l-4 hover:shadow-xl transition-all`}>
-            <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                <AppLogo app={appData.app as "flow" | "edu" | "purpose"} size="xl" />
-              </div>
-              <CardTitle className="text-2xl text-gray-800">
-                <AppName app={appData.app as "flow" | "edu" | "purpose"} />
-              </CardTitle>
-              <Badge className="bg-white/50 text-gray-700 mx-auto">
-                {appData.tagline}
-              </Badge>
-            </CardHeader>
+          <SwipeableCard
+            key={i}
+            onSwipeRight={() => window.location.href = `/${appData.app}`}
+            onSwipeLeft={() => setSparkleStates(prev => prev.map((state, index) => index === i ? true : state))}
+          >
+            <GlowEffect glowColor={appData.app === "flow" ? "green" : appData.app === "edu" ? "blue" : "purple"}>
+              <SparkleEffect trigger={sparkleStates[i]} className="h-full">
+                <Card className={`bg-gradient-to-br ${appData.bgGradient} border-l-4 hover:shadow-xl transition-all h-full`}>
+                  <CardHeader className="text-center">
+                    <div className="flex justify-center mb-4">
+                      <AppLogo app={appData.app as "flow" | "edu" | "purpose"} size="xl" />
+                    </div>
+                    <CardTitle className="text-2xl text-gray-800">
+                      <AppName app={appData.app as "flow" | "edu" | "purpose"} />
+                    </CardTitle>
+                    <Badge className="bg-white/50 text-gray-700 mx-auto">
+                      {appData.tagline}
+                    </Badge>
+                  </CardHeader>
             
             <CardContent className="space-y-6">
               <p className="text-gray-700 text-center leading-relaxed">
@@ -108,13 +120,13 @@ export default function AppShowcase() {
                   <>
                     <div className="text-center p-3 bg-white/50 rounded-lg">
                       <div className="text-lg font-bold text-green-600">
-                        R$ {appData.stats.balance.toLocaleString('pt-BR')}
+                        R$ <CounterAnimation value={appData.stats.balance} />
                       </div>
                       <div className="text-xs text-gray-600">Saldo</div>
                     </div>
                     <div className="text-center p-3 bg-white/50 rounded-lg">
                       <div className="text-lg font-bold text-green-600">
-                        R$ {appData.stats.investments.toLocaleString('pt-BR')}
+                        R$ <CounterAnimation value={appData.stats.investments} />
                       </div>
                       <div className="text-xs text-gray-600">Investido</div>
                     </div>
@@ -125,13 +137,13 @@ export default function AppShowcase() {
                   <>
                     <div className="text-center p-3 bg-white/50 rounded-lg">
                       <div className="text-lg font-bold text-blue-600">
-                        {appData.stats.courses}
+                        <CounterAnimation value={appData.stats.courses} />
                       </div>
                       <div className="text-xs text-gray-600">Cursos</div>
                     </div>
                     <div className="text-center p-3 bg-white/50 rounded-lg">
                       <div className="text-lg font-bold text-blue-600">
-                        {appData.stats.streak}
+                        <CounterAnimation value={appData.stats.streak} />
                       </div>
                       <div className="text-xs text-gray-600">Dias</div>
                     </div>
@@ -169,12 +181,19 @@ export default function AppShowcase() {
               </div>
 
               {/* Action Button */}
-              <Button className={`w-full bg-gradient-to-r ${appData.color} hover:opacity-90 text-white`}>
+              <InteractiveButton
+                gradient
+                className={`w-full bg-gradient-to-r ${appData.color} text-white`}
+                onClick={() => window.location.href = `/${appData.app}`}
+                icon={ArrowRight}
+              >
                 Abrir {appData.name}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              </InteractiveButton>
             </CardContent>
-          </Card>
+                </Card>
+              </SparkleEffect>
+            </GlowEffect>
+          </SwipeableCard>
         ))}
       </div>
 

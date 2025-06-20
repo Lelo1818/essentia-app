@@ -1,10 +1,60 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
-import UserAvatar from "@/components/ui/user-avatar";
+import { Badge } from "@/components/ui/badge";
+import { AppLogo, AppName } from "@/components/ui/app-logo";
+import { UserAvatar } from "@/components/ui/user-avatar";
+import { getCurrentUser } from "@/data/mock-users";
+import { cn } from "@/lib/utils";
+import { 
+  Home, 
+  TrendingUp, 
+  GraduationCap, 
+  Heart,
+  Settings,
+  Bell,
+  Search,
+  User,
+  Menu,
+  Crown
+} from "lucide-react";
 
 export default function Navigation() {
   const [location] = useLocation();
+  const currentUser = getCurrentUser();
+
+  const navigationItems = [
+    {
+      href: "/",
+      label: "Dashboard",
+      icon: Home,
+      badge: null,
+      description: "Visão geral do ecossistema"
+    },
+    {
+      href: "/flow",
+      label: "Flow",
+      icon: TrendingUp,
+      badge: null,
+      description: "Gestão financeira inteligente",
+      app: "flow" as const
+    },
+    {
+      href: "/edu",
+      label: "EduVie",
+      icon: GraduationCap,
+      badge: "3",
+      description: "Educação personalizada com IA",
+      app: "edu" as const
+    },
+    {
+      href: "/purpose",
+      label: "Essentia",
+      icon: Heart,
+      badge: null,
+      description: "Jornada de autoconhecimento",
+      app: "purpose" as const
+    }
+  ];
 
   const navItems = [
     { path: "/", label: "Dashboard" },

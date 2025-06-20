@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "@/components/layout/navigation";
 import MobileNavigation from "@/components/layout/mobile-navigation";
+import { FloatingAIAssistant, ScrollToTop, LiveStats } from "@/components/enhanced/floating-elements";
 import Dashboard from "@/pages/dashboard";
 import Income from "@/pages/income";
 import Expenses from "@/pages/expenses";
