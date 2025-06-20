@@ -308,6 +308,7 @@ export default function Clareira() {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </MediaIntegration>
   );
 }
