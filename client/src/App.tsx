@@ -17,6 +17,8 @@ import Educacao from "@/pages/educacao";
 import Dividas from "@/pages/dividas";
 import Milhas from "@/pages/milhas";
 import FeedbackIA from "@/pages/feedback-ia";
+import Familias from "@/pages/familias";
+import OcrAvancado from "@/pages/ocr-avancado";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -33,6 +35,8 @@ function Router() {
       <Route path="/dividas" component={Dividas} />
       <Route path="/milhas" component={Milhas} />
       <Route path="/feedback-ia" component={FeedbackIA} />
+      <Route path="/familias" component={Familias} />
+      <Route path="/ocr-avancado" component={OcrAvancado} />
       <Route path="/profile" component={Profile} />
       <Route component={NotFound} />
     </Switch>

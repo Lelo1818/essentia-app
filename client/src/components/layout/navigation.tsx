@@ -16,6 +16,8 @@ export default function Navigation() {
     { path: "/milhas", label: "Milhas" },
     { path: "/educacao", label: "Educação" },
     { path: "/feedback-ia", label: "IA Insights" },
+    { path: "/familias", label: "Família" },
+    { path: "/ocr-avancado", label: "OCR Foto" },
     { path: "/ofertas", label: "Ofertas" }
   ];
 
