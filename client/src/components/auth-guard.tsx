@@ -101,8 +101,8 @@ export function AuthGuard({ children }: AuthGuardProps) {
           </Button>
           
           <div className="text-center text-sm text-gray-500 pt-4 border-t">
-            <p>Senha: <span className="font-mono bg-gray-100 px-2 py-1 rounded">123456</span></p>
-            <p className="mt-2 font-medium">Flow • Essentia • EduVibe</p>
+            <p className="font-medium">Flow • Essentia • EduVibe</p>
+            <p className="mt-2 text-xs">Três aplicativos disponíveis</p>
           </div>
         </CardContent>
       </Card>

@@ -75,21 +75,21 @@ export default function PresentationApp() {
             
             <div className="flex justify-center space-x-8">
               <div className="text-center space-y-2">
-                <div className="w-20 h-20 rounded-full mx-auto overflow-hidden bg-white shadow-lg">
+                <div className="w-20 h-20 rounded-xl mx-auto overflow-hidden bg-white shadow-lg p-2">
                   <img src={flowLogo} alt="Flow" className="w-full h-full object-contain" />
                 </div>
                 <p className="font-medium">Flow</p>
                 <p className="text-sm text-gray-500">Fintech</p>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-20 h-20 rounded-full mx-auto overflow-hidden bg-white shadow-lg">
+                <div className="w-20 h-20 rounded-xl mx-auto overflow-hidden bg-white shadow-lg p-2">
                   <img src={essentiaLogo} alt="Essentia" className="w-full h-full object-contain" />
                 </div>
                 <p className="font-medium">Essentia</p>
                 <p className="text-sm text-gray-500">Bem-estar</p>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-20 h-20 rounded-full mx-auto overflow-hidden bg-white shadow-lg">
+                <div className="w-20 h-20 rounded-xl mx-auto overflow-hidden bg-white shadow-lg p-2">
                   <img src={eduvibeLogo} alt="EduVibe" className="w-full h-full object-contain" />
                 </div>
                 <p className="font-medium">EduVibe</p>
@@ -183,7 +183,7 @@ export default function PresentationApp() {
             <div className="grid md:grid-cols-3 gap-6">
               <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto overflow-hidden bg-white shadow-lg mb-4">
+                  <div className="w-16 h-16 rounded-xl mx-auto overflow-hidden bg-white shadow-lg mb-4 p-2">
                     <img src={flowLogo} alt="Flow" className="w-full h-full object-contain" />
                   </div>
                   <CardTitle className="text-blue-700">Flow - Fintech Pessoal</CardTitle>
@@ -210,7 +210,7 @@ export default function PresentationApp() {
 
               <Card className="border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto overflow-hidden bg-white shadow-lg mb-4">
+                  <div className="w-16 h-16 rounded-xl mx-auto overflow-hidden bg-white shadow-lg mb-4 p-2">
                     <img src={essentiaLogo} alt="Essentia" className="w-full h-full object-contain" />
                   </div>
                   <CardTitle className="text-purple-700">Essentia - Bem-estar Digital</CardTitle>
@@ -237,7 +237,7 @@ export default function PresentationApp() {
 
               <Card className="border-green-200 bg-gradient-to-br from-green-50 to-emerald-50">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto overflow-hidden bg-white shadow-lg mb-4">
+                  <div className="w-16 h-16 rounded-xl mx-auto overflow-hidden bg-white shadow-lg mb-4 p-2">
                     <img src={eduvibeLogo} alt="EduVibe" className="w-full h-full object-contain" />
                   </div>
                   <CardTitle className="text-green-700">EduVibe - EdTech Inclusiva</CardTitle>
