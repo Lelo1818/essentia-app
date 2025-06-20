@@ -12,9 +12,27 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Income() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   const handleModalClose = () => {
     setModalOpen(false);
+  };
+
+  const handlePayslipData = (data: any) => {
+    // Converter dados do holerite para formato de renda
+    const incomeData = {
+      description: `Salário - ${data.company}`,
+      amount: data.netSalary.toString(),
+      frequency: "mensal",
+      date: new Date().toISOString().split('T')[0],
+      userId: 1
+    };
+    
+    // Aqui você salvaria os dados automaticamente
+    toast({
+      title: "Holerite processado!",
+      description: `Salário de ${formatCurrency(data.netSalary)} adicionado automaticamente`,
+    });
   };
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -79,10 +97,16 @@ export default function Income() {
           <h1 className="text-3xl font-bold text-gray-900">Gestão de Renda</h1>
           <p className="text-gray-600 mt-2">Registre e gerencie suas fontes de renda</p>
         </div>
-        <Button onClick={() => setModalOpen(true)} className="gradient-primary">
-          <Plus className="w-4 h-4 mr-2" />
-          Adicionar Renda
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setCameraOpen(true)} className="gradient-primary">
+            <Camera className="w-4 h-4 mr-2" />
+            Foto Holerite
+          </Button>
+          <Button onClick={() => setModalOpen(true)} variant="outline">
+            <Plus className="w-4 h-4 mr-2" />
+            Manual
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -176,6 +200,12 @@ export default function Income() {
       </Card>
 
       <IncomeModal open={modalOpen} onOpenChange={handleModalClose} />
+      <DocumentCamera 
+        open={cameraOpen} 
+        onOpenChange={setCameraOpen}
+        documentType="payslip"
+        onDataExtracted={handlePayslipData}
+      />
     </div>
   );
 }

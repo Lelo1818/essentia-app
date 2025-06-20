@@ -29,13 +29,22 @@ import {
 } from "lucide-react";
 import { formatCurrency } from "@/lib/financial-utils";
 import { useToast } from "@/hooks/use-toast";
+import DocumentCamera from "@/components/camera/document-camera";
 
 export default function Invoices() {
   const [newInvoiceOpen, setNewInvoiceOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [viewInvoiceOpen, setViewInvoiceOpen] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  const handleInvoiceData = (data: any) => {
+    toast({
+      title: "Nota fiscal processada!",
+      description: `NF ${data.invoiceNumber} de ${formatCurrency(data.amount)} identificada`,
+    });
+  };
 
   // Dados do prestador de serviços (Marcelo)
   const serviceProvider = {
@@ -160,9 +169,13 @@ export default function Invoices() {
             <p className="text-gray-600 mt-2">Gerencie suas NFS-e para prestação de serviços</p>
           </div>
           <div className="flex gap-3">
-            <Button onClick={handleNewInvoice} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={() => setCameraOpen(true)} className="bg-blue-600 hover:bg-blue-700">
+              <Camera className="w-4 h-4 mr-2" />
+              Foto Nota Fiscal
+            </Button>
+            <Button onClick={handleNewInvoice} variant="outline">
               <Plus className="w-4 h-4 mr-2" />
-              Nova NFS-e
+              Manual
             </Button>
             <Button variant="outline">
               <Calculator className="w-4 h-4 mr-2" />
@@ -486,6 +499,14 @@ export default function Invoices() {
             </div>
           </DialogContent>
         </Dialog>
+
+        {/* Camera Modal */}
+        <DocumentCamera 
+          open={cameraOpen} 
+          onOpenChange={setCameraOpen}
+          documentType="invoice"
+          onDataExtracted={handleInvoiceData}
+        />
 
         {/* Modal Visualizar NFS-e */}
         <Dialog open={viewInvoiceOpen} onOpenChange={setViewInvoiceOpen}>

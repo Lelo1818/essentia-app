@@ -25,11 +25,21 @@ import {
   TrendingDown
 } from "lucide-react";
 import { formatCurrency } from "@/lib/financial-utils";
+import { BankLogos, PaymentMethods } from "@/assets/bank-logos";
+import DocumentCamera from "@/components/camera/document-camera";
 
 export default function BankAccount() {
   const [showBalance, setShowBalance] = useState(true);
   const [transferModalOpen, setTransferModalOpen] = useState(false);
   const [filterPeriod, setFilterPeriod] = useState("30days");
+  const [cameraOpen, setCameraOpen] = useState(false);
+
+  const handleStatementData = (data: any) => {
+    toast({
+      title: "Extrato processado!",
+      description: `${data.transactions?.length || 0} transações identificadas`,
+    });
+  };
 
   // Dados das contas bancárias
   const bankAccounts = [
@@ -187,13 +197,19 @@ export default function BankAccount() {
               {showBalance ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
               {showBalance ? "Ocultar" : "Mostrar"} Saldos
             </Button>
-            <Button 
-              className="bg-blue-600 hover:bg-blue-700"
-              onClick={() => setTransferModalOpen(true)}
-            >
-              <ArrowUpRight className="w-4 h-4 mr-2" />
-              Transferir
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => setCameraOpen(true)} className="bg-blue-600 hover:bg-blue-700">
+                <Camera className="w-4 h-4 mr-2" />
+                Foto Extrato
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => setTransferModalOpen(true)}
+              >
+                <ArrowUpRight className="w-4 h-4 mr-2" />
+                Transferir
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -538,6 +554,14 @@ export default function BankAccount() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Camera Modal */}
+        <DocumentCamera 
+          open={cameraOpen} 
+          onOpenChange={setCameraOpen}
+          documentType="bank-statement"
+          onDataExtracted={handleStatementData}
+        />
 
         {/* Transfer Modal */}
         <Dialog open={transferModalOpen} onOpenChange={setTransferModalOpen}>

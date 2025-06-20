@@ -24,11 +24,21 @@ import {
   Target
 } from "lucide-react";
 import { formatCurrency } from "@/lib/financial-utils";
+import { BankLogos, CardFlags } from "@/assets/bank-logos";
+import DocumentCamera from "@/components/camera/document-camera";
 
 export default function CreditCards() {
   const [showCardNumbers, setShowCardNumbers] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
+
+  const handleBillData = (data: any) => {
+    toast({
+      title: "Fatura processada!",
+      description: `Fatura ${data.bank} de ${formatCurrency(data.totalAmount)} identificada`,
+    });
+  };
 
   // Dados dos cartões de crédito do usuário
   const creditCards = [
@@ -168,10 +178,16 @@ export default function CreditCards() {
               {showCardNumbers ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
               {showCardNumbers ? "Ocultar" : "Mostrar"} Números
             </Button>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Novo Cartão
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => setCameraOpen(true)} className="bg-blue-600 hover:bg-blue-700">
+                <Camera className="w-4 h-4 mr-2" />
+                Foto Fatura
+              </Button>
+              <Button variant="outline">
+                <Plus className="w-4 h-4 mr-2" />
+                Novo Cartão
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -459,6 +475,14 @@ export default function CreditCards() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Camera Modal */}
+        <DocumentCamera 
+          open={cameraOpen} 
+          onOpenChange={setCameraOpen}
+          documentType="credit-card"
+          onDataExtracted={handleBillData}
+        />
 
         {/* Payment Modal */}
         <Dialog open={paymentModalOpen} onOpenChange={setPaymentModalOpen}>

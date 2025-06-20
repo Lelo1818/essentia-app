@@ -23,12 +23,21 @@ import {
 import { formatCurrency } from "@/lib/financial-utils";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import DocumentCamera from "@/components/camera/document-camera";
 
 export default function Taxes() {
   const [calculatorOpen, setCalculatorOpen] = useState(false);
   const [documentUploadOpen, setDocumentUploadOpen] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  const handleTaxDocumentData = (data: any) => {
+    toast({
+      title: "Documento fiscal processado!",
+      description: `${data.documentType} de ${data.year} identificado`,
+    });
+  };
 
   const { data: summary } = useQuery({
     queryKey: ["/api/financial-summary"],
@@ -94,7 +103,11 @@ export default function Taxes() {
             <p className="text-gray-600 mt-2">Otimize seus impostos e mantenha tudo em dia com o Fisco</p>
           </div>
           <div className="flex gap-3">
-            <Button onClick={() => setCalculatorOpen(true)} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={() => setCameraOpen(true)} className="bg-blue-600 hover:bg-blue-700">
+              <Camera className="w-4 h-4 mr-2" />
+              Foto Documento
+            </Button>
+            <Button onClick={() => setCalculatorOpen(true)} variant="outline">
               <Calculator className="w-4 h-4 mr-2" />
               Simular IR
             </Button>
@@ -550,6 +563,14 @@ export default function Taxes() {
             </div>
           </DialogContent>
         </Dialog>
+
+        {/* Camera Modal */}
+        <DocumentCamera 
+          open={cameraOpen} 
+          onOpenChange={setCameraOpen}
+          documentType="tax-document"
+          onDataExtracted={handleTaxDocumentData}
+        />
 
         {/* Document Upload Modal */}
         <Dialog open={documentUploadOpen} onOpenChange={setDocumentUploadOpen}>
