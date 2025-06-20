@@ -51,7 +51,7 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Force development mode for now to ensure frontend loads
+  // Always setup Vite for external access during development
   await setupVite(app, server);
 
   // ALWAYS serve the app on port 5000
