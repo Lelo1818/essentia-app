@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import path from "path";
 import { 
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
   insertGoalSchema, insertAchievementSchema
@@ -8,6 +9,10 @@ import {
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Servir arquivo HTML estático para EduVie
+  app.get('/eduvie', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'eduvie.html'));
+  });
   // Mock user ID for development (in real app, this would come from authentication)
   const getCurrentUserId = () => 1;
 
