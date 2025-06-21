@@ -32,14 +32,13 @@ import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
 import KidsApp from "./App-kids";
 import EcosystemApp from "./App-ecosystem";
-import FlowSimple from "./pages/flow-simple";
-import KidsSimple from "./pages/kids-simple";
+
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
-      <Route path="/flow" component={FlowSimple} />
+      <Route path="/flow" component={Dashboard} />
       <Route path="/income" component={Income} />
       <Route path="/expenses" component={Expenses} />
       <Route path="/planning" component={Planning} />
@@ -50,7 +49,7 @@ function Router() {
       <Route path="/agendar-pagamentos" component={AgendarPagamentos} />
       <Route path="/simular-cenarios" component={SimularCenarios} />
       <Route path="/renegociar-dividas" component={RenegociarDividas} />
-      <Route path="/kids" component={KidsSimple} />
+      <Route path="/kids" component={KidsApp} />
       <Route path="/ofertas" component={Ofertas} />
       <Route path="/cupons" component={Cupons} />
       <Route path="/educacao" component={Educacao} />

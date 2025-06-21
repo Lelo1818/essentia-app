@@ -205,32 +205,32 @@ function KidsDashboard() {
   }
 
   return (
-    <div className="min-h-screen p-6 pt-16">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen p-4 md:p-6 pt-16">
+      <div className="max-w-6xl mx-auto space-y-4 md:space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center space-x-3">
             <div className="p-3 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full">
               <PiggyBank className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
               Flow Kids
             </h1>
           </div>
-          <p className="text-lg text-gray-600">
+          <p className="text-base md:text-lg text-gray-600">
             Aprenda sobre dinheiro de forma divertida! 🌟
           </p>
         </div>
 
         {/* Player Stats */}
         <Card className="border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <CardContent className="p-4 md:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600">Level {level}</div>
-                <div className="text-purple-500">Super Poupador</div>
-                <Progress value={xpProgress} className="mt-2 h-3" />
-                <div className="text-sm text-gray-600 mt-1">{xpProgress}% para próximo level</div>
+                <div className="text-2xl md:text-3xl font-bold text-purple-600">Level {level}</div>
+                <div className="text-purple-500 text-sm md:text-base">Super Poupador</div>
+                <Progress value={xpProgress} className="mt-2 h-2 md:h-3" />
+                <div className="text-xs md:text-sm text-gray-600 mt-1">{xpProgress}% para próximo level</div>
               </div>
               
               <div className="text-center">
