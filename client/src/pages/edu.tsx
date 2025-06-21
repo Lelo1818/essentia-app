@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Avatar3DEdu from "@/components/edu/avatar-3d-edu";
+import BearAvatar from "@/components/edu/bear-avatar";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
@@ -254,6 +255,10 @@ export default function Edu() {
           <TabsTrigger value="prompts" className="flex items-center space-x-1">
             <Zap className="w-4 h-4" />
             <span>Prompts IA</span>
+          </TabsTrigger>
+          <TabsTrigger value="avatar" className="flex items-center space-x-1">
+            <Bot className="w-4 h-4" />
+            <span>Avatar</span>
           </TabsTrigger>
         </TabsList>
 

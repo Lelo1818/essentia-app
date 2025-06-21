@@ -17,6 +17,7 @@ import JourneyPhases from "@/pages/purpose/journey-phases";
 import { TransitionJourney } from "@/components/purpose/transition-journey";
 import { AvatarJourney } from "@/components/purpose/avatar-journey";
 import { Avatar3DDisplay } from "@/components/purpose/avatar-3d-display";
+import ShamanAvatar from "@/components/purpose/shaman-avatar";
 import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
 import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
@@ -259,7 +260,16 @@ export default function Purpose() {
         </TabsContent>
 
         <TabsContent value="avatar" className="mt-6">
-          <Avatar3DDisplay />
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-center">Avatar Místico Original</h3>
+              <Avatar3DDisplay />
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-center">Xamã Ancestral - Guia Espiritual</h3>
+              <ShamanAvatar isChanneling={false} />
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="breathing" className="mt-6">
