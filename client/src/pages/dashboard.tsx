@@ -64,14 +64,24 @@ export default function Dashboard() {
 
   const { data: summary, isLoading } = useQuery<FinancialSummary>({
     queryKey: ["/api/financial-summary"],
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    staleTime: Infinity,
   });
 
   const { data: goals = [] } = useQuery({
     queryKey: ["/api/goals"],
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   const { data: achievements = [] } = useQuery({
     queryKey: ["/api/achievements"],
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   if (isLoading) {
