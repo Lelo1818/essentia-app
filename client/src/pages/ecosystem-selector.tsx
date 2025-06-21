@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart, Calendar, CheckCircle, Clock, Lightbulb, Rocket, Star } from "lucide-react";
+import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart, Calendar, CheckCircle, Clock, Lightbulb, Rocket, Star, User } from "lucide-react";
 
 // Simple audio feedback functions
 const playButtonSound = () => {
@@ -129,8 +129,11 @@ export default function EcosystemSelector() {
           <p className="text-lg md:text-2xl text-gray-300 mb-4 max-w-4xl mx-auto px-4">
             Quatro aplicativos revolucionários que transformam vida, educação e finanças
           </p>
-          <p className="text-lg text-purple-300 mb-8">
-            Fundado por Marcelo Rymer (Lelo) - Tecnologia de ponta + Conteúdo transformacional = Impacto social massivo
+          <p className="text-lg text-purple-300 mb-4">
+            Fundado por Marcelo Rymer (Lelão) - Empreendedor com 20+ anos de experiência
+          </p>
+          <p className="text-md text-gray-400 mb-8 max-w-2xl mx-auto">
+            Plataformas que integram bem-estar, educação e propósito com tecnologia que toca a alma
           </p>
           
           {/* Stats */}
