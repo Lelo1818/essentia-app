@@ -36,6 +36,9 @@ import FlowApp from "./App-flow";
 import EduApp from "./App-edu";
 import PurposeApp from "./App-purpose";
 import MobileTest from "./pages/mobile-test";
+import MinimalTest from "./pages/minimal-test";
+import SimpleApp from "./App-simple";
+import SuperSimple from "./pages/super-simple";
 
 
 function Router() {
@@ -49,6 +52,11 @@ function Router() {
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/investor-demo" component={InvestorDemo} />
       <Route path="/mobile-test" component={MobileTest} />
+      <Route path="/minimal-test" component={MinimalTest} />
+      <Route path="/simple-test" component={SimpleApp} />
+      <Route path="/kids-simple" component={SimpleApp} />
+      <Route path="/flow-simple" component={SimpleApp} />
+      <Route path="/super-simple" component={SuperSimple} />
       <Route path="/income" component={Income} />
       <Route path="/expenses" component={Expenses} />
       <Route path="/planning" component={Planning} />

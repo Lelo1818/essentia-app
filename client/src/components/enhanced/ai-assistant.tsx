@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { 
-  MessageCircle, Send, Bot, User, Lightbulb, TrendingUp,
-  PieChart, Target, AlertTriangle, CheckCircle, X
+  MessageCircle, Send, User, Lightbulb, TrendingUp,
+  PieChart, Target, AlertTriangle, CheckCircle, X, Brain
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -202,7 +202,7 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
           )}
           size="icon"
         >
-          <Bot className="w-6 h-6" />
+          <Brain className="w-6 h-6" />
         </Button>
       </div>
     );
@@ -248,7 +248,7 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
                 >
                   <div className="flex items-start space-x-2">
                     {message.type === "assistant" && (
-                      <Bot className={cn("w-4 h-4 mt-0.5", config.color)} />
+                      <Brain className={cn("w-4 h-4 mt-0.5", config.color)} />
                     )}
                     <div className="flex-1">
                       <p className="whitespace-pre-line">{message.content}</p>
@@ -290,7 +290,7 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
               <div className="flex justify-start">
                 <div className={cn("rounded-lg p-3", config.bgColor, "border", config.borderColor)}>
                   <div className="flex items-center space-x-2">
-                    <Bot className={cn("w-4 h-4", config.color)} />
+                    <Brain className={cn("w-4 h-4", config.color)} />
                     <div className="flex space-x-1">
                       {[0, 1, 2].map((i) => (
                         <div

@@ -260,7 +260,7 @@ export default function Edu() {
             <span>Prompts IA</span>
           </TabsTrigger>
           <TabsTrigger value="avatar" className="flex items-center space-x-1">
-            <Bot className="w-4 h-4" />
+            <Brain className="w-4 h-4" />
             <span>Avatar</span>
           </TabsTrigger>
         </TabsList>
