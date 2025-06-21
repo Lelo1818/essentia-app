@@ -22,6 +22,8 @@ import QuickNavButton from "@/components/shared/quick-nav-button";
 import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
 import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
+import JourneyContinuity from "@/components/purpose/journey-continuity";
+import AdaptiveCompanion from "@/components/purpose/adaptive-companion";
 import BiometricSensors from "@/components/purpose/biometric-sensors";
 import AITherapist from "@/components/purpose/ai-therapist";
 import { 
@@ -259,7 +261,27 @@ export default function Purpose() {
         </TabsList>
 
         <TabsContent value="journey" className="mt-6">
-          <JourneyPhases />
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <JourneyContinuity 
+                userId={currentUser.id}
+                currentPhase="exploration"
+                progress={currentUser.stats.purpose.journeyProgress}
+              />
+            </div>
+            <div>
+              <AdaptiveCompanion
+                userName={currentUser.name}
+                recentActivity={["meditation", "reflection", "insight"]}
+                mood="contemplative"
+                timeOfDay={
+                  new Date().getHours() < 12 ? 'morning' :
+                  new Date().getHours() < 18 ? 'afternoon' :
+                  new Date().getHours() < 22 ? 'evening' : 'night'
+                }
+              />
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="transition" className="mt-6">
