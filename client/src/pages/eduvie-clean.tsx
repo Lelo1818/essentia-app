@@ -254,23 +254,23 @@ export default function EduVieClean() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-4 md:px-6 py-4 md:py-8">
         {/* Header Profissional */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 md:mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 EduVie Pro
               </h1>
-              <p className="text-lg text-gray-600 mt-2">
+              <p className="text-sm md:text-lg text-gray-600 mt-1 md:mt-2">
                 Plataforma Inteligente de Aprendizado Personalizado
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500 mb-2">Meta Mensal</p>
-              <div className="flex items-center justify-end gap-3">
-                <Progress value={(stats.currentMonth / stats.monthlyGoal) * 100} className="w-32 h-3" />
-                <span className="text-sm font-bold text-gray-800">
+            <div className="text-left md:text-right">
+              <p className="text-xs md:text-sm text-gray-500 mb-2">Meta Mensal</p>
+              <div className="flex items-center md:justify-end gap-3">
+                <Progress value={(stats.currentMonth / stats.monthlyGoal) * 100} className="w-24 md:w-32 h-2 md:h-3" />
+                <span className="text-xs md:text-sm font-bold text-gray-800">
                   {stats.currentMonth}/{stats.monthlyGoal}h
                 </span>
               </div>
@@ -279,16 +279,16 @@ export default function EduVieClean() {
         </div>
 
         {/* Cards de Estatísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-blue-100 rounded-xl">
-                  <BookOpen className="w-6 h-6 text-blue-600" />
+            <CardContent className="p-3 md:p-6">
+              <div className="flex flex-col md:flex-row items-center md:gap-3 text-center md:text-left">
+                <div className="p-2 md:p-3 bg-blue-100 rounded-xl mb-2 md:mb-0">
+                  <BookOpen className="w-4 h-4 md:w-6 md:h-6 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Cursos Ativos</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.totalCourses}</p>
+                  <p className="text-xs md:text-sm text-gray-600">Cursos Ativos</p>
+                  <p className="text-lg md:text-2xl font-bold text-gray-900">{stats.totalCourses}</p>
                 </div>
               </div>
             </CardContent>
@@ -353,10 +353,11 @@ export default function EduVieClean() {
 
         {/* Navegação Principal */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-5 bg-white/90 backdrop-blur-sm shadow-lg rounded-xl p-2">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
-              <Target className="w-4 h-4" />
-              Dashboard
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 bg-white/90 backdrop-blur-sm shadow-lg rounded-xl p-1 md:p-2 overflow-x-auto">
+            <TabsTrigger value="dashboard" className="flex items-center gap-1 md:gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-2 md:px-4 py-2 md:py-3 transition-all duration-200 text-xs md:text-sm">
+              <Target className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Dashboard</span>
+              <span className="sm:hidden">Home</span>
             </TabsTrigger>
             <TabsTrigger value="courses" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <BookOpen className="w-4 h-4" />
