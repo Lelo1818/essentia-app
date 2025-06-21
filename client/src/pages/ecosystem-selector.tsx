@@ -162,7 +162,7 @@ export default function EcosystemSelector() {
             <Link href="/epic-demo">
               <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg">
                 <Play className="w-5 h-5 mr-2" />
-                Demo Épica das Galáxias
+                Demo Executivo Premium
               </Button>
             </Link>
             <Link href="/investor-demo">
@@ -401,9 +401,9 @@ export default function EcosystemSelector() {
               <div className="text-2xl font-bold text-yellow-400 mb-6">
                 Sua decisão hoje define se você será parte desta revolução.
               </div>
-              <div className="flex flex-col md:flex-row justify-center gap-4 px-4">
+              <div className="flex flex-col gap-3 max-w-md mx-auto px-4">
                 <Button 
-                  className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:opacity-90 text-white px-6 py-3 text-base md:text-lg w-full md:w-auto"
+                  className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:opacity-90 text-white py-3 text-base w-full"
                   onClick={() => {
                     playSuccessSound();
                     setTimeout(() => window.location.href = '/investor-demo', 200);
@@ -414,7 +414,7 @@ export default function EcosystemSelector() {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="text-yellow-400 border-yellow-400 px-6 py-3 text-base md:text-lg w-full md:w-auto"
+                  className="text-yellow-400 border-yellow-400 py-3 text-base w-full"
                   onClick={() => {
                     playSuccessSound();
                     setTimeout(() => window.location.href = '/epic-demo', 200);
