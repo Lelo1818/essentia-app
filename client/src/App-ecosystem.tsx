@@ -7,6 +7,7 @@ import PurposeApp from "@/pages/purpose";
 import KidsApp from "@/pages/kids";
 import EpicDemo from "@/pages/epic-demo";
 
+
 function App() {
   const [location] = useLocation();
   const isHomePage = location === '/';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/purpose" component={PurposeApp} />
           <Route path="/kids" component={KidsApp} />
           <Route path="/epic-demo" component={EpicDemo} />
+
           <Route>404 Page Not Found</Route>
         </Switch>
       </div>
