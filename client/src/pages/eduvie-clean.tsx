@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -252,20 +252,30 @@ export default function EduVieClean() {
     ));
   };
 
+  // Override global styles for this page
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      nav.bg-white.shadow-sm { display: none !important; }
+      .fixed.bottom-0 { display: none !important; }
+      main.max-w-7xl { display: none !important; }
+      body { margin: 0; padding: 0; }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative">
-      {/* Sobrescrever navegação completamente */}
-      <style>{`
-        body { margin: 0; padding: 0; }
-        nav, .mobile-navigation, footer, main { display: none !important; }
-        #root > div > div { margin: 0; padding: 0; max-width: none; }
-        #root > div > main { display: none !important; }
-        #root > div > nav { display: none !important; }
-        .mobile-navigation { display: none !important; }
-      `}</style>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-auto"
+         style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1000 }}>
       
       {/* Header EduVie próprio */}
-      <div className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+      <div className="absolute top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-10">
         <div className="px-4 md:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
