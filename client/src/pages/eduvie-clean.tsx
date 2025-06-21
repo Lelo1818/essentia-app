@@ -252,14 +252,22 @@ export default function EduVieClean() {
     ));
   };
 
-  // Override global styles for this page
+  // Hide Flow navigation when EduVie loads
   React.useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
-      nav.bg-white.shadow-sm { display: none !important; }
-      .fixed.bottom-0 { display: none !important; }
-      main.max-w-7xl { display: none !important; }
-      body { margin: 0; padding: 0; }
+      /* Hide Flow navigation and footer */
+      nav.bg-white.shadow-sm,
+      .fixed.bottom-0,
+      .mobile-navigation,
+      div[class*="fixed bottom"],
+      div[class*="bottom-0"] {
+        display: none !important;
+      }
+      /* Ensure body has no bottom padding */
+      body {
+        padding-bottom: 0 !important;
+      }
     `;
     document.head.appendChild(style);
     

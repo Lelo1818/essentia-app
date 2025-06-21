@@ -14,7 +14,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/public', express.static(path.join(__dirname, 'public')));
   
   app.get('/eduvie', (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache');
     res.send(`<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
