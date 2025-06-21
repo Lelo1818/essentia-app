@@ -91,12 +91,230 @@ export default function Income() {
   const totalIncome = incomes.reduce((sum: number, income: any) => sum + parseFloat(income.amount), 0);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestão de Renda</h1>
-          <p className="text-gray-600 mt-2">Registre e gerencie suas fontes de renda</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-purple-50">
+      {/* Header superior da aba Renda */}
+      <div className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 text-white p-8 rounded-b-3xl mb-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">💰 Gestão de Renda</h1>
+              <p className="text-white/90 text-lg">Controle total das suas fontes de receita</p>
+            </div>
+            <div className="flex gap-3">
+              <Button 
+                onClick={() => setCameraOpen(true)}
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30"
+              >
+                <Camera className="w-4 h-4 mr-2" />
+                Foto Holerite
+              </Button>
+              <Button 
+                onClick={() => setModalOpen(true)}
+                className="bg-white text-blue-600 hover:bg-white/90"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Manual
+              </Button>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 space-y-8">
+        {/* Cards de métricas com dados fictícios para demonstração */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <div className="p-2 bg-green-100 rounded-full">
+                  <Plus className="w-5 h-5 text-green-600" />
+                </div>
+                Total do Mês
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-green-600">
+                {incomes.length > 0 ? formatCurrency(totalIncome) : "R$ 8.450,00"}
+              </p>
+              <p className="text-sm text-slate-600 mt-1">+12% vs mês anterior</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <div className="p-2 bg-blue-100 rounded-full">
+                  <Plus className="w-5 h-5 text-blue-600" />
+                </div>
+                Fontes de Renda
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-blue-600">
+                {incomes.length > 0 ? incomes.length : "4"}
+              </p>
+              <p className="text-sm text-slate-600 mt-1">Diversificação ativa</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <div className="p-2 bg-purple-100 rounded-full">
+                  <Plus className="w-5 h-5 text-purple-600" />
+                </div>
+                Renda Média
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-purple-600">
+                {incomes.length > 0 
+                  ? formatCurrency(totalIncome / incomes.length)
+                  : "R$ 2.112,50"
+                }
+              </p>
+              <p className="text-sm text-slate-600 mt-1">Por fonte ativa</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Lista de rendas */}
+        <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <div className="p-2 bg-green-100 rounded-full">
+                <Plus className="w-6 h-6 text-green-600" />
+              </div>
+              Suas Fontes de Renda
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {incomes.length === 0 ? (
+              <div className="space-y-4">
+                {/* Dados fictícios para demonstração */}
+                <div className="flex items-center justify-between p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-200">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-green-100 rounded-full">
+                      <Plus className="w-6 h-6 text-green-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg">Salário CLT</h3>
+                      <p className="text-slate-600">Tech Solutions Ltda</p>
+                      <p className="text-sm text-slate-500">Recebido em 05/06/2025</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-green-600">R$ 5.500,00</p>
+                    <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
+                      Principal
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-200">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-blue-100 rounded-full">
+                      <Plus className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg">Freelance Desenvolvimento</h3>
+                      <p className="text-slate-600">Projetos Diversos</p>
+                      <p className="text-sm text-slate-500">Recebido em 15/06/2025</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-blue-600">R$ 1.800,00</p>
+                    <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200">
+                      Extra
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-200 hover:shadow-lg transition-all duration-200">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-purple-100 rounded-full">
+                      <Plus className="w-6 h-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg">Dividendos e Juros</h3>
+                      <p className="text-slate-600">Carteira de Investimentos</p>
+                      <p className="text-sm text-slate-500">Recebido em 20/06/2025</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-purple-600">R$ 950,00</p>
+                    <Badge className="bg-purple-100 text-purple-700 hover:bg-purple-200">
+                      Passiva
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-6 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200 hover:shadow-lg transition-all duration-200">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-orange-100 rounded-full">
+                      <Plus className="w-6 h-6 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg">Vendas Online</h3>
+                      <p className="text-slate-600">E-commerce Próprio</p>
+                      <p className="text-sm text-slate-500">Recebido em 18/06/2025</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-orange-600">R$ 200,00</p>
+                    <Badge className="bg-orange-100 text-orange-700 hover:bg-orange-200">
+                      Negócio
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Botão adicionar */}
+                <div className="mt-6 p-6 border-2 border-dashed border-slate-300 rounded-xl text-center hover:border-blue-400 hover:bg-blue-50/30 transition-all duration-200 cursor-pointer">
+                  <Plus className="w-8 h-8 mx-auto mb-2 text-slate-400" />
+                  <p className="text-slate-600 font-medium">Adicionar Nova Fonte de Renda</p>
+                  <p className="text-sm text-slate-500">Foto do holerite ou entrada manual</p>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {incomes.map((income: any) => (
+                  <div key={income.id} className="flex items-center justify-between p-6 bg-white rounded-xl border hover:shadow-lg transition-all duration-200">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-green-100 rounded-full">
+                        <Plus className="w-6 h-6 text-green-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg">{income.description}</h3>
+                        <p className="text-slate-600">{income.source || "Fonte não especificada"}</p>
+                        <p className="text-sm text-slate-500">{formatDate(income.date)}</p>
+                      </div>
+                    </div>
+                    <div className="text-right flex items-center gap-4">
+                      <div>
+                        <p className="text-2xl font-bold text-green-600">{formatCurrency(parseFloat(income.amount))}</p>
+                        <Badge className={getFrequencyColor(income.frequency)}>
+                          {getFrequencyLabel(income.frequency)}
+                        </Badge>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => deleteIncomeMutation.mutate(income.id)}
+                        disabled={deleteIncomeMutation.isPending}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="space-y-6">
         <div className="flex gap-2">
           <Button onClick={() => setCameraOpen(true)} className="gradient-primary">
             <Camera className="w-4 h-4 mr-2" />
