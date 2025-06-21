@@ -275,14 +275,14 @@ export default function Purpose() {
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <JourneyContinuity 
-                userId={user.id}
+                userId={user?.id || 1}
                 currentPhase="exploration"
                 progress={75}
               />
             </div>
             <div>
               <AdaptiveCompanion
-                userName={user.name}
+                userName={user?.name || "Explorer"}
                 recentActivity={["meditation", "reflection", "insight"]}
                 mood="contemplative"
                 timeOfDay={
