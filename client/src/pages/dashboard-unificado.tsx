@@ -180,22 +180,8 @@ export default function DashboardUnificado() {
           <div className="grid lg:grid-cols-2 gap-8">
             {appCards.map((app) => (
               <Card key={app.id} className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden relative">
-                {/* Background pattern for each app */}
-                <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${app.color}`}>
-                  <div className="absolute inset-0" style={{
-                    backgroundImage: app.id === 'flow' ? 
-                      'radial-gradient(circle at 25% 25%, currentColor 2px, transparent 2px)' :
-                    app.id === 'eduvie' ?
-                      'linear-gradient(45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%)' :
-                    app.id === 'essentia' ?
-                      'conic-gradient(from 0deg, currentColor 0deg, transparent 45deg, currentColor 90deg, transparent 135deg)' :
-                      'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                    backgroundSize: app.id === 'flow' ? '20px 20px' : 
-                                   app.id === 'eduvie' ? '30px 30px' :
-                                   app.id === 'essentia' ? '40px 40px' : '25px 25px',
-                    color: 'rgba(0,0,0,0.1)'
-                  }}></div>
-                </div>
+                {/* Background gradient for each app */}
+                <div className={`absolute inset-0 opacity-20 bg-gradient-to-br ${app.color}`}></div>
                 <div className={`h-2 bg-gradient-to-r ${app.color} relative z-10`}></div>
                 <CardHeader className="p-6 relative z-10">
                   <div className="flex items-start justify-between">
