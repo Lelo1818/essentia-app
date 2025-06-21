@@ -63,8 +63,8 @@ export default function EcosystemSelector() {
       metrics: "72% clareza | 89 dias | 12 conquistas",
       icon: Sparkles,
       color: "from-purple-600 to-pink-600",
-      route: "#",
-      status: "Migrado para Conta Família",
+      route: "/conta-familia",
+      status: "Ver Conta Família",
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"
     },
     {
@@ -102,8 +102,8 @@ export default function EcosystemSelector() {
       metrics: "Conceito validado | Protótipo Q4 2025",
       icon: Baby,
       color: "from-orange-600 to-yellow-600",
-      route: "#",
-      status: "Migrado para Conta Família", 
+      route: "/conta-familia",
+      status: "Ver Conta Família", 
       image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop"
     }
   ];

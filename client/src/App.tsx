@@ -35,6 +35,7 @@ import EcosystemApp from "./App-ecosystem";
 import FlowApp from "./App-flow";
 import EduApp from "./App-edu";
 import PurposeApp from "./App-purpose";
+import ContaFamilia from "@/pages/conta-familia";
 import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
 import SimpleApp from "./App-simple";
@@ -46,9 +47,10 @@ function Router() {
     <Switch>
       <Route path="/" component={EcosystemApp} />
       <Route path="/flow" component={FlowApp} />
-      {/* Migrado para conta secundária - <Route path="/kids" component={KidsApp} /> */}
+      <Route path="/kids" component={KidsApp} />
+      <Route path="/conta-familia" component={ContaFamilia} />
       <Route path="/edu" component={EduApp} />
-      {/* Migrado para conta secundária - <Route path="/purpose" component={PurposeApp} /> */}
+      <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/investor-demo" component={InvestorDemo} />
