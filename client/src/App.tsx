@@ -37,6 +37,7 @@ import EduApp from "./App-edu";
 import PurposeApp from "./App-purpose";
 import ContaFamilia from "@/pages/conta-familia";
 import EduVieClean from "@/pages/eduvie-clean";
+import EduVieStandalone from "@/pages/eduvie-standalone";
 import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
 import SimpleApp from "./App-simple";
@@ -52,6 +53,7 @@ function Router() {
       <Route path="/conta-familia" component={ContaFamilia} />
       <Route path="/edu" component={EduApp} />
       <Route path="/eduvie-clean" component={EduVieClean} />
+      <Route path="/eduvie-standalone" component={EduVieStandalone} />
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/dashboard" component={Dashboard} />
