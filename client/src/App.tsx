@@ -32,13 +32,21 @@ import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
 import KidsApp from "./App-kids";
 import EcosystemApp from "./App-ecosystem";
+import FlowApp from "./App-flow";
+import EduApp from "./App-edu";
+import PurposeApp from "./App-purpose";
 
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
-      <Route path="/flow" component={Dashboard} />
+      <Route path="/flow" component={FlowApp} />
+      <Route path="/kids" component={KidsApp} />
+      <Route path="/edu" component={EduApp} />
+      <Route path="/purpose" component={PurposeApp} />
+      <Route path="/ecosystem" component={EcosystemApp} />
+      <Route path="/investor-demo" component={InvestorDemo} />
       <Route path="/income" component={Income} />
       <Route path="/expenses" component={Expenses} />
       <Route path="/planning" component={Planning} />
@@ -49,7 +57,6 @@ function Router() {
       <Route path="/agendar-pagamentos" component={AgendarPagamentos} />
       <Route path="/simular-cenarios" component={SimularCenarios} />
       <Route path="/renegociar-dividas" component={RenegociarDividas} />
-      <Route path="/kids" component={KidsApp} />
       <Route path="/ofertas" component={Ofertas} />
       <Route path="/cupons" component={Cupons} />
       <Route path="/educacao" component={Educacao} />
@@ -58,10 +65,6 @@ function Router() {
       <Route path="/feedback-ia" component={FeedbackIA} />
       <Route path="/familias" component={Familias} />
       <Route path="/ocr-avancado" component={OcrAvancado} />
-      <Route path="/purpose" component={Purpose} />
-      <Route path="/edu" component={Edu} />
-      <Route path="/investor-demo" component={InvestorDemo} />
-      <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/profile" component={Profile} />
       <Route>
         <NotFound />

@@ -1,55 +1,38 @@
-import { Route, Switch } from "wouter";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Edu from "@/pages/edu";
+import { useMobileOptimization } from "@/hooks/useMobileOptimization";
 
-// Import pages
-import Dashboard from "@/pages/edu/dashboard";
-import LearningPaths from "@/pages/edu/learning-paths";
-import CreatePath from "@/pages/edu/create-path";
-import Study from "@/pages/edu/study";
-import Materials from "@/pages/edu/materials";
-import Progress from "@/pages/edu/progress";
-import Profile from "@/pages/edu/profile";
-import NotFound from "@/pages/not-found";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchInterval: false,
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      retry: false,
-    },
-    mutations: {
-      retry: false,
-    },
-  },
-});
-
-function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={Dashboard} />
-      <Route path="/trilhas" component={LearningPaths} />
-      <Route path="/criar-trilha" component={CreatePath} />
-      <Route path="/estudar/:pathId?" component={Study} />
-      <Route path="/materiais" component={Materials} />
-      <Route path="/progresso" component={Progress} />
-      <Route path="/perfil" component={Profile} />
-      <Route component={NotFound} />
-    </Switch>
-  );
-}
-
-function App() {
+export default function EduApp() {
+  useMobileOptimization();
+  
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <Router />
-        <Toaster />
-      </div>
+      <TooltipProvider>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+          {/* Mobile Header */}
+          <div className="md:hidden sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b">
+            <div className="flex items-center justify-between p-4">
+              <a 
+                href="/" 
+                className="flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+              >
+                ← Ecossistema
+              </a>
+              <h1 className="text-lg font-bold text-blue-600">EduVie</h1>
+              <div className="w-20"></div>
+            </div>
+          </div>
+          
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+            <Edu />
+          </main>
+          
+          <Toaster />
+        </div>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }
-
-export default App;
