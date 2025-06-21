@@ -104,9 +104,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         </div>
 
         <div id="content-dashboard" class="content-tab">
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-xl font-semibold mb-4">Plano de Estudos - Hoje</h3>
-                <p class="text-gray-600 mb-6">Sessões personalizadas pela IA baseadas no seu perfil</p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Plano de Estudos - Hoje</h3>
+                        <p class="text-gray-600 mb-6">Sessões personalizadas pela IA baseadas no seu perfil</p>
                 
                 <div class="space-y-4">
                     <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
@@ -154,6 +156,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full" style="width: 68%"></div>
                             </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600">
+                            <span>Por Carlos Silva</span>
+                            <span>2.340 alunos</span>
+                        </div>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+                            Continuar Curso
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Iniciante</span>
+                        <span class="text-yellow-400 text-sm">★★★★★ 4.9</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Design UX/UI Centrado no Usuário</h3>
+                    <p class="text-sm text-gray-600 mb-4">Crie interfaces incríveis e funcionais</p>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progresso</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600">
+                            <span>Por Ana Costa</span>
+                            <span>1.890 alunos</span>
+                        </div>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+                            Continuar Curso
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Avançado</span>
+                        <span class="text-yellow-400 text-sm">★★★★☆ 4.7</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Gestão Financeira e Investimentos</h3>
+                    <p class="text-sm text-gray-600 mb-4">Aprenda a gerenciar suas finanças como um profissional</p>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progresso</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600">
+                            <span>Por Roberto Martins</span>
+                            <span>3.120 alunos</span>
                         </div>
                         <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
                             Continuar Curso
