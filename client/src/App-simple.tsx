@@ -10,6 +10,7 @@ import Purpose from "@/pages/purpose";
 import EduPage from "@/pages/edu";
 import InvestorDemo from "@/pages/investor-demo";
 import EpicDemo from "@/pages/epic-demo";
+import { TrendingUp, Baby } from "lucide-react";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -58,20 +59,44 @@ function App() {
               <Route path="/investor-demo" component={InvestorDemo} />
               <Route path="/epic-demo" component={EpicDemo} />
               <Route path="/flow">
-                <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-900 to-emerald-900">
-                  <div className="text-center text-white">
-                    <h1 className="text-4xl font-bold mb-4">Flow - Gestão Financeira</h1>
-                    <p className="text-xl mb-8">Em desenvolvimento - Lançamento previsto para Q3 2025</p>
-                    <a href="/" className="text-green-300 underline">← Voltar ao Ecossistema</a>
+                <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-900 to-emerald-900 px-4">
+                  <div className="text-center text-white max-w-4xl">
+                    <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                      <TrendingUp className="w-16 h-16 text-white" />
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4">Flow - Gestão Financeira Inteligente</h1>
+                    <p className="text-lg md:text-xl mb-6">Sistema revolucionário com IA preditiva e automação completa</p>
+                    <div className="bg-green-800/30 rounded-xl p-6 mb-8">
+                      <h3 className="text-xl font-bold mb-4">Lançamento Q3 2025</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>✓ Análise preditiva de gastos</div>
+                        <div>✓ Automação de investimentos</div>
+                        <div>✓ Metas financeiras gamificadas</div>
+                        <div>✓ Avatar 3D de progresso</div>
+                      </div>
+                    </div>
+                    <a href="/" className="text-green-300 underline text-lg">← Voltar ao Ecossistema</a>
                   </div>
                 </div>
               </Route>
               <Route path="/flow-kids">
-                <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-900 to-yellow-900">
-                  <div className="text-center text-white">
-                    <h1 className="text-4xl font-bold mb-4">Flow Kids - Educação Financeira Infantil</h1>
-                    <p className="text-xl mb-8">Conceito em desenvolvimento - Educação lúdica de finanças para crianças</p>
-                    <a href="/" className="text-orange-300 underline">← Voltar ao Ecossistema</a>
+                <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-900 to-yellow-900 px-4">
+                  <div className="text-center text-white max-w-4xl">
+                    <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full flex items-center justify-center">
+                      <Baby className="w-16 h-16 text-white" />
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4">Flow Kids - Educação Financeira Infantil</h1>
+                    <p className="text-lg md:text-xl mb-6">Gamificação total para ensinar crianças sobre dinheiro</p>
+                    <div className="bg-orange-800/30 rounded-xl p-6 mb-8">
+                      <h3 className="text-xl font-bold mb-4">Conceito Revolucionário</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>🎮 Realidade aumentada</div>
+                        <div>👨‍👩‍👧‍👦 Missões em família</div>
+                        <div>🏆 Sistema de conquistas</div>
+                        <div>🧠 Avatar 3D evolutivo</div>
+                      </div>
+                    </div>
+                    <a href="/" className="text-orange-300 underline text-lg">← Voltar ao Ecossistema</a>
                   </div>
                 </div>
               </Route>
