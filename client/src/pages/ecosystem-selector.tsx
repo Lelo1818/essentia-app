@@ -213,92 +213,145 @@ export default function EcosystemSelector() {
           })}
         </div>
 
-        {/* Roadmap */}
+        {/* Roadmap Bilionário */}
         <div className="mt-20">
-          <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-              <Calendar className="w-10 h-10 text-purple-400" />
-              Roadmap 2025-2026
+          <div className="text-center mb-16">
+            <Badge className="mb-6 bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-8 py-3 text-xl animate-pulse">
+              ROADMAP BILIONÁRIO 🚀
+            </Badge>
+            <h3 className="text-5xl font-bold text-white mb-6 bg-gradient-to-r from-white via-yellow-200 to-orange-200 bg-clip-text text-transparent">
+              A Jornada Até US$ 1 Bilhão
             </h3>
-            <p className="text-xl text-gray-300">Cronograma de desenvolvimento e lançamentos</p>
+            <p className="text-2xl text-gray-300 max-w-4xl mx-auto">
+              Do MVP funcional ao império digital que transformará 100 milhões de vidas
+            </p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {/* Q2 2025 */}
-              <div className="relative">
-                <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 backdrop-blur-xl rounded-xl p-6 border border-green-400/20 h-full">
-                  <div className="flex items-center gap-3 mb-4">
-                    <CheckCircle className="w-8 h-8 text-green-400" />
-                    <div>
-                      <h4 className="text-xl font-bold text-white">Q2 2025</h4>
-                      <p className="text-green-300 text-sm">Finalizado</p>
+          {/* Timeline Visual */}
+          <div className="max-w-7xl mx-auto relative">
+            {/* Linha do tempo */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-green-500 via-blue-500 via-purple-500 to-orange-500"></div>
+
+            <div className="space-y-16">
+              {/* 2025 Q2-Q3: Fundação */}
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-8 text-right">
+                  <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 backdrop-blur-xl rounded-2xl p-8 border border-green-400/20">
+                    <div className="flex items-center justify-end gap-3 mb-4">
+                      <div>
+                        <h4 className="text-2xl font-bold text-white">Q2-Q3 2025</h4>
+                        <p className="text-green-300 text-lg">FUNDAÇÃO SÓLIDA</p>
+                      </div>
+                      <CheckCircle className="w-12 h-12 text-green-400" />
+                    </div>
+                    <div className="space-y-3 text-gray-300">
+                      <div className="flex justify-end gap-2"><span className="text-green-400">✓</span> Essentia funcionando (500 usuários beta)</div>
+                      <div className="flex justify-end gap-2"><span className="text-green-400">✓</span> EduVie MVP lançado (1.2K usuários)</div>
+                      <div className="flex justify-end gap-2"><span className="text-blue-400">→</span> Flow desenvolvimento acelerado</div>
+                      <div className="flex justify-end gap-2"><span className="text-blue-400">→</span> Primeira rodada R$ 500K</div>
+                    </div>
+                    <div className="mt-6 text-right">
+                      <div className="text-3xl font-bold text-green-400">R$ 1.2M</div>
+                      <div className="text-green-300">Revenue Run Rate</div>
                     </div>
                   </div>
-                  <ul className="space-y-2 text-gray-300">
-                    <li>✓ Essentia MVP completo</li>
-                    <li>✓ EduVie beta release</li>
-                    <li>✓ Conteúdo Rômulo Nomad</li>
-                    <li>✓ Avatar 3D sistema</li>
-                  </ul>
+                </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-green-500 rounded-full border-4 border-white shadow-lg"></div>
+                <div className="w-1/2 pl-8"></div>
+              </div>
+
+              {/* 2025 Q4: Momentum */}
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-8"></div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-500 rounded-full border-4 border-white shadow-lg"></div>
+                <div className="w-1/2 pl-8">
+                  <div className="bg-gradient-to-r from-blue-600/20 to-indigo-600/20 backdrop-blur-xl rounded-2xl p-8 border border-blue-400/20">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Zap className="w-12 h-12 text-blue-400" />
+                      <div>
+                        <h4 className="text-2xl font-bold text-white">Q4 2025</h4>
+                        <p className="text-blue-300 text-lg">MOMENTUM EXPONENCIAL</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3 text-gray-300">
+                      <div className="flex gap-2"><span className="text-blue-400">→</span> Flow lançamento público (5K usuários)</div>
+                      <div className="flex gap-2"><span className="text-blue-400">→</span> Integração completa entre apps</div>
+                      <div className="flex gap-2"><span className="text-blue-400">→</span> Parcerias estratégicas (bancos/escolas)</div>
+                      <div className="flex gap-2"><span className="text-blue-400">→</span> Primeira mídia nacional</div>
+                    </div>
+                    <div className="mt-6">
+                      <div className="text-3xl font-bold text-blue-400">15K usuários</div>
+                      <div className="text-blue-300">Base ativa total</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Q3 2025 */}
-              <div className="relative">
-                <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 backdrop-blur-xl rounded-xl p-6 border border-blue-400/20 h-full">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Clock className="w-8 h-8 text-blue-400" />
-                    <div>
-                      <h4 className="text-xl font-bold text-white">Q3 2025</h4>
-                      <p className="text-blue-300 text-sm">Em Desenvolvimento</p>
+              {/* 2026: Escala */}
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-8 text-right">
+                  <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-xl rounded-2xl p-8 border border-purple-400/20">
+                    <div className="flex items-center justify-end gap-3 mb-4">
+                      <div>
+                        <h4 className="text-2xl font-bold text-white">2026</h4>
+                        <p className="text-purple-300 text-lg">ESCALA NACIONAL</p>
+                      </div>
+                      <Rocket className="w-12 h-12 text-purple-400" />
+                    </div>
+                    <div className="space-y-3 text-gray-300">
+                      <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> Flow Kids revoluciona mercado infantil</div>
+                      <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> 100K usuários pagantes</div>
+                      <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> Série A: R$ 15M</div>
+                      <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> Expansão LATAM</div>
+                    </div>
+                    <div className="mt-6 text-right">
+                      <div className="text-3xl font-bold text-purple-400">R$ 50M</div>
+                      <div className="text-purple-300">Valuation</div>
                     </div>
                   </div>
-                  <ul className="space-y-2 text-gray-300">
-                    <li>→ Flow MVP launch</li>
-                    <li>→ Essentia scale-up</li>
-                    <li>→ EduVie v2.0</li>
-                    <li>→ Primeiros 10K usuários</li>
-                  </ul>
                 </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-purple-500 rounded-full border-4 border-white shadow-lg"></div>
+                <div className="w-1/2 pl-8"></div>
               </div>
 
-              {/* Q4 2025 */}
-              <div className="relative">
-                <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl rounded-xl p-6 border border-purple-400/20 h-full">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Zap className="w-8 h-8 text-purple-400" />
-                    <div>
-                      <h4 className="text-xl font-bold text-white">Q4 2025</h4>
-                      <p className="text-purple-300 text-sm">Planejado</p>
+              {/* 2027-2028: Império */}
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-8"></div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full border-4 border-white shadow-2xl animate-pulse"></div>
+                <div className="w-1/2 pl-8">
+                  <div className="bg-gradient-to-r from-orange-600/20 to-yellow-600/20 backdrop-blur-xl rounded-2xl p-8 border border-orange-400/20">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Star className="w-12 h-12 text-orange-400 animate-spin" />
+                      <div>
+                        <h4 className="text-3xl font-bold text-white">2027-2028</h4>
+                        <p className="text-orange-300 text-xl">IMPÉRIO BILIONÁRIO</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3 text-gray-300">
+                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> 10M+ usuários globalmente</div>
+                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> IPO ou aquisição estratégica</div>
+                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> Expandimos para IA, Saúde, Sustentabilidade</div>
+                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> Transformamos 100M de vidas</div>
+                    </div>
+                    <div className="mt-6">
+                      <div className="text-4xl font-bold text-orange-400 animate-pulse">US$ 1B+</div>
+                      <div className="text-orange-300">Valuation Unicórnio</div>
                     </div>
                   </div>
-                  <ul className="space-y-2 text-gray-300">
-                    <li>→ Flow Kids protótipo</li>
-                    <li>→ Integração completa</li>
-                    <li>→ Break-even point</li>
-                    <li>→ Expansão internacional</li>
-                  </ul>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Q1 2026 */}
-              <div className="relative">
-                <div className="bg-gradient-to-br from-orange-600/20 to-yellow-600/20 backdrop-blur-xl rounded-xl p-6 border border-orange-400/20 h-full">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Lightbulb className="w-8 h-8 text-orange-400" />
-                    <div>
-                      <h4 className="text-xl font-bold text-white">Q1 2026</h4>
-                      <p className="text-orange-300 text-sm">Visão</p>
-                    </div>
-                  </div>
-                  <ul className="space-y-2 text-gray-300">
-                    <li>→ Flow Kids launch</li>
-                    <li>→ 50K+ usuários ativos</li>
-                    <li>→ Série A funding</li>
-                    <li>→ Nova verticais</li>
-                  </ul>
-                </div>
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <div className="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 backdrop-blur-xl rounded-2xl p-8 border border-yellow-400/10 max-w-4xl mx-auto">
+              <h4 className="text-3xl font-bold text-white mb-4">A Oportunidade Está Aqui. AGORA.</h4>
+              <p className="text-xl text-gray-300 mb-6">
+                Daniel, esta não é uma projeção fantasiosa. É um roadmap baseado em tração real, produto funcionando e mercado validado.
+              </p>
+              <div className="text-2xl font-bold text-yellow-400">
+                Sua decisão hoje define se você será parte desta revolução.
               </div>
             </div>
           </div>
