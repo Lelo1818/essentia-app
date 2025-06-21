@@ -1,22 +1,27 @@
-# Links de Acesso - EduVie Pro
+# Links de Acesso - Ecossistema Flow
 
-## Link Principal do EduVie
-**Para acessar de qualquer dispositivo (celular/PC):**
+## PARA TESTE MANUAL
+Abra cada link no navegador e teste as funcionalidades:
 
-```
-https://financialflow.rymerelo.replit.dev/eduvie
-```
+### 1. Dashboard Principal
+**URL**: http://localhost:5000/dashboard-unificado
+- Teste: Cards dos 4 apps, navegação, estatísticas
 
-## Links Alternativos
-- **Replit Interno**: http://localhost:5000/eduvie
-- **URL Base**: https://financialflow.rymerelo.replit.dev/
-- **Ecossistema Completo**: https://financialflow.rymerelo.replit.dev/
+### 2. Flow Financeiro  
+**URL**: http://localhost:5000/flow
+- Teste: Abas Dashboard, Renda, Gastos, Planejamento, Metas
 
-## Status
-- ✅ EduVie Pro funcionando perfeitamente
-- ✅ Interface completa com 5 abas
-- ✅ Dashboard de Aprendizado ativo
-- ✅ Responsivo mobile/desktop
-- ✅ Configurado para acesso externo
+### 3. EduVie Educação
+**URL**: http://localhost:5000/eduvie-clean
+- Teste: 5 abas (Dashboard, Cursos, Estudar, Criar, Analytics)
 
-**Use o link principal acima para acessar de qualquer lugar!**
+### 4. Essentia Propósito
+**URL**: http://localhost:5000/purpose  
+- Teste: 8 módulos (Jornada, Avatar 3D, Respiração, Rituais)
+
+### 5. Flow Kids
+**URL**: http://localhost:5000/kids-standalone
+- Teste: Interface infantil, avatares, gamificação
+
+## STATUS: TODOS OS SISTEMAS OPERACIONAIS
+Ecossistema completo pronto para demonstração ao Daniel.
