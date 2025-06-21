@@ -38,7 +38,8 @@ import {
   Brain,
   Star,
   User,
-  Trophy as Award
+  Trophy as Award,
+  Sparkles
 } from "lucide-react";
 
 export default function Purpose() {

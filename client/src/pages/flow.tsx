@@ -36,13 +36,9 @@ import Impostos from "@/pages/impostos";
 function Router() {
   const { isMobile } = useDeviceDetection();
   
-  // Smart routing: mobile gets simplified version, desktop gets full version
-  const FlowComponent = isMobile ? SimpleFlow : Dashboard;
-  
   return (
     <Switch>
-      <Route path="/flow" component={FlowComponent} />
-      <Route path="/flow/dashboard" component={Dashboard} />
+      <Route path="/flow" component={Dashboard} />
       <Route path="/flow/simple" component={SimpleFlow} />
       <Route path="/flow/income" component={Income} />
       <Route path="/flow/expenses" component={Expenses} />

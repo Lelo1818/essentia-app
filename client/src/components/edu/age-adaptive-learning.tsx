@@ -12,7 +12,7 @@ import {
   BookOpen, 
   Brain, 
   Target, 
-  Star as Sparkles,
+  Sparkles,
   Gamepad2 as GamepadIcon,
   Heart,
   Clock,

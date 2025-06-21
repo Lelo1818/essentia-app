@@ -14,18 +14,37 @@ export interface IStorage {
   // Achievements
   getAchievementsByUserId(userId: number): Promise<Achievement[]>;
   createAchievement(achievement: InsertAchievement): Promise<Achievement>;
+  
+  // Financial data methods
+  getIncomesByUserId(userId: number): Promise<any[]>;
+  createIncome(income: any): Promise<any>;
+  getExpensesByUserId(userId: number): Promise<any[]>;
+  createExpense(expense: any): Promise<any>;
+  getBudgetsByUserId(userId: number): Promise<any[]>;
+  createBudget(budget: any): Promise<any>;
+  getGoalsByUserId(userId: number): Promise<any[]>;
+  createGoal(goal: any): Promise<any>;
 }
 
 class MemStorage implements IStorage {
   private users = new Map<number, User>();
   private achievements = new Map<number, Achievement>();
+  private incomes = new Map<number, any>();
+  private expenses = new Map<number, any>();
+  private budgets = new Map<number, any>();
+  private goals = new Map<number, any>();
   private currentId = 1;
 
   constructor() {
     this.users = new Map();
     this.achievements = new Map();
+    this.incomes = new Map();
+    this.expenses = new Map();
+    this.budgets = new Map();
+    this.goals = new Map();
     this.currentId = 1;
     this.seedUsers();
+    this.seedFinancialData();
   }
 
   private seedUsers() {
@@ -62,6 +81,43 @@ class MemStorage implements IStorage {
         ...achievementData
       };
       this.achievements.set(achievement.id, achievement);
+    });
+  }
+
+  private seedFinancialData() {
+    // Sample incomes
+    const incomesData = [
+      { userId: 1, description: "Salário Principal", amount: 8500, frequency: "mensal", date: new Date() },
+      { userId: 1, description: "Freelance Design", amount: 1200, frequency: "unica", date: new Date() },
+      { userId: 1, description: "Dividendos", amount: 350, frequency: "mensal", date: new Date() }
+    ];
+
+    incomesData.forEach(incomeData => {
+      const income = { id: this.currentId++, ...incomeData, createdAt: new Date() };
+      this.incomes.set(income.id, income);
+    });
+
+    // Sample expenses
+    const expensesData = [
+      { userId: 1, description: "Supermercado", amount: 450, category: "Alimentação", date: new Date() },
+      { userId: 1, description: "Gasolina", amount: 280, category: "Transporte", date: new Date() },
+      { userId: 1, description: "Netflix", amount: 32, category: "Entretenimento", date: new Date() }
+    ];
+
+    expensesData.forEach(expenseData => {
+      const expense = { id: this.currentId++, ...expenseData, createdAt: new Date() };
+      this.expenses.set(expense.id, expense);
+    });
+
+    // Sample goals
+    const goalsData = [
+      { userId: 1, title: "Viagem Europa", description: "Economizar para viagem", targetAmount: 15000, currentAmount: 8500, targetDate: new Date('2025-12-31'), category: "Viagem", priority: "alta", status: "ativo" },
+      { userId: 1, title: "Reserva Emergência", description: "6 meses de gastos", targetAmount: 25000, currentAmount: 12000, targetDate: new Date('2025-06-30'), category: "Emergência", priority: "alta", status: "ativo" }
+    ];
+
+    goalsData.forEach(goalData => {
+      const goal = { id: this.currentId++, ...goalData, createdAt: new Date(), updatedAt: new Date() };
+      this.goals.set(goal.id, goal);
     });
   }
 
