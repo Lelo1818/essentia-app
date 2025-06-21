@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Avatar3DEdu } from "@/components/edu/avatar-3d-edu";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
@@ -20,6 +21,7 @@ import AgeBasedLearning from "@/components/edu/age-based-learning";
 import AdvancedFeatures from "@/components/edu/advanced-features";
 import ProfessionalFeatures from "@/components/edu/professional-features";
 import HybridLearningSystem from "@/components/edu/hybrid-learning-system";
+import PromptIntelligence from "@/components/edu/prompt-intelligence";
 import { 
   BookOpen, 
   Brain, 
@@ -247,6 +249,10 @@ export default function Edu() {
           <TabsTrigger value="quiz" className="flex items-center space-x-1">
             <Brain className="w-4 h-4" />
             <span>Quiz</span>
+          </TabsTrigger>
+          <TabsTrigger value="prompts" className="flex items-center space-x-1">
+            <Zap className="w-4 h-4" />
+            <span>Prompts IA</span>
           </TabsTrigger>
         </TabsList>
 

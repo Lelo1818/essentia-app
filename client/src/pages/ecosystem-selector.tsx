@@ -17,7 +17,7 @@ export default function EcosystemSelector() {
       color: "from-purple-600 to-pink-600",
       route: "/purpose",
       status: "Completo",
-      image: "/attached_assets/image_1750461865442.png"
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"
     },
     {
       id: "eduvie",
@@ -30,7 +30,7 @@ export default function EcosystemSelector() {
       color: "from-blue-600 to-indigo-600", 
       route: "/edu",
       status: "Completo",
-      image: "/attached_assets/image_1750461949800.png"
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop"
     },
     {
       id: "flow",
@@ -43,7 +43,7 @@ export default function EcosystemSelector() {
       color: "from-green-600 to-emerald-600",
       route: "/flow", 
       status: "Em desenvolvimento",
-      image: "/attached_assets/image_1750461970564.png"
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop"
     },
     {
       id: "flow-kids",
@@ -56,7 +56,7 @@ export default function EcosystemSelector() {
       color: "from-orange-600 to-yellow-600",
       route: "/flow-kids",
       status: "Conceito", 
-      image: "/attached_assets/image_1750462839381.png"
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop"
     }
   ];
 
@@ -356,7 +356,10 @@ export default function EcosystemSelector() {
               <div className="flex flex-col md:flex-row justify-center gap-4 px-4">
                 <Button 
                   className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:opacity-90 text-white px-6 py-3 text-base md:text-lg w-full md:w-auto"
-                  onClick={() => window.location.href = '/investor-demo'}
+                  onClick={() => {
+                    playSuccessSound();
+                    setTimeout(() => window.location.href = '/investor-demo', 200);
+                  }}
                 >
                   <Star className="w-4 h-4 mr-2" />
                   Análise Técnica Completa
@@ -364,10 +367,13 @@ export default function EcosystemSelector() {
                 <Button 
                   variant="outline" 
                   className="text-yellow-400 border-yellow-400 px-6 py-3 text-base md:text-lg w-full md:w-auto"
-                  onClick={() => window.location.href = '/epic-demo'}
+                  onClick={() => {
+                    playSuccessSound();
+                    setTimeout(() => window.location.href = '/epic-demo', 200);
+                  }}
                 >
                   <Play className="w-4 h-4 mr-2" />
-                  Ver Transformações Reais
+                  Demo Executivo Completo
                 </Button>
               </div>
             </div>
