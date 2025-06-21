@@ -254,6 +254,17 @@ export default function EduVieClean() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      {/* Esconder navegação antiga */}
+      <style>{`
+        nav[role="navigation"], 
+        .mobile-navigation,
+        footer {
+          display: none !important;
+        }
+        body {
+          padding-bottom: 0 !important;
+        }
+      `}</style>
       <div className="container mx-auto px-4 md:px-6 py-4 md:py-8">
         {/* Header Profissional */}
         <div className="mb-6 md:mb-8">
@@ -280,7 +291,7 @@ export default function EduVieClean() {
 
         {/* Cards de Estatísticas */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow">
+          <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-3 md:p-6">
               <div className="flex flex-col md:flex-row items-center md:gap-3 text-center md:text-left">
                 <div className="p-2 md:p-3 bg-blue-100 rounded-xl mb-2 md:mb-0">
@@ -359,19 +370,32 @@ export default function EduVieClean() {
               <span className="hidden sm:inline">Dashboard</span>
               <span className="sm:hidden">Home</span>
             </TabsTrigger>
-            <TabsTrigger value="courses" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
-              <BookOpen className="w-4 h-4" />
-              Meus Cursos
+            <TabsTrigger value="courses" className="flex items-center gap-1 md:gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-2 md:px-4 py-2 md:py-3 transition-all duration-200 text-xs md:text-sm">
+              <BookOpen className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Meus Cursos</span>
+              <span className="sm:hidden">Cursos</span>
             </TabsTrigger>
-            <TabsTrigger value="study" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
-              <Brain className="w-4 h-4" />
-              Estudar Hoje
+            <TabsTrigger value="study" className="flex items-center gap-1 md:gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-2 md:px-4 py-2 md:py-3 transition-all duration-200 text-xs md:text-sm">
+              <Brain className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Estudar Hoje</span>
+              <span className="sm:hidden">Estudar</span>
             </TabsTrigger>
-            <TabsTrigger value="create" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
+            <TabsTrigger value="create" className="flex items-center gap-1 md:gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-2 md:px-4 py-2 md:py-3 transition-all duration-200 text-xs md:text-sm lg:hidden">
+              <Upload className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Criar Conteúdo</span>
+              <span className="sm:hidden">Criar</span>
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-1 md:gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-2 md:px-4 py-2 md:py-3 transition-all duration-200 text-xs md:text-sm lg:hidden">
+              <TrendingUp className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Analytics</span>
+              <span className="sm:hidden">Stats</span>
+            </TabsTrigger>
+            {/* Tabs extras só no desktop */}
+            <TabsTrigger value="create" className="hidden lg:flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <Upload className="w-4 h-4" />
               Criar Conteúdo
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
+            <TabsTrigger value="analytics" className="hidden lg:flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <TrendingUp className="w-4 h-4" />
               Analytics
             </TabsTrigger>
