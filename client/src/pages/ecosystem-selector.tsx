@@ -111,10 +111,15 @@ export default function EcosystemSelector() {
           </div>
 
           <div className="flex justify-center gap-4 mb-8">
-            <Link href="/investor-demo">
+            <Link href="/epic-demo">
               <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg">
                 <Play className="w-5 h-5 mr-2" />
-                Ver Demo Completa
+                Demo Épica das Galáxias
+              </Button>
+            </Link>
+            <Link href="/investor-demo">
+              <Button variant="outline" className="text-purple-400 border-purple-400 px-8 py-4 text-lg">
+                Demo Técnica
               </Button>
             </Link>
             <Button variant="outline" className="text-purple-400 border-purple-400 px-8 py-4 text-lg">

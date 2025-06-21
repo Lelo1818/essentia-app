@@ -9,6 +9,7 @@ import EcosystemSelector from "@/pages/ecosystem-selector";
 import Purpose from "@/pages/purpose";
 import EduPage from "@/pages/edu";
 import InvestorDemo from "@/pages/investor-demo";
+import EpicDemo from "@/pages/epic-demo";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -55,6 +56,7 @@ function App() {
               <Route path="/purpose" component={Purpose} />
               <Route path="/edu" component={EduPage} />
               <Route path="/investor-demo" component={InvestorDemo} />
+              <Route path="/epic-demo" component={EpicDemo} />
               <Route path="/flow">
                 <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-900 to-emerald-900">
                   <div className="text-center text-white">
