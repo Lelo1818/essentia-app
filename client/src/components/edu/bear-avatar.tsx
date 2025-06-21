@@ -43,12 +43,19 @@ export default function BearAvatar({ isRoaring = false, environment = "forest" }
       ctx.translate(200, 200);
       ctx.scale(breathingScale, breathingScale);
       
-      // URSO PODEROSO
+      // URSO ALPHA - MENTOR SUPREMO
       
-      // Corpo do urso
-      ctx.fillStyle = '#4A4A4A';
+      // Corpo do urso massivo
+      ctx.fillStyle = '#2F2F2F';
       ctx.beginPath();
-      ctx.ellipse(0, 30, 80, 100, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 30, 95, 120, 0, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Músculos definidos
+      ctx.fillStyle = '#1A1A1A';
+      ctx.beginPath();
+      ctx.ellipse(-40, 10, 25, 45, 0.3, 0, Math.PI * 2);
+      ctx.ellipse(40, 10, 25, 45, -0.3, 0, Math.PI * 2);
       ctx.fill();
       
       // Barriga
@@ -57,11 +64,21 @@ export default function BearAvatar({ isRoaring = false, environment = "forest" }
       ctx.ellipse(0, 40, 50, 70, 0, 0, Math.PI * 2);
       ctx.fill();
       
-      // Cabeça do urso
+      // Cabeça imponente
       ctx.fillStyle = '#654321';
       ctx.beginPath();
-      ctx.arc(0, -50, 70, 0, Math.PI * 2);
+      ctx.arc(0, -50, 85, 0, Math.PI * 2);
       ctx.fill();
+      
+      // Cicatrizes de batalha (experiência)
+      ctx.strokeStyle = '#8B4513';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(-60, -70);
+      ctx.lineTo(-45, -65);
+      ctx.moveTo(45, -60);
+      ctx.lineTo(60, -55);
+      ctx.stroke();
       
       // Orelhas
       ctx.fillStyle = '#4A4A4A';

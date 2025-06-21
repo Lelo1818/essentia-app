@@ -44,7 +44,7 @@ export default function ShamanAvatar({ isChanneling = false, environment = "sacr
       ctx.translate(200, 200 + floatingY);
       ctx.scale(breathingScale, breathingScale);
       
-      // XAMÃ INDÍGENA PODEROSO
+      // ARQUI-XAMÃ - MESTRE DOS PORTAIS DIMENSIONAIS
       
       // Aura espiritual externa (mais intensa quando canalizando)
       const auraIntensity = isChanneling ? 0.6 : 0.2;
@@ -53,11 +53,26 @@ export default function ShamanAvatar({ isChanneling = false, environment = "sacr
       ctx.arc(0, 0, 140 + Math.sin(time * 3) * 20, 0, Math.PI * 2);
       ctx.fill();
       
-      // Corpo do xamã
+      // Corpo energizado
       ctx.fillStyle = '#8B4513';
       ctx.beginPath();
       ctx.ellipse(0, 20, 55, 80, 0, 0, Math.PI * 2);
       ctx.fill();
+      
+      // Tatuagens de poder
+      ctx.strokeStyle = '#FFD700';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      // Espiral no peito
+      for (let i = 0; i < 20; i++) {
+        const angle = (i / 20) * Math.PI * 4;
+        const radius = i * 2;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius + 20;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
       
       // Pinturas corporais sagradas
       ctx.strokeStyle = '#FFD700';
