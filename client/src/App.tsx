@@ -35,6 +35,7 @@ import EcosystemApp from "./App-ecosystem";
 import FlowApp from "./App-flow";
 import EduApp from "./App-edu";
 import PurposeApp from "./App-purpose";
+import MobileTest from "./pages/mobile-test";
 
 
 function Router() {
@@ -47,6 +48,7 @@ function Router() {
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/investor-demo" component={InvestorDemo} />
+      <Route path="/mobile-test" component={MobileTest} />
       <Route path="/income" component={Income} />
       <Route path="/expenses" component={Expenses} />
       <Route path="/planning" component={Planning} />
