@@ -307,7 +307,7 @@ export default function EduVieClean() {
         </div>
 
         {/* Cards de Estatísticas */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8 animate-fade-in">
           <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-3 md:p-6">
               <div className="flex flex-col md:flex-row items-center md:gap-3 text-center md:text-left">
@@ -381,7 +381,7 @@ export default function EduVieClean() {
 
         {/* Navegação Principal */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 bg-white/90 backdrop-blur-sm shadow-lg rounded-xl p-1 md:p-2 overflow-x-auto">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 bg-white/95 backdrop-blur-sm shadow-xl rounded-xl p-1 md:p-2 overflow-x-auto border border-gray-200">
             <TabsTrigger value="dashboard" className="flex items-center gap-1 md:gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-2 md:px-4 py-2 md:py-3 transition-all duration-200 text-xs md:text-sm">
               <Target className="w-3 h-3 md:w-4 md:h-4" />
               <span className="hidden sm:inline">Dashboard</span>
@@ -423,7 +423,7 @@ export default function EduVieClean() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Plano de Estudos de Hoje */}
               <div className="lg:col-span-2">
-                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-blue-600" />
@@ -481,7 +481,7 @@ export default function EduVieClean() {
 
               {/* Progresso e Conquistas */}
               <div className="space-y-6">
-                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Trophy className="w-5 h-5 text-gold-600" />
@@ -504,7 +504,7 @@ export default function EduVieClean() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-blue-500 to-purple-600 text-white border-0 shadow-lg">
+                <Card className="bg-gradient-to-br from-blue-500 to-purple-600 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-3 mb-4">
                       <Sparkles className="w-6 h-6" />
@@ -526,7 +526,7 @@ export default function EduVieClean() {
           <TabsContent value="courses">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {courses.map((course) => (
-                <Card key={course.id} className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <Card key={course.id} className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                   <CardHeader className="pb-4">
                     <div className="flex justify-between items-start mb-2">
                       <Badge className={`${getDifficultyColor(course.difficulty)} border text-xs`}>
@@ -579,7 +579,7 @@ export default function EduVieClean() {
           {/* Estudar Hoje */}
           <TabsContent value="study">
             <div className="space-y-6">
-              <Card className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 shadow-lg">
+              <Card className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
                     <div>
@@ -646,7 +646,7 @@ export default function EduVieClean() {
           {/* Criar Conteúdo */}
           <TabsContent value="create">
             <div className="max-w-4xl mx-auto space-y-6">
-              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-purple-600" />
@@ -775,7 +775,7 @@ export default function EduVieClean() {
           <TabsContent value="analytics">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2 space-y-6">
-                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-blue-600" />
@@ -810,7 +810,7 @@ export default function EduVieClean() {
               </div>
 
               <div className="space-y-6">
-                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Estatísticas Detalhadas</CardTitle>
                   </CardHeader>
