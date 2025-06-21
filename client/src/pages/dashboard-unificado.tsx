@@ -180,17 +180,20 @@ export default function DashboardUnificado() {
           <div className="grid lg:grid-cols-2 gap-8">
             {appCards.map((app) => (
               <Card key={app.id} className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden relative">
-                {/* Background image pattern for each app */}
-                <div className={`absolute inset-0 opacity-5 bg-gradient-to-br ${app.color}`}>
+                {/* Background pattern for each app */}
+                <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${app.color}`}>
                   <div className="absolute inset-0" style={{
                     backgroundImage: app.id === 'flow' ? 
-                      'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' :
+                      'radial-gradient(circle at 25% 25%, currentColor 2px, transparent 2px)' :
                     app.id === 'eduvie' ?
-                      'url("data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000000" fill-opacity="0.08"%3E%3Cpath d="M20 20l4-4v8l-4-4z"/%3E%3C/g%3E%3C/svg%3E")' :
+                      'linear-gradient(45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%)' :
                     app.id === 'essentia' ?
-                      'url("data:image/svg+xml,%3Csvg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000000" fill-opacity="0.06"%3E%3Cpath d="M40 40l20-20v40l-20-20z"/%3E%3C/g%3E%3C/svg%3E")' :
-                      'url("data:image/svg+xml,%3Csvg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000000" fill-opacity="0.1"%3E%3Cpolygon points="15,0 30,15 15,30 0,15"/%3E%3C/g%3E%3C/svg%3E")',
-                    backgroundSize: '40px 40px'
+                      'conic-gradient(from 0deg, currentColor 0deg, transparent 45deg, currentColor 90deg, transparent 135deg)' :
+                      'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                    backgroundSize: app.id === 'flow' ? '20px 20px' : 
+                                   app.id === 'eduvie' ? '30px 30px' :
+                                   app.id === 'essentia' ? '40px 40px' : '25px 25px',
+                    color: 'rgba(0,0,0,0.1)'
                   }}></div>
                 </div>
                 <div className={`h-2 bg-gradient-to-r ${app.color} relative z-10`}></div>
