@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart, Calendar, CheckCircle, Clock, Lightbulb } from "lucide-react";
+import { Sparkles, GraduationCap, TrendingUp, Baby, Play, Users, Award, Zap, Brain, Heart, Calendar, CheckCircle, Clock, Lightbulb, Rocket, Star } from "lucide-react";
 
 export default function EcosystemSelector() {
   const apps = [
