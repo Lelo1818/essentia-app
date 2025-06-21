@@ -43,6 +43,13 @@ import {
 export default function Purpose() {
   const [activeTab, setActiveTab] = useState("journey");
   const { activeWindow, openWindow, closeWindow } = useEssentiaWindows();
+  
+  const user = {
+    id: 1,
+    name: "Rafael Santos", 
+    email: "rafael.santos@gmail.com",
+    role: "Explorador Interior"
+  };
 
   const userJourney = {
     stage: "Descoberta de Paixões",
@@ -266,14 +273,14 @@ export default function Purpose() {
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <JourneyContinuity 
-                userId={currentUser.id}
+                userId={user.id}
                 currentPhase="exploration"
-                progress={currentUser.stats.purpose.journeyProgress}
+                progress={75}
               />
             </div>
             <div>
               <AdaptiveCompanion
-                userName={currentUser.name}
+                userName={user.name}
                 recentActivity={["meditation", "reflection", "insight"]}
                 mood="contemplative"
                 timeOfDay={
@@ -336,7 +343,7 @@ export default function Purpose() {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <User className="w-5 h-5 mr-2" />
-                Sobre Mim - {currentUser.name}
+                Sobre Mim - {user.name}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -345,16 +352,16 @@ export default function Purpose() {
                   <h3 className="font-semibold text-lg mb-3">Perfil Pessoal</h3>
                   <div className="space-y-3">
                     <div>
-                      <span className="font-medium">Nome:</span> {currentUser.name}
+                      <span className="font-medium">Nome:</span> {user.name}
                     </div>
                     <div>
-                      <span className="font-medium">Email:</span> {currentUser.email}
+                      <span className="font-medium">Email:</span> {user.email}
                     </div>
                     <div>
-                      <span className="font-medium">Jornada:</span> {currentUser.stats.purpose.journeyProgress}% completa
+                      <span className="font-medium">Jornada:</span> 75% completa
                     </div>
                     <div>
-                      <span className="font-medium">Foco Atual:</span> {currentUser.role}
+                      <span className="font-medium">Foco Atual:</span> {user.role}
                     </div>
                   </div>
                 </div>
@@ -364,19 +371,19 @@ export default function Purpose() {
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span>Clareza de Propósito:</span>
-                      <span className="font-semibold text-purple-600">{currentUser.stats.purpose.journeyProgress}%</span>
+                      <span className="font-semibold text-purple-600">75%</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Cursos Completados:</span>
-                      <span className="font-semibold text-blue-600">{currentUser.stats.edu.coursesCompleted}</span>
+                      <span className="font-semibold text-blue-600">8</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Sequência de Estudos:</span>
-                      <span className="font-semibold text-green-600">{currentUser.stats.edu.streak} dias</span>
+                      <span className="font-semibold text-green-600">12 dias</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Rituais Completados:</span>
-                      <span className="font-semibold text-indigo-600">{currentUser.stats.purpose.ritualsCompleted}</span>
+                      <span className="font-semibold text-indigo-600">28</span>
                     </div>
                   </div>
                 </div>
