@@ -13,15 +13,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));
   
+  // Rota EduVie servindo arquivo estático
   app.get('/eduvie', (req, res) => {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.send(`<!DOCTYPE html>
+    try {
+      const htmlPath = path.join(__dirname, 'eduvie-standalone.html');
+      const html = fs.readFileSync(htmlPath, 'utf8');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(html);
+    } catch (error) {
+      console.error('Erro ao carregar EduVie:', error);
+      res.status(500).send('Erro interno do servidor');
+    }
+  });
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduVie Pro - Plataforma de Aprendizado</title>
+    <title>EduVie Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
