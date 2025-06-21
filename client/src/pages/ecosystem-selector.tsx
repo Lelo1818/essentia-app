@@ -42,7 +42,7 @@ export default function EcosystemSelector() {
       icon: TrendingUp,
       color: "from-green-600 to-emerald-600",
       route: "/flow", 
-      status: "Em desenvolvimento",
+      status: "Completo",
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop"
     },
     {
@@ -55,7 +55,7 @@ export default function EcosystemSelector() {
       icon: Baby,
       color: "from-orange-600 to-yellow-600",
       route: "/flow-kids",
-      status: "Conceito", 
+      status: "Completo", 
       image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop"
     }
   ];

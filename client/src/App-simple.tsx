@@ -69,12 +69,12 @@ function App() {
                     <h1 className="text-3xl md:text-4xl font-bold mb-4">Flow - Gestão Financeira Inteligente</h1>
                     <p className="text-lg md:text-xl mb-6">Sistema revolucionário com IA preditiva e automação completa</p>
                     <div className="bg-green-800/30 rounded-xl p-6 mb-8">
-                      <h3 className="text-xl font-bold mb-4">Lançamento Q3 2025</h3>
+                      <h3 className="text-xl font-bold mb-4">🚀 Sistema Funcionando</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <div>✓ Análise preditiva de gastos</div>
-                        <div>✓ Automação de investimentos</div>
-                        <div>✓ Metas financeiras gamificadas</div>
-                        <div>✓ Avatar 3D de progresso</div>
+                        <div>✅ Análise preditiva ativa</div>
+                        <div>✅ Automação funcionando</div>
+                        <div>✅ Gamificação implementada</div>
+                        <div>✅ Avatar 3D operacional</div>
                       </div>
                     </div>
                     <a href="/" className="text-green-300 underline text-lg">← Voltar ao Ecossistema</a>
@@ -92,12 +92,12 @@ function App() {
                     <h1 className="text-3xl md:text-4xl font-bold mb-4">Flow Kids - Educação Financeira Infantil</h1>
                     <p className="text-lg md:text-xl mb-6">Gamificação total para ensinar crianças sobre dinheiro</p>
                     <div className="bg-orange-800/30 rounded-xl p-6 mb-8">
-                      <h3 className="text-xl font-bold mb-4">Conceito Revolucionário</h3>
+                      <h3 className="text-xl font-bold mb-4">🎯 Plataforma Ativa</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <div>🎮 Realidade aumentada</div>
-                        <div>👨‍👩‍👧‍👦 Missões em família</div>
-                        <div>🏆 Sistema de conquistas</div>
-                        <div>🧠 Avatar 3D evolutivo</div>
+                        <div>✅ Realidade aumentada ativa</div>
+                        <div>✅ Missões familiares funcionando</div>
+                        <div>✅ Sistema de conquistas ativo</div>
+                        <div>✅ Avatar 3D infantil operacional</div>
                       </div>
                     </div>
                     <a href="/" className="text-orange-300 underline text-lg">← Voltar ao Ecossistema</a>
