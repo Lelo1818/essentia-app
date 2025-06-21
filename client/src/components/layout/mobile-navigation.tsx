@@ -1,16 +1,16 @@
 import { Link, useLocation } from "wouter";
-import { Home, Plus, Camera, PieChart, Trophy, Gift, CreditCard, BookOpen, Percent, Plane, Brain } from "lucide-react";
+import { Home, Plus, Camera, PieChart, Trophy, Gift, CreditCard, BookOpen, Percent, Plane, Brain, Baby, TrendingUp } from "lucide-react";
 
 export default function MobileNavigation() {
   const [location] = useLocation();
 
   const navItems = [
     { path: "/", icon: Home, label: "Home" },
+    { path: "/flow", icon: TrendingUp, label: "Flow" },
+    { path: "/kids", icon: Baby, label: "Kids" },
     { path: "/expenses", icon: Camera, label: "Gastos" },
-    { path: "/milhas", icon: Plane, label: "Milhas" },
-    { path: "/cupons", icon: Percent, label: "Cupons" },
-    { path: "/feedback-ia", icon: Brain, label: "IA" },
-    { path: "/goals", icon: Trophy, label: "Metas" }
+    { path: "/goals", icon: Trophy, label: "Metas" },
+    { path: "/cupons", icon: Percent, label: "Cupons" }
   ];
 
   return (
