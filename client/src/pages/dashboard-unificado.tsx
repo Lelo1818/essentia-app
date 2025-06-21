@@ -179,9 +179,22 @@ export default function DashboardUnificado() {
           {/* Apps Grid */}
           <div className="grid lg:grid-cols-2 gap-8">
             {appCards.map((app) => (
-              <Card key={app.id} className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden">
-                <div className={`h-2 bg-gradient-to-r ${app.color}`}></div>
-                <CardHeader className="p-6">
+              <Card key={app.id} className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden relative">
+                {/* Background image pattern for each app */}
+                <div className={`absolute inset-0 opacity-5 bg-gradient-to-br ${app.color}`}>
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: app.id === 'flow' ? 
+                      'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' :
+                    app.id === 'eduvie' ?
+                      'url("data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000000" fill-opacity="0.08"%3E%3Cpath d="M20 20l4-4v8l-4-4z"/%3E%3C/g%3E%3C/svg%3E")' :
+                    app.id === 'essentia' ?
+                      'url("data:image/svg+xml,%3Csvg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000000" fill-opacity="0.06"%3E%3Cpath d="M40 40l20-20v40l-20-20z"/%3E%3C/g%3E%3C/svg%3E")' :
+                      'url("data:image/svg+xml,%3Csvg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000000" fill-opacity="0.1"%3E%3Cpolygon points="15,0 30,15 15,30 0,15"/%3E%3C/g%3E%3C/svg%3E")',
+                    backgroundSize: '40px 40px'
+                  }}></div>
+                </div>
+                <div className={`h-2 bg-gradient-to-r ${app.color} relative z-10`}></div>
+                <CardHeader className="p-6 relative z-10">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-4">
                       <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${app.color} p-4 group-hover:scale-110 transition-transform`}>
@@ -198,7 +211,7 @@ export default function DashboardUnificado() {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="p-6 pt-0">
+                <CardContent className="p-6 pt-0 relative z-10">
                   <p className="text-gray-600 mb-4">{app.description}</p>
                   <Button 
                     className={`w-full bg-gradient-to-r ${app.color} text-white hover:shadow-lg transition-all`}
