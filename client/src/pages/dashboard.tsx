@@ -13,6 +13,7 @@ import ExpenseCategories from "@/components/dashboard/expense-categories";
 import DebtOptimization from "@/components/dashboard/debt-optimization";
 import PersonalizedSuggestions from "@/components/dashboard/personalized-suggestions";
 import AdvancedAnalytics from "@/components/flow/advanced-analytics";
+import CashFlowAnalysis from "@/components/flow/cash-flow-analysis";
 import RecentTransactions from "@/components/dashboard/recent-transactions";
 import TravelGoalsIntegration from "@/components/dashboard/travel-goals-integration";
 import CryptoTracker from "@/components/future-features/crypto-tracker";
@@ -260,6 +261,8 @@ export default function Dashboard() {
       <PersonalizedSuggestions />
 
       <AdvancedAnalytics />
+
+      <CashFlowAnalysis />
 
       <RecentTransactions transactions={recentTransactions} />
 

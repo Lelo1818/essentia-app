@@ -20,6 +20,8 @@ import ContentUpload from "@/components/edu/content-upload";
 import AdaptiveQuiz from "@/components/edu/adaptive-quiz";
 import SmartContentDetection from "@/components/edu/smart-content-detection";
 import AgeBasedLearning from "@/components/edu/age-based-learning";
+import AgeAdaptiveLearning from "@/components/edu/age-adaptive-learning";
+import SmartSuggestions from "@/components/edu/smart-suggestions";
 import AdvancedFeatures from "@/components/edu/advanced-features";
 import ProfessionalFeatures from "@/components/edu/professional-features";
 import HybridLearningSystem from "@/components/edu/hybrid-learning-system";
