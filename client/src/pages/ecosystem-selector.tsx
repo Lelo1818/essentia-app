@@ -130,7 +130,7 @@ export default function EcosystemSelector() {
             Quatro aplicativos revolucionários que transformam vida, educação e finanças
           </p>
           <p className="text-lg text-purple-300 mb-8">
-            Tecnologia de ponta + Conteúdo transformacional = Impacto social massivo
+            Fundado por Marcelo Rymer (Lelo) - Tecnologia de ponta + Conteúdo transformacional = Impacto social massivo
           </p>
           
           {/* Stats */}
