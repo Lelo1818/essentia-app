@@ -22,6 +22,7 @@ import AdvancedFeatures from "@/components/edu/advanced-features";
 import ProfessionalFeatures from "@/components/edu/professional-features";
 import HybridLearningSystem from "@/components/edu/hybrid-learning-system";
 import PromptIntelligence from "@/components/edu/prompt-intelligence";
+import { PromptShowcase } from "@/components/edu/prompt-showcase";
 import { 
   BookOpen, 
   Brain, 

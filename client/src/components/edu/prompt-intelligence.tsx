@@ -142,11 +142,68 @@ CRIE UMA TRILHA COM:
 8. Cronograma flexível`
     },
     {
+      id: "adhd-optimizer",
+      title: "Otimizador TDAH/Dislexia",
+      description: "Adapta conteúdo para neurodivergentes com técnicas comprovadas",
+      category: "Inclusivo",
+      prompt: `Você é especialista em educação inclusiva para TDAH e dislexia. Transforme este conteúdo:
+
+CONTEÚDO: [MATERIAL_ORIGINAL]
+PERFIL: [TDAH/DISLEXIA/AMBOS]
+
+ADAPTAÇÕES OBRIGATÓRIAS:
+1. MICRO-LEARNING: Divida em blocos de 5-7 minutos
+2. MULTI-SENSORIAL: Combine visual + auditivo + tátil
+3. GAMIFICAÇÃO: Pontos, níveis, conquistas imediatas
+4. REPETIÇÃO ESPAÇADA: Revisões estratégicas
+5. MOVIMENTO: Inclua atividades físicas
+6. CORES & DESTACOS: Use coded colors para organização
+7. PAUSAS ATIVAS: A cada 15 minutos
+8. FEEDBACK POSITIVO: Celebre micro-conquistas
+
+ESTRUTURA FINAL:
+- Objetivo claro em 1 frase
+- 3 pontos principais max
+- Atividade prática hands-on
+- Quiz gamificado
+- Recompensa imediata`
+    },
+    {
+      id: "financial-literacy",
+      title: "Educação Financeira Inteligente",
+      description: "Ensina finanças de forma prática e envolvente",
+      category: "Especializado",
+      prompt: `Crie conteúdo de educação financeira adaptado para:
+
+PERFIL: [IDADE/NÍVEL_FINANCEIRO/OBJETIVOS]
+
+MÉTODO FLOW INTEGRATION:
+1. SITUAÇÃO REAL: Use cenários do cotidiano brasileiro
+2. IMPACTO EMOCIONAL: Conecte com sonhos pessoais
+3. CÁLCULOS SIMPLES: Matemática acessível
+4. AÇÃO IMEDIATA: O que fazer hoje mesmo
+5. GAMIFICAÇÃO: Desafios de economia/investimento
+
+TÓPICOS ESSENCIAIS:
+- Orçamento pessoal/familiar
+- Reserva de emergência
+- Juros compostos explicados simples
+- Investimentos básicos
+- Planejamento de metas
+- Psicologia do dinheiro
+
+FORMATO:
+- Storytelling com personagens brasileiros
+- Planilhas interativas simples
+- Simuladores visuais
+- Metas semanais achievables`
+    },
+    {
       id: "treevium-integration",
-      title: "Integração Base Treevium",
-      description: "Acesso à biblioteca especializada de prompts testados",
+      title: "Biblioteca Treevium Premium",
+      description: "Base de prompts especializados testados e otimizados",
       category: "Avançado",
-      prompt: `SISTEMA INTEGRADO TREEVIUM - PROMPTS ESPECIALIZADOS
+      prompt: `SISTEMA TREEVIUM - BIBLIOTECA ESPECIALIZADA
 
 Você tem acesso a uma base de dados com prompts altamente específicos e testados para diferentes contextos educacionais.
 
