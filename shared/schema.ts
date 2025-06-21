@@ -119,6 +119,28 @@ export const transactions = pgTable("transactions", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Income table
+export const incomes = pgTable("incomes", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  description: text("description").notNull(),
+  amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+  frequency: varchar("frequency", { length: 20 }).default("unica"), // unica, mensal, anual
+  date: timestamp("date").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Expenses table
+export const expenses = pgTable("expenses", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  description: text("description").notNull(),
+  amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+  category: varchar("category", { length: 100 }),
+  date: timestamp("date").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // User achievements across all apps
 export const achievements = pgTable("achievements", {
   id: serial("id").primaryKey(),
@@ -177,6 +199,16 @@ export type InsertTransaction = typeof transactions.$inferInsert;
 
 export type Achievement = typeof achievements.$inferSelect;
 export type InsertAchievement = typeof achievements.$inferInsert;
+
+export type Income = typeof incomes.$inferSelect;
+export type InsertIncome = typeof incomes.$inferInsert;
+
+export type Expense = typeof expenses.$inferSelect;
+export type InsertExpense = typeof expenses.$inferInsert;
+
+// Zod schemas
+export const insertIncomeSchema = createInsertSchema(incomes);
+export const insertExpenseSchema = createInsertSchema(expenses);
 
 // Zod schemas for validation
 export const insertUserSchema = createInsertSchema(users);

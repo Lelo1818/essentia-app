@@ -261,7 +261,7 @@ export default function Edu() {
           </TabsTrigger>
           <TabsTrigger value="avatar" className="flex items-center space-x-1">
             <Brain className="w-4 h-4" />
-            <span>Avatar</span>
+            <span>Bear Avatar</span>
           </TabsTrigger>
         </TabsList>
 
