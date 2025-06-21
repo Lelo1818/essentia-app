@@ -37,7 +37,8 @@ import {
   Lightbulb,
   Brain,
   Star,
-  User
+  User,
+  Trophy as Award
 } from "lucide-react";
 
 export default function Purpose() {
