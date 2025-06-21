@@ -46,9 +46,9 @@ function Router() {
     <Switch>
       <Route path="/" component={EcosystemApp} />
       <Route path="/flow" component={FlowApp} />
-      <Route path="/kids" component={KidsApp} />
+      {/* Migrado para conta secundária - <Route path="/kids" component={KidsApp} /> */}
       <Route path="/edu" component={EduApp} />
-      <Route path="/purpose" component={PurposeApp} />
+      {/* Migrado para conta secundária - <Route path="/purpose" component={PurposeApp} /> */}
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/investor-demo" component={InvestorDemo} />
