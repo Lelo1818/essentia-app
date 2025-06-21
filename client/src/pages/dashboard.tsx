@@ -8,9 +8,11 @@ import { mockPurposeData } from "@/data/mock-purpose-data";
 import WelcomeHeader from "@/components/dashboard/welcome-header";
 import QuickActions from "@/components/dashboard/quick-actions";
 import FinancialOverview from "@/components/dashboard/financial-overview";
+import FinancialCards from "@/components/dashboard/financial-cards";
 import ExpenseCategories from "@/components/dashboard/expense-categories";
 import DebtOptimization from "@/components/dashboard/debt-optimization";
 import PersonalizedSuggestions from "@/components/dashboard/personalized-suggestions";
+import AdvancedAnalytics from "@/components/flow/advanced-analytics";
 import RecentTransactions from "@/components/dashboard/recent-transactions";
 import TravelGoalsIntegration from "@/components/dashboard/travel-goals-integration";
 import CryptoTracker from "@/components/future-features/crypto-tracker";
@@ -256,6 +258,8 @@ export default function Dashboard() {
       </div>
 
       <PersonalizedSuggestions />
+
+      <AdvancedAnalytics />
 
       <RecentTransactions transactions={recentTransactions} />
 

@@ -27,6 +27,9 @@ import CashbackMarketplacePage from "@/pages/cashback-marketplace";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
+import Cartoes from "@/pages/cartoes";
+import Seguros from "@/pages/seguros";
+import Impostos from "@/pages/impostos";
 
 function Router() {
   return (
@@ -47,6 +50,9 @@ function Router() {
       <Route path="/flow/educacao" component={Educacao} />
       <Route path="/flow/dividas" component={Dividas} />
       <Route path="/flow/milhas" component={Milhas} />
+      <Route path="/flow/cartoes" component={Cartoes} />
+      <Route path="/flow/seguros" component={Seguros} />
+      <Route path="/flow/impostos" component={Impostos} />
       <Route path="/flow/feedback-ia" component={FeedbackIA} />
       <Route path="/flow/familias" component={Familias} />
       <Route path="/flow/ocr-avancado" component={OcrAvancado} />

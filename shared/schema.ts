@@ -46,8 +46,68 @@ export const flowData = pgTable("flow_data", {
   investments: decimal("investments", { precision: 12, scale: 2 }).default("0"),
   monthlyIncome: decimal("monthly_income", { precision: 12, scale: 2 }),
   monthlyExpenses: decimal("monthly_expenses", { precision: 12, scale: 2 }),
+  taxesPaid: decimal("taxes_paid", { precision: 12, scale: 2 }).default("0"),
+  insuranceCosts: decimal("insurance_costs", { precision: 12, scale: 2 }).default("0"),
+  milesBalance: integer("miles_balance").default(0),
+  creditScore: integer("credit_score").default(0),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Credit Cards
+export const creditCards = pgTable("credit_cards", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  bank: varchar("bank", { length: 255 }),
+  limit: decimal("limit", { precision: 12, scale: 2 }),
+  currentBalance: decimal("current_balance", { precision: 12, scale: 2 }).default("0"),
+  dueDate: integer("due_date"), // day of month
+  annualFee: decimal("annual_fee", { precision: 12, scale: 2 }).default("0"),
+  rewardsProgram: varchar("rewards_program", { length: 255 }),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Insurance Policies
+export const insurancePolicies = pgTable("insurance_policies", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  type: varchar("type", { length: 100 }).notNull(), // health, auto, life, property
+  provider: varchar("provider", { length: 255 }),
+  monthlyPremium: decimal("monthly_premium", { precision: 12, scale: 2 }),
+  coverage: decimal("coverage", { precision: 12, scale: 2 }),
+  deductible: decimal("deductible", { precision: 12, scale: 2 }),
+  expiresAt: timestamp("expires_at"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Tax Records
+export const taxRecords = pgTable("tax_records", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  year: integer("year").notNull(),
+  taxType: varchar("tax_type", { length: 100 }), // income, property, sales
+  amount: decimal("amount", { precision: 12, scale: 2 }),
+  deductions: decimal("deductions", { precision: 12, scale: 2 }).default("0"),
+  refund: decimal("refund", { precision: 12, scale: 2 }).default("0"),
+  filedAt: timestamp("filed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Miles Programs
+export const milesPrograms = pgTable("miles_programs", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  airline: varchar("airline", { length: 255 }).notNull(),
+  programName: varchar("program_name", { length: 255 }),
+  membershipNumber: varchar("membership_number", { length: 255 }),
+  currentMiles: integer("current_miles").default(0),
+  tierStatus: varchar("tier_status", { length: 100 }),
+  expirationDate: timestamp("expiration_date"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 // Edu app - Learning data
@@ -188,6 +248,10 @@ export const usersRelations = relations(users, ({ many }) => ({
   learningSessions: many(learningSessions),
   purposeInsights: many(purposeInsights),
   transactions: many(transactions),
+  creditCards: many(creditCards),
+  insurancePolicies: many(insurancePolicies),
+  taxRecords: many(taxRecords),
+  milesPrograms: many(milesPrograms),
   achievements: many(achievements),
 }));
 
@@ -255,3 +319,21 @@ export const insertLearningSessionSchema = createInsertSchema(learningSessions);
 export const insertPurposeInsightSchema = createInsertSchema(purposeInsights);
 export const insertTransactionSchema = createInsertSchema(transactions);
 export const insertAchievementSchema = createInsertSchema(achievements);
+
+// NEW FINANCIAL SCHEMAS
+export type CreditCard = typeof creditCards.$inferSelect;
+export type InsertCreditCard = typeof creditCards.$inferInsert;
+
+export type InsurancePolicy = typeof insurancePolicies.$inferSelect;
+export type InsertInsurancePolicy = typeof insurancePolicies.$inferInsert;
+
+export type TaxRecord = typeof taxRecords.$inferSelect;
+export type InsertTaxRecord = typeof taxRecords.$inferInsert;
+
+export type MilesProgram = typeof milesPrograms.$inferSelect;
+export type InsertMilesProgram = typeof milesPrograms.$inferInsert;
+
+export const insertCreditCardSchema = createInsertSchema(creditCards);
+export const insertInsurancePolicySchema = createInsertSchema(insurancePolicies);
+export const insertTaxRecordSchema = createInsertSchema(taxRecords);
+export const insertMilesProgramSchema = createInsertSchema(milesPrograms);
