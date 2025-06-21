@@ -43,7 +43,7 @@ const ENVIRONMENTS = {
   }
 };
 
-export default function Avatar3D({ clarityLevel, environment, isActive }: Avatar3DProps) {
+export function Avatar3D({ clarityLevel, environment, isActive }: Avatar3DProps) {
   const [rotation, setRotation] = useState(0);
   const [breathing, setBreathing] = useState(1);
   const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, opacity: number}>>([]);

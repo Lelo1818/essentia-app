@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Avatar3D } from "./avatar-3d";
 import { cn } from "@/lib/utils";
 import { 
   User, 
@@ -191,10 +192,7 @@ export function AvatarJourney() {
             {/* Avatar Representation */}
             <div className="relative h-48 bg-white/30 rounded-lg border border-white/50 overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className={cn(
-                  "w-20 h-20 rounded-full border-4 border-white bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center transition-all duration-1000",
-                  isAnimating && "animate-pulse scale-110"
-                )}>
+                <div className="w-20 h-20 rounded-full border-4 border-white bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                   <User className="w-10 h-10 text-white" />
                 </div>
               </div>

@@ -8,7 +8,7 @@ interface Avatar3DEduProps {
   className?: string;
 }
 
-export function Avatar3DEdu({ knowledgeLevel, environment, isActive, className }: Avatar3DEduProps) {
+export default function Avatar3DEdu({ knowledgeLevel, environment, isActive, className }: Avatar3DEduProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const [time, setTime] = useState(0);

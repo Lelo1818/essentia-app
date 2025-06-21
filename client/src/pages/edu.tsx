@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar3DEdu } from "@/components/edu/avatar-3d-edu";
+import Avatar3DEdu from "@/components/edu/avatar-3d-edu";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
@@ -261,6 +261,15 @@ export default function Edu() {
         </TabsContent>
 
         <TabsContent value="dashboard" className="mt-6">
+          {/* Avatar 3D Educational */}
+          <div className="flex justify-center mb-8">
+            <Avatar3DEdu
+              knowledgeLevel={userStats.averageScore}
+              environment="library"
+              isActive={true}
+              className="mx-auto"
+            />
+          </div>
           <HybridLearningSystem />
         </TabsContent>
         

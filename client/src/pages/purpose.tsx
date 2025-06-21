@@ -16,6 +16,7 @@ import AICoach from "@/components/purpose/ai-coach";
 import JourneyPhases from "@/pages/purpose/journey-phases";
 import { TransitionJourney } from "@/components/purpose/transition-journey";
 import { AvatarJourney } from "@/components/purpose/avatar-journey";
+import { Avatar3DDisplay } from "@/components/purpose/avatar-3d-display";
 import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
 import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
@@ -256,7 +257,7 @@ export default function Purpose() {
         </TabsContent>
 
         <TabsContent value="avatar" className="mt-6">
-          <AvatarJourney />
+          <Avatar3DDisplay />
         </TabsContent>
 
         <TabsContent value="breathing" className="mt-6">
