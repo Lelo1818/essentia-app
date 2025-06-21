@@ -252,6 +252,10 @@ export default function Purpose() {
             <Users className="w-4 h-4" />
             <span className="hidden sm:inline">Comunidade</span>
           </TabsTrigger>
+          <TabsTrigger value="profile" className="flex items-center space-x-1">
+            <User className="w-4 h-4" />
+            <span className="hidden sm:inline">Sobre Mim</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="journey" className="mt-6">
@@ -270,7 +274,7 @@ export default function Purpose() {
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-center">Xamã Ancestral - Guia Espiritual</h3>
-              <ShamanAvatar isChanneling={false} />
+              <ShamanAvatar isChanneling={activeTab === "avatar"} />
             </div>
           </div>
         </TabsContent>
@@ -301,6 +305,82 @@ export default function Purpose() {
 
         <TabsContent value="community" className="mt-6">
           <CommunityConnect />
+        </TabsContent>
+
+        <TabsContent value="profile" className="mt-6">
+          <Card className="border-l-4 border-l-blue-500">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <User className="w-5 h-5 mr-2" />
+                Sobre Mim - {currentUser.name}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="font-semibold text-lg mb-3">Perfil Pessoal</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <span className="font-medium">Nome:</span> {currentUser.name}
+                    </div>
+                    <div>
+                      <span className="font-medium">Email:</span> {currentUser.email}
+                    </div>
+                    <div>
+                      <span className="font-medium">Jornada:</span> {currentUser.stats.purpose.journeyProgress}% completa
+                    </div>
+                    <div>
+                      <span className="font-medium">Foco Atual:</span> {currentUser.role}
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold text-lg mb-3">Progresso na Jornada</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span>Clareza de Propósito:</span>
+                      <span className="font-semibold text-purple-600">{currentUser.stats.purpose.journeyProgress}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Cursos Completados:</span>
+                      <span className="font-semibold text-blue-600">{currentUser.stats.edu.coursesCompleted}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sequência de Estudos:</span>
+                      <span className="font-semibold text-green-600">{currentUser.stats.edu.streak} dias</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Rituais Completados:</span>
+                      <span className="font-semibold text-indigo-600">{currentUser.stats.purpose.ritualsCompleted}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Conquistas Recentes</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-3 bg-purple-50 rounded-lg">
+                    <Award className="w-6 h-6 mx-auto mb-2 text-purple-600" />
+                    <div className="text-sm font-medium">Meditador</div>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <Star className="w-6 h-6 mx-auto mb-2 text-blue-600" />
+                    <div className="text-sm font-medium">Explorador</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <Heart className="w-6 h-6 mx-auto mb-2 text-green-600" />
+                    <div className="text-sm font-medium">Conectado</div>
+                  </div>
+                  <div className="text-center p-3 bg-indigo-50 rounded-lg">
+                    <Sparkles className="w-6 h-6 mx-auto mb-2 text-indigo-600" />
+                    <div className="text-sm font-medium">Iluminado</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
 

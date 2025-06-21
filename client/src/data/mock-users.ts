@@ -66,7 +66,17 @@ export const mockUsers = [
   }
 ];
 
-export const getCurrentUser = () => mockUsers[0]; // Ana Silva como usuário atual
+export const getCurrentUser = () => {
+  const user = mockUsers[3]; // Rafael Santos - usuário demonstração
+  return {
+    ...user,
+    // Dados específicos para demonstração
+    name: "Rafael Santos",
+    email: "rafael.santos@flowecosystem.com",
+    role: "Beta Tester",
+    level: user.stats.edu.streak
+  };
+};
 
 export const getRandomUser = () => {
   return mockUsers[Math.floor(Math.random() * mockUsers.length)];

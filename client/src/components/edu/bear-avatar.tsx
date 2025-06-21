@@ -228,22 +228,81 @@ export default function BearAvatar({ isRoaring = false, environment = "forest" }
   const playRoarSound = () => {
     if (!soundEnabled) return;
     
-    // Simular som de rugido com Web Audio API
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.setValueAtTime(80, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(40, audioContext.currentTime + 0.5);
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 1);
+    try {
+      // Som de rugido épico com Web Audio API
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      // Oscilador principal (rugido grave)
+      const oscillator1 = audioContext.createOscillator();
+      const gainNode1 = audioContext.createGain();
+      
+      // Oscilador secundário (harmônicos)
+      const oscillator2 = audioContext.createOscillator();
+      const gainNode2 = audioContext.createGain();
+      
+      // Noise para textura
+      const bufferSize = audioContext.sampleRate * 1;
+      const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      
+      const noiseSource = audioContext.createBufferSource();
+      noiseSource.buffer = noiseBuffer;
+      const noiseGain = audioContext.createGain();
+      const noiseFilter = audioContext.createBiquadFilter();
+      noiseFilter.frequency.value = 200;
+      noiseFilter.type = 'lowpass';
+      
+      // Conexões
+      oscillator1.connect(gainNode1);
+      oscillator2.connect(gainNode2);
+      noiseSource.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      
+      gainNode1.connect(audioContext.destination);
+      gainNode2.connect(audioContext.destination);
+      noiseGain.connect(audioContext.destination);
+      
+      // Configuração do rugido principal
+      oscillator1.frequency.setValueAtTime(120, audioContext.currentTime);
+      oscillator1.frequency.exponentialRampToValueAtTime(60, audioContext.currentTime + 0.3);
+      oscillator1.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 1);
+      
+      // Harmônicos
+      oscillator2.frequency.setValueAtTime(240, audioContext.currentTime);
+      oscillator2.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.3);
+      
+      // Envelope de volume
+      gainNode1.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode1.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 0.1);
+      gainNode1.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
+      
+      gainNode2.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode2.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 0.1);
+      gainNode2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+      
+      // Ruído de textura
+      noiseGain.gain.setValueAtTime(0, audioContext.currentTime);
+      noiseGain.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+      noiseGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      
+      // Iniciar sons
+      oscillator1.start(audioContext.currentTime);
+      oscillator2.start(audioContext.currentTime);
+      noiseSource.start(audioContext.currentTime);
+      
+      // Parar sons
+      oscillator1.stop(audioContext.currentTime + 1.5);
+      oscillator2.stop(audioContext.currentTime + 1);
+      noiseSource.stop(audioContext.currentTime + 0.5);
+      
+      console.log("🐻 RUGIDO ÉPICO EXECUTADO!");
+      
+    } catch (error) {
+      console.log("Som não disponível, mas rugido visual ativo!");
+    }
   };
 
   return (
