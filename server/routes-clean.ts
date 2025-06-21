@@ -4,9 +4,10 @@ import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
-  // Rota EduVie funcionando
+  // Rota EduVie funcionando na porta principal
   app.get('/eduvie', (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(`<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
