@@ -3,11 +3,9 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Dashboard from "@/pages/dashboard";
-import { useMobileOptimization } from "@/hooks/useMobileOptimization";
+
 
 export default function FlowApp() {
-  useMobileOptimization();
-  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

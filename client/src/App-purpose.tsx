@@ -3,11 +3,9 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Purpose from "@/pages/purpose";
-import { useMobileOptimization } from "@/hooks/useMobileOptimization";
+
 
 export default function PurposeApp() {
-  useMobileOptimization();
-  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
