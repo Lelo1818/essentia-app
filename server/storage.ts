@@ -24,6 +24,8 @@ export interface IStorage {
   createBudget(budget: any): Promise<any>;
   getGoalsByUserId(userId: number): Promise<any[]>;
   createGoal(goal: any): Promise<any>;
+  getDebtsByUserId(userId: number): Promise<any[]>;
+  createDebt(debt: any): Promise<any>;
 }
 
 class MemStorage implements IStorage {
@@ -87,9 +89,12 @@ class MemStorage implements IStorage {
   private seedFinancialData() {
     // Sample incomes
     const incomesData = [
-      { userId: 1, description: "Salário Principal", amount: 8500, frequency: "mensal", date: new Date() },
-      { userId: 1, description: "Freelance Design", amount: 1200, frequency: "unica", date: new Date() },
-      { userId: 1, description: "Dividendos", amount: 350, frequency: "mensal", date: new Date() }
+      { userId: 1, description: "Salário Principal", amount: 8500, frequency: "mensal", date: new Date(), category: "Trabalho" },
+      { userId: 1, description: "Freelance Design", amount: 1200, frequency: "unica", date: new Date(), category: "Freelance" },
+      { userId: 1, description: "Dividendos Ações", amount: 350, frequency: "mensal", date: new Date(), category: "Investimentos" },
+      { userId: 1, description: "Aluguel Imóvel", amount: 1800, frequency: "mensal", date: new Date(), category: "Aluguel" },
+      { userId: 1, description: "Consultoria Tech", amount: 2500, frequency: "trimestral", date: new Date(), category: "Consultoria" },
+      { userId: 1, description: "Vendas Online", amount: 750, frequency: "semanal", date: new Date(), category: "E-commerce" }
     ];
 
     incomesData.forEach(incomeData => {
@@ -99,9 +104,18 @@ class MemStorage implements IStorage {
 
     // Sample expenses
     const expensesData = [
-      { userId: 1, description: "Supermercado", amount: 450, category: "Alimentação", date: new Date() },
-      { userId: 1, description: "Gasolina", amount: 280, category: "Transporte", date: new Date() },
-      { userId: 1, description: "Netflix", amount: 32, category: "Entretenimento", date: new Date() }
+      { userId: 1, description: "Supermercado Pão de Açúcar", amount: 450, category: "Alimentação", date: new Date(), recurring: true },
+      { userId: 1, description: "Gasolina Shell", amount: 280, category: "Transporte", date: new Date(), recurring: false },
+      { userId: 1, description: "Netflix Premium", amount: 32, category: "Entretenimento", date: new Date(), recurring: true },
+      { userId: 1, description: "Aluguel Apartamento", amount: 2200, category: "Moradia", date: new Date(), recurring: true },
+      { userId: 1, description: "Plano de Saúde Unimed", amount: 350, category: "Saúde", date: new Date(), recurring: true },
+      { userId: 1, description: "Internet Fibra", amount: 120, category: "Utilidades", date: new Date(), recurring: true },
+      { userId: 1, description: "Academia Smart Fit", amount: 89, category: "Saúde", date: new Date(), recurring: true },
+      { userId: 1, description: "Spotify Family", amount: 34, category: "Entretenimento", date: new Date(), recurring: true },
+      { userId: 1, description: "Uber", amount: 180, category: "Transporte", date: new Date(), recurring: false },
+      { userId: 1, description: "Jantar Restaurante", amount: 120, category: "Alimentação", date: new Date(), recurring: false },
+      { userId: 1, description: "Farmácia", amount: 85, category: "Saúde", date: new Date(), recurring: false },
+      { userId: 1, description: "Roupas Shopping", amount: 320, category: "Vestuário", date: new Date(), recurring: false }
     ];
 
     expensesData.forEach(expenseData => {
@@ -111,13 +125,44 @@ class MemStorage implements IStorage {
 
     // Sample goals
     const goalsData = [
-      { userId: 1, title: "Viagem Europa", description: "Economizar para viagem", targetAmount: 15000, currentAmount: 8500, targetDate: new Date('2025-12-31'), category: "Viagem", priority: "alta", status: "ativo" },
-      { userId: 1, title: "Reserva Emergência", description: "6 meses de gastos", targetAmount: 25000, currentAmount: 12000, targetDate: new Date('2025-06-30'), category: "Emergência", priority: "alta", status: "ativo" }
+      { userId: 1, title: "Viagem Europa", description: "Economizar para viagem de 15 dias", targetAmount: 15000, currentAmount: 8500, targetDate: new Date('2025-12-31'), category: "Viagem", priority: "alta", status: "ativo" },
+      { userId: 1, title: "Reserva Emergência", description: "6 meses de gastos essenciais", targetAmount: 25000, currentAmount: 12000, targetDate: new Date('2025-06-30'), category: "Emergência", priority: "alta", status: "ativo" },
+      { userId: 1, title: "Carro Novo", description: "Troca do carro atual", targetAmount: 35000, currentAmount: 18500, targetDate: new Date('2026-03-15'), category: "Transporte", priority: "média", status: "ativo" },
+      { userId: 1, title: "Casa Própria", description: "Entrada para apartamento", targetAmount: 80000, currentAmount: 32000, targetDate: new Date('2027-12-31'), category: "Moradia", priority: "alta", status: "ativo" },
+      { userId: 1, title: "Curso MBA", description: "Especialização em gestão", targetAmount: 12000, currentAmount: 4500, targetDate: new Date('2025-08-15'), category: "Educação", priority: "média", status: "ativo" },
+      { userId: 1, title: "Investimento Renda Fixa", description: "Diversificar carteira", targetAmount: 50000, currentAmount: 28000, targetDate: new Date('2025-12-31'), category: "Investimentos", priority: "baixa", status: "ativo" }
     ];
 
     goalsData.forEach(goalData => {
       const goal = { id: this.currentId++, ...goalData, createdAt: new Date(), updatedAt: new Date() };
       this.goals.set(goal.id, goal);
+    });
+
+    // Sample budgets
+    const budgetsData = [
+      { userId: 1, category: "Alimentação", planned: 800, spent: 650, month: "2025-01", status: "dentro_limite" },
+      { userId: 1, category: "Transporte", planned: 400, spent: 460, month: "2025-01", status: "acima_limite" },
+      { userId: 1, category: "Entretenimento", planned: 300, spent: 220, month: "2025-01", status: "dentro_limite" },
+      { userId: 1, category: "Saúde", planned: 500, spent: 435, month: "2025-01", status: "dentro_limite" },
+      { userId: 1, category: "Moradia", planned: 2500, spent: 2320, month: "2025-01", status: "dentro_limite" },
+      { userId: 1, category: "Vestuário", planned: 200, spent: 320, month: "2025-01", status: "acima_limite" }
+    ];
+
+    budgetsData.forEach(budgetData => {
+      const budget = { id: this.currentId++, ...budgetData, createdAt: new Date(), updatedAt: new Date() };
+      this.budgets.set(budget.id, budget);
+    });
+
+    // Sample debts
+    const debtsData = [
+      { userId: 1, name: "Cartão de Crédito Nubank", balance: 2100, minimumPayment: 120, interestRate: 12.5, dueDate: new Date('2025-01-15'), type: "cartao_credito" },
+      { userId: 1, name: "Financiamento Carro", balance: 28000, minimumPayment: 850, interestRate: 1.2, dueDate: new Date('2025-01-10'), type: "financiamento" },
+      { userId: 1, name: "Empréstimo Pessoal", balance: 8500, minimumPayment: 450, interestRate: 2.8, dueDate: new Date('2025-01-20'), type: "emprestimo" }
+    ];
+
+    debtsData.forEach(debtData => {
+      const debt = { id: this.currentId++, ...debtData, createdAt: new Date(), updatedAt: new Date() };
+      this.expenses.set(debt.id, debt); // Using expenses map for debts
     });
   }
 
@@ -213,6 +258,17 @@ class MemStorage implements IStorage {
     const newGoal = { ...goal, id, createdAt: new Date(), updatedAt: new Date() };
     this.goals.set(id, newGoal);
     return newGoal;
+  }
+
+  async getDebtsByUserId(userId: number): Promise<any[]> {
+    return Array.from(this.expenses.values()).filter(item => item.userId === userId && item.type);
+  }
+
+  async createDebt(debt: any): Promise<any> {
+    const id = this.currentId++;
+    const newDebt = { ...debt, id, createdAt: new Date(), updatedAt: new Date() };
+    this.expenses.set(id, newDebt);
+    return newDebt;
   }
 }
 
