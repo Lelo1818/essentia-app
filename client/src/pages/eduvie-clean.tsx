@@ -270,11 +270,16 @@ export default function EduVieClean() {
         padding: 0 !important;
         overflow-x: hidden !important;
       }
-      /* EduVie container styles */
+      /* EduVie full control */
       #eduvie-container {
-        position: relative !important;
-        z-index: 10 !important;
-        min-height: 100vh !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 9999 !important;
+        background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%) !important;
+        overflow-y: auto !important;
       }
     `;
     document.head.appendChild(style);
@@ -301,7 +306,7 @@ export default function EduVieClean() {
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-            <span className="text-sm text-gray-600 hidden md:inline">Daniel</span>
+            <span className="text-sm text-gray-600 hidden md:inline">Lelão</span>
           </div>
         </div>
       </div>

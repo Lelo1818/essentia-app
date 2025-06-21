@@ -48,8 +48,8 @@ export default function Purpose() {
   
   const user = {
     id: 1,
-    name: "Rafael Santos", 
-    email: "rafael.santos@gmail.com",
+    name: "Lelão", 
+    email: "lelao@flow.com",
     role: "Explorador Interior"
   };
 
@@ -109,7 +109,7 @@ export default function Purpose() {
                 Jornada de Propósito
               </CardTitle>
               <p className="text-gray-600 mt-2">
-                Bem-vindo de volta, Rafael. Sua clareza sobre propósito cresceu {userJourney.clarity}% em {userJourney.daysActive} dias.
+                Bem-vindo de volta, Lelão. Sua clareza sobre propósito cresceu {userJourney.clarity}% em {userJourney.daysActive} dias.
               </p>
             </div>
             <Badge className="bg-purple-100 text-purple-700 px-4 py-2">
