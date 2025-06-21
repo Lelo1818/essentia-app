@@ -1,7 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerEcosystemRoutes } from "./routes-ecosystem";
-import { registerPurposeRoutes } from "./routes-purpose";
-import { registerEduRoutes } from "./routes-edu";
+import { registerRoutes } from "./routes-clean";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
@@ -54,9 +52,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = await registerEcosystemRoutes(app);
-  await registerPurposeRoutes(app);
-  await registerEduRoutes(app);
+  const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

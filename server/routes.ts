@@ -26,13 +26,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).send('Erro interno do servidor');
     }
   });
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduVie Pro</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+
+  // Rota alternativa para teste  
+  app.get('/eduvie-test', (req, res) => {
+    res.send(`
+<!DOCTYPE html>
+<html><head><title>EduVie Pro</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-blue-50 p-8">
+<div class="max-w-4xl mx-auto">
+<h1 class="text-4xl font-bold text-blue-600 mb-8">EduVie Pro - Funcionando!</h1>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-white p-6 rounded-xl shadow text-center"><div class="text-2xl mb-2">📚</div><h3 class="font-bold">18</h3><p class="text-sm text-gray-600">Cursos Ativos</p></div>
+<div class="bg-white p-6 rounded-xl shadow text-center"><div class="text-2xl mb-2">🏆</div><h3 class="font-bold">5</h3><p class="text-sm text-gray-600">Certificados</p></div>
+<div class="bg-white p-6 rounded-xl shadow text-center"><div class="text-2xl mb-2">🔥</div><h3 class="font-bold">12</h3><p class="text-sm text-gray-600">Sequência</p></div>
+<div class="bg-white p-6 rounded-xl shadow text-center"><div class="text-2xl mb-2">📈</div><h3 class="font-bold">89%</h3><p class="text-sm text-gray-600">Performance</p></div>
+</div>
+<div class="bg-white rounded-xl shadow p-6">
+<h2 class="text-2xl font-bold mb-4">Dashboard Funcionando Perfeitamente!</h2>
+<p class="text-gray-600 mb-4">Esta é a versão de teste do EduVie que funciona sem problemas.</p>
+<div class="flex gap-4">
+<button class="bg-blue-600 text-white px-6 py-3 rounded-lg">Iniciar Curso</button>
+<button class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg">Ver Progresso</button>
+</div>
+</div>
+</div>
+</body></html>
+    `);
+  });
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; 
