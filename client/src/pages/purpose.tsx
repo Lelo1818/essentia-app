@@ -24,6 +24,8 @@ import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
 import JourneyContinuity from "@/components/purpose/journey-continuity";
 import AdaptiveCompanion from "@/components/purpose/adaptive-companion";
+import MagicalInteractions from "@/components/purpose/magical-interactions";
+import LivingReactions from "@/components/purpose/living-reactions";
 import BiometricSensors from "@/components/purpose/biometric-sensors";
 import AITherapist from "@/components/purpose/ai-therapist";
 import { 

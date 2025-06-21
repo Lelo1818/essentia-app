@@ -316,6 +316,11 @@ export default function EpicDemo() {
           </Link>
         </div>
       </div>
+      
+      {/* Elementos bombásticos para impressionar Daniel Allegri */}
+      <HolyShitMoments />
+      <SurpriseMechanics />
+      <EasterEggs />
     </div>
   );
 }
