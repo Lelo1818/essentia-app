@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "@/components/layout/navigation";
-import MobileNavigation from "@/components/layout/mobile-navigation";
+import BottomNavigation from "@/components/layout/bottom-navigation";
 import { FloatingAIAssistant, ScrollToTop, LiveStats } from "@/components/enhanced/floating-elements";
 import Dashboard from "@/pages/dashboard";
 import Income from "@/pages/income";
@@ -70,7 +70,7 @@ export default function FlowApp() {
       <TooltipProvider>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
           <Navigation />
-          <MobileNavigation />
+          <BottomNavigation />
           
           <main className="lg:pl-72">
             <Router />

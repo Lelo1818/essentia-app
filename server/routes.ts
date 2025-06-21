@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { 
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
-  insertDebtSchema, insertGoalSchema, insertAchievementSchema
+  insertGoalSchema, insertAchievementSchema
 } from "@shared/schema";
 import { z } from "zod";
 
