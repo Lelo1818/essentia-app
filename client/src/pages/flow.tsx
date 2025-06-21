@@ -8,6 +8,7 @@ import BottomNavigation from "@/components/layout/bottom-navigation";
 import { FloatingAIAssistant, ScrollToTop, LiveStats } from "@/components/enhanced/floating-elements";
 import Dashboard from "@/pages/dashboard";
 import DashboardStatic from "@/pages/dashboard-static";
+import FlowWorking from "@/pages/flow-working";
 
 import Income from "@/pages/income";
 import Expenses from "@/pages/expenses";
@@ -36,7 +37,7 @@ import Impostos from "@/pages/impostos";
 function Router() {
   return (
     <Switch>
-      <Route path="/flow" component={DashboardStatic} />
+      <Route path="/flow" component={FlowWorking} />
       <Route path="/flow/dynamic" component={Dashboard} />
       <Route path="/flow/income" component={Income} />
       <Route path="/flow/expenses" component={Expenses} />
