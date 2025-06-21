@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Avatar3DEdu from "@/components/edu/avatar-3d-edu";
 import BearAvatar from "@/components/edu/bear-avatar";
+import QuickNavButton from "@/components/shared/quick-nav-button";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
@@ -150,9 +151,11 @@ export default function Edu() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-l-4 border-l-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <QuickNavButton />
+      <div className="max-w-7xl mx-auto space-y-6">
+        {/* Header */}
+        <Card className="border-l-4 border-l-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -462,6 +465,7 @@ export default function Edu() {
           </Button>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

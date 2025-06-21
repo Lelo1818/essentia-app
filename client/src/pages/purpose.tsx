@@ -18,6 +18,7 @@ import { TransitionJourney } from "@/components/purpose/transition-journey";
 import { AvatarJourney } from "@/components/purpose/avatar-journey";
 import { Avatar3DDisplay } from "@/components/purpose/avatar-3d-display";
 import ShamanAvatar from "@/components/purpose/shaman-avatar";
+import QuickNavButton from "@/components/shared/quick-nav-button";
 import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
 import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
@@ -82,7 +83,9 @@ export default function Purpose() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <QuickNavButton />
+      <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
       <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
         <CardHeader>
@@ -355,6 +358,7 @@ export default function Purpose() {
           autoClose={true}
         />
       )}
+      </div>
     </div>
   );
 }

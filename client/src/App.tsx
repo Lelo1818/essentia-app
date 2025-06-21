@@ -31,6 +31,7 @@ import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
 import KidsApp from "./App-kids";
+import EcosystemApp from "./App-ecosystem";
 
 function Router() {
   return (
@@ -58,6 +59,7 @@ function Router() {
       <Route path="/purpose" component={Purpose} />
       <Route path="/edu" component={Edu} />
       <Route path="/investor-demo" component={InvestorDemo} />
+      <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/profile" component={Profile} />
       <Route>
         <NotFound />
