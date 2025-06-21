@@ -3,6 +3,7 @@ import { Switch, Route } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
+import { useMobileOptimization } from "@/hooks/useMobileOptimization";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InteractiveButton } from "@/components/ui/interactive-button";
 import { Badge } from "@/components/ui/badge";
@@ -52,6 +53,8 @@ function KidsDashboard() {
   const [xpProgress, setXpProgress] = useState(65);
   const [currentGame, setCurrentGame] = useState<string | null>(null);
   const { toast } = useToast();
+  
+  useMobileOptimization();
 
   const achievements: KidsAchievement[] = [
     {
@@ -205,7 +208,7 @@ function KidsDashboard() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6 pt-16">
+    <div className="min-h-screen p-4 md:p-6 pt-20 md:pt-16">
       <div className="max-w-6xl mx-auto space-y-4 md:space-y-6">
         {/* Header */}
         <div className="text-center space-y-4">
@@ -477,6 +480,15 @@ export default function FlowKidsApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
+        {/* Mobile Navigation */}
+        <div className="md:hidden fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b z-50 p-3">
+          <div className="flex items-center justify-between">
+            <a href="/" className="text-pink-600 font-semibold">← Voltar</a>
+            <h1 className="text-lg font-bold text-pink-600">Flow Kids</h1>
+            <div className="w-16"></div>
+          </div>
+        </div>
+        
         <KidsDashboard />
         <Toaster />
       </div>

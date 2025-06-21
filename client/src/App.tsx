@@ -81,6 +81,20 @@ function App() {
           </main>
           <MobileNavigation />
           <Toaster />
+          
+          {/* Mobile Touch Optimization */}
+          <style>{`
+            @media (max-width: 768px) {
+              * { 
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+              }
+              button, a, [role="button"] {
+                min-height: 44px;
+                min-width: 44px;
+              }
+            }
+          `}</style>
         </div>
       </TooltipProvider>
     </QueryClientProvider>
