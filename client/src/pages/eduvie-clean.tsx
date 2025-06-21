@@ -267,10 +267,10 @@ export default function EduVieClean() {
               </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-500">Meta Mensal</p>
-              <div className="flex items-center gap-2">
-                <Progress value={(stats.currentMonth / stats.monthlyGoal) * 100} className="w-24 h-2" />
-                <span className="text-sm font-medium text-gray-700">
+              <p className="text-sm text-gray-500 mb-2">Meta Mensal</p>
+              <div className="flex items-center justify-end gap-3">
+                <Progress value={(stats.currentMonth / stats.monthlyGoal) * 100} className="w-32 h-3" />
+                <span className="text-sm font-bold text-gray-800">
                   {stats.currentMonth}/{stats.monthlyGoal}h
                 </span>
               </div>
@@ -279,7 +279,7 @@ export default function EduVieClean() {
         </div>
 
         {/* Cards de Estatísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center gap-3">
@@ -352,25 +352,25 @@ export default function EduVieClean() {
         </div>
 
         {/* Navegação Principal */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 bg-white/80 backdrop-blur-sm shadow-lg">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+          <TabsList className="grid w-full grid-cols-5 bg-white/90 backdrop-blur-sm shadow-lg rounded-xl p-2">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <Target className="w-4 h-4" />
               Dashboard
             </TabsTrigger>
-            <TabsTrigger value="courses" className="flex items-center gap-2">
+            <TabsTrigger value="courses" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <BookOpen className="w-4 h-4" />
               Meus Cursos
             </TabsTrigger>
-            <TabsTrigger value="study" className="flex items-center gap-2">
+            <TabsTrigger value="study" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <Brain className="w-4 h-4" />
               Estudar Hoje
             </TabsTrigger>
-            <TabsTrigger value="create" className="flex items-center gap-2">
+            <TabsTrigger value="create" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <Upload className="w-4 h-4" />
               Criar Conteúdo
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2">
+            <TabsTrigger value="analytics" className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white rounded-lg px-4 py-3 transition-all duration-200">
               <TrendingUp className="w-4 h-4" />
               Analytics
             </TabsTrigger>
