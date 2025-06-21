@@ -252,21 +252,35 @@ export default function EduVieClean() {
     ));
   };
 
-  // Hide Flow navigation when EduVie loads
+  // Hide ALL Flow elements when EduVie loads
   React.useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
-      /* Hide Flow navigation and footer */
-      nav.bg-white.shadow-sm,
-      .fixed.bottom-0,
-      .mobile-navigation,
-      div[class*="fixed bottom"],
-      div[class*="bottom-0"] {
+      /* Hide EVERYTHING from Flow system */
+      nav, .fixed, .sticky, .absolute, 
+      div[class*="bottom"], div[class*="fixed"], 
+      div[class*="navigation"], footer, header,
+      main:not(#eduvie-main), 
+      .mobile-navigation, .desktop-navigation,
+      [class*="nav"], [class*="header"], [class*="footer"] {
         display: none !important;
+        visibility: hidden !important;
       }
-      /* Ensure body has no bottom padding */
+      /* Reset body completely */
       body {
-        padding-bottom: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+      }
+      /* EduVie takes full control */
+      #eduvie-container {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 999999 !important;
+        background: #f8fafc !important;
       }
     `;
     document.head.appendChild(style);
@@ -279,8 +293,8 @@ export default function EduVieClean() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-auto"
-         style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1000 }}>
+    <div id="eduvie-container" className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-auto">
+      <main id="eduvie-main" className="w-full h-full">
       
       {/* Header EduVie próprio */}
       <div className="absolute top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-10">
@@ -871,6 +885,7 @@ export default function EduVieClean() {
           </TabsContent>
         </Tabs>
       </div>
+      </main>
     </div>
   );
 }
