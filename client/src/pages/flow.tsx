@@ -7,8 +7,7 @@ import Navigation from "@/components/layout/navigation";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 import { FloatingAIAssistant, ScrollToTop, LiveStats } from "@/components/enhanced/floating-elements";
 import Dashboard from "@/pages/dashboard";
-import SimpleFlow from "@/pages/simple-flow";
-import { useDeviceDetection } from "@/hooks/useDeviceDetection";
+
 import Income from "@/pages/income";
 import Expenses from "@/pages/expenses";
 import Planning from "@/pages/planning";
@@ -34,12 +33,9 @@ import Seguros from "@/pages/seguros";
 import Impostos from "@/pages/impostos";
 
 function Router() {
-  const { isMobile } = useDeviceDetection();
-  
   return (
     <Switch>
       <Route path="/flow" component={Dashboard} />
-      <Route path="/flow/simple" component={SimpleFlow} />
       <Route path="/flow/income" component={Income} />
       <Route path="/flow/expenses" component={Expenses} />
       <Route path="/flow/planning" component={Planning} />

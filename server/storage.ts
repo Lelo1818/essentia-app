@@ -169,6 +169,51 @@ class MemStorage implements IStorage {
     this.achievements.set(id, achievement);
     return achievement;
   }
+
+  // Financial data methods
+  async getIncomesByUserId(userId: number): Promise<any[]> {
+    return Array.from(this.incomes.values()).filter(income => income.userId === userId);
+  }
+
+  async createIncome(income: any): Promise<any> {
+    const id = this.currentId++;
+    const newIncome = { ...income, id, createdAt: new Date() };
+    this.incomes.set(id, newIncome);
+    return newIncome;
+  }
+
+  async getExpensesByUserId(userId: number): Promise<any[]> {
+    return Array.from(this.expenses.values()).filter(expense => expense.userId === userId);
+  }
+
+  async createExpense(expense: any): Promise<any> {
+    const id = this.currentId++;
+    const newExpense = { ...expense, id, createdAt: new Date() };
+    this.expenses.set(id, newExpense);
+    return newExpense;
+  }
+
+  async getBudgetsByUserId(userId: number): Promise<any[]> {
+    return Array.from(this.budgets.values()).filter(budget => budget.userId === userId);
+  }
+
+  async createBudget(budget: any): Promise<any> {
+    const id = this.currentId++;
+    const newBudget = { ...budget, id, createdAt: new Date(), updatedAt: new Date() };
+    this.budgets.set(id, newBudget);
+    return newBudget;
+  }
+
+  async getGoalsByUserId(userId: number): Promise<any[]> {
+    return Array.from(this.goals.values()).filter(goal => goal.userId === userId);
+  }
+
+  async createGoal(goal: any): Promise<any> {
+    const id = this.currentId++;
+    const newGoal = { ...goal, id, createdAt: new Date(), updatedAt: new Date() };
+    this.goals.set(id, newGoal);
+    return newGoal;
+  }
 }
 
 export const storage = new MemStorage();
