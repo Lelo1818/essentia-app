@@ -253,27 +253,44 @@ export default function EduVieClean() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      {/* Esconder navegação antiga */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative">
+      {/* Sobrescrever navegação completamente */}
       <style>{`
-        nav[role="navigation"], 
-        .mobile-navigation,
-        footer {
-          display: none !important;
-        }
-        body {
-          padding-bottom: 0 !important;
-        }
+        body { margin: 0; padding: 0; }
+        nav, .mobile-navigation, footer, main { display: none !important; }
+        #root > div > div { margin: 0; padding: 0; max-width: none; }
+        #root > div > main { display: none !important; }
+        #root > div > nav { display: none !important; }
+        .mobile-navigation { display: none !important; }
       `}</style>
-      <div className="container mx-auto px-4 md:px-6 py-4 md:py-8">
-        {/* Header Profissional */}
-        <div className="mb-6 md:mb-8">
+      
+      {/* Header EduVie próprio */}
+      <div className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div className="px-4 md:px-6 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">E</span>
+            </div>
+            <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              EduVie Pro
+            </h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+            <span className="text-sm text-gray-600 hidden md:inline">Daniel</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-16 px-4 md:px-6 pb-6">
+        {/* Header Principal */}
+        <div className="mb-6 md:mb-8 pt-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                EduVie Pro
-              </h1>
-              <p className="text-sm md:text-lg text-gray-600 mt-1 md:mt-2">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900">
+                Dashboard de Aprendizado
+              </h2>
+              <p className="text-sm md:text-base text-gray-600 mt-1">
                 Plataforma Inteligente de Aprendizado Personalizado
               </p>
             </div>
