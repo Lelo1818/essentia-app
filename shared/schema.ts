@@ -141,6 +141,34 @@ export const expenses = pgTable("expenses", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Budget table
+export const budgets = pgTable("budgets", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  category: varchar("category", { length: 100 }).notNull(),
+  amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+  period: varchar("period", { length: 20 }).default("mensal"), // mensal, anual
+  spent: decimal("spent", { precision: 12, scale: 2 }).default("0"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Goals table
+export const goals = pgTable("goals", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  targetAmount: decimal("target_amount", { precision: 12, scale: 2 }).notNull(),
+  currentAmount: decimal("current_amount", { precision: 12, scale: 2 }).default("0"),
+  targetDate: timestamp("target_date"),
+  category: varchar("category", { length: 100 }),
+  priority: varchar("priority", { length: 20 }).default("media"), // baixa, media, alta
+  status: varchar("status", { length: 20 }).default("ativo"), // ativo, pausado, concluido
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // User achievements across all apps
 export const achievements = pgTable("achievements", {
   id: serial("id").primaryKey(),
@@ -206,9 +234,17 @@ export type InsertIncome = typeof incomes.$inferInsert;
 export type Expense = typeof expenses.$inferSelect;
 export type InsertExpense = typeof expenses.$inferInsert;
 
+export type Budget = typeof budgets.$inferSelect;
+export type InsertBudget = typeof budgets.$inferInsert;
+
+export type Goal = typeof goals.$inferSelect;
+export type InsertGoal = typeof goals.$inferInsert;
+
 // Zod schemas
 export const insertIncomeSchema = createInsertSchema(incomes);
 export const insertExpenseSchema = createInsertSchema(expenses);
+export const insertBudgetSchema = createInsertSchema(budgets);
+export const insertGoalSchema = createInsertSchema(goals);
 
 // Zod schemas for validation
 export const insertUserSchema = createInsertSchema(users);
