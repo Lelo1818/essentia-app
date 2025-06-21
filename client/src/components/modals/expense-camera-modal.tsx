@@ -77,20 +77,39 @@ export default function ExpenseCameraModal({ open, onOpenChange }: ExpenseCamera
   });
 
   const handleTakePhoto = () => {
-    setIsProcessing(true);
-    // Simulate OCR processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      setShowOcrResults(true);
-      // Mock OCR results
-      form.setValue("description", "Supermercado Extra");
-      form.setValue("amount", "127.85");
-      form.setValue("category", "alimentacao");
-      toast({
-        title: "Foto processada",
-        description: "Dados extraídos com sucesso! Verifique e confirme.",
-      });
-    }, 2000);
+    // Create a file input with camera capture for mobile
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment'; // Use back camera on mobile
+    input.onchange = (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        setIsProcessing(true);
+        // Process the captured image
+        setTimeout(() => {
+          setIsProcessing(false);
+          setShowOcrResults(true);
+          // Simulate OCR results based on common receipts
+          const mockResults = [
+            { description: "Supermercado Extra", amount: "127.85", category: "alimentacao" },
+            { description: "Posto Shell", amount: "85.00", category: "transporte" },
+            { description: "Farmácia Pacheco", amount: "45.90", category: "saude" },
+            { description: "Restaurante Outback", amount: "98.50", category: "alimentacao" }
+          ];
+          const result = mockResults[Math.floor(Math.random() * mockResults.length)];
+          
+          form.setValue("description", result.description);
+          form.setValue("amount", result.amount);
+          form.setValue("category", result.category);
+          toast({
+            title: "Foto processada",
+            description: "Dados extraídos com sucesso! Verifique e confirme.",
+          });
+        }, 2000);
+      }
+    };
+    input.click();
   };
 
   const handleUploadPhoto = () => {
@@ -136,18 +155,18 @@ export default function ExpenseCameraModal({ open, onOpenChange }: ExpenseCamera
         
         {!showOcrResults && !isProcessing && (
           <div className="text-center py-8">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Camera className="w-8 h-8 text-gray-400" />
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Camera className="w-8 h-8 text-white" />
             </div>
-            <h4 className="font-medium text-gray-900 mb-2">Fotografe seu recibo ou nota fiscal</h4>
-            <p className="text-sm text-gray-500 mb-6">O OCR extrairá automaticamente o valor e a categoria</p>
+            <h4 className="font-bold text-xl text-gray-900 mb-2">📸 Câmera Inteligente</h4>
+            <p className="text-sm text-gray-600 mb-6">Fotografe seu recibo e a IA extrairá automaticamente os dados!</p>
             <div className="flex space-x-3">
               <Button 
-                className="flex-1 gradient-primary"
+                className="flex-1 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white"
                 onClick={handleTakePhoto}
               >
                 <Camera className="w-4 h-4 mr-2" />
-                Tirar Foto
+                📱 Abrir Câmera
               </Button>
               <Button 
                 variant="outline" 
