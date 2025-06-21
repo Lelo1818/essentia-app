@@ -256,15 +256,13 @@ export default function EduVieClean() {
   React.useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
-      /* Hide EVERYTHING from Flow system */
-      nav, .fixed, .sticky, .absolute, 
-      div[class*="bottom"], div[class*="fixed"], 
-      div[class*="navigation"], footer, header,
-      main:not(#eduvie-main), 
-      .mobile-navigation, .desktop-navigation,
-      [class*="nav"], [class*="header"], [class*="footer"] {
+      /* Hide Flow navigation and interfering elements */
+      .min-h-screen.bg-gray-50 nav,
+      .max-w-7xl.mx-auto,
+      .fixed.bottom-0,
+      div[class*="mobile-navigation"],
+      div[class*="navigation"] {
         display: none !important;
-        visibility: hidden !important;
       }
       /* Reset body completely */
       body {
@@ -272,15 +270,11 @@ export default function EduVieClean() {
         padding: 0 !important;
         overflow-x: hidden !important;
       }
-      /* EduVie takes full control */
+      /* EduVie container styles */
       #eduvie-container {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        z-index: 999999 !important;
-        background: #f8fafc !important;
+        position: relative !important;
+        z-index: 10 !important;
+        min-height: 100vh !important;
       }
     `;
     document.head.appendChild(style);
@@ -293,9 +287,7 @@ export default function EduVieClean() {
   }, []);
 
   return (
-    <div id="eduvie-container" className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-auto">
-      <main id="eduvie-main" className="w-full h-full">
-      
+    <div id="eduvie-container" className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header EduVie próprio */}
       <div className="absolute top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-10">
         <div className="px-4 md:px-6 py-3 flex items-center justify-between">
@@ -885,7 +877,6 @@ export default function EduVieClean() {
           </TabsContent>
         </Tabs>
       </div>
-      </main>
     </div>
   );
 }
