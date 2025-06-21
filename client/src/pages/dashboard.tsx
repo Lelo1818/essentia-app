@@ -62,27 +62,26 @@ export default function Dashboard() {
 
   useKeyboardShortcuts(shortcuts);
 
-  const { data: summary, isLoading } = useQuery<FinancialSummary>({
-    queryKey: ["/api/financial-summary"],
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    staleTime: Infinity,
-  });
-
-  const { data: goals = [] } = useQuery({
-    queryKey: ["/api/goals"],
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
-
-  const { data: achievements = [] } = useQuery({
-    queryKey: ["/api/achievements"],
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  // Static data for stable demo
+  const summary = {
+    totalIncome: 10050,
+    totalExpenses: 3730,
+    balance: 6320,
+    savings: 15420,
+    investments: 8750
+  };
+  
+  const goals = [
+    { id: 1, title: "Viagem Europa", progress: 57, target: 15000, current: 8500 },
+    { id: 2, title: "Reserva Emergência", progress: 48, target: 25000, current: 12000 }
+  ];
+  
+  const achievements = [
+    { id: 1, title: "Primeiro Login", description: "Bem-vindo ao Flow!" },
+    { id: 2, title: "Meta Alcançada", description: "Parabéns pela disciplina!" }
+  ];
+  
+  const isLoading = false;
 
   if (isLoading) {
     return (
