@@ -20,6 +20,7 @@ import { Avatar3DDisplay } from "@/components/purpose/avatar-3d-display";
 import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
 import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
+import BiometricSensors from "@/components/purpose/biometric-sensors";
 import { 
   Compass, 
   Heart, 
@@ -270,6 +271,10 @@ export default function Purpose() {
 
         <TabsContent value="wheel" className="mt-6">
           <LifeWheel />
+        </TabsContent>
+
+        <TabsContent value="biometric" className="mt-6">
+          <BiometricSensors />
         </TabsContent>
 
         <TabsContent value="inspiration" className="mt-6">
