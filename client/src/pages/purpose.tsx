@@ -21,6 +21,7 @@ import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing"
 import { DailyRitualsComponent } from "@/components/purpose/daily-rituals";
 import { EssentiaWindowComponent, useEssentiaWindows } from "@/components/purpose/essentia-window";
 import BiometricSensors from "@/components/purpose/biometric-sensors";
+import AITherapist from "@/components/purpose/ai-therapist";
 import { 
   Compass, 
   Heart, 
@@ -275,6 +276,10 @@ export default function Purpose() {
 
         <TabsContent value="biometric" className="mt-6">
           <BiometricSensors />
+        </TabsContent>
+
+        <TabsContent value="therapist" className="mt-6">
+          <AITherapist />
         </TabsContent>
 
         <TabsContent value="inspiration" className="mt-6">

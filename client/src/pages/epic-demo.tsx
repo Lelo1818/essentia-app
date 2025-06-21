@@ -49,7 +49,7 @@ const DEMO_SCENARIOS = [
       { time: 49, text: "Projeto final: app que detecta humor em selfies - 94% accuracy!", mood: "🏆" },
       { time: 54, text: "Pedro recebe proposta de emprego de empresa que viu seu projeto", mood: "🚀" }
     ],
-    impact: { retention: "+312%", completion: "+89%", satisfaction: "+267%" }
+    impact: { retention: "+89%", completion: "+67%", satisfaction: "+145%" }
   },
   {
     id: "financial",
@@ -71,7 +71,7 @@ const DEMO_SCENARIOS = [
       { time: 64, text: "Mês 6: família planeja viagem para Disney com dinheiro 'sobrado'", mood: "🏰" },
       { time: 69, text: "Flow sugere: 'Que tal investir parte dessa reserva?'", mood: "📈" }
     ],
-    impact: { debt: "-73%", savings: "+450%", financial_literacy: "+189%" }
+    impact: { debt: "-65%", savings: "+180%", financial_literacy: "+120%" }
   },
   {
     id: "kids",
@@ -91,7 +91,7 @@ const DEMO_SCENARIOS = [
       { time: 36, text: "Nueva missão: Ana economiza mesada para comprar presente da mãe", mood: "🎁" },
       { time: 42, text: "Ana ensina irmão menor a separar moedas por valor - educadora!", mood: "👩‍🏫" }
     ],
-    impact: { understanding: "+289%", saving_behavior: "+156%", family_harmony: "+123%" }
+    impact: { understanding: "+150%", saving_behavior: "+85%", family_harmony: "+65%" }
   }
 ];
 
