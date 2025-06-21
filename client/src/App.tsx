@@ -44,12 +44,13 @@ import SuperSimple from "./pages/super-simple";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
+      <Route path="/" component={EcosystemApp} />
       <Route path="/flow" component={FlowApp} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/edu" component={EduApp} />
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/investor-demo" component={InvestorDemo} />
       <Route path="/mobile-test" component={MobileTest} />
       <Route path="/minimal-test" component={MinimalTest} />
