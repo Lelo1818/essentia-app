@@ -156,26 +156,30 @@ export default function FlowKids() {
       {/* Floating CSS for complete isolation */}
       <style>
         {`
-          /* Hide other app elements completely */
-          .min-h-screen.bg-gray-50 > nav,
-          .min-h-screen.bg-gray-50 > main,
-          .fixed.bottom-0,
+          /* Hide all other elements */
+          body > div:not(#flowkids-container),
+          #root > div:not(#flowkids-container),
+          nav, main, header, footer,
+          .min-h-screen.bg-gray-50,
           .mobile-navigation,
-          div[class*="navigation"]:not(#flowkids-container *),
-          nav:not(#flowkids-container *) {
+          .fixed.bottom-0 {
             display: none !important;
           }
           
-          /* Flow Kids full control */
+          /* Flow Kids takes over completely */
           #flowkids-container {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             right: 0 !important;
             bottom: 0 !important;
-            z-index: 9999 !important;
+            z-index: 99999 !important;
             background: linear-gradient(135deg, #f3e8ff 0%, #fce7f3 50%, #dbeafe 100%) !important;
             overflow-y: auto !important;
+          }
+          
+          body {
+            overflow: hidden !important;
           }
         `}
       </style>

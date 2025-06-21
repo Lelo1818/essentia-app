@@ -30,6 +30,7 @@ import CashbackMarketplacePage from "@/pages/cashback-marketplace";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import FlowKids from "@/pages/flow-kids";
 import DashboardUnificado from "@/pages/dashboard-unificado";
+import FlowKidsStandalone from "@/pages/flow-kids-standalone";
 import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
 import KidsApp from "./App-kids";
@@ -54,6 +55,7 @@ function Router() {
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKids} />
       <Route path="/dashboard-unificado" component={DashboardUnificado} />
+      <Route path="/kids-standalone" component={FlowKidsStandalone} />
       <Route path="/conta-familia" component={ContaFamilia} />
       <Route path="/edu" component={EduApp} />
       <Route path="/eduvie-clean" component={EduVieClean} />
