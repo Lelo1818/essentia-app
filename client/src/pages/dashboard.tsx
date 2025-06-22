@@ -66,7 +66,7 @@ export default function Dashboard() {
   // Fetch real financial data 
   const { data: realSummary, isLoading: summaryLoading } = useQuery({
     queryKey: ['/api/financial-summary'],
-    refetchInterval: 5000
+    refetchInterval: 2000
   });
 
   const summary = realSummary || {
