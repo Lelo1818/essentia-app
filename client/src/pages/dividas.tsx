@@ -232,14 +232,14 @@ export default function GestaoDividas() {
     setTimeout(() => {
       setNovaDiv(prev => ({
         ...prev,
-        nome: "Cartão de Crédito (OCR)",
-        valorTotal: "4550",
-        valorRestante: "4550", 
+        nome: "Cartão Credicard",
+        valorTotal: "2850",
+        valorRestante: "2850", 
         jurosAM: "12.5",
         vencimento: "todo dia 15",
         parcelas: "12",
         parcelasRestantes: "12",
-        valorParcela: "380",
+        valorParcela: "238",
         tipo: "cartao"
       }));
       toast({
