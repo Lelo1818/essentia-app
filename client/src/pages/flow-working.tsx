@@ -549,8 +549,8 @@ function QuickIncomeModal({ onClose }) {
       
       if (response.ok) {
         // Invalidação pura conforme recomendação do Brancola
-        queryClient.invalidateQueries(['financial-summary']);
-        queryClient.invalidateQueries(['/api/incomes']);
+        queryClient.invalidateQueries({ queryKey: ['/api/financial-summary'] });
+        queryClient.invalidateQueries({ queryKey: ['/api/incomes'] });
         
         alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
         onClose();
@@ -765,8 +765,8 @@ function QuickExpenseModal({ onClose }) {
       
       if (response.ok) {
         // Invalidação pura conforme recomendação do Brancola
-        queryClient.invalidateQueries(['financial-summary']);
-        queryClient.invalidateQueries(['/api/expenses']);
+        queryClient.invalidateQueries({ queryKey: ['/api/financial-summary'] });
+        queryClient.invalidateQueries({ queryKey: ['/api/expenses'] });
         
         alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
         onClose();

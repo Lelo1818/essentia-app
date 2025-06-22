@@ -32,6 +32,9 @@ interface FinancialOverviewProps {
 
 export default function FinancialOverview({ totalIncome, totalExpenses, balance }: FinancialOverviewProps) {
   const [selectedPeriod, setSelectedPeriod] = useState("Este mês");
+  
+  // Debug log crítico para diagnóstico
+  console.log('💰 FINANCIAL OVERVIEW PROPS:', { totalIncome, totalExpenses, balance });
 
   const chartData = {
     labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],

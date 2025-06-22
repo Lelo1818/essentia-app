@@ -63,8 +63,8 @@ export default function Dashboard() {
 
   useKeyboardShortcuts(shortcuts);
 
-  // Query key claro e único conforme recomendação
-  const queryKey = ['financial-summary'];
+  // Query key DEVE coincidir com a invalidação
+  const queryKey = ['/api/financial-summary'];
   
   // Fetch real financial data com refetchInterval para reatividade
   const { data: realSummary, isLoading: summaryLoading } = useQuery({
@@ -74,7 +74,16 @@ export default function Dashboard() {
     refetchOnWindowFocus: true
   });
 
-  const summary = realSummary || {
+  // Debug log para diagnóstico
+  console.log('🔍 DASHBOARD DEBUG:', { realSummary, isLoading: summaryLoading });
+
+  const summary = realSummary ? {
+    totalIncome: realSummary.totalIncome,
+    totalExpenses: realSummary.totalExpenses,
+    balance: realSummary.totalIncome - realSummary.totalExpenses,
+    savings: realSummary.savings || 15420,
+    investments: realSummary.investments || 8750
+  } : {
     totalIncome: 0,
     totalExpenses: 0,
     balance: 0,
