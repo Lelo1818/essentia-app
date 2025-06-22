@@ -78,10 +78,11 @@ export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
       });
       onOpenChange(false);
     },
-    onError: () => {
+    onError: (error) => {
+      console.error("Error creating goal:", error);
       toast({
         title: "Erro",
-        description: "Não foi possível criar a meta. Tente novamente.",
+        description: `Não foi possível criar a meta: ${error.message}`,
         variant: "destructive",
       });
     },
