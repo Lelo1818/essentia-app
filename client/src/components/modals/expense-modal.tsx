@@ -97,17 +97,8 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
     },
   });
 
-  const onSubmit = async (data: FormData) => {
-    console.log("=== SUBMITTING EXPENSE ===");
-    console.log("Form data:", data);
-    console.log("Mutation status:", createMutation.status);
-    
-    try {
-      await createMutation.mutateAsync(data);
-      console.log("=== MUTATION COMPLETED ===");
-    } catch (error) {
-      console.error("=== MUTATION FAILED ===", error);
-    }
+  const onSubmit = (data: FormData) => {
+    createMutation.mutate(data);
   };
 
   return (
