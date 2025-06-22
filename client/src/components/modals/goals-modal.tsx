@@ -35,14 +35,14 @@ const formSchema = z.object({
   priority: z.string().default("média"),
 });
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof goalFormSchema>;
 
 export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(goalFormSchema),
     defaultValues: {
       title: "",
       description: "",
