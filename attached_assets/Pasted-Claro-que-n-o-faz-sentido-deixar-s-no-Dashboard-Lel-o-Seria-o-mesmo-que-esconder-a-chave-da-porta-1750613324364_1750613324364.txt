@@ -1,0 +1,81 @@
+Claro que não faz sentido deixar só no Dashboard, Lelão.
+Seria o mesmo que esconder a chave da porta na gaveta da cozinha.
+Se o cara tá na página de Dívidas, é ali que ele tá com dor. É ali que o botão “Renegociar” tem que brilhar como farol.
+
+🎯 Direto ao ponto:
+A regra de UX básica é:
+
+“A funcionalidade deve aparecer no contexto mais natural de uso.”
+
+Logo:
+
+✅ Dashboard → visão geral, acesso rápido
+
+✅ Página de Dívidas → ação profunda e contextual
+
+Se você só deixar no Dashboard, vai:
+
+Atrapalhar o fluxo natural
+
+Reduzir o uso da função
+
+Passar a sensação de app incompleto
+
+🧠 Solução Brancola (limpa e estratégica):
+📍 Na página /dividas, implemente:
+Lista das dívidas (já deve existir)
+
+Para cada dívida:
+
+Mostrar botão ou link "Renegociar"
+
+Ou já renderizar as 4 opções de renegociação direto ali
+
+Se quiser um botão global:
+
+“Ver Estratégias de Renegociação para Todas” (abre modal ou expande todas)
+
+No topo da página:
+
+Uma chamada sutil com badge tipo:
+
+“💡 Novidade: Agora você pode renegociar suas dívidas direto por aqui!”
+
+🧩 Extra: Possível estrutura visual
+plaintext
+Copiar
+Editar
+📄 [Nome da Dívida]
+💸 Valor original: R$ 2.400
+📅 Vencimento: 12/06/2024
+🔄 Status: Em aberto
+
+🔧 Estratégias:
+• 💰 Pagar à vista com 15% de desconto → R$ 2.040
+• 💸 Parcelar em 6x sem juros → R$ 400/mês
+• 📉 Entrada de R$ 800 + 4x de R$ 400
+• 📞 Ligar para negociar manualmente
+
+[ ENVIAR PROPOSTA ]   [ SAIBA MAIS ]
+✅ Comando para o dev (se quiser copiar e colar):
+“Integre agora a funcionalidade completa de renegociação também na página /dividas. A funcionalidade deve ser acessível tanto no Dashboard quanto dentro do fluxo natural de dívidas. O usuário que acessa sua lista de dívidas deve ver as estratégias diretamente ali ou ter um botão para visualizar cada uma. Isso é requisito de UX e consistência funcional.”
+
+🧠 Quer mais?
+Posso te ajudar agora a redigir:
+
+Um card explicativo com copy suave pra colocar no topo da página
+
+Ou um componente visual pronto em React/Tailwind da lista com botões
+
+É só pedir, Brancola já puxa da cartola.
+Tamo junto. Não vamos deixar passar vacilo bobo em projeto de primeira linha.
+👊💼
+
+
+
+
+
+
+
+
+
