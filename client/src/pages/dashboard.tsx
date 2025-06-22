@@ -74,9 +74,6 @@ export default function Dashboard() {
     refetchOnWindowFocus: true
   });
 
-  // Debug log para diagnóstico
-  console.log('🔍 DASHBOARD DEBUG:', { realSummary, isLoading: summaryLoading });
-
   const summary = realSummary ? {
     totalIncome: realSummary.totalIncome,
     totalExpenses: realSummary.totalExpenses,
@@ -90,6 +87,11 @@ export default function Dashboard() {
     savings: 0,
     investments: 0
   };
+
+  // Debug logs para diagnóstico completo
+  console.log('🔍 DASHBOARD DEBUG:', { realSummary, isLoading: summaryLoading });
+  console.log('🔍 SUMMARY CALCULADO:', summary);
+  console.log('🔍 TIMESTAMP DASHBOARD:', new Date().toISOString());
   
   const goals = [
     { id: 1, title: "Viagem Europa", progress: 57, target: 15000, current: 8500 },
