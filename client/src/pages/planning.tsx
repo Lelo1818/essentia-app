@@ -40,20 +40,22 @@ export default function Planning() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fixedExpenses: "0",
-      variableExpenses: "0", 
-      savings: "0",
-      leisure: "0",
+      fixedExpenses: budget ? String((budget as any).fixedExpenses || 0) : "0",
+      variableExpenses: budget ? String((budget as any).variableExpenses || 0) : "0",
+      savings: budget ? String((budget as any).savings || 0) : "0",
+      leisure: budget ? String((budget as any).leisure || 0) : "0",
     },
   });
 
   // Update form when budget data loads
   React.useEffect(() => {
     if (budget) {
-      form.setValue("fixedExpenses", String((budget as any).fixedExpenses || 0));
-      form.setValue("variableExpenses", String((budget as any).variableExpenses || 0));
-      form.setValue("savings", String((budget as any).savings || 0));
-      form.setValue("leisure", String((budget as any).leisure || 0));
+      form.reset({
+        fixedExpenses: String((budget as any).fixedExpenses || 0),
+        variableExpenses: String((budget as any).variableExpenses || 0),
+        savings: String((budget as any).savings || 0),
+        leisure: String((budget as any).leisure || 0),
+      });
     }
   }, [budget, form]);
 
