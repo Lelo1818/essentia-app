@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation as useWouterLocation } from "wouter";
 import { ArrowLeft, DollarSign, TrendingDown, Calculator, AlertTriangle, CheckCircle, CreditCard } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,23 @@ import { useQuery } from "@tanstack/react-query";
 export default function RenegociarDividas() {
   const [, setLocation] = useLocation();
   const [selectedDebt, setSelectedDebt] = useState<any>(null);
+  
+  // Capturar parâmetro da URL se vier da página de dívidas
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const debtId = urlParams.get('debt');
+    if (debtId) {
+      // Scroll para a dívida específica quando a página carregar
+      setTimeout(() => {
+        const element = document.getElementById(`debt-${debtId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          element.style.border = '3px solid #3b82f6';
+          element.style.backgroundColor = '#dbeafe';
+        }
+      }, 500);
+    }
+  }, []);
 
   // Buscar dívidas reais do sistema
   const { data: realDebts, isLoading } = useQuery({
@@ -199,7 +217,7 @@ export default function RenegociarDividas() {
                 const options = calculateNegotiationOptions(debt);
                 
                 return (
-                  <Card key={debt.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  <Card key={debt.id} id={`debt-${debt.id}`} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                     <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100">
                       <div className="flex justify-between items-start">
                         <div>
