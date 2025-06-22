@@ -315,41 +315,51 @@ export default function GestaoDividas() {
                 <DialogTitle>Nova Dívida</DialogTitle>
               </DialogHeader>
               <div className="space-y-6">
-                {/* Upload OCR */}
-                <div className="border-2 border-dashed border-blue-200 rounded-lg p-6 text-center bg-gradient-to-r from-blue-50 to-purple-50">
-                  <div className="space-y-2">
-                    <div className="flex justify-center">
-                      <div className="p-3 bg-blue-100 rounded-full">
-                        <Camera className="w-8 h-8 text-blue-600" />
+                {/* Upload OCR - só mostra se não veio das sugestões */}
+                {(!novaDiv.descricao || !novaDiv.descricao.includes("IA")) && (
+                  <div className="border-2 border-dashed border-blue-200 rounded-lg p-6 text-center bg-gradient-to-r from-blue-50 to-purple-50">
+                    <div className="space-y-2">
+                      <div className="flex justify-center">
+                        <div className="p-3 bg-blue-100 rounded-full">
+                          <Camera className="w-8 h-8 text-blue-600" />
+                        </div>
+                      </div>
+                      <div className="text-sm font-medium text-gray-900">🤖 IA de Extração Automática</div>
+                      <div className="text-xs text-gray-600">
+                        Tire uma foto da fatura, boleto ou contrato.<br/>
+                        Nossa IA extrai todos os dados automaticamente!
+                      </div>
+                      <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleOCRUpload('camera')}
+                          className="w-full sm:w-auto hover:bg-blue-50"
+                        >
+                          <Camera className="w-4 h-4 mr-1" />
+                          Tirar Foto
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleOCRUpload('upload')}
+                          className="w-full sm:w-auto hover:bg-green-50"
+                        >
+                          <Upload className="w-4 h-4 mr-1" />
+                          Upload
+                        </Button>
                       </div>
                     </div>
-                    <div className="text-sm font-medium text-gray-900">🤖 IA de Extração Automática</div>
-                    <div className="text-xs text-gray-600">
-                      Tire uma foto da fatura, boleto ou contrato.<br/>
-                      Nossa IA extrai todos os dados automaticamente!
-                    </div>
-                    <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleOCRUpload('camera')}
-                        className="w-full sm:w-auto hover:bg-blue-50"
-                      >
-                        <Camera className="w-4 h-4 mr-1" />
-                        Tirar Foto
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleOCRUpload('upload')}
-                        className="w-full sm:w-auto hover:bg-green-50"
-                      >
-                        <Upload className="w-4 h-4 mr-1" />
-                        Upload
-                      </Button>
-                    </div>
                   </div>
-                </div>
+                )}
+
+                {/* Indicador quando veio da sugestão IA */}
+                {novaDiv.descricao && novaDiv.descricao.includes("IA") && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                    <div className="text-sm font-medium text-green-800">✅ Sugestão da IA Carregada</div>
+                    <div className="text-xs text-green-600">Revise os dados abaixo e confirme</div>
+                  </div>
+                )}
 
                 {/* Formulário Manual */}
                 <div className="grid grid-cols-1 gap-4">
