@@ -82,7 +82,9 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
         return response.json();
       }
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
+      console.log("=== SUCCESS ===");
+      console.log("API response:", result);
       queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
       queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
       toast({
@@ -90,6 +92,7 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
         description: expense ? "Despesa foi atualizada com sucesso." : "Nova despesa foi registrada.",
       });
       form.reset();
+      console.log("=== CLOSING MODAL ===");
       onClose();
     },
     onError: (error) => {
@@ -103,7 +106,9 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("Submitting expense:", data);
+    console.log("=== SUBMITTING EXPENSE ===");
+    console.log("Form data:", data);
+    console.log("Mutation status:", createMutation.status);
     createMutation.mutate(data);
   };
 
