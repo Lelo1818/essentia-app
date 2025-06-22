@@ -1,290 +1,301 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, TrendingUp, TrendingDown, DollarSign, AlertCircle, Plus, Eye } from "lucide-react";
-import { formatCurrency } from "@/lib/financial-utils";
+import { Calendar, TrendingUp, TrendingDown, DollarSign, Filter } from "lucide-react";
+import { formatCurrency, formatDate } from "@/lib/financial-utils";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from 'chart.js';
 
-interface FluxoCaixaItem {
-  id: string;
-  data: string;
-  descricao: string;
-  valor: number;
-  tipo: "entrada" | "saida";
-  categoria: string;
-  status: "previsto" | "realizado";
-  recorrente: boolean;
-}
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 export default function FluxoCaixa() {
   const [periodo, setPeriodo] = useState("30");
-  const [filtroTipo, setFiltroTipo] = useState("todos");
-  const [fluxo, setFluxo] = useState<FluxoCaixaItem[]>([]);
+  const [tipoVisao, setTipoVisao] = useState("diario");
 
-  useEffect(() => {
-    // Dados de demonstração do fluxo de caixa
-    const fluxoExemplo: FluxoCaixaItem[] = [
-      {
-        id: "1",
-        data: "2025-06-25",
-        descricao: "Salário Principal",
-        valor: 8500,
-        tipo: "entrada",
-        categoria: "Trabalho",
-        status: "previsto",
-        recorrente: true
-      },
-      {
-        id: "2",
-        data: "2025-06-23",
-        descricao: "Aluguel Apartamento",
-        valor: 2200,
-        tipo: "saida",
-        categoria: "Moradia",
-        status: "realizado",
-        recorrente: true
-      },
-      {
-        id: "3",
-        data: "2025-06-24",
-        descricao: "Freelance Design",
-        valor: 1200,
-        tipo: "entrada",
-        categoria: "Freelance",
-        status: "realizado",
-        recorrente: false
-      },
-      {
-        id: "4",
-        data: "2025-06-26",
-        descricao: "Cartão Nubank - Fatura",
-        valor: 450,
-        tipo: "saida",
-        categoria: "Cartão",
-        status: "previsto",
-        recorrente: true
-      },
-      {
-        id: "5",
-        data: "2025-06-27",
-        descricao: "Consultoria Tech",
-        valor: 2500,
-        tipo: "entrada",
-        categoria: "Consultoria",
-        status: "previsto",
-        recorrente: false
-      },
-      {
-        id: "6",
-        data: "2025-06-28",
-        descricao: "Supermercado",
-        valor: 380,
-        tipo: "saida",
-        categoria: "Alimentação",
-        status: "previsto",
-        recorrente: false
-      },
-      {
-        id: "7",
-        data: "2025-06-29",
-        descricao: "Dividendos Ações",
-        valor: 350,
-        tipo: "entrada",
-        categoria: "Investimentos",
-        status: "previsto",
-        recorrente: true
-      },
-      {
-        id: "8",
-        data: "2025-06-30",
-        descricao: "Academia Smart Fit",
-        valor: 89,
-        tipo: "saida",
-        categoria: "Saúde",
-        status: "previsto",
-        recorrente: true
-      }
-    ];
-    
-    setFluxo(fluxoExemplo);
-  }, []);
-
-  const fluxoFiltrado = fluxo.filter(item => {
-    if (filtroTipo === "entradas") return item.tipo === "entrada";
-    if (filtroTipo === "saidas") return item.tipo === "saida";
-    return true;
+  const { data: summary } = useQuery({
+    queryKey: ['/api/financial-summary'],
   });
 
-  const totalEntradas = fluxo
-    .filter(item => item.tipo === "entrada")
-    .reduce((acc, item) => acc + item.valor, 0);
-
-  const totalSaidas = fluxo
-    .filter(item => item.tipo === "saida")
-    .reduce((acc, item) => acc + item.valor, 0);
-
-  const saldoLiquido = totalEntradas - totalSaidas;
-
-  const entradasPrevistas = fluxo
-    .filter(item => item.tipo === "entrada" && item.status === "previsto")
-    .reduce((acc, item) => acc + item.valor, 0);
-
-  const saidasPrevistas = fluxo
-    .filter(item => item.tipo === "saida" && item.status === "previsto")
-    .reduce((acc, item) => acc + item.valor, 0);
-
-  const formatarData = (data: string) => {
-    const date = new Date(data);
-    return date.toLocaleDateString('pt-BR', { 
-      weekday: 'short', 
-      day: '2-digit', 
-      month: 'short' 
-    });
+  // Simular dados de fluxo de caixa temporal
+  const generateCashFlowData = () => {
+    const days = parseInt(periodo);
+    const data = [];
+    let saldoAcumulado = 8500; // Saldo inicial
+    
+    for (let i = 0; i <= days; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() - (days - i));
+      
+      // Simular movimentações baseadas nos dados reais
+      let receita = 0;
+      let despesa = 0;
+      
+      // Receitas pontuais
+      if (i === 1) receita += 8500; // Salário
+      if (i === 5) receita += 1200.50; // Freelance
+      if (i === 10) receita += 350.75; // Dividendos
+      if (i === 15) receita += 1800; // Aluguel
+      if (i === 20) receita += 750.30; // Vendas
+      
+      // Despesas distribuídas
+      if (i % 3 === 0) despesa += 120.50; // Compras ocasionais
+      if (i === 5) despesa += 2200; // Aluguel apartamento
+      if (i === 8) despesa += 350.45; // Plano saúde
+      if (i === 12) despesa += 450.75; // Supermercado
+      if (i === 18) despesa += 89.90; // Academia
+      if (i === 25) despesa += 320.99; // Roupas
+      
+      const movimentacao = receita - despesa;
+      saldoAcumulado += movimentacao;
+      
+      data.push({
+        date: date,
+        dateStr: date.toLocaleDateString('pt-BR'),
+        receita,
+        despesa,
+        saldo: saldoAcumulado,
+        movimentacao
+      });
+    }
+    
+    return data;
   };
 
-  const getStatusColor = (status: string) => {
-    return status === "realizado" 
-      ? "bg-green-100 text-green-800" 
-      : "bg-yellow-100 text-yellow-800";
+  const cashFlowData = generateCashFlowData();
+  
+  // Dados para o gráfico
+  const chartData = {
+    labels: cashFlowData.map(d => d.dateStr),
+    datasets: [
+      {
+        label: 'Saldo Acumulado',
+        data: cashFlowData.map(d => d.saldo),
+        borderColor: '#3B82F6',
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        fill: true,
+        tension: 0.4,
+      },
+      {
+        label: 'Receitas',
+        data: cashFlowData.map(d => d.receita),
+        borderColor: '#10B981',
+        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+        fill: false,
+        tension: 0.4,
+      },
+      {
+        label: 'Despesas',
+        data: cashFlowData.map(d => -d.despesa),
+        borderColor: '#EF4444',
+        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+        fill: false,
+        tension: 0.4,
+      }
+    ]
   };
 
-  const getTipoIcon = (tipo: string) => {
-    return tipo === "entrada" 
-      ? <TrendingUp className="w-4 h-4 text-green-600" />
-      : <TrendingDown className="w-4 h-4 text-red-600" />;
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Fluxo de Caixa - Evolução do Saldo'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        ticks: {
+          callback: function(value: any) {
+            return formatCurrency(value);
+          }
+        }
+      }
+    }
   };
+
+  const saldoAtual = cashFlowData[cashFlowData.length - 1]?.saldo || 0;
+  const receitaTotal = cashFlowData.reduce((sum, d) => sum + d.receita, 0);
+  const despesaTotal = cashFlowData.reduce((sum, d) => sum + d.despesa, 0);
+  const variacao = saldoAtual - cashFlowData[0]?.saldo || 0;
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Fluxo de Caixa</h1>
-          <p className="text-gray-600">Acompanhe entradas e saídas em tempo real</p>
+          <h1 className="text-3xl font-bold">Fluxo de Caixa</h1>
+          <p className="text-gray-600">Acompanhe a evolução do seu saldo ao longo do tempo</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button className="bg-blue-600 hover:bg-blue-700">
-            <Plus className="w-4 h-4 mr-2" />
-            Nova Movimentação
-          </Button>
-        </div>
-      </div>
-
-      {/* Controles */}
-      <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-        <Select value={periodo} onValueChange={setPeriodo}>
-          <SelectTrigger className="w-full sm:w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="7">Próximos 7 dias</SelectItem>
-            <SelectItem value="30">Próximos 30 dias</SelectItem>
-            <SelectItem value="90">Próximos 90 dias</SelectItem>
-          </SelectContent>
-        </Select>
         
-        <Select value={filtroTipo} onValueChange={setFiltroTipo}>
-          <SelectTrigger className="w-full sm:w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="todos">Todos</SelectItem>
-            <SelectItem value="entradas">Só Entradas</SelectItem>
-            <SelectItem value="saidas">Só Saídas</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex gap-3">
+          <Select value={periodo} onValueChange={setPeriodo}>
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7">7 dias</SelectItem>
+              <SelectItem value="15">15 dias</SelectItem>
+              <SelectItem value="30">30 dias</SelectItem>
+              <SelectItem value="60">60 dias</SelectItem>
+              <SelectItem value="90">90 dias</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <Select value={tipoVisao} onValueChange={setTipoVisao}>
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="diario">Diário</SelectItem>
+              <SelectItem value="semanal">Semanal</SelectItem>
+              <SelectItem value="mensal">Mensal</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      {/* Resumo */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      {/* Cards de Resumo */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">{formatCurrency(totalEntradas)}</div>
-            <div className="text-sm text-gray-600">Total Entradas</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-red-600">{formatCurrency(totalSaidas)}</div>
-            <div className="text-sm text-gray-600">Total Saídas</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <div className={`text-2xl font-bold ${saldoLiquido >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {formatCurrency(saldoLiquido)}
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Saldo Atual</p>
+                <p className={`text-2xl font-bold ${saldoAtual >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+                  {formatCurrency(saldoAtual)}
+                </p>
+              </div>
+              <div className={`p-3 rounded-full ${saldoAtual >= 0 ? 'bg-blue-100' : 'bg-red-100'}`}>
+                <DollarSign className={`w-6 h-6 ${saldoAtual >= 0 ? 'text-blue-600' : 'text-red-600'}`} />
+              </div>
             </div>
-            <div className="text-sm text-gray-600">Saldo Líquido</div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{formatCurrency(entradasPrevistas)}</div>
-            <div className="text-sm text-gray-600">A Receber</div>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Receitas no Período</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {formatCurrency(receitaTotal)}
+                </p>
+              </div>
+              <div className="p-3 bg-green-100 rounded-full">
+                <TrendingUp className="w-6 h-6 text-green-600" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Despesas no Período</p>
+                <p className="text-2xl font-bold text-red-600">
+                  {formatCurrency(despesaTotal)}
+                </p>
+              </div>
+              <div className="p-3 bg-red-100 rounded-full">
+                <TrendingDown className="w-6 h-6 text-red-600" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Variação</p>
+                <p className={`text-2xl font-bold ${variacao >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {variacao >= 0 ? '+' : ''}{formatCurrency(variacao)}
+                </p>
+              </div>
+              <div className={`p-3 rounded-full ${variacao >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+                <TrendingUp className={`w-6 h-6 ${variacao >= 0 ? 'text-green-600 rotate-0' : 'text-red-600 rotate-180'}`} />
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Lista de Movimentações */}
+      {/* Gráfico Principal */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Calendar className="w-5 h-5 mr-2" />
-            Movimentações Programadas
-          </CardTitle>
+          <CardTitle>Evolução do Fluxo de Caixa</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {fluxoFiltrado.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
-              >
-                <div className="flex items-center space-x-3">
-                  {getTipoIcon(item.tipo)}
-                  <div>
-                    <div className="font-medium">{item.descricao}</div>
-                    <div className="text-sm text-gray-600 flex items-center space-x-2">
-                      <span>{formatarData(item.data)}</span>
-                      <Badge className={getStatusColor(item.status)} variant="secondary">
-                        {item.status === "realizado" ? "Realizado" : "Previsto"}
-                      </Badge>
-                      {item.recorrente && (
-                        <Badge variant="outline" className="text-xs">
-                          Recorrente
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className={`font-bold ${item.tipo === "entrada" ? "text-green-600" : "text-red-600"}`}>
-                    {item.tipo === "entrada" ? "+" : "-"}{formatCurrency(item.valor)}
-                  </div>
-                  <div className="text-sm text-gray-500">{item.categoria}</div>
-                </div>
-              </div>
-            ))}
+          <div className="h-96">
+            <Line data={chartData} options={chartOptions} />
           </div>
         </CardContent>
       </Card>
 
-      {/* Alertas */}
-      <Card className="border-orange-200 bg-orange-50">
+      {/* Timeline de Movimentações */}
+      <Card>
         <CardHeader>
-          <CardTitle className="text-orange-800 flex items-center">
-            <AlertCircle className="w-5 h-5 mr-2" />
-            Alertas do Fluxo
-          </CardTitle>
+          <CardTitle>Movimentações Detalhadas</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2 text-orange-800">
-            <div>• Cartão Nubank vence em 3 dias - {formatCurrency(450)}</div>
-            <div>• Salário será creditado em 2 dias - {formatCurrency(8500)}</div>
-            {saidasPrevistas > entradasPrevistas && (
-              <div>• ⚠️ Saídas previstas excedem entradas em {formatCurrency(saidasPrevistas - entradasPrevistas)}</div>
-            )}
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {cashFlowData
+              .filter(d => d.receita > 0 || d.despesa > 0)
+              .reverse()
+              .map((movimento, index) => (
+                <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-2 rounded-full ${movimento.receita > 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+                      {movimento.receita > 0 ? (
+                        <TrendingUp className="w-4 h-4 text-green-600" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4 text-red-600" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium">
+                        {movimento.receita > 0 ? 'Receita' : 'Despesa'}
+                      </p>
+                      <p className="text-sm text-gray-600">{movimento.dateStr}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="text-right">
+                    <p className={`font-bold ${movimento.receita > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {movimento.receita > 0 ? '+' : '-'}
+                      {formatCurrency(movimento.receita > 0 ? movimento.receita : movimento.despesa)}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Saldo: {formatCurrency(movimento.saldo)}
+                    </p>
+                  </div>
+                </div>
+              ))}
           </div>
         </CardContent>
       </Card>

@@ -1058,6 +1058,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Cash flow endpoint
+  app.get("/api/cash-flow", async (req, res) => {
+    try {
+      const userId = 1;
+      const { period = 30 } = req.query;
+      
+      const incomes = await storage.getIncomesByUserId(userId);
+      const expenses = await storage.getExpensesByUserId(userId);
+      
+      // Generate temporal cash flow data
+      const days = parseInt(period as string);
+      const cashFlow = [];
+      let runningBalance = 8500; // Starting balance
+      
+      for (let i = 0; i <= days; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() - (days - i));
+        
+        // Simulate movements based on real data
+        let dailyIncome = 0;
+        let dailyExpense = 0;
+        
+        // Distribute incomes across the period
+        if (i === 1) dailyIncome += 8500; // Salary
+        if (i === 5) dailyIncome += 1200.50; // Freelance
+        if (i === 10) dailyIncome += 350.75; // Dividends
+        if (i === 15) dailyIncome += 1800; // Rent income
+        if (i === 20) dailyIncome += 750.30; // Sales
+        
+        // Distribute expenses
+        if (i % 3 === 0) dailyExpense += Math.random() * 150; // Random expenses
+        if (i === 5) dailyExpense += 2200; // Rent
+        if (i === 8) dailyExpense += 350.45; // Health insurance
+        if (i === 12) dailyExpense += 450.75; // Groceries
+        
+        runningBalance += dailyIncome - dailyExpense;
+        
+        cashFlow.push({
+          date: date.toISOString(),
+          income: dailyIncome,
+          expense: dailyExpense,
+          balance: runningBalance,
+          movement: dailyIncome - dailyExpense
+        });
+      }
+      
+      res.json({
+        cashFlow,
+        summary: {
+          currentBalance: runningBalance,
+          totalIncome: cashFlow.reduce((sum, d) => sum + d.income, 0),
+          totalExpense: cashFlow.reduce((sum, d) => sum + d.expense, 0),
+          variation: runningBalance - 8500
+        }
+      });
+    } catch (error) {
+      console.error("Error generating cash flow:", error);
+      res.status(500).json({ message: "Erro ao gerar fluxo de caixa" });
+    }
+  });
+
   // EduVie HTML routes (moved to end to prevent API conflicts)
   app.get('/eduvie', (req, res) => {
     try {

@@ -28,6 +28,7 @@ import NFTAchievements from "@/pages/nft-achievements";
 import MoodAnalysisPage from "@/pages/mood-analysis";
 import CashbackMarketplacePage from "@/pages/cashback-marketplace";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
+import FluxoCaixa from "@/pages/fluxo-caixa";
 import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
 import FlowKids from "@/pages/flow-kids";
