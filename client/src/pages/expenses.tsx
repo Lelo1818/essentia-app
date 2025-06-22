@@ -8,7 +8,7 @@ import { formatCurrency, formatDate, formatDateRelative } from "@/lib/financial-
 import { EXPENSE_CATEGORIES } from "@/types";
 import { Camera, Plus, Trash2, Filter, Home, Utensils, Car, Gamepad2, Heart, GraduationCap, ShoppingBag } from "lucide-react";
 import ExpenseCameraModal from "@/components/modals/expense-camera-modal";
-import { ExpenseModal } from "@/components/modals/expense-modal";
+import { ExpenseModal } from "@/components/modals/expense-modal-new";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -333,10 +333,7 @@ export default function Expenses() {
       
       <ExpenseModal 
         isOpen={manualModalOpen}
-        onClose={() => {
-          console.log("=== EXPENSE PAGE: CLOSING MODAL ===");
-          setManualModalOpen(false);
-        }}
+        onClose={() => setManualModalOpen(false)}
       />
     </div>
   );
