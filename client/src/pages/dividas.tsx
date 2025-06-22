@@ -243,7 +243,7 @@ export default function GestaoDividas() {
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-right">
-            <div className="text-2xl font-bold text-red-600">R$ {totalDividas.toLocaleString()}</div>
+            <div className="text-2xl font-bold text-red-600">R$ {totalDividas.toLocaleString('pt-BR')}</div>
             <div className="text-sm text-gray-600">Total em Dívidas</div>
           </div>
           <Dialog open={modalOpen} onOpenChange={setModalOpen}>
@@ -253,7 +253,7 @@ export default function GestaoDividas() {
                 Adicionar Dívida
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Nova Dívida</DialogTitle>
               </DialogHeader>
@@ -266,12 +266,22 @@ export default function GestaoDividas() {
                     <div className="text-xs text-gray-500">
                       Tire uma foto ou faça upload da fatura/contrato
                     </div>
-                    <div className="flex justify-center space-x-2">
-                      <Button variant="outline" size="sm">
+                    <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleOCRUpload(new File([], "camera"))}
+                        className="w-full sm:w-auto"
+                      >
                         <Camera className="w-4 h-4 mr-1" />
                         Tirar Foto
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleOCRUpload(new File([], "upload"))}
+                        className="w-full sm:w-auto"
+                      >
                         <Upload className="w-4 h-4 mr-1" />
                         Upload
                       </Button>
@@ -280,7 +290,7 @@ export default function GestaoDividas() {
                 </div>
 
                 {/* Formulário Manual */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   <div>
                     <Label>Nome da Dívida *</Label>
                     <Input
@@ -343,11 +353,18 @@ export default function GestaoDividas() {
                   </div>
                 </div>
 
-                <div className="flex justify-end space-x-2">
-                  <Button variant="outline" onClick={() => setModalOpen(false)}>
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 pt-4">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setModalOpen(false)}
+                    className="w-full sm:w-auto"
+                  >
                     Cancelar
                   </Button>
-                  <Button onClick={handleAddDivida} className="bg-red-600 hover:bg-red-700">
+                  <Button 
+                    onClick={handleAddDivida} 
+                    className="bg-red-600 hover:bg-red-700 w-full sm:w-auto"
+                  >
                     Adicionar Dívida
                   </Button>
                 </div>
