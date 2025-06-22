@@ -41,7 +41,7 @@ import { PredictiveDashboard } from "@/components/enhanced/predictive-dashboard"
 import EcosystemStats from "@/components/dashboard/ecosystem-stats";
 import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
-import { Trophy, Medal, Target, TrendingUp, Zap } from "lucide-react";
+import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera } from "lucide-react";
 import type { FinancialSummary } from "@/types";
 
 export default function Dashboard() {
