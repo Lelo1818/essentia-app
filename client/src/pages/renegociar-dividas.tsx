@@ -291,7 +291,10 @@ export default function RenegociarDividas() {
                           className="flex-1 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
                           onClick={() => {
                             console.log('Simular Acordo clicado para:', debt.name);
+                            console.log('Dados da dívida:', debt);
                             setSelectedDebt(debt);
+                            // Resetar valores de simulação
+                            setSimulationValues({ cashValue: 0, installments: 12 });
                             // Forçar re-render e scroll
                             setTimeout(() => {
                               const element = document.getElementById('simulation-section');
@@ -365,6 +368,9 @@ export default function RenegociarDividas() {
                   <Calculator className="w-5 h-5" />
                   Simulação de Negociação - {selectedDebt.name}
                 </CardTitle>
+                <div className="text-sm text-green-700">
+                  Valor original: {selectedDebt.remainingAmount?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || 'N/A'}
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -407,24 +413,33 @@ export default function RenegociarDividas() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="text-center">
                       <div className="text-lg font-bold text-green-600">
-                        {selectedDebt.remainingAmount ? 
-                          (selectedDebt.remainingAmount * 0.75).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
-                          'R$ 2.125,00'
+                        {simulationValues.cashValue > 0 ? 
+                          simulationValues.cashValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
+                          selectedDebt.remainingAmount ? 
+                            (selectedDebt.remainingAmount * 0.75).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
+                            'Digite um valor'
                         }
                       </div>
                       <div className="text-sm text-gray-600">Valor Final</div>
                     </div>
                     <div className="text-center">
                       <div className="text-lg font-bold text-blue-600">
-                        {selectedDebt.remainingAmount ? 
-                          (selectedDebt.remainingAmount * 0.25).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
-                          'R$ 675,00'
+                        {simulationValues.cashValue > 0 && selectedDebt.remainingAmount ? 
+                          (selectedDebt.remainingAmount - simulationValues.cashValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
+                          selectedDebt.remainingAmount ? 
+                            (selectedDebt.remainingAmount * 0.25).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
+                            'Digite um valor'
                         }
                       </div>
                       <div className="text-sm text-gray-600">Economia</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-bold text-purple-600">25%</div>
+                      <div className="text-lg font-bold text-purple-600">
+                        {simulationValues.cashValue > 0 && selectedDebt.remainingAmount ? 
+                          Math.round(((selectedDebt.remainingAmount - simulationValues.cashValue) / selectedDebt.remainingAmount) * 100) + '%' :
+                          '25%'
+                        }
+                      </div>
                       <div className="text-sm text-gray-600">Desconto</div>
                     </div>
                   </div>
@@ -443,6 +458,7 @@ export default function RenegociarDividas() {
                       className="flex-1"
                       onClick={() => {
                         setSelectedDebt(null);
+                        setSimulationValues({ cashValue: 0, installments: 12 });
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
                     >
