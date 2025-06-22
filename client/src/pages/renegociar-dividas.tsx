@@ -16,6 +16,7 @@ export default function RenegociarDividas() {
     cashValue: 0,
     installments: 12
   });
+  const [proposalSent, setProposalSent] = useState(false);
   
   // Capturar parâmetro da URL se vier da página de dívidas
   useEffect(() => {
@@ -482,25 +483,64 @@ export default function RenegociarDividas() {
                   </div>
 
                   <div className="mt-4 flex gap-3">
-                    <Button 
-                      className="flex-1 bg-green-600 hover:bg-green-700"
-                      onClick={() => {
-                        alert('🎉 Proposta enviada com sucesso! Você será contactado em até 24h.');
-                      }}
-                    >
-                      Aceitar Proposta
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="flex-1"
-                      onClick={() => {
-                        setSelectedDebt(null);
-                        setSimulationValues({ cashValue: 0, installments: 12 });
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                    >
-                      Simular Novamente
-                    </Button>
+                    {!proposalSent ? (
+                      <>
+                        <Button 
+                          className="flex-1 bg-green-600 hover:bg-green-700"
+                          onClick={() => {
+                            console.log('Proposta aceita:', {
+                              debt: selectedDebt.name,
+                              amount: selectedDebt.amount,
+                              cashValue: simulationValues.cashValue,
+                              installments: simulationValues.installments
+                            });
+                            setProposalSent(true);
+                          }}
+                        >
+                          Aceitar Proposta
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="flex-1"
+                          onClick={() => {
+                            setSelectedDebt(null);
+                            setSimulationValues({ cashValue: 0, installments: 12 });
+                            setProposalSent(false);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                        >
+                          Simular Novamente
+                        </Button>
+                      </>
+                    ) : (
+                      <div className="w-full bg-green-100 border border-green-400 rounded-lg p-4 text-center">
+                        <div className="text-green-800 font-semibold mb-2">Proposta Enviada com Sucesso!</div>
+                        <div className="text-green-700 text-sm mb-3">
+                          Você será contactado em até 24h para finalizar o acordo.
+                        </div>
+                        <div className="flex gap-2 justify-center">
+                          <Button 
+                            size="sm"
+                            onClick={() => setLocation("/")}
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            Voltar ao Dashboard
+                          </Button>
+                          <Button 
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              setSelectedDebt(null);
+                              setSimulationValues({ cashValue: 0, installments: 12 });
+                              setProposalSent(false);
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                          >
+                            Nova Simulação
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
