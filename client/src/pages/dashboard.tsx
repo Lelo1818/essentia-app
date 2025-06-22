@@ -64,17 +64,26 @@ export default function Dashboard() {
   useKeyboardShortcuts(shortcuts);
 
   // Fetch real financial data 
-  const { data: realSummary, isLoading: summaryLoading } = useQuery({
+  const { data: realSummary, isLoading: summaryLoading, refetch: refetchSummary } = useQuery({
     queryKey: ['/api/financial-summary'],
-    refetchInterval: 2000
+    staleTime: 0,
+    cacheTime: 0,
+    refetchOnWindowFocus: true,
+    refetchInterval: false
   });
 
-  const summary = realSummary || {
-    totalIncome: 20601.8,
-    totalExpenses: 4267.94,
-    balance: 16333.86,
-    savings: 15420,
-    investments: 8750
+  const summary = realSummary ? {
+    totalIncome: realSummary.totalIncome,
+    totalExpenses: realSummary.totalExpenses,
+    balance: realSummary.totalIncome - realSummary.totalExpenses,
+    savings: realSummary.savings || 15420,
+    investments: realSummary.investments || 8750
+  } : {
+    totalIncome: 0,
+    totalExpenses: 0,
+    balance: 0,
+    savings: 0,
+    investments: 0
   };
   
   const goals = [

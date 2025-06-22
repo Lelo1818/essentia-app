@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatCurrency } from "@/lib/financial-utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -31,6 +31,12 @@ interface FinancialOverviewProps {
 }
 
 export default function FinancialOverview({ totalIncome, totalExpenses, balance }: FinancialOverviewProps) {
+  // Force re-render when props change
+  const [key, setKey] = useState(Date.now());
+  
+  useEffect(() => {
+    setKey(Date.now());
+  }, [totalIncome, totalExpenses, balance]);
   const [selectedPeriod, setSelectedPeriod] = useState("Este mês");
 
   const chartData = {

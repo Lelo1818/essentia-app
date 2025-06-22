@@ -548,9 +548,15 @@ function QuickIncomeModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Invalidate specific queries for instant update
+        // Force immediate refetch of all financial data
+        await queryClient.refetchQueries({ queryKey: ["/api/financial-summary"] });
+        await queryClient.refetchQueries({ queryKey: ["/api/incomes"] });
+        await queryClient.refetchQueries({ queryKey: ["/api/expenses"] });
+        
+        // Also invalidate for future requests
         queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
         queryClient.invalidateQueries({ queryKey: ["/api/incomes"] });
+        queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
         
         alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
         onClose();
@@ -764,9 +770,15 @@ function QuickExpenseModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Invalidate specific queries for instant update
+        // Force immediate refetch of all financial data
+        await queryClient.refetchQueries({ queryKey: ["/api/financial-summary"] });
+        await queryClient.refetchQueries({ queryKey: ["/api/expenses"] });
+        await queryClient.refetchQueries({ queryKey: ["/api/incomes"] });
+        
+        // Also invalidate for future requests
         queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
         queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
+        queryClient.invalidateQueries({ queryKey: ["/api/incomes"] });
         
         alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
         onClose();
