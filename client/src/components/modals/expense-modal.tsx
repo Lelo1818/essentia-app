@@ -83,11 +83,8 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
       });
       form.reset();
       
-      // Force close modal
-      setTimeout(() => {
-        console.log("=== FORCING MODAL CLOSE ===");
-        onClose();
-      }, 100);
+      // Force close modal immediately
+      onClose();
     },
     onError: (error) => {
       console.error("=== MUTATION ERROR ===", error);
