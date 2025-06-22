@@ -40,6 +40,7 @@ class MemStorage implements IStorage {
   private budgets = new Map<number, any>();
   private goals = new Map<number, any>();
   private debts = new Map<number, any>();
+  private plannings = new Map<number, any>();
   private currentId = 1;
 
   constructor() {
@@ -50,6 +51,7 @@ class MemStorage implements IStorage {
     this.budgets = new Map();
     this.goals = new Map();
     this.debts = new Map();
+    this.plannings = new Map();
     this.currentId = 1;
     this.seedUsers();
     this.seedFinancialData();
@@ -320,6 +322,27 @@ class MemStorage implements IStorage {
     const newDebt = { ...debt, id, createdAt: new Date(), updatedAt: new Date() };
     this.expenses.set(id, newDebt);
     return newDebt;
+  }
+
+  // Planning methods
+  async getPlanningByUserId(userId: number): Promise<any | null> {
+    const planning = Array.from(this.plannings.values()).find(p => p.userId === userId);
+    return planning || null;
+  }
+
+  async savePlanning(planningData: any): Promise<any> {
+    const existingPlanning = await this.getPlanningByUserId(planningData.userId);
+    
+    if (existingPlanning) {
+      const updated = { ...existingPlanning, ...planningData, updatedAt: new Date() };
+      this.plannings.set(existingPlanning.id, updated);
+      return updated;
+    } else {
+      const id = this.currentId++;
+      const newPlanning = { ...planningData, id, createdAt: new Date(), updatedAt: new Date() };
+      this.plannings.set(id, newPlanning);
+      return newPlanning;
+    }
   }
 }
 
