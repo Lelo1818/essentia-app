@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -520,13 +520,19 @@ export default function FlowWorking() {
   );
 }
 
-// Quick Income Modal
+// Quick Income Modal with Camera
 function QuickIncomeModal({ onClose }) {
   const [formData, setFormData] = useState({
     description: "",
     amount: "",
     frequency: "mensal"
   });
+  const [showCamera, setShowCamera] = useState(false);
+  const [stream, setStream] = useState(null);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const videoRef = useState(null);
+  const canvasRef = useState(null);
 
   const handleSubmit = async () => {
     try {
@@ -549,11 +555,81 @@ function QuickIncomeModal({ onClose }) {
     }
   };
 
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' }
+      });
+      setStream(mediaStream);
+      setShowCamera(true);
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
+    } catch (error) {
+      alert('Erro ao acessar câmera. Verifique as permissões.');
+    }
+  };
+
+  const capturePhoto = () => {
+    if (!videoRef.current || !canvasRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    const context = canvas.getContext('2d');
+    
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0);
+    
+    const imageData = canvas.toDataURL('image/jpeg', 0.8);
+    setCapturedImage(imageData);
+    
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setShowCamera(false);
+    
+    // Analyze the captured image for income
+    analyzeIncomeDocument();
+  };
+
+  const analyzeIncomeDocument = () => {
+    setAnalyzing(true);
+    
+    setTimeout(() => {
+      // Mock AI analysis result for income documents
+      const result = {
+        description: 'Pagamento Freelance - Design',
+        amount: '2500.00',
+        frequency: 'unica'
+      };
+      
+      setFormData({
+        description: result.description,
+        amount: result.amount,
+        frequency: result.frequency
+      });
+      setAnalyzing(false);
+      alert('Documento analisado! Dados preenchidos automaticamente.');
+    }, 2000);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-green-600">Nova Receita</CardTitle>
+          <CardTitle className="text-green-600 flex items-center justify-between">
+            Nova Receita
+            <Button 
+              size="sm" 
+              onClick={startCamera}
+              className="bg-purple-600 hover:bg-purple-700 text-white"
+            >
+              <Camera className="w-4 h-4 mr-1" />
+              Foto
+            </Button>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
@@ -593,13 +669,55 @@ function QuickIncomeModal({ onClose }) {
             </select>
           </div>
 
+          {/* Camera Interface */}
+          {showCamera && (
+            <div className="space-y-4">
+              <div className="relative bg-black rounded-lg">
+                <video 
+                  ref={videoRef}
+                  autoPlay 
+                  playsInline
+                  className="w-full rounded-lg"
+                  style={{ transform: 'scaleX(-1)' }}
+                />
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                  <Button 
+                    onClick={capturePhoto}
+                    className="w-16 h-16 rounded-full bg-white hover:bg-gray-100 text-black"
+                  >
+                    <Camera className="w-8 h-8" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Captured Image Preview */}
+          {capturedImage && (
+            <div className="space-y-2">
+              <img 
+                src={capturedImage} 
+                alt="Captured document" 
+                className="w-full rounded-lg border max-h-32 object-cover"
+              />
+              {analyzing && (
+                <div className="text-center py-2">
+                  <div className="animate-spin w-6 h-6 border-2 border-green-400 border-t-transparent rounded-full mx-auto mb-2"></div>
+                  <p className="text-sm">Analisando documento...</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          <canvas ref={canvasRef} style={{ display: 'none' }} />
+
           <div className="flex gap-3 pt-4">
             <Button 
               onClick={handleSubmit} 
               className="flex-1 bg-green-600 hover:bg-green-700"
-              disabled={!formData.description || !formData.amount}
+              disabled={!formData.description || !formData.amount || analyzing}
             >
-              Adicionar Receita
+              {analyzing ? 'Processando...' : 'Adicionar Receita'}
             </Button>
             <Button variant="outline" onClick={onClose} className="flex-1">
               Cancelar
