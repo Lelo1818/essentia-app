@@ -548,12 +548,16 @@ function QuickIncomeModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Invalidate queries to refresh dashboard
-        queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
-        queryClient.invalidateQueries({ queryKey: ["/api/incomes"] });
+        // Force complete cache invalidation
+        queryClient.clear();
         
         alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
         onClose();
+        
+        // Force page reload to ensure data refresh
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (error) {
       alert('Erro ao adicionar receita');
@@ -764,12 +768,16 @@ function QuickExpenseModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Invalidate queries to refresh dashboard
-        queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
-        queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
+        // Force complete cache invalidation
+        queryClient.clear();
         
         alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
         onClose();
+        
+        // Force page reload to ensure data refresh
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (error) {
       alert('Erro ao adicionar gasto');
