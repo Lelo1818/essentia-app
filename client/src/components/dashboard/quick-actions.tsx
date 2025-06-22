@@ -1,5 +1,6 @@
-import { Plus, Camera, PieChart, Target } from "lucide-react";
+import { Plus, Camera, PieChart, Target, Calculator, DollarSign, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface QuickActionsProps {
   onOpenIncomeModal: () => void;
@@ -14,13 +15,35 @@ export default function QuickActions({
   onOpenPlanningModal,
   onOpenGoalsModal
 }: QuickActionsProps) {
+  const { toast } = useToast();
+  
   const actions = [
     {
-      title: "Adicionar Renda",
-      description: "Registre sua renda",
-      icon: Plus,
+      title: "Agendar Pagamentos",
+      description: "Organize pagamentos",
+      icon: Calendar,
+      color: "blue",
+      onClick: () => window.location.href = '/agendar-pagamentos'
+    },
+    {
+      title: "Simular Cenários",
+      description: "Análise preditiva",
+      icon: Calculator,
+      color: "purple",
+      onClick: () => toast({
+        title: "Simulador de Cenários",
+        description: "Funcionalidade em desenvolvimento..."
+      })
+    },
+    {
+      title: "Renegociar Dívidas",
+      description: "Estratégias de pagamento",
+      icon: DollarSign,
       color: "green",
-      onClick: onOpenIncomeModal
+      onClick: () => toast({
+        title: "Renegociar Dívidas", 
+        description: "Análise de renegociação em desenvolvimento..."
+      })
     },
     {
       title: "Fotografar Gasto",
@@ -28,27 +51,13 @@ export default function QuickActions({
       icon: Camera,
       color: "red",
       onClick: onOpenExpenseModal
-    },
-    {
-      title: "Planejamento",
-      description: "Organize seu mês",
-      icon: PieChart,
-      color: "blue",
-      onClick: onOpenPlanningModal
-    },
-    {
-      title: "Definir Meta",
-      description: "Objetivos claros",
-      icon: Target,
-      color: "purple",
-      onClick: onOpenGoalsModal
     }
   ];
 
   const getColorClasses = (color: string) => {
     const colors = {
       green: "bg-green-100 text-green-600",
-      red: "bg-red-100 text-red-600",
+      red: "bg-red-100 text-red-600", 
       blue: "bg-blue-100 text-blue-600",
       purple: "bg-purple-100 text-purple-600"
     };
