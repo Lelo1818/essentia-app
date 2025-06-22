@@ -31,12 +31,6 @@ interface FinancialOverviewProps {
 }
 
 export default function FinancialOverview({ totalIncome, totalExpenses, balance }: FinancialOverviewProps) {
-  // Force re-render when props change
-  const [key, setKey] = useState(Date.now());
-  
-  useEffect(() => {
-    setKey(Date.now());
-  }, [totalIncome, totalExpenses, balance]);
   const [selectedPeriod, setSelectedPeriod] = useState("Este mês");
 
   const chartData = {
