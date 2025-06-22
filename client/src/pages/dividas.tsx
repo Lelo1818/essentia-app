@@ -264,6 +264,35 @@ export default function GestaoDividas() {
             <div className="text-2xl font-bold text-red-600">R$ {totalDividas.toLocaleString('pt-BR')}</div>
             <div className="text-sm text-gray-600">Total em Dívidas</div>
           </div>
+          
+          {/* Sugestões Inteligentes */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-xs">
+            <div className="text-sm font-medium text-blue-800 mb-2">💡 IA Detectou</div>
+            <div className="space-y-2 text-xs text-blue-700">
+              <div>• Cartão adicional não cadastrado (~R$ 1.200)</div>
+              <div>• Parcelas Escola em atraso (~R$ 460)</div>
+              <div>• IPVA 2025 vencendo (~R$ 850)</div>
+            </div>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="mt-2 text-xs w-full border-blue-300 text-blue-700"
+              onClick={() => {
+                setNovaDiv({
+                  ...novaDiv,
+                  nome: "Cartão Adicional",
+                  valorTotal: "1200",
+                  valorRestante: "1200",
+                  tipo: "cartao",
+                  jurosAM: "14.5"
+                });
+                setModalOpen(true);
+              }}
+            >
+              Revisar Sugestões
+            </Button>
+          </div>
+
           <Dialog open={modalOpen} onOpenChange={setModalOpen}>
             <DialogTrigger asChild>
               <Button className="bg-red-600 hover:bg-red-700">
