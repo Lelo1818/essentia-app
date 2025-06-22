@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { useQuery } from "@tanstack/react-query";
 import { 
   MessageCircle, Send, User, Lightbulb, TrendingUp,
   PieChart, Target, AlertTriangle, CheckCircle, X, Brain
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/financial-utils";
 
 interface AIMessage {
   id: string;
@@ -31,6 +33,20 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
   const [messages, setMessages] = React.useState<AIMessage[]>([]);
   const [inputValue, setInputValue] = React.useState("");
   const [isTyping, setIsTyping] = React.useState(false);
+
+  // Fetch real financial data
+  const { data: financialData } = useQuery({
+    queryKey: ['/api/financial-summary'],
+    refetchInterval: 5000
+  });
+
+  const { data: incomes } = useQuery({
+    queryKey: ['/api/incomes']
+  });
+
+  const { data: expenses } = useQuery({
+    queryKey: ['/api/expenses']
+  });
 
   const contextConfig = {
     financial: {
