@@ -1,0 +1,24 @@
+| Bloco / Teste                              | Status     | Evidência Requerida                   |
+| ------------------------------------------ | ---------- | ------------------------------------- |
+| **🎯 CEO – Núcleo de Lógica Crítica**      |            |                                       |
+| Meta impossível ajusta automaticamente     | ☐ Pendente | Print/vídeo da sugestão inteligente   |
+| Comportamento gera recompensa real         | ☐ Pendente | Cupom ou benefício visível            |
+| Navegação completa sem quebra              | ☐ Pendente | Vídeo fluído entre seções             |
+| APIs respondem em tempo real (<200ms)      | ☐ Pendente | Logs ou terminal                      |
+| Sincronização entre módulos                | ☐ Pendente | Ação num módulo refletindo em outro   |
+| **🧭 Navegação e UX**                      |            |                                       |
+| Todos os links do menu funcionando         | ☐ Pendente | Print dos acessos                     |
+| Responsividade mobile                      | ☐ Pendente | Teste em celular ou simulador         |
+| Carregamento fluido e rápido               | ☐ Pendente | Tempo cronometrado ou lighthouse      |
+| **⚡ Funcionalidades-Chave (Core)**         |            |                                       |
+| Sistema de metas com CRUD                  | ☐ Pendente | Criar/editar/excluir meta com sucesso |
+| Conquistas desbloqueando                   | ☐ Pendente | Tela de conquista alcançada           |
+| Ofertas aparecendo corretamente            | ☐ Pendente | Visual das ofertas disponíveis        |
+| Cashback aparecendo e registrando          | ☐ Pendente | Valor de cashback registrado          |
+| **🔌 Integrações e APIs**                  |            |                                       |
+| Dados financeiros carregando corretamente  | ☐ Pendente | R\$ reais exibidos com saldo          |
+| APIs de metas e conquistas funcionando     | ☐ Pendente | Retorno 200 OK                        |
+| APIs de comportamento respondendo          | ☐ Pendente | Feedback da ação                      |
+| **🔄 Fluxos Completos**                    |            |                                       |
+| Meta → Conquista → Oferta (fluxo completo) | ☐ Pendente | Percurso registrado                   |
+| Nível → Benefício → Recompensa             | ☐ Pendente | Tela mostrando progresso e prêmio     |
