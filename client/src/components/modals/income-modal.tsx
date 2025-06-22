@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertIncomeSchema } from "@shared/schema";
 import { z } from "zod";
+import { useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -47,6 +48,15 @@ export default function IncomeModal({ open, onOpenChange, initialData }: IncomeM
       date: new Date().toISOString().split('T')[0],
     },
   });
+
+  // Update form when initialData changes
+  useEffect(() => {
+    if (initialData?.description) {
+      form.setValue("description", initialData.description);
+      form.setValue("amount", initialData.amount);
+      form.setValue("frequency", initialData.frequency);
+    }
+  }, [initialData, form]);
 
   const createIncomeMutation = useMutation({
     mutationFn: async (data: FormData) => {
