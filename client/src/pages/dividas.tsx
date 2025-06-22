@@ -278,14 +278,16 @@ export default function GestaoDividas() {
               variant="outline" 
               className="mt-2 text-xs w-full border-blue-300 text-blue-700"
               onClick={() => {
-                setNovaDiv({
-                  ...novaDiv,
+                const novaData = {
                   nome: "Cartão Adicional",
                   valorTotal: "1200",
                   valorRestante: "1200",
-                  tipo: "cartao",
-                  jurosAM: "14.5"
-                });
+                  tipo: "cartao" as const,
+                  jurosAM: "14.5",
+                  dataVencimento: "",
+                  descricao: "Cartão detectado pela IA"
+                };
+                setNovaDiv(novaData);
                 setModalOpen(true);
               }}
             >
