@@ -98,12 +98,12 @@ class MemStorage implements IStorage {
   private seedFinancialData() {
     // Sample incomes
     const incomesData = [
-      { userId: 1, description: "Salário Principal", amount: 8500, frequency: "mensal", date: new Date(), category: "Trabalho" },
-      { userId: 1, description: "Freelance Design", amount: 1200, frequency: "unica", date: new Date(), category: "Freelance" },
-      { userId: 1, description: "Dividendos Ações", amount: 350, frequency: "mensal", date: new Date(), category: "Investimentos" },
-      { userId: 1, description: "Aluguel Imóvel", amount: 1800, frequency: "mensal", date: new Date(), category: "Aluguel" },
-      { userId: 1, description: "Consultoria Tech", amount: 2500, frequency: "trimestral", date: new Date(), category: "Consultoria" },
-      { userId: 1, description: "Vendas Online", amount: 750, frequency: "semanal", date: new Date(), category: "E-commerce" }
+      { userId: 1, description: "Salário Principal", amount: 8500.00, frequency: "mensal", date: new Date(), category: "Trabalho" },
+      { userId: 1, description: "Freelance Design", amount: 1200.50, frequency: "unica", date: new Date(), category: "Freelance" },
+      { userId: 1, description: "Dividendos Ações", amount: 350.75, frequency: "mensal", date: new Date(), category: "Investimentos" },
+      { userId: 1, description: "Aluguel Imóvel", amount: 1800.00, frequency: "mensal", date: new Date(), category: "Aluguel" },
+      { userId: 1, description: "Consultoria Tech", amount: 2500.25, frequency: "trimestral", date: new Date(), category: "Consultoria" },
+      { userId: 1, description: "Vendas Online", amount: 750.30, frequency: "semanal", date: new Date(), category: "E-commerce" }
     ];
 
     incomesData.forEach(incomeData => {
@@ -113,18 +113,18 @@ class MemStorage implements IStorage {
 
     // Sample expenses
     const expensesData = [
-      { userId: 1, description: "Supermercado Pão de Açúcar", amount: 450, category: "Alimentação", date: new Date(), recurring: true },
-      { userId: 1, description: "Gasolina Shell", amount: 280, category: "Transporte", date: new Date(), recurring: false },
-      { userId: 1, description: "Netflix Premium", amount: 32, category: "Entretenimento", date: new Date(), recurring: true },
-      { userId: 1, description: "Aluguel Apartamento", amount: 2200, category: "Moradia", date: new Date(), recurring: true },
-      { userId: 1, description: "Plano de Saúde Unimed", amount: 350, category: "Saúde", date: new Date(), recurring: true },
-      { userId: 1, description: "Internet Fibra", amount: 120, category: "Utilidades", date: new Date(), recurring: true },
-      { userId: 1, description: "Academia Smart Fit", amount: 89, category: "Saúde", date: new Date(), recurring: true },
-      { userId: 1, description: "Spotify Family", amount: 34, category: "Entretenimento", date: new Date(), recurring: true },
-      { userId: 1, description: "Uber", amount: 180, category: "Transporte", date: new Date(), recurring: false },
-      { userId: 1, description: "Jantar Restaurante", amount: 120, category: "Alimentação", date: new Date(), recurring: false },
-      { userId: 1, description: "Farmácia", amount: 85, category: "Saúde", date: new Date(), recurring: false },
-      { userId: 1, description: "Roupas Shopping", amount: 320, category: "Vestuário", date: new Date(), recurring: false }
+      { userId: 1, description: "Supermercado Pão de Açúcar", amount: 450.75, category: "Alimentação", date: new Date(), recurring: true },
+      { userId: 1, description: "Gasolina Shell", amount: 280.90, category: "Transporte", date: new Date(), recurring: false },
+      { userId: 1, description: "Netflix Premium", amount: 32.90, category: "Entretenimento", date: new Date(), recurring: true },
+      { userId: 1, description: "Aluguel Apartamento", amount: 2200.00, category: "Moradia", date: new Date(), recurring: true },
+      { userId: 1, description: "Plano de Saúde Unimed", amount: 350.45, category: "Saúde", date: new Date(), recurring: true },
+      { userId: 1, description: "Internet Fibra", amount: 120.90, category: "Utilidades", date: new Date(), recurring: true },
+      { userId: 1, description: "Academia Smart Fit", amount: 89.90, category: "Saúde", date: new Date(), recurring: true },
+      { userId: 1, description: "Spotify Family", amount: 34.90, category: "Entretenimento", date: new Date(), recurring: true },
+      { userId: 1, description: "Uber", amount: 180.45, category: "Transporte", date: new Date(), recurring: false },
+      { userId: 1, description: "Jantar Restaurante", amount: 120.50, category: "Alimentação", date: new Date(), recurring: false },
+      { userId: 1, description: "Farmácia", amount: 85.30, category: "Saúde", date: new Date(), recurring: false },
+      { userId: 1, description: "Roupas Shopping", amount: 320.99, category: "Vestuário", date: new Date(), recurring: false }
     ];
 
     expensesData.forEach(expenseData => {
