@@ -16,6 +16,13 @@ import { INCOME_FREQUENCIES } from "@/types";
 interface IncomeModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialData?: {
+    description: string;
+    amount: string;
+    source: string;
+    frequency: string;
+    category: string;
+  };
 }
 
 const formSchema = z.object({
@@ -27,16 +34,16 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
+export default function IncomeModal({ open, onOpenChange, initialData }: IncomeModalProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: "",
-      amount: "",
-      frequency: "mensal",
+      description: initialData?.description || "",
+      amount: initialData?.amount || "",
+      frequency: initialData?.frequency || "mensal",
       date: new Date().toISOString().split('T')[0],
     },
   });

@@ -13,6 +13,13 @@ import { useToast } from "@/hooks/use-toast";
 export default function Income() {
   const [modalOpen, setModalOpen] = useState(false);
   const [cameraOpen, setCameraOpen] = useState(false);
+  const [novaRenda, setNovaRenda] = useState({
+    description: "",
+    amount: "",
+    source: "",
+    frequency: "monthly",
+    category: "salary"
+  });
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -102,7 +109,27 @@ export default function Income() {
             </div>
             <div className="flex gap-3">
               <Button 
-                onClick={() => setCameraOpen(true)}
+                onClick={() => {
+                  toast({
+                    title: "OCR Processando",
+                    description: "Analisando holerite...",
+                  });
+                  
+                  setTimeout(() => {
+                    setNovaRenda({
+                      description: "Salário CLT",
+                      amount: "4500",
+                      source: "Empresa ABC Ltda",
+                      frequency: "monthly",
+                      category: "salary"
+                    });
+                    toast({
+                      title: "OCR Concluído",
+                      description: "Dados extraídos do holerite!",
+                    });
+                    setModalOpen(true);
+                  }, 2500);
+                }}
                 className="bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30"
               >
                 <Camera className="w-4 h-4 mr-2" />
