@@ -67,10 +67,19 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
           body: JSON.stringify(payload),
         });
       } else {
-        return apiRequest("/api/expenses", {
-          method: "POST", 
+        const response = await fetch("/api/expenses", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(payload),
         });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        return response.json();
       }
     },
     onSuccess: () => {
