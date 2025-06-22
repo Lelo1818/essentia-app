@@ -176,9 +176,7 @@ export default function Dashboard() {
         </button>
 
         <button 
-          onClick={() => {
-            alert("Simulador de Cenários - Funcionalidade em desenvolvimento...");
-          }}
+          onClick={() => window.location.href = '/simular-cenarios'}
           className="bg-purple-600 hover:bg-purple-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
         >
           <Calculator className="w-6 h-6" />
@@ -186,9 +184,7 @@ export default function Dashboard() {
         </button>
 
         <button 
-          onClick={() => {
-            alert("Renegociar Dívidas - Análise de renegociação em desenvolvimento...");
-          }}
+          onClick={() => window.location.href = '/renegociar-dividas'}
           className="bg-green-600 hover:bg-green-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
         >
           <DollarSign className="w-6 h-6" />
