@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/data/mock-users";
 import { mockEduData } from "@/data/mock-edu-data";
 import { mockPurposeData } from "@/data/mock-purpose-data";
 import WelcomeHeader from "@/components/dashboard/welcome-header";
-import QuickActions from "@/components/dashboard/quick-actions";
+
 import FinancialOverview from "@/components/dashboard/financial-overview";
 import FinancialCards from "@/components/dashboard/financial-cards";
 import ExpenseCategories from "@/components/dashboard/expense-categories";
