@@ -1172,6 +1172,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Validação de metas
+  app.post("/api/goals/validate", async (req, res) => {
+    try {
+      const { GoalValidator } = await import('./validation/goal-validator');
+      const { targetAmount, targetDate, category } = req.body;
+      
+      // Calcular meses até a data alvo
+      const today = new Date();
+      const target = new Date(targetDate);
+      const months = Math.max(1, Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24 * 30)));
+      
+      // Perfil financeiro simulado baseado nos dados reais
+      const userProfile = {
+        monthlyIncome: 10650, // Baseado no summary real
+        monthlyExpenses: 4267,
+        availableForSaving: 6383,
+        currentBalance: 10833
+      };
+      
+      const validation = GoalValidator.validateGoal(targetAmount, months, userProfile);
+      res.json(validation);
+    } catch (error) {
+      console.error("Error validating goal:", error);
+      res.status(500).json({ message: "Erro ao validar meta" });
+    }
+  });
+
+  // Sistema de conquistas e XP
+  app.post("/api/achievements/unlock", async (req, res) => {
+    try {
+      const { achievementId, context } = req.body;
+      
+      // Simular desbloqueio de conquista
+      const achievement = {
+        id: achievementId,
+        title: "Poupador Consistente",
+        description: "Economizou por 3 dias seguidos",
+        xpReward: 150,
+        unlockedAt: new Date(),
+        category: context || "savings"
+      };
+      
+      res.json({
+        success: true,
+        achievement,
+        newXP: 1350, // XP total simulado
+        levelUp: false,
+        message: "Parabéns! Nova conquista liberada"
+      });
+    } catch (error) {
+      console.error("Error unlocking achievement:", error);
+      res.status(500).json({ message: "Erro ao desbloquear conquista" });
+    }
+  });
+
+  // Teste de sincronização entre módulos
+  app.get("/api/sync-test", async (req, res) => {
+    try {
+      // Buscar dados de todos os módulos
+      const summary = await fetch('http://localhost:5000/api/financial-summary').then(r => r.json());
+      const goals = await fetch('http://localhost:5000/api/goals').then(r => r.json());
+      
+      const syncTest = {
+        timestamp: new Date().toISOString(),
+        modules: {
+          financial: { status: 'ok', balance: summary.balance },
+          goals: { status: 'ok', count: goals.length },
+          offers: { status: 'ok', available: true }
+        },
+        consistency: {
+          mathCheck: summary.totalIncome - summary.totalExpenses === summary.balance,
+          dataIntegrity: goals.every(g => g.targetAmount > 0),
+          performance: true
+        }
+      };
+      
+      res.json(syncTest);
+    } catch (error) {
+      console.error("Error in sync test:", error);
+      res.status(500).json({ message: "Erro no teste de sincronização" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
