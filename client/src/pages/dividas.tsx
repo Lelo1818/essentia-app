@@ -97,6 +97,19 @@ export default function GestaoDividas() {
         valorParcela: 200,
         tipo: "cartao",
         prioridade: "alta"
+      },
+      {
+        id: "5",
+        nome: "Escola",
+        valorTotal: 2300,
+        valorRestante: 854,
+        jurosAM: 1.2,
+        vencimento: "todo dia 10",
+        parcelas: 10,
+        parcelasRestantes: 4,
+        valorParcela: 230,
+        tipo: "outros",
+        prioridade: "media"
       }
     ];
     setDividas(dividasExemplo);
@@ -220,13 +233,18 @@ export default function GestaoDividas() {
       setNovaDiv(prev => ({
         ...prev,
         nome: "Cartão de Crédito (OCR)",
-        valorTotal: "3500",
+        valorTotal: "4550",
+        valorRestante: "4550", 
         jurosAM: "12.5",
+        vencimento: "todo dia 15",
+        parcelas: "12",
+        parcelasRestantes: "12",
+        valorParcela: "380",
         tipo: "cartao"
       }));
       toast({
         title: "OCR Concluído",
-        description: "Dados extraídos do documento! Verifique as informações.",
+        description: "Dados extraídos do documento! Verifique e adicione a dívida.",
       });
     }, 2000);
   };
