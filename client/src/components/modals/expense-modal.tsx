@@ -96,10 +96,11 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
       onClose();
     },
     onError: (error) => {
-      console.error("Error saving expense:", error);
+      console.error("=== MUTATION ERROR ===", error);
+      console.error("Error details:", error.message);
       toast({
         title: "Erro",
-        description: expense ? "Erro ao atualizar despesa." : "Erro ao adicionar despesa.",
+        description: `${expense ? "Erro ao atualizar despesa." : "Erro ao adicionar despesa."} ${error.message}`,
         variant: "destructive",
       });
     },
