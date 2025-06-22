@@ -297,11 +297,7 @@ export default function Planning() {
             <CardTitle>Análise de Gastos</CardTitle>
           </CardHeader>
           <CardContent>
-            {Object.keys(expensesByCategory).length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
-                <p>Registre alguns gastos para ver a análise aqui.</p>
-              </div>
-            ) : (
+            {true ? (
               <div className="space-y-6">
                 <div>
                   <h4 className="font-medium text-gray-900 mb-3">Comparação: Planejado vs Real</h4>
@@ -365,6 +361,10 @@ export default function Planning() {
                     </div>
                   </div>
                 </div>
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <p>Registre alguns gastos para ver a análise aqui.</p>
               </div>
             )}
           </CardContent>
