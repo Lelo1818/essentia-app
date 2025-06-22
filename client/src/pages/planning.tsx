@@ -306,14 +306,17 @@ export default function Planning() {
                       const plannedAmount = parseFloat(String(form.watch(category.key as keyof FormData))) || 0;
                       const totalExpenses = (summary as any)?.totalExpenses || 4100;
                       
-                      // Map categories to actual expenses
+                      // Map categories to actual expenses/savings
                       let actualAmount = 0;
+                      let isPositiveMetric = false;
+                      
                       if (category.key === "fixedExpenses") {
                         actualAmount = 2200; // Aluguel + Internet + Plano de Saúde aproximado
                       } else if (category.key === "variableExpenses") {
                         actualAmount = 730; // Supermercado + Gasolina aproximado 
                       } else if (category.key === "savings") {
-                        actualAmount = 0; // Poupança não aparece em gastos
+                        actualAmount = 850; // Valor já poupado este mês
+                        isPositiveMetric = true; // Para poupança, mais é melhor
                       } else if (category.key === "leisure") {
                         actualAmount = 32; // Netflix aproximado
                       }
@@ -333,12 +336,14 @@ export default function Planning() {
                             </span>
                           </div>
                           <div className="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>Real: {formatCurrency(actualAmount)}</span>
-                            <span>Planejado: {formatCurrency(plannedAmount)}</span>
+                            <span>{isPositiveMetric ? "Poupado" : "Real"}: {formatCurrency(actualAmount)}</span>
+                            <span>{isPositiveMetric ? "Meta" : "Planejado"}: {formatCurrency(plannedAmount)}</span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
                             <div 
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-in-out"
+                              className={`h-2 rounded-full transition-all duration-300 ease-in-out ${
+                                isPositiveMetric ? 'bg-green-600' : 'bg-blue-600'
+                              }`}
                               style={{ width: `${Math.min(percentage, 100)}%` }}
                             />
                           </div>
