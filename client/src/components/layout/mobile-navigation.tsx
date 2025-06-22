@@ -9,7 +9,7 @@ export default function MobileNavigation() {
     { path: "/flow", icon: TrendingUp, label: "Flow" },
     { path: "/dividas", icon: CreditCard, label: "Dívidas" },
     { path: "/goals", icon: Trophy, label: "Metas" },
-    { path: "/planning", icon: PieChart, label: "Plan." },
+    { path: "/fluxo-caixa", icon: PieChart, label: "Fluxo" },
     { path: "/profile", icon: Shield, label: "Perfil" }
   ];
 
