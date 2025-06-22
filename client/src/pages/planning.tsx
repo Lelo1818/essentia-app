@@ -307,7 +307,7 @@ export default function Planning() {
                   <h4 className="font-medium text-gray-900 mb-3">Comparação: Planejado vs Real</h4>
                   <div className="space-y-3">
                     {categories.map((category) => {
-                      const plannedAmount = budget ? parseFloat(String((budget as any)[category.key] || 0)) : 0;
+                      const plannedAmount = parseFloat(String(form.getValues(category.key as keyof FormData))) || 0;
                       const totalExpenses = (summary as any)?.totalExpenses || 4100;
                       
                       // Map categories to actual expenses
