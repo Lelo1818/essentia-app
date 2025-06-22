@@ -63,11 +63,16 @@ export default function Dashboard() {
 
   useKeyboardShortcuts(shortcuts);
 
-  // Static data for stable demo
-  const summary = {
-    totalIncome: 10050,
-    totalExpenses: 3730,
-    balance: 6320,
+  // Fetch real financial data 
+  const { data: realSummary, isLoading: summaryLoading } = useQuery({
+    queryKey: ['/api/financial-summary'],
+    refetchInterval: 5000
+  });
+
+  const summary = realSummary || {
+    totalIncome: 20601.8,
+    totalExpenses: 4267.94,
+    balance: 16333.86,
     savings: 15420,
     investments: 8750
   };
