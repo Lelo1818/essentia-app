@@ -227,7 +227,22 @@ export default function Expenses() {
                     <div key={expense.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                          <Icon className="w-5 h-5 text-gray-600" />
+                          {(() => {
+                            const icons = {
+                              "Moradia": Home,
+                              "Alimentação": Utensils,
+                              "Transporte": Car,
+                              "Entretenimento": Gamepad2,
+                              "Saúde": Heart,
+                              "Educação": GraduationCap,
+                              "Compras": ShoppingBag,
+                              "Serviços": Plus,
+                              "Utilidades": Home,
+                              "Outros": Plus,
+                            };
+                            const IconComponent = icons[expense.category as keyof typeof icons] || Plus;
+                            return <IconComponent className="w-5 h-5 text-gray-600" />;
+                          })()}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
@@ -315,6 +330,11 @@ export default function Expenses() {
       </div>
 
       <ExpenseCameraModal open={modalOpen} onOpenChange={setModalOpen} />
+      
+      <ExpenseModal 
+        isOpen={manualModalOpen}
+        onClose={() => setManualModalOpen(false)}
+      />
     </div>
   );
 }
