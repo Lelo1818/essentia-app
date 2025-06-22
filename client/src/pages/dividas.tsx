@@ -281,22 +281,33 @@ export default function GestaoDividas() {
               variant="outline" 
               className="mt-2 text-xs w-full border-blue-300 text-blue-700"
               onClick={() => {
-                // Reset OCR status first
-                setUploadStatus("idle");
-                // Preencher com sugestão da IA (NÃO OCR)
-                setNovaDiv({
-                  nome: "Cartão Adicional",
-                  valorTotal: "1200",
-                  valorRestante: "1200",
-                  tipo: "cartao",
-                  jurosAM: "14.5",
-                  vencimento: "todo dia 10",
-                  parcelas: "12",
-                  parcelasRestantes: "12",
-                  valorParcela: "100",
-                  descricao: "Cartão detectado pela IA"
+                setSugestoes([
+                  {
+                    id: 1,
+                    nome: "Cartão Adicional",
+                    valor: 1200,
+                    tipo: "cartao",
+                    descricao: "Cartão adicional com limite disponível"
+                  },
+                  {
+                    id: 2,
+                    nome: "Escola em atraso",
+                    valor: 460,
+                    tipo: "outros",
+                    descricao: "Mensalidade escolar em atraso"
+                  },
+                  {
+                    id: 3,
+                    nome: "IPVA 2025",
+                    valor: 850,
+                    tipo: "outros", 
+                    descricao: "IPVA vencendo em março"
+                  }
+                ]);
+                toast({
+                  title: "Sugestões Carregadas",
+                  description: "3 dívidas detectadas pela IA",
                 });
-                setModalOpen(true);
               }}
             >
               Revisar Sugestões
