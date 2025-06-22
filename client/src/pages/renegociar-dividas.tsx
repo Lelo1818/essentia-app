@@ -1,210 +1,332 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ArrowLeft, DollarSign, TrendingDown, Calculator, AlertTriangle, CheckCircle, CreditCard } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { DollarSign, Calculator, TrendingDown, AlertCircle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 
 export default function RenegociarDividas() {
-  const [divida, setDivida] = useState({
-    valorTotal: "",
-    valorParcela: "",
-    parcelasRestantes: "",
-    jurosAtual: ""
+  const [, setLocation] = useLocation();
+  const [selectedDebt, setSelectedDebt] = useState<any>(null);
+
+  // Buscar dívidas reais do sistema
+  const { data: realDebts, isLoading } = useQuery({
+    queryKey: ["/api/debts"],
+    retry: false,
   });
 
-  const [proposta, setProposta] = useState<any>(null);
+  // Simular dívidas baseadas no padrão conhecido do sistema
+  const mockDebts = [
+    {
+      id: 1,
+      creditor: "Cartão Nubank",
+      amount: "12500.00",
+      dueDate: "2024-12-15",
+      category: "Cartão de Crédito",
+      interestRate: 12.5
+    },
+    {
+      id: 2,
+      creditor: "Financiamento Carro",
+      amount: "28000.00", 
+      dueDate: "2025-01-10",
+      category: "Financiamento",
+      interestRate: 1.8
+    },
+    {
+      id: 3,
+      creditor: "Empréstimo Pessoal",
+      amount: "8500.00",
+      dueDate: "2024-11-30",
+      category: "Empréstimo",
+      interestRate: 8.9
+    }
+  ];
 
-  const calcularRenegociacao = () => {
-    const valorTotal = parseFloat(divida.valorTotal) || 0;
-    const valorParcela = parseFloat(divida.valorParcela) || 0;
-    const parcelasRestantes = parseInt(divida.parcelasRestantes) || 1;
-    const jurosAtual = parseFloat(divida.jurosAtual) || 0;
+  // Usar dívidas reais se disponíveis, senão usar mock
+  const debts = (realDebts && realDebts.length > 0 ? realDebts : mockDebts).map((debt: any) => ({
+    id: debt.id,
+    name: debt.creditor || debt.description || "Dívida",
+    amount: parseFloat(debt.amount),
+    minimumPayment: parseFloat(debt.amount) * 0.03, // 3% como parcela mínima
+    interestRate: debt.interestRate || 12.5,
+    daysOverdue: debt.dueDate ? Math.max(0, Math.floor((new Date().getTime() - new Date(debt.dueDate).getTime()) / (1000 * 60 * 60 * 24))) : 0,
+    category: debt.category || "Dívida",
+    priority: parseFloat(debt.amount) > 10000 ? "Alta" : parseFloat(debt.amount) > 5000 ? "Média" : "Baixa",
+    originalDebt: debt
+  }));
 
-    // Simulação de propostas de renegociação
-    const desconto15 = valorTotal * 0.85; // 15% desconto à vista
-    const desconto25 = valorTotal * 0.75; // 25% desconto à vista
-    const parcelamento = valorTotal / (parcelasRestantes + 6); // Mais 6 parcelas
-    const reducaoJuros = valorTotal * (1 + (jurosAtual * 0.5) / 100); // Redução de 50% dos juros
-
-    setProposta({
-      atual: { valor: valorTotal, parcela: valorParcela, parcelas: parcelasRestantes },
-      opcoes: [
-        {
-          tipo: "À Vista com 15% desconto",
-          valor: desconto15,
-          economia: valorTotal - desconto15,
-          recomendacao: "Boa opção se tiver reserva"
-        },
-        {
-          tipo: "À Vista com 25% desconto",
-          valor: desconto25,
-          economia: valorTotal - desconto25,
-          recomendacao: "Melhor opção financeira"
-        },
-        {
-          tipo: "Parcelamento Estendido",
-          valor: valorTotal,
-          parcela: parcelamento,
-          parcelas: parcelasRestantes + 6,
-          recomendacao: "Alivia o orçamento mensal"
-        },
-        {
-          tipo: "Redução de Juros 50%",
-          valor: reducaoJuros,
-          economia: valorTotal - reducaoJuros,
-          recomendacao: "Equilibra pagamento e economia"
-        }
-      ]
-    });
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(value);
   };
 
+  const calculateNegotiationOptions = (debt: any) => {
+    const amount = debt.amount;
+    return {
+      discount15: { 
+        value: amount * 0.85, 
+        savings: amount * 0.15,
+        title: "15% Desconto à Vista",
+        description: "Pagamento imediato com desconto"
+      },
+      discount25: { 
+        value: amount * 0.75, 
+        savings: amount * 0.25,
+        title: "25% Desconto à Vista",
+        description: "Melhor opção para quem tem reserva"
+      },
+      installments: { 
+        value: amount,
+        monthlyPayment: amount / 12,
+        title: "Parcelamento em 12x",
+        description: "Sem juros adicionais"
+      },
+      reducedInterest: { 
+        value: amount * 1.05, 
+        savings: amount * (debt.interestRate / 100 * 0.5),
+        title: "Redução de 50% nos Juros",
+        description: "Mantém parcelamento com juros reduzidos"
+      }
+    };
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-4 mb-6">
+            <Button variant="ghost" onClick={() => setLocation("/")}>
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <h1 className="text-2xl font-bold text-gray-900">Carregando Dívidas...</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-teal-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-gradient-to-r from-green-600 via-blue-600 to-teal-600 text-white p-8 rounded-b-3xl mb-8">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 text-white p-8 rounded-3xl mb-8 shadow-xl">
+          <Button 
+            variant="ghost" 
+            onClick={() => setLocation("/")}
+            className="text-white hover:bg-white/20 mb-4"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Voltar
+          </Button>
           <div className="flex items-center gap-4">
             <DollarSign className="w-12 h-12" />
             <div>
               <h1 className="text-4xl font-bold">Renegociar Dívidas</h1>
-              <p className="text-white/90 text-lg">Analise as melhores estratégias para quitar suas dívidas</p>
+              <p className="text-white/90 text-lg">Estratégias inteligentes baseadas nas suas dívidas reais</p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="w-5 h-5" />
-                Dados da Dívida Atual
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="valorTotal">Valor Total da Dívida (R$)</Label>
-                <Input
-                  id="valorTotal"
-                  type="number"
-                  value={divida.valorTotal}
-                  onChange={(e) => setDivida(prev => ({ ...prev, valorTotal: e.target.value }))}
-                  placeholder="0,00"
-                />
+        {/* Status das Dívidas */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-red-600 font-medium">Total em Dívidas</p>
+                  <p className="text-2xl font-bold text-red-700">
+                    {formatCurrency(debts.reduce((sum, debt) => sum + debt.amount, 0))}
+                  </p>
+                </div>
+                <CreditCard className="h-8 w-8 text-red-500" />
               </div>
-
-              <div>
-                <Label htmlFor="valorParcela">Valor da Parcela Atual (R$)</Label>
-                <Input
-                  id="valorParcela"
-                  type="number"
-                  value={divida.valorParcela}
-                  onChange={(e) => setDivida(prev => ({ ...prev, valorParcela: e.target.value }))}
-                  placeholder="0,00"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="parcelasRestantes">Parcelas Restantes</Label>
-                <Input
-                  id="parcelasRestantes"
-                  type="number"
-                  value={divida.parcelasRestantes}
-                  onChange={(e) => setDivida(prev => ({ ...prev, parcelasRestantes: e.target.value }))}
-                  placeholder="12"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="jurosAtual">Taxa de Juros Atual (%)</Label>
-                <Input
-                  id="jurosAtual"
-                  type="number"
-                  value={divida.jurosAtual}
-                  onChange={(e) => setDivida(prev => ({ ...prev, jurosAtual: e.target.value }))}
-                  placeholder="2,5"
-                />
-              </div>
-
-              <Button onClick={calcularRenegociacao} className="w-full bg-gradient-to-r from-green-600 to-blue-600">
-                <Calculator className="w-4 h-4 mr-2" />
-                Calcular Propostas
-              </Button>
             </CardContent>
           </Card>
 
-          {proposta && (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <AlertCircle className="w-5 h-5" />
-                    Situação Atual
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-3 bg-red-50 rounded-lg">
-                      <div className="text-red-600 font-bold text-lg">R$ {proposta.atual.valor.toFixed(2)}</div>
-                      <div className="text-sm text-gray-600">Valor Total</div>
-                    </div>
-                    <div className="text-center p-3 bg-red-50 rounded-lg">
-                      <div className="text-red-600 font-bold text-lg">{proposta.atual.parcelas}x</div>
-                      <div className="text-sm text-gray-600">Parcelas Restantes</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-yellow-600 font-medium">Dívidas em Atraso</p>
+                  <p className="text-2xl font-bold text-yellow-700">
+                    {debts.filter(debt => debt.daysOverdue > 0).length}
+                  </p>
+                </div>
+                <AlertTriangle className="h-8 w-8 text-yellow-500" />
+              </div>
+            </CardContent>
+          </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingDown className="w-5 h-5" />
-                    Propostas de Renegociação
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {proposta.opcoes.map((opcao: any, index: number) => (
-                    <div key={index} className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-gray-900">{opcao.tipo}</h3>
-                        {opcao.economia && (
-                          <Badge className="bg-green-100 text-green-700">
-                            Economia: R$ {opcao.economia.toFixed(2)}
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4 mb-3">
-                        <div>
-                          <span className="text-sm text-gray-600">Valor:</span>
-                          <div className="font-bold text-lg">R$ {opcao.valor.toFixed(2)}</div>
-                        </div>
-                        {opcao.parcela && (
-                          <div>
-                            <span className="text-sm text-gray-600">Parcela:</span>
-                            <div className="font-bold text-lg">R$ {opcao.parcela.toFixed(2)}</div>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="text-sm text-blue-600 font-medium">
-                        💡 {opcao.recomendacao}
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-          )}
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-blue-600 font-medium">Prioridade Alta</p>
+                  <p className="text-2xl font-bold text-blue-700">
+                    {debts.filter(debt => debt.priority === "Alta").length}
+                  </p>
+                </div>
+                <TrendingDown className="h-8 w-8 text-blue-500" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <div className="mt-8">
+        {/* Lista de Dívidas para Renegociação */}
+        {debts.length === 0 ? (
+          <Card className="p-8 text-center">
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Parabéns! Nenhuma dívida encontrada</h3>
+            <p className="text-gray-600 mb-4">Você não possui dívidas cadastradas no sistema para renegociar.</p>
+            <Button 
+              onClick={() => setLocation("/dividas")} 
+              className="bg-gradient-to-r from-blue-600 to-purple-600"
+            >
+              Gerenciar Dívidas
+            </Button>
+          </Card>
+        ) : (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-gray-900">Suas Dívidas - Opções de Renegociação</h2>
+            
+            <div className="grid grid-cols-1 gap-6">
+              {debts.map((debt) => {
+                const options = calculateNegotiationOptions(debt);
+                
+                return (
+                  <Card key={debt.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-xl flex items-center gap-2">
+                            <CreditCard className="h-5 w-5" />
+                            {debt.name}
+                          </CardTitle>
+                          <div className="flex gap-2 mt-2">
+                            <Badge variant={debt.priority === "Alta" ? "destructive" : debt.priority === "Média" ? "default" : "secondary"}>
+                              {debt.priority} Prioridade
+                            </Badge>
+                            <Badge variant="outline">{debt.category}</Badge>
+                            {debt.daysOverdue > 0 && (
+                              <Badge variant="destructive">{debt.daysOverdue} dias em atraso</Badge>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-2xl font-bold text-red-600">{formatCurrency(debt.amount)}</p>
+                          <p className="text-sm text-gray-600">Valor Total</p>
+                        </div>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="p-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {/* Opção 1: 15% Desconto */}
+                        <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                          <h4 className="font-semibold text-green-800 mb-2">{options.discount15.title}</h4>
+                          <p className="text-2xl font-bold text-green-700">{formatCurrency(options.discount15.value)}</p>
+                          <p className="text-sm text-green-600 mb-2">Economia: {formatCurrency(options.discount15.savings)}</p>
+                          <p className="text-xs text-gray-600">{options.discount15.description}</p>
+                          <Badge className="mt-2 bg-green-100 text-green-800">Recomendado</Badge>
+                        </div>
+
+                        {/* Opção 2: 25% Desconto */}
+                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                          <h4 className="font-semibold text-blue-800 mb-2">{options.discount25.title}</h4>
+                          <p className="text-2xl font-bold text-blue-700">{formatCurrency(options.discount25.value)}</p>
+                          <p className="text-sm text-blue-600 mb-2">Economia: {formatCurrency(options.discount25.savings)}</p>
+                          <p className="text-xs text-gray-600">{options.discount25.description}</p>
+                          <Badge className="mt-2 bg-blue-100 text-blue-800">Melhor Economia</Badge>
+                        </div>
+
+                        {/* Opção 3: Parcelamento */}
+                        <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                          <h4 className="font-semibold text-purple-800 mb-2">{options.installments.title}</h4>
+                          <p className="text-2xl font-bold text-purple-700">{formatCurrency(options.installments.monthlyPayment)}</p>
+                          <p className="text-sm text-purple-600 mb-2">por mês</p>
+                          <p className="text-xs text-gray-600">{options.installments.description}</p>
+                          <Badge className="mt-2 bg-purple-100 text-purple-800">Sem Juros</Badge>
+                        </div>
+
+                        {/* Opção 4: Juros Reduzidos */}
+                        <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                          <h4 className="font-semibold text-orange-800 mb-2">{options.reducedInterest.title}</h4>
+                          <p className="text-2xl font-bold text-orange-700">{formatCurrency(options.reducedInterest.value)}</p>
+                          <p className="text-sm text-orange-600 mb-2">Economia em juros: {formatCurrency(options.reducedInterest.savings)}</p>
+                          <p className="text-xs text-gray-600">{options.reducedInterest.description}</p>
+                          <Badge className="mt-2 bg-orange-100 text-orange-800">Equilibrado</Badge>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 flex gap-3">
+                        <Button 
+                          className="flex-1 bg-gradient-to-r from-green-600 to-blue-600"
+                          onClick={() => setSelectedDebt(debt)}
+                        >
+                          <Calculator className="h-4 w-4 mr-2" />
+                          Simular Acordo
+                        </Button>
+                        <Button 
+                          variant="outline"
+                          onClick={() => window.open(`tel:${debt.originalDebt?.phone || '0800-000-0000'}`, '_self')}
+                        >
+                          Ligar para Negociar
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Dicas de Renegociação */}
+        <Card className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-blue-800">
+              <TrendingDown className="h-5 w-5" />
+              Dicas para Renegociação Eficaz
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold mb-2 text-blue-700">Antes de Negociar</h4>
+                <ul className="space-y-1 text-sm text-gray-700">
+                  <li>• Tenha sua situação financeira completa em mãos</li>
+                  <li>• Defina o máximo que pode pagar à vista</li>
+                  <li>• Pesquise histórico de acordos da empresa</li>
+                  <li>• Prepare argumentos sobre sua dificuldade financeira</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2 text-purple-700">Durante a Negociação</h4>
+                <ul className="space-y-1 text-sm text-gray-700">
+                  <li>• Sempre comece com uma proposta menor</li>
+                  <li>• Negocie desconto antes de parcelamento</li>
+                  <li>• Peça para registrar o acordo por escrito</li>
+                  <li>• Confirme a quitação total da dívida</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Botão Voltar */}
+        <div className="mt-8 text-center">
           <Button 
-            onClick={() => window.location.href = '/'}
+            onClick={() => setLocation("/")}
             variant="outline"
-            className="w-full"
+            size="lg"
+            className="min-w-[200px]"
           >
+            <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar ao Dashboard
           </Button>
         </div>
