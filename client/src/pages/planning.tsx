@@ -332,7 +332,7 @@ export default function Planning() {
                               <span className="text-sm font-medium">{category.name}</span>
                             </div>
                             <span className="text-xs text-gray-500">
-                              {Math.round(percentage)}% usado
+                              {Math.round(percentage)}% {isPositiveMetric ? "atingido" : "usado"}
                             </span>
                           </div>
                           <div className="flex justify-between text-xs text-gray-600 mb-1">
