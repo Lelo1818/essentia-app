@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { formatCurrency, formatDate, calculateGoalProgress } from "@/lib/financial-utils";
-import { Target, Plus, Trash2, Edit, TrendingUp, Calendar, DollarSign } from "lucide-react";
+import { Target, Plus, Trash2, Edit, TrendingUp, Calendar, DollarSign, Plane, Home, Car, GraduationCap, Heart, Briefcase, ShoppingBag, PiggyBank } from "lucide-react";
 import GoalsModal from "@/components/modals/goals-modal";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -21,6 +21,58 @@ const updateGoalSchema = z.object({
 });
 
 type UpdateFormData = z.infer<typeof updateGoalSchema>;
+
+const getCategoryIcon = (category: string) => {
+  const icons: Record<string, any> = {
+    "Viagem": Plane,
+    "viagem": Plane,
+    "Moradia": Home,
+    "moradia": Home,
+    "Transporte": Car,
+    "transporte": Car,
+    "Educação": GraduationCap,
+    "educacao": GraduationCap,
+    "Saúde": Heart,
+    "saude": Heart,
+    "Trabalho": Briefcase,
+    "trabalho": Briefcase,
+    "Compras": ShoppingBag,
+    "compras": ShoppingBag,
+    "Investimentos": PiggyBank,
+    "investimentos": PiggyBank,
+    "Emergência": Target,
+    "emergencia": Target,
+    "outros": Target,
+  };
+  
+  return icons[category] || Target;
+};
+
+const getCategoryColor = (category: string) => {
+  const colors: Record<string, string> = {
+    "Viagem": "bg-blue-100 text-blue-600 border-blue-200",
+    "viagem": "bg-blue-100 text-blue-600 border-blue-200",
+    "Moradia": "bg-green-100 text-green-600 border-green-200",
+    "moradia": "bg-green-100 text-green-600 border-green-200",
+    "Transporte": "bg-purple-100 text-purple-600 border-purple-200",
+    "transporte": "bg-purple-100 text-purple-600 border-purple-200",
+    "Educação": "bg-yellow-100 text-yellow-600 border-yellow-200",
+    "educacao": "bg-yellow-100 text-yellow-600 border-yellow-200",
+    "Saúde": "bg-red-100 text-red-600 border-red-200",
+    "saude": "bg-red-100 text-red-600 border-red-200",
+    "Trabalho": "bg-indigo-100 text-indigo-600 border-indigo-200",
+    "trabalho": "bg-indigo-100 text-indigo-600 border-indigo-200",
+    "Compras": "bg-pink-100 text-pink-600 border-pink-200",
+    "compras": "bg-pink-100 text-pink-600 border-pink-200",
+    "Investimentos": "bg-emerald-100 text-emerald-600 border-emerald-200",
+    "investimentos": "bg-emerald-100 text-emerald-600 border-emerald-200",
+    "Emergência": "bg-orange-100 text-orange-600 border-orange-200",
+    "emergencia": "bg-orange-100 text-orange-600 border-orange-200",
+    "outros": "bg-gray-100 text-gray-600 border-gray-200",
+  };
+  
+  return colors[category] || "bg-gray-100 text-gray-600 border-gray-200";
+};
 
 export default function Goals() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -224,6 +276,7 @@ export default function Goals() {
                 <div className="space-y-4">
                   {activeGoals.map((goal: any) => {
                     const { percentage, remaining } = calculateGoalProgress(goal);
+                    const CategoryIcon = getCategoryIcon(goal.category);
                     return (
                       <div key={goal.id} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex items-center justify-between mb-3">

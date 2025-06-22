@@ -16,10 +16,14 @@ interface GoalsModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const formSchema = insertGoalSchema.extend({
+const formSchema = z.object({
+  title: z.string().min(1, "Título é obrigatório"),
+  description: z.string().optional(),
   targetAmount: z.string().min(1, "Valor da meta é obrigatório"),
-  currentAmount: z.string(),
+  currentAmount: z.string().default("0"),
   targetDate: z.string().optional(),
+  category: z.string().default("outros"),
+  priority: z.string().default("média"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -31,22 +35,26 @@ export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      title: "",
+      description: "",
       targetAmount: "",
       currentAmount: "0",
       targetDate: "",
+      category: "outros",
+      priority: "média",
     },
   });
 
   const createGoalMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const payload = {
-        title: data.name,
+        title: data.title,
         description: data.description || "",
         targetAmount: data.targetAmount,
         currentAmount: data.currentAmount || "0",
-        targetDate: data.targetDate,
+        targetDate: data.targetDate || "",
         category: data.category || "outros",
+        priority: data.priority || "média",
         userId: 1
       };
       console.log("Creating goal with payload:", payload);
@@ -59,7 +67,15 @@ export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
         title: "Meta criada",
         description: "Sua meta foi criada com sucesso!",
       });
-      form.reset();
+      form.reset({
+        title: "",
+        description: "",
+        targetAmount: "",
+        currentAmount: "0",
+        targetDate: "",
+        category: "outros",
+        priority: "média",
+      });
       onOpenChange(false);
     },
     onError: () => {
@@ -85,7 +101,7 @@ export default function GoalsModal({ open, onOpenChange }: GoalsModalProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="name"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nome da Meta</FormLabel>
