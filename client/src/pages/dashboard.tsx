@@ -163,35 +163,99 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
-      {/* SEÇÃO DE BOTÕES PRINCIPAIS */}
-      <div className="my-8 bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Ferramentas Financeiras</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* 🔥 BOTÕES IMPLEMENTADOS COM FORÇA BRUTA */}
+      <div style={{backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', margin: '32px 0'}}>
+        <h2 style={{fontSize: '24px', fontWeight: 'bold', color: '#111827', marginBottom: '24px'}}>🚀 Ferramentas Financeiras</h2>
+        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px'}}>
+          
           <button 
-            onClick={() => { console.log('Clicou Agendar'); window.location.href = '/agendar-pagamentos'; }}
-            className="group bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+            onClick={() => {
+              console.log('🔵 CLICOU AGENDAR PAGAMENTOS');
+              alert('Redirecionando para Agendar Pagamentos...');
+              setTimeout(() => window.location.href = '/agendar-pagamentos', 500);
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+              color: 'white',
+              padding: '32px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              textAlign: 'center'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 10px 25px rgba(59, 130, 246, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
           >
-            <Calendar className="w-12 h-12 mx-auto mb-4 group-hover:animate-pulse" />
-            <h3 className="text-xl font-bold text-center mb-2">Agendar Pagamentos</h3>
-            <p className="text-blue-100 text-center text-sm">Organize suas contas</p>
+            <Calendar style={{width: '48px', height: '48px', margin: '0 auto 16px', display: 'block'}} />
+            <h3 style={{fontSize: '20px', fontWeight: 'bold', margin: '0 0 8px 0'}}>📅 Agendar Pagamentos</h3>
+            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>Organize suas contas em dia</p>
           </button>
 
           <button 
-            onClick={() => { console.log('Clicou Simular'); window.location.href = '/simular-cenarios'; }}
-            className="group bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+            onClick={() => {
+              console.log('🟣 CLICOU SIMULAR CENÁRIOS');
+              alert('Redirecionando para Simular Cenários...');
+              setTimeout(() => window.location.href = '/simular-cenarios', 500);
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
+              color: 'white',
+              padding: '32px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              textAlign: 'center'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 10px 25px rgba(139, 92, 246, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
           >
-            <Calculator className="w-12 h-12 mx-auto mb-4 group-hover:animate-pulse" />
-            <h3 className="text-xl font-bold text-center mb-2">Simular Cenários</h3>
-            <p className="text-purple-100 text-center text-sm">Projete seu futuro</p>
+            <Calculator style={{width: '48px', height: '48px', margin: '0 auto 16px', display: 'block'}} />
+            <h3 style={{fontSize: '20px', fontWeight: 'bold', margin: '0 0 8px 0'}}>📊 Simular Cenários</h3>
+            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>Projete seu futuro financeiro</p>
           </button>
 
           <button 
-            onClick={() => { console.log('Clicou Renegociar'); window.location.href = '/renegociar-dividas'; }}
-            className="group bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+            onClick={() => {
+              console.log('🟢 CLICOU RENEGOCIAR DÍVIDAS');
+              alert('Redirecionando para Renegociar Dívidas...');
+              setTimeout(() => window.location.href = '/renegociar-dividas', 500);
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              color: 'white',
+              padding: '32px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              textAlign: 'center'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 10px 25px rgba(16, 185, 129, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
           >
-            <DollarSign className="w-12 h-12 mx-auto mb-4 group-hover:animate-pulse" />
-            <h3 className="text-xl font-bold text-center mb-2">Renegociar Dívidas</h3>
-            <p className="text-green-100 text-center text-sm">Quite suas dívidas</p>
+            <DollarSign style={{width: '48px', height: '48px', margin: '0 auto 16px', display: 'block'}} />
+            <h3 style={{fontSize: '20px', fontWeight: 'bold', margin: '0 0 8px 0'}}>💰 Renegociar Dívidas</h3>
+            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>Estratégias para quitar</p>
           </button>
         </div>
       </div>
