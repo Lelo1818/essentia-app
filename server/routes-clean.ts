@@ -180,16 +180,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = 1;
       const processedData = {
-        ...req.body,
         userId,
-        targetAmount: req.body.targetAmount, // Keep as string since schema expects string
-        currentAmount: req.body.currentAmount || "0", // Keep as string
-        targetDate: req.body.targetDate || null,
+        title: req.body.title,
+        description: req.body.description || "",
+        targetAmount: parseFloat(req.body.targetAmount), // Parse to number for decimal field
+        currentAmount: parseFloat(req.body.currentAmount || "0"), // Parse to number
+        targetDate: req.body.targetDate ? new Date(req.body.targetDate) : null,
+        category: req.body.category || "outros",
+        priority: req.body.priority || "média",
+        status: "ativo"
       };
       
-      const validatedData = insertGoalSchema.parse(processedData);
-      const goal = await storage.createGoal(validatedData);
-      
+      console.log("Processing goal data:", processedData);
+      const goal = await storage.createGoal(processedData);
       res.status(201).json(goal);
     } catch (error) {
       if (error instanceof z.ZodError) {
