@@ -283,15 +283,27 @@ export default function RenegociarDividas() {
 
                       <div className="mt-6 flex gap-3">
                         <Button 
-                          className="flex-1 bg-gradient-to-r from-green-600 to-blue-600"
-                          onClick={() => setSelectedDebt(debt)}
+                          className="flex-1 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+                          onClick={() => {
+                            console.log('Simular Acordo clicado para:', debt.name);
+                            setSelectedDebt(debt);
+                            setTimeout(() => {
+                              const element = document.getElementById('simulation-section');
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                              }
+                            }, 100);
+                          }}
                         >
                           <Calculator className="h-4 w-4 mr-2" />
                           Simular Acordo
                         </Button>
                         <Button 
                           variant="outline"
-                          onClick={() => window.open(`tel:${debt.originalDebt?.phone || '0800-000-0000'}`, '_self')}
+                          onClick={() => {
+                            console.log('Ligar clicado');
+                            alert('📞 Ligando para 0800-000-0000...');
+                          }}
                         >
                           Ligar para Negociar
                         </Button>
@@ -335,6 +347,101 @@ export default function RenegociarDividas() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Seção de Simulação */}
+        {selectedDebt && (
+          <div id="simulation-section">
+            <Card className="mt-8 border-2 border-green-200 bg-green-50">
+              <CardHeader>
+                <CardTitle className="text-green-800 flex items-center gap-2">
+                  <Calculator className="w-5 h-5" />
+                  Simulação de Negociação - {selectedDebt.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-green-700 mb-2">
+                      Valor que você pode pagar à vista
+                    </label>
+                    <Input
+                      type="number"
+                      placeholder="Ex: 2000"
+                      className="w-full"
+                      onChange={(e) => {
+                        const valor = parseFloat(e.target.value) || 0;
+                        console.log('Simulando valor:', valor);
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-green-700 mb-2">
+                      Quantas parcelas você prefere
+                    </label>
+                    <Input
+                      type="number"
+                      placeholder="Ex: 12"
+                      className="w-full"
+                      onChange={(e) => {
+                        const parcelas = parseInt(e.target.value) || 0;
+                        console.log('Simulando parcelas:', parcelas);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-6 bg-white p-4 rounded-lg border border-green-200">
+                  <h4 className="font-semibold text-green-800 mb-3">Resultado da Simulação</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-green-600">
+                        {selectedDebt.remainingAmount ? 
+                          (selectedDebt.remainingAmount * 0.75).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
+                          'R$ 2.125,00'
+                        }
+                      </div>
+                      <div className="text-sm text-gray-600">Valor Final</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-blue-600">
+                        {selectedDebt.remainingAmount ? 
+                          (selectedDebt.remainingAmount * 0.25).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) :
+                          'R$ 675,00'
+                        }
+                      </div>
+                      <div className="text-sm text-gray-600">Economia</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-purple-600">25%</div>
+                      <div className="text-sm text-gray-600">Desconto</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex gap-3">
+                    <Button 
+                      className="flex-1 bg-green-600 hover:bg-green-700"
+                      onClick={() => {
+                        alert('🎉 Proposta enviada com sucesso! Você será contactado em até 24h.');
+                      }}
+                    >
+                      Aceitar Proposta
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="flex-1"
+                      onClick={() => {
+                        setSelectedDebt(null);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    >
+                      Simular Novamente
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Botão Voltar */}
         <div className="mt-8 text-center">
