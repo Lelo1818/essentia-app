@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import { AlertTriangle, TrendingDown, Calculator, Target, CreditCard, Calendar, DollarSign, CheckCircle } from "lucide-react";
+import { AlertTriangle, TrendingDown, Calculator, Target, CreditCard, Calendar, DollarSign, CheckCircle, Plus, Camera, Upload } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 interface Divida {
   id: string;
@@ -25,6 +29,20 @@ export default function GestaoDividas() {
   const [dividas, setDividas] = useState<Divida[]>([]);
   const [estrategia, setEstrategia] = useState<"snowball" | "avalanche">("avalanche");
   const [valorExtra, setValorExtra] = useState<number>(200);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [novaDiv, setNovaDiv] = useState({
+    nome: "",
+    valorTotal: "",
+    valorRestante: "",
+    jurosAM: "",
+    vencimento: "",
+    parcelas: "",
+    parcelasRestantes: "",
+    valorParcela: "",
+    tipo: "cartao" as const,
+    prioridade: "media" as const
+  });
+  const { toast } = useToast();
 
   useEffect(() => {
     const dividasExemplo: Divida[] = [
@@ -145,6 +163,213 @@ export default function GestaoDividas() {
   const simulacao = simularPagamento();
   const economiaTotal = simulacao.reduce((acc, s) => acc + s.economiaJuros, 0);
 
+  const handleAddDivida = () => {
+    if (!novaDiv.nome || !novaDiv.valorTotal) {
+      toast({
+        title: "Erro",
+        description: "Preencha pelo menos o nome e valor total da dívida",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const novaDivida: Divida = {
+      id: Date.now().toString(),
+      nome: novaDiv.nome,
+      valorTotal: Number(novaDiv.valorTotal),
+      valorRestante: Number(novaDiv.valorRestante) || Number(novaDiv.valorTotal),
+      jurosAM: Number(novaDiv.jurosAM) || 0,
+      vencimento: novaDiv.vencimento || "A definir",
+      parcelas: Number(novaDiv.parcelas) || 1,
+      parcelasRestantes: Number(novaDiv.parcelasRestantes) || Number(novaDiv.parcelas) || 1,
+      valorParcela: Number(novaDiv.valorParcela) || Number(novaDiv.valorTotal),
+      tipo: novaDiv.tipo,
+      prioridade: novaDiv.prioridade
+    };
+
+    setDividas([...dividas, novaDivida]);
+    setModalOpen(false);
+    setNovaDiv({
+      nome: "",
+      valorTotal: "",
+      valorRestante: "",
+      jurosAM: "",
+      vencimento: "",
+      parcelas: "",
+      parcelasRestantes: "",
+      valorParcela: "",
+      tipo: "cartao",
+      prioridade: "media"
+    });
+
+    toast({
+      title: "Sucesso",
+      description: "Dívida adicionada com sucesso!",
+    });
+  };
+
+  const handleOCRUpload = (file: File) => {
+    // Simular OCR - em produção conectaria com API real
+    toast({
+      title: "OCR Processando",
+      description: "Analisando documento... (funcionalidade em desenvolvimento)",
+    });
+    
+    // Simular preenchimento automático
+    setTimeout(() => {
+      setNovaDiv(prev => ({
+        ...prev,
+        nome: "Cartão de Crédito (OCR)",
+        valorTotal: "3500",
+        jurosAM: "12.5",
+        tipo: "cartao"
+      }));
+      toast({
+        title: "OCR Concluído",
+        description: "Dados extraídos do documento! Verifique as informações.",
+      });
+    }, 2000);
+  };
+
+  const renderModalContent = () => (
+    <div className="space-y-6">
+      {/* Upload OCR */}
+      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+        <div className="space-y-2">
+          <Camera className="w-8 h-8 mx-auto text-gray-400" />
+          <div className="text-sm font-medium">Extrair dados automaticamente</div>
+          <div className="text-xs text-gray-500">
+            Tire uma foto ou faça upload da fatura/contrato
+          </div>
+          <div className="flex justify-center space-x-2">
+            <Button variant="outline" size="sm">
+              <Camera className="w-4 h-4 mr-1" />
+              Tirar Foto
+            </Button>
+            <Button variant="outline" size="sm">
+              <Upload className="w-4 h-4 mr-1" />
+              Upload
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Formulário Manual */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label>Nome da Dívida *</Label>
+          <Input
+            value={novaDiv.nome}
+            onChange={(e) => setNovaDiv({...novaDiv, nome: e.target.value})}
+            placeholder="Ex: Cartão Nubank"
+          />
+        </div>
+        <div>
+          <Label>Tipo</Label>
+          <Select value={novaDiv.tipo} onValueChange={(value) => setNovaDiv({...novaDiv, tipo: value as any})}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="cartao">Cartão de Crédito</SelectItem>
+              <SelectItem value="financiamento">Financiamento</SelectItem>
+              <SelectItem value="emprestimo">Empréstimo</SelectItem>
+              <SelectItem value="outros">Outros</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label>Valor Total *</Label>
+          <Input
+            type="number"
+            step="0.01"
+            value={novaDiv.valorTotal}
+            onChange={(e) => setNovaDiv({...novaDiv, valorTotal: e.target.value})}
+            placeholder="0,00"
+          />
+        </div>
+        <div>
+          <Label>Valor Restante</Label>
+          <Input
+            type="number"
+            step="0.01"
+            value={novaDiv.valorRestante}
+            onChange={(e) => setNovaDiv({...novaDiv, valorRestante: e.target.value})}
+            placeholder="Mesmo que o total"
+          />
+        </div>
+        <div>
+          <Label>Juros ao Mês (%)</Label>
+          <Input
+            type="number"
+            step="0.1"
+            value={novaDiv.jurosAM}
+            onChange={(e) => setNovaDiv({...novaDiv, jurosAM: e.target.value})}
+            placeholder="0.0"
+          />
+        </div>
+        <div>
+          <Label>Vencimento</Label>
+          <Input
+            value={novaDiv.vencimento}
+            onChange={(e) => setNovaDiv({...novaDiv, vencimento: e.target.value})}
+            placeholder="Ex: todo dia 15"
+          />
+        </div>
+        <div>
+          <Label>Total de Parcelas</Label>
+          <Input
+            type="number"
+            value={novaDiv.parcelas}
+            onChange={(e) => setNovaDiv({...novaDiv, parcelas: e.target.value})}
+            placeholder="1"
+          />
+        </div>
+        <div>
+          <Label>Parcelas Restantes</Label>
+          <Input
+            type="number"
+            value={novaDiv.parcelasRestantes}
+            onChange={(e) => setNovaDiv({...novaDiv, parcelasRestantes: e.target.value})}
+            placeholder="Mesmo que total"
+          />
+        </div>
+        <div>
+          <Label>Valor da Parcela</Label>
+          <Input
+            type="number"
+            step="0.01"
+            value={novaDiv.valorParcela}
+            onChange={(e) => setNovaDiv({...novaDiv, valorParcela: e.target.value})}
+            placeholder="Calculado automaticamente"
+          />
+        </div>
+        <div>
+          <Label>Prioridade</Label>
+          <Select value={novaDiv.prioridade} onValueChange={(value) => setNovaDiv({...novaDiv, prioridade: value as any})}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="alta">Alta</SelectItem>
+              <SelectItem value="media">Média</SelectItem>
+              <SelectItem value="baixa">Baixa</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="flex justify-end space-x-2">
+        <Button variant="outline" onClick={() => setModalOpen(false)}>
+          Cancelar
+        </Button>
+        <Button onClick={handleAddDivida} className="bg-red-600 hover:bg-red-700">
+          Adicionar Dívida
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -153,9 +378,25 @@ export default function GestaoDividas() {
           <h1 className="text-3xl font-bold text-gray-900">Gestão de Dívidas</h1>
           <p className="text-gray-600">Estratégias inteligentes para quitar suas dívidas</p>
         </div>
-        <div className="text-right">
-          <div className="text-2xl font-bold text-red-600">R$ {totalDividas.toLocaleString()}</div>
-          <div className="text-sm text-gray-600">Total em Dívidas</div>
+        <div className="flex items-center space-x-4">
+          <div className="text-right">
+            <div className="text-2xl font-bold text-red-600">R$ {totalDividas.toLocaleString()}</div>
+            <div className="text-sm text-gray-600">Total em Dívidas</div>
+          </div>
+          <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-red-600 hover:bg-red-700">
+                <Plus className="w-4 h-4 mr-2" />
+                Adicionar Dívida
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>Nova Dívida</DialogTitle>
+              </DialogHeader>
+              {renderModalContent()}
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
