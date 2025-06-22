@@ -98,15 +98,24 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
   });
 
   const onSubmit = (data: FormData) => {
-    createMutation.mutate(data);
+    console.log("=== FORM SUBMIT TRIGGERED ===");
+    createMutation.mutate(data, {
+      onSuccess: () => {
+        console.log("=== IMMEDIATE SUCCESS CALLBACK ===");
+        onClose();
+      }
+    });
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" aria-describedby="expense-description">
         <DialogHeader>
           <DialogTitle>{expense ? "Editar Despesa" : "Nova Despesa"}</DialogTitle>
         </DialogHeader>
+        <div id="expense-description" className="sr-only">
+          Formulário para registrar uma nova despesa
+        </div>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
