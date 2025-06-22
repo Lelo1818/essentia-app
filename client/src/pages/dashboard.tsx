@@ -84,6 +84,9 @@ export default function Dashboard() {
   
   const isLoading = false;
 
+  // DEBUG: Log para verificar se chegamos até aqui
+  console.log('Dashboard rendering... isLoading:', isLoading);
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
@@ -158,8 +161,46 @@ export default function Dashboard() {
     }
   ];
 
+  // DEBUG: Log antes do return
+  console.log('Dashboard about to return JSX...');
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      {/* BOTÕES ESSENCIAIS FIXOS - POSIÇÃO TOP */}
+      <div style={{
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        zIndex: 9999,
+        background: 'white',
+        padding: '15px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        border: '3px solid red'
+      }}>
+        <div style={{marginBottom: '10px', fontWeight: 'bold', textAlign: 'center'}}>BOTÕES TESTE</div>
+        <div style={{display: 'flex', gap: '8px'}}>
+          <button 
+            onClick={() => {console.log('AGENDAR!'); window.location.href='/agendar-pagamentos';}}
+            style={{background: 'blue', color: 'white', padding: '8px 12px', border: 'none', borderRadius: '4px', fontSize: '12px'}}
+          >
+            📅 AGENDAR
+          </button>
+          <button 
+            onClick={() => {console.log('SIMULAR!'); window.location.href='/simular-cenarios';}}
+            style={{background: 'purple', color: 'white', padding: '8px 12px', border: 'none', borderRadius: '4px', fontSize: '12px'}}
+          >
+            📊 SIMULAR
+          </button>
+          <button 
+            onClick={() => {console.log('RENEGOCIAR!'); window.location.href='/renegociar-dividas';}}
+            style={{background: 'green', color: 'white', padding: '8px 12px', border: 'none', borderRadius: '4px', fontSize: '12px'}}
+          >
+            💰 RENEGOCIAR
+          </button>
+        </div>
+      </div>
+      
       <AppShowcase />
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />

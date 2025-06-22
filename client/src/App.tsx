@@ -51,7 +51,7 @@ import SuperSimple from "./pages/super-simple";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={EcosystemApp} />
+      <Route path="/" component={Dashboard} />
       <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKids} />
