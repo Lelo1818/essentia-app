@@ -122,8 +122,8 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
         suggestions = ["Simular investimentos", "Ver carteira recomendada", "Estudar sobre investimentos"];
       } else if (message.includes("orçamento") || message.includes("analisa")) {
         const totalIncome = userData?.totalIncome || 20601.8;
-        const totalExpenses = userData?.totalExpenses || 4395.79;
-        const balance = userData?.balance || 16206.01;
+        const totalExpenses = userData?.totalExpenses || 4267.94;
+        const balance = userData?.balance || 16333.86;
         
         response = `📊 **Análise do Seu Orçamento**\n\n💰 **Receita Total:** R$ ${totalIncome.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💸 **Gastos Totais:** R$ ${totalExpenses.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💵 **Saldo Disponível:** R$ ${balance.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n\n✅ **Situação:** Muito positiva! Você está poupando ${((balance/totalIncome)*100).toFixed(1)}% da sua receita.\n\n**Recomendações:**\n• Continue esse padrão de economia\n• Considere investir parte do saldo\n• Mantenha reserva de emergência`;
         suggestions = ["Como investir o saldo", "Otimizar gastos", "Planejar aposentadoria"];
