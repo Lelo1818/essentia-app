@@ -158,12 +158,43 @@ export default function Dashboard() {
   ];
 
   return (
-    <>
-      <div className="mb-8">
-        <AppShowcase />
-      </div>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <AppShowcase />
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
+      
+      {/* SEÇÃO DE BOTÕES PRINCIPAIS */}
+      <div className="my-8 bg-white rounded-xl shadow-sm p-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Ferramentas Financeiras</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <button 
+            onClick={() => { console.log('Clicou Agendar'); window.location.href = '/agendar-pagamentos'; }}
+            className="group bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+          >
+            <Calendar className="w-12 h-12 mx-auto mb-4 group-hover:animate-pulse" />
+            <h3 className="text-xl font-bold text-center mb-2">Agendar Pagamentos</h3>
+            <p className="text-blue-100 text-center text-sm">Organize suas contas</p>
+          </button>
+
+          <button 
+            onClick={() => { console.log('Clicou Simular'); window.location.href = '/simular-cenarios'; }}
+            className="group bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+          >
+            <Calculator className="w-12 h-12 mx-auto mb-4 group-hover:animate-pulse" />
+            <h3 className="text-xl font-bold text-center mb-2">Simular Cenários</h3>
+            <p className="text-purple-100 text-center text-sm">Projete seu futuro</p>
+          </button>
+
+          <button 
+            onClick={() => { console.log('Clicou Renegociar'); window.location.href = '/renegociar-dividas'; }}
+            className="group bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+          >
+            <DollarSign className="w-12 h-12 mx-auto mb-4 group-hover:animate-pulse" />
+            <h3 className="text-xl font-bold text-center mb-2">Renegociar Dívidas</h3>
+            <p className="text-green-100 text-center text-sm">Quite suas dívidas</p>
+          </button>
+        </div>
+      </div>
       
       {/* Botões de ação rápida - IMPLEMENTADOS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-4">
@@ -330,6 +361,6 @@ export default function Dashboard() {
           console.log("AI Action:", action, data);
         }}
       />
-    </>
+    </div>
   );
 }
