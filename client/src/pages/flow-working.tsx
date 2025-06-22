@@ -80,28 +80,48 @@ export default function FlowWorking() {
             </div>
           </div>
 
-          {/* Mobile Navigation Tabs */}
-          <TabsList className="grid w-full grid-cols-5 mb-4 sm:mb-6 h-auto p-1">
-            <TabsTrigger value="dashboard" className="flex flex-col gap-1 py-2 px-1 text-xs">
-              <BarChart3 className="w-4 h-4" />
-              <span className="hidden sm:inline">Dashboard</span>
-              <span className="sm:hidden">Home</span>
+          {/* Mobile Navigation Tabs with Visual Improvements */}
+          <TabsList className="grid w-full grid-cols-5 mb-4 sm:mb-6 h-auto p-1 bg-white/80 backdrop-blur-sm border border-gray-200 shadow-lg rounded-xl">
+            <TabsTrigger 
+              value="dashboard" 
+              className="flex flex-col gap-1 py-3 px-2 text-xs relative group hover:bg-blue-50 transition-all duration-200 data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-200"
+            >
+              <BarChart3 className="w-4 h-4 group-data-[state=active]:scale-110 transition-transform duration-200" />
+              <span className="hidden sm:inline font-medium">Dashboard</span>
+              <span className="sm:hidden font-medium">Home</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </TabsTrigger>
-            <TabsTrigger value="income" className="flex flex-col gap-1 py-2 px-1 text-xs">
-              <TrendingUp className="w-4 h-4" />
-              <span>Renda</span>
+            <TabsTrigger 
+              value="income" 
+              className="flex flex-col gap-1 py-3 px-2 text-xs relative group hover:bg-green-50 transition-all duration-200 data-[state=active]:bg-gradient-to-br data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-green-200"
+            >
+              <TrendingUp className="w-4 h-4 group-data-[state=active]:scale-110 transition-transform duration-200" />
+              <span className="font-medium">Renda</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </TabsTrigger>
-            <TabsTrigger value="expenses" className="flex flex-col gap-1 py-2 px-1 text-xs">
-              <TrendingDown className="w-4 h-4" />
-              <span>Gastos</span>
+            <TabsTrigger 
+              value="expenses" 
+              className="flex flex-col gap-1 py-3 px-2 text-xs relative group hover:bg-red-50 transition-all duration-200 data-[state=active]:bg-gradient-to-br data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-red-200"
+            >
+              <TrendingDown className="w-4 h-4 group-data-[state=active]:scale-110 transition-transform duration-200" />
+              <span className="font-medium">Gastos</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </TabsTrigger>
-            <TabsTrigger value="goals" className="flex flex-col gap-1 py-2 px-1 text-xs">
-              <Target className="w-4 h-4" />
-              <span>Metas</span>
+            <TabsTrigger 
+              value="goals" 
+              className="flex flex-col gap-1 py-3 px-2 text-xs relative group hover:bg-purple-50 transition-all duration-200 data-[state=active]:bg-gradient-to-br data-[state=active]:from-purple-500 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-200"
+            >
+              <Target className="w-4 h-4 group-data-[state=active]:scale-110 transition-transform duration-200" />
+              <span className="font-medium">Metas</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </TabsTrigger>
-            <TabsTrigger value="planning" className="flex flex-col gap-1 py-2 px-1 text-xs">
-              <PiggyBank className="w-4 h-4" />
-              <span>Plan.</span>
+            <TabsTrigger 
+              value="planning" 
+              className="flex flex-col gap-1 py-3 px-2 text-xs relative group hover:bg-indigo-50 transition-all duration-200 data-[state=active]:bg-gradient-to-br data-[state=active]:from-indigo-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-indigo-200"
+            >
+              <PiggyBank className="w-4 h-4 group-data-[state=active]:scale-110 transition-transform duration-200" />
+              <span className="font-medium">Plan.</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </TabsTrigger>
           </TabsList>
 

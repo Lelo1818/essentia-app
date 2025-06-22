@@ -182,9 +182,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const processedData = {
         ...req.body,
         userId,
-        targetAmount: parseFloat(req.body.targetAmount),
-        currentAmount: parseFloat(req.body.currentAmount || 0),
-        targetDate: req.body.targetDate ? new Date(req.body.targetDate) : null,
+        targetAmount: req.body.targetAmount, // Keep as string since schema expects string
+        currentAmount: req.body.currentAmount || "0", // Keep as string
+        targetDate: req.body.targetDate || null,
       };
       
       const validatedData = insertGoalSchema.parse(processedData);
