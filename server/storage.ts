@@ -327,6 +327,8 @@ class MemStorage implements IStorage {
   // Planning methods
   async getPlanningByUserId(userId: number): Promise<any | null> {
     const planning = Array.from(this.plannings.values()).find(p => p.userId === userId);
+    console.log("Getting planning for user", userId, "found:", planning);
+    console.log("All plannings:", Array.from(this.plannings.values()));
     return planning || null;
   }
 

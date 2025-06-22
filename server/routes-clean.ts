@@ -137,8 +137,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = 1;
       const budget = await storage.getPlanningByUserId(userId);
+      console.log("Budget found:", budget);
       res.json(budget);
     } catch (error) {
+      console.error("Error getting budget:", error);
       res.status(500).json({ message: "Erro ao buscar orçamento" });
     }
   });
