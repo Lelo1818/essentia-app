@@ -55,6 +55,8 @@ export default function AgendarPagamentos() {
   const { toast } = useToast();
 
   const handleSchedulePayment = () => {
+    console.log("Agendando pagamento:", newPayment);
+    
     if (!newPayment.description || !newPayment.amount || !newPayment.dueDate) {
       toast({
         title: "Erro",
@@ -235,7 +237,10 @@ export default function AgendarPagamentos() {
           </div>
           
           <InteractiveButton
-            onClick={handleSchedulePayment}
+            onClick={(e) => {
+              e.preventDefault();
+              handleSchedulePayment();
+            }}
             className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
             soundType="success"
           >
