@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatCurrency } from "@/lib/financial-utils";
+import { queryClient } from "@/lib/queryClient";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -547,6 +548,10 @@ function QuickIncomeModal({ onClose }) {
       });
       
       if (response.ok) {
+        // Invalidate queries to refresh dashboard
+        queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
+        queryClient.invalidateQueries({ queryKey: ["/api/incomes"] });
+        
         alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
         onClose();
       }
@@ -759,6 +764,10 @@ function QuickExpenseModal({ onClose }) {
       });
       
       if (response.ok) {
+        // Invalidate queries to refresh dashboard
+        queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
+        queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
+        
         alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
         onClose();
       }
