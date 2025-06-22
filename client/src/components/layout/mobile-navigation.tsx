@@ -7,10 +7,10 @@ export default function MobileNavigation() {
   const navItems = [
     { path: "/", icon: Home, label: "Home" },
     { path: "/flow", icon: TrendingUp, label: "Flow" },
-    { path: "/flow/cartoes", icon: CreditCard, label: "Cartões" },
-    { path: "/flow/seguros", icon: Shield, label: "Seguros" },
-    { path: "/flow/milhas", icon: Plane, label: "Milhas" },
-    { path: "/flow/impostos", icon: Receipt, label: "Impostos" }
+    { path: "/dividas", icon: CreditCard, label: "Dívidas" },
+    { path: "/goals", icon: Trophy, label: "Metas" },
+    { path: "/planning", icon: PieChart, label: "Plan." },
+    { path: "/profile", icon: Shield, label: "Perfil" }
   ];
 
   return (

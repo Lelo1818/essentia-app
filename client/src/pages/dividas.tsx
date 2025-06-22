@@ -231,144 +231,7 @@ export default function GestaoDividas() {
     }, 2000);
   };
 
-  const renderModalContent = () => (
-    <div className="space-y-6">
-      {/* Upload OCR */}
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-        <div className="space-y-2">
-          <Camera className="w-8 h-8 mx-auto text-gray-400" />
-          <div className="text-sm font-medium">Extrair dados automaticamente</div>
-          <div className="text-xs text-gray-500">
-            Tire uma foto ou faça upload da fatura/contrato
-          </div>
-          <div className="flex justify-center space-x-2">
-            <Button variant="outline" size="sm">
-              <Camera className="w-4 h-4 mr-1" />
-              Tirar Foto
-            </Button>
-            <Button variant="outline" size="sm">
-              <Upload className="w-4 h-4 mr-1" />
-              Upload
-            </Button>
-          </div>
-        </div>
-      </div>
 
-      {/* Formulário Manual */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <Label>Nome da Dívida *</Label>
-          <Input
-            value={novaDiv.nome}
-            onChange={(e) => setNovaDiv({...novaDiv, nome: e.target.value})}
-            placeholder="Ex: Cartão Nubank"
-          />
-        </div>
-        <div>
-          <Label>Tipo</Label>
-          <Select value={novaDiv.tipo} onValueChange={(value) => setNovaDiv({...novaDiv, tipo: value as any})}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="cartao">Cartão de Crédito</SelectItem>
-              <SelectItem value="financiamento">Financiamento</SelectItem>
-              <SelectItem value="emprestimo">Empréstimo</SelectItem>
-              <SelectItem value="outros">Outros</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Valor Total *</Label>
-          <Input
-            type="number"
-            step="0.01"
-            value={novaDiv.valorTotal}
-            onChange={(e) => setNovaDiv({...novaDiv, valorTotal: e.target.value})}
-            placeholder="0,00"
-          />
-        </div>
-        <div>
-          <Label>Valor Restante</Label>
-          <Input
-            type="number"
-            step="0.01"
-            value={novaDiv.valorRestante}
-            onChange={(e) => setNovaDiv({...novaDiv, valorRestante: e.target.value})}
-            placeholder="Mesmo que o total"
-          />
-        </div>
-        <div>
-          <Label>Juros ao Mês (%)</Label>
-          <Input
-            type="number"
-            step="0.1"
-            value={novaDiv.jurosAM}
-            onChange={(e) => setNovaDiv({...novaDiv, jurosAM: e.target.value})}
-            placeholder="0.0"
-          />
-        </div>
-        <div>
-          <Label>Vencimento</Label>
-          <Input
-            value={novaDiv.vencimento}
-            onChange={(e) => setNovaDiv({...novaDiv, vencimento: e.target.value})}
-            placeholder="Ex: todo dia 15"
-          />
-        </div>
-        <div>
-          <Label>Total de Parcelas</Label>
-          <Input
-            type="number"
-            value={novaDiv.parcelas}
-            onChange={(e) => setNovaDiv({...novaDiv, parcelas: e.target.value})}
-            placeholder="1"
-          />
-        </div>
-        <div>
-          <Label>Parcelas Restantes</Label>
-          <Input
-            type="number"
-            value={novaDiv.parcelasRestantes}
-            onChange={(e) => setNovaDiv({...novaDiv, parcelasRestantes: e.target.value})}
-            placeholder="Mesmo que total"
-          />
-        </div>
-        <div>
-          <Label>Valor da Parcela</Label>
-          <Input
-            type="number"
-            step="0.01"
-            value={novaDiv.valorParcela}
-            onChange={(e) => setNovaDiv({...novaDiv, valorParcela: e.target.value})}
-            placeholder="Calculado automaticamente"
-          />
-        </div>
-        <div>
-          <Label>Prioridade</Label>
-          <Select value={novaDiv.prioridade} onValueChange={(value) => setNovaDiv({...novaDiv, prioridade: value as any})}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="alta">Alta</SelectItem>
-              <SelectItem value="media">Média</SelectItem>
-              <SelectItem value="baixa">Baixa</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div className="flex justify-end space-x-2">
-        <Button variant="outline" onClick={() => setModalOpen(false)}>
-          Cancelar
-        </Button>
-        <Button onClick={handleAddDivida} className="bg-red-600 hover:bg-red-700">
-          Adicionar Dívida
-        </Button>
-      </div>
-    </div>
-  );
 
   return (
     <div className="p-6 space-y-6">
@@ -394,7 +257,101 @@ export default function GestaoDividas() {
               <DialogHeader>
                 <DialogTitle>Nova Dívida</DialogTitle>
               </DialogHeader>
-              {renderModalContent()}
+              <div className="space-y-6">
+                {/* Upload OCR */}
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <div className="space-y-2">
+                    <Camera className="w-8 h-8 mx-auto text-gray-400" />
+                    <div className="text-sm font-medium">Extrair dados automaticamente</div>
+                    <div className="text-xs text-gray-500">
+                      Tire uma foto ou faça upload da fatura/contrato
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Camera className="w-4 h-4 mr-1" />
+                        Tirar Foto
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Upload className="w-4 h-4 mr-1" />
+                        Upload
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Formulário Manual */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label>Nome da Dívida *</Label>
+                    <Input
+                      value={novaDiv.nome}
+                      onChange={(e) => setNovaDiv({...novaDiv, nome: e.target.value})}
+                      placeholder="Ex: Cartão Nubank"
+                    />
+                  </div>
+                  <div>
+                    <Label>Tipo</Label>
+                    <Select value={novaDiv.tipo} onValueChange={(value) => setNovaDiv({...novaDiv, tipo: value as any})}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cartao">Cartão de Crédito</SelectItem>
+                        <SelectItem value="financiamento">Financiamento</SelectItem>
+                        <SelectItem value="emprestimo">Empréstimo</SelectItem>
+                        <SelectItem value="outros">Outros</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label>Valor Total *</Label>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={novaDiv.valorTotal}
+                      onChange={(e) => setNovaDiv({...novaDiv, valorTotal: e.target.value})}
+                      placeholder="0,00"
+                    />
+                  </div>
+                  <div>
+                    <Label>Valor Restante</Label>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={novaDiv.valorRestante}
+                      onChange={(e) => setNovaDiv({...novaDiv, valorRestante: e.target.value})}
+                      placeholder="Mesmo que o total"
+                    />
+                  </div>
+                  <div>
+                    <Label>Juros ao Mês (%)</Label>
+                    <Input
+                      type="number"
+                      step="0.1"
+                      value={novaDiv.jurosAM}
+                      onChange={(e) => setNovaDiv({...novaDiv, jurosAM: e.target.value})}
+                      placeholder="0.0"
+                    />
+                  </div>
+                  <div>
+                    <Label>Vencimento</Label>
+                    <Input
+                      value={novaDiv.vencimento}
+                      onChange={(e) => setNovaDiv({...novaDiv, vencimento: e.target.value})}
+                      placeholder="Ex: todo dia 15"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-end space-x-2">
+                  <Button variant="outline" onClick={() => setModalOpen(false)}>
+                    Cancelar
+                  </Button>
+                  <Button onClick={handleAddDivida} className="bg-red-600 hover:bg-red-700">
+                    Adicionar Dívida
+                  </Button>
+                </div>
+              </div>
             </DialogContent>
           </Dialog>
         </div>
