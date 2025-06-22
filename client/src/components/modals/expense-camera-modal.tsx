@@ -19,9 +19,12 @@ interface ExpenseCameraModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const formSchema = insertExpenseSchema.extend({
+const formSchema = z.object({
+  description: z.string().min(1, "Descrição é obrigatória"),
   amount: z.string().min(1, "Valor é obrigatório"),
+  category: z.string().default("outros"),
   date: z.string().min(1, "Data é obrigatória"),
+  isFromPhoto: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -47,7 +50,7 @@ export default function ExpenseCameraModal({ open, onOpenChange }: ExpenseCamera
     mutationFn: async (data: FormData) => {
       const payload = {
         description: data.description,
-        amount: parseFloat(data.amount),
+        amount: data.amount, // Keep as string since server schema expects string
         category: data.category,
         date: data.date,
         userId: 1,
