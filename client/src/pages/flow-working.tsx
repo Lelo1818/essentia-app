@@ -25,7 +25,9 @@ import {
   Edit,
   Power,
   AlertTriangle,
-  CheckCircle
+  CheckCircle,
+  Camera,
+  Upload
 } from "lucide-react";
 import Income from "@/pages/income";
 import Expenses from "@/pages/expenses";
@@ -252,6 +254,7 @@ export default function FlowWorking() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showIncomeModal, setShowIncomeModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
+  const [showCameraModal, setShowCameraModal] = useState(false);
 
   // Real financial data
   const data = {
@@ -421,7 +424,7 @@ export default function FlowWorking() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-4">
               <Button 
                 onClick={() => setShowIncomeModal(true)}
                 className="h-16 flex flex-col gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200"
@@ -437,12 +440,23 @@ export default function FlowWorking() {
                 <CreditCard className="w-5 h-5" />
                 <span className="text-xs">Novo Gasto</span>
               </Button>
+            </div>
+            
+            {/* Secondary Actions */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
               <Button 
                 onClick={() => setActiveTab("alerts")}
                 className="h-16 flex flex-col gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-200"
               >
                 <Bell className="w-5 h-5" />
                 <span className="text-xs">Alertas</span>
+              </Button>
+              <Button 
+                onClick={() => setShowCameraModal(true)}
+                className="h-16 flex flex-col gap-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
+              >
+                <Camera className="w-5 h-5" />
+                <span className="text-xs">Tirar Foto</span>
               </Button>
             </div>
 
@@ -512,6 +526,11 @@ export default function FlowWorking() {
         {/* Expense Modal */}
         {showExpenseModal && (
           <QuickExpenseModal onClose={() => setShowExpenseModal(false)} />
+        )}
+
+        {/* Camera Modal */}
+        {showCameraModal && (
+          <CameraModal onClose={() => setShowCameraModal(false)} />
         )}
       </div>
     </div>
