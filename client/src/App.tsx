@@ -29,6 +29,7 @@ import MoodAnalysisPage from "@/pages/mood-analysis";
 import CashbackMarketplacePage from "@/pages/cashback-marketplace";
 import CashbackMerit from "@/pages/cashback-merit";
 import PainelValidacao from "@/pages/painel-validacao";
+import TesteAutomatico from "@/pages/teste-automatico";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import FluxoCaixa from "@/pages/fluxo-caixa";
 import SimularCenarios from "@/pages/simular-cenarios";
@@ -95,6 +96,7 @@ function Router() {
       <Route path="/ocr-avancado" component={OcrAvancado} />
       <Route path="/cashback-merit" component={CashbackMerit} />
       <Route path="/painel-validacao" component={PainelValidacao} />
+      <Route path="/teste-automatico" component={TesteAutomatico} />
       <Route path="/profile" component={Profile} />
       <Route>
         <NotFound />
