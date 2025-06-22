@@ -102,11 +102,11 @@ export default function GestaoDividas() {
         id: "5",
         nome: "Escola",
         valorTotal: 2300,
-        valorRestante: 854,
+        valorRestante: 2300,
         jurosAM: 1.2,
         vencimento: "todo dia 10",
         parcelas: 10,
-        parcelasRestantes: 4,
+        parcelasRestantes: 10,
         valorParcela: 230,
         tipo: "outros",
         prioridade: "media"
