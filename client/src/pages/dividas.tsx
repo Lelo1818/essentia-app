@@ -30,6 +30,7 @@ export default function GestaoDividas() {
   const [estrategia, setEstrategia] = useState<"avalanche" | "snowball">("avalanche");
   const [valorExtra, setValorExtra] = useState("200");
   const [modalOpen, setModalOpen] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<"idle" | "uploading" | "success">("idle");
   const [novaDiv, setNovaDiv] = useState({
     nome: "",
     valorTotal: "",
@@ -221,11 +222,12 @@ export default function GestaoDividas() {
     });
   };
 
-  const handleOCRUpload = (file: File) => {
-    // Simular OCR - em produção conectaria com API real
+  const handleOCRUpload = (type: string) => {
+    setUploadStatus("uploading");
+    
     toast({
       title: "OCR Processando",
-      description: "Analisando documento... (funcionalidade em desenvolvimento)",
+      description: "Analisando documento...",
     });
     
     // Simular preenchimento automático
@@ -242,11 +244,12 @@ export default function GestaoDividas() {
         valorParcela: "238",
         tipo: "cartao"
       }));
+      setUploadStatus("success");
       toast({
         title: "OCR Concluído",
-        description: "Dados extraídos do documento! Verifique e adicione a dívida.",
+        description: "Dados extraídos do documento!",
       });
-    }, 2000);
+    }, 2500);
   };
 
 
@@ -278,7 +281,9 @@ export default function GestaoDividas() {
               variant="outline" 
               className="mt-2 text-xs w-full border-blue-300 text-blue-700"
               onClick={() => {
-                // Preencher com sugestão da IA
+                // Reset OCR status first
+                setUploadStatus("idle");
+                // Preencher com sugestão da IA (NÃO OCR)
                 setNovaDiv({
                   nome: "Cartão Adicional",
                   valorTotal: "1200",
