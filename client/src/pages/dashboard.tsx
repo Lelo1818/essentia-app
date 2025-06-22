@@ -163,6 +163,142 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
+      {/* ✨ SEÇÃO PRINCIPAL DE FERRAMENTAS ✨ */}
+      <div style={{
+        backgroundColor: '#f8fafc', 
+        padding: '32px', 
+        borderRadius: '16px', 
+        marginBottom: '32px',
+        border: '2px solid #e2e8f0'
+      }}>
+        <h2 style={{
+          fontSize: '28px', 
+          fontWeight: 'bold', 
+          color: '#1e293b', 
+          marginBottom: '8px',
+          textAlign: 'center'
+        }}>
+          ⚡ Ferramentas de Alto Impacto
+        </h2>
+        <p style={{
+          textAlign: 'center', 
+          color: '#64748b', 
+          marginBottom: '32px',
+          fontSize: '16px'
+        }}>
+          Acesse as funcionalidades mais poderosas do seu ecossistema financeiro
+        </p>
+        
+        <div style={{
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+          gap: '24px'
+        }}>
+          
+          <div
+            onClick={() => {
+              console.log('🔵 DASHBOARD → AGENDAR PAGAMENTOS');
+              window.location.href = '/agendar-pagamentos';
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
+              color: 'white',
+              padding: '24px',
+              borderRadius: '16px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)',
+              transition: 'all 0.3s ease',
+              border: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.3)';
+            }}
+          >
+            <Calendar style={{width: '40px', height: '40px', margin: '0 auto 16px'}} />
+            <h3 style={{fontSize: '18px', fontWeight: 'bold', margin: '0 0 8px'}}>
+              📅 Agendar Pagamentos
+            </h3>
+            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>
+              Organize e controle todas suas contas
+            </p>
+          </div>
+
+          <div
+            onClick={() => {
+              console.log('🟣 DASHBOARD → SIMULAR CENÁRIOS');
+              window.location.href = '/simular-cenarios';
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+              color: 'white',
+              padding: '24px',
+              borderRadius: '16px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3)',
+              transition: 'all 0.3s ease',
+              border: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(139, 92, 246, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 92, 246, 0.3)';
+            }}
+          >
+            <Calculator style={{width: '40px', height: '40px', margin: '0 auto 16px'}} />
+            <h3 style={{fontSize: '18px', fontWeight: 'bold', margin: '0 0 8px'}}>
+              📊 Simular Cenários
+            </h3>
+            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>
+              Projete diferentes situações financeiras
+            </p>
+          </div>
+
+          <div
+            onClick={() => {
+              console.log('🟢 DASHBOARD → RENEGOCIAR DÍVIDAS');
+              window.location.href = '/renegociar-dividas';
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              color: 'white',
+              padding: '24px',
+              borderRadius: '16px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+              transition: 'all 0.3s ease',
+              border: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+            }}
+          >
+            <DollarSign style={{width: '40px', height: '40px', margin: '0 auto 16px'}} />
+            <h3 style={{fontSize: '18px', fontWeight: 'bold', margin: '0 0 8px'}}>
+              💰 Renegociar Dívidas
+            </h3>
+            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>
+              Estratégias inteligentes para quitar
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* 🔥 BOTÕES IMPLEMENTADOS COM FORÇA BRUTA */}
       <div style={{backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', margin: '32px 0'}}>
         <h2 style={{fontSize: '24px', fontWeight: 'bold', color: '#111827', marginBottom: '24px'}}>🚀 Ferramentas Financeiras</h2>
