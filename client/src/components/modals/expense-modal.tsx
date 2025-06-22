@@ -84,6 +84,7 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
       onClose();
     },
     onError: (error) => {
+      console.error("Error saving expense:", error);
       toast({
         title: "Erro",
         description: expense ? "Erro ao atualizar despesa." : "Erro ao adicionar despesa.",
@@ -93,6 +94,7 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
   });
 
   const onSubmit = (data: FormData) => {
+    console.log("Submitting expense:", data);
     createMutation.mutate(data);
   };
 
