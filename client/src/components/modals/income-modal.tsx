@@ -54,9 +54,16 @@ export default function IncomeModal({ open, onOpenChange, initialData }: IncomeM
     if (initialData?.description) {
       form.setValue("description", initialData.description);
       form.setValue("amount", initialData.amount);
-      form.setValue("frequency", initialData.frequency);
+      form.setValue("frequency", "mensal");
     }
   }, [initialData, form]);
+
+  // Also reset when modal opens/closes
+  useEffect(() => {
+    if (!open) {
+      form.reset();
+    }
+  }, [open, form]);
 
   const createIncomeMutation = useMutation({
     mutationFn: async (data: FormData) => {
