@@ -8,11 +8,13 @@ import { formatCurrency, formatDate, formatDateRelative } from "@/lib/financial-
 import { EXPENSE_CATEGORIES } from "@/types";
 import { Camera, Plus, Trash2, Filter, Home, Utensils, Car, Gamepad2, Heart, GraduationCap, ShoppingBag } from "lucide-react";
 import ExpenseCameraModal from "@/components/modals/expense-camera-modal";
+import { ExpenseModal } from "@/components/modals/expense-modal";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Expenses() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [manualModalOpen, setManualModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -112,10 +114,20 @@ export default function Expenses() {
           <h1 className="text-3xl font-bold text-gray-900">Gestão de Gastos</h1>
           <p className="text-gray-600 mt-2">Registre e acompanhe seus gastos por categoria</p>
         </div>
-        <Button onClick={() => setModalOpen(true)} className="gradient-primary">
-          <Camera className="w-4 h-4 mr-2" />
-          Foto Gasto
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setModalOpen(true)} className="gradient-primary">
+            <Camera className="w-4 h-4 mr-2" />
+            Via Foto
+          </Button>
+          <Button 
+            onClick={() => setManualModalOpen(true)}
+            variant="outline"
+            className="border-purple-200 text-purple-600 hover:bg-purple-50"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Manual
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
