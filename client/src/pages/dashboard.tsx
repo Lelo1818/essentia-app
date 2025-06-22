@@ -42,6 +42,7 @@ import EcosystemStats from "@/components/dashboard/ecosystem-stats";
 import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
 import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera } from "lucide-react";
+import ActionButtons from "@/components/dashboard/action-buttons";
 import type { FinancialSummary } from "@/types";
 
 export default function Dashboard() {
@@ -299,102 +300,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* 🔥 BOTÕES IMPLEMENTADOS COM FORÇA BRUTA */}
-      <div style={{backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', margin: '32px 0'}}>
-        <h2 style={{fontSize: '24px', fontWeight: 'bold', color: '#111827', marginBottom: '24px'}}>🚀 Ferramentas Financeiras</h2>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px'}}>
-          
-          <button 
-            onClick={() => {
-              console.log('🔵 CLICOU AGENDAR PAGAMENTOS');
-              alert('Redirecionando para Agendar Pagamentos...');
-              setTimeout(() => window.location.href = '/agendar-pagamentos', 500);
-            }}
-            style={{
-              background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
-              color: 'white',
-              padding: '32px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              textAlign: 'center'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 10px 25px rgba(59, 130, 246, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <Calendar style={{width: '48px', height: '48px', margin: '0 auto 16px', display: 'block'}} />
-            <h3 style={{fontSize: '20px', fontWeight: 'bold', margin: '0 0 8px 0'}}>📅 Agendar Pagamentos</h3>
-            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>Organize suas contas em dia</p>
-          </button>
 
-          <button 
-            onClick={() => {
-              console.log('🟣 CLICOU SIMULAR CENÁRIOS');
-              alert('Redirecionando para Simular Cenários...');
-              setTimeout(() => window.location.href = '/simular-cenarios', 500);
-            }}
-            style={{
-              background: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
-              color: 'white',
-              padding: '32px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              textAlign: 'center'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 10px 25px rgba(139, 92, 246, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <Calculator style={{width: '48px', height: '48px', margin: '0 auto 16px', display: 'block'}} />
-            <h3 style={{fontSize: '20px', fontWeight: 'bold', margin: '0 0 8px 0'}}>📊 Simular Cenários</h3>
-            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>Projete seu futuro financeiro</p>
-          </button>
-
-          <button 
-            onClick={() => {
-              console.log('🟢 CLICOU RENEGOCIAR DÍVIDAS');
-              alert('Redirecionando para Renegociar Dívidas...');
-              setTimeout(() => window.location.href = '/renegociar-dividas', 500);
-            }}
-            style={{
-              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-              color: 'white',
-              padding: '32px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              textAlign: 'center'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 10px 25px rgba(16, 185, 129, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <DollarSign style={{width: '48px', height: '48px', margin: '0 auto 16px', display: 'block'}} />
-            <h3 style={{fontSize: '20px', fontWeight: 'bold', margin: '0 0 8px 0'}}>💰 Renegociar Dívidas</h3>
-            <p style={{fontSize: '14px', margin: '0', opacity: '0.9'}}>Estratégias para quitar</p>
-          </button>
-        </div>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <FinancialOverview
