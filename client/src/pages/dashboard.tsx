@@ -165,39 +165,40 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
-      {/* Botões de ação rápida */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <button 
+      {/* Botões de ação rápida - IMPLEMENTADOS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-4">
+        <div 
           onClick={() => window.location.href = '/agendar-pagamentos'}
-          className="bg-blue-600 hover:bg-blue-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-8 rounded-2xl cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
         >
-          <Calendar className="w-6 h-6" />
-          <span className="font-medium">Agendar Pagamentos</span>
-        </button>
+          <div className="flex items-center justify-center mb-4">
+            <Calendar className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-bold text-center">Agendar Pagamentos</h3>
+          <p className="text-blue-100 text-center text-sm mt-2">Organize seus pagamentos</p>
+        </div>
 
-        <button 
+        <div 
           onClick={() => window.location.href = '/simular-cenarios'}
-          className="bg-purple-600 hover:bg-purple-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+          className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-8 rounded-2xl cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
         >
-          <Calculator className="w-6 h-6" />
-          <span className="font-medium">Simular Cenários</span>
-        </button>
+          <div className="flex items-center justify-center mb-4">
+            <Calculator className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-bold text-center">Simular Cenários</h3>
+          <p className="text-purple-100 text-center text-sm mt-2">Análise preditiva</p>
+        </div>
 
-        <button 
+        <div 
           onClick={() => window.location.href = '/renegociar-dividas'}
-          className="bg-green-600 hover:bg-green-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+          className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-8 rounded-2xl cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
         >
-          <DollarSign className="w-6 h-6" />
-          <span className="font-medium">Renegociar Dívidas</span>
-        </button>
-
-        <button 
-          onClick={() => setExpenseModalOpen(true)}
-          className="bg-red-600 hover:bg-red-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
-        >
-          <Camera className="w-6 h-6" />
-          <span className="font-medium">Fotografar Gasto</span>
-        </button>
+          <div className="flex items-center justify-center mb-4">
+            <DollarSign className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-bold text-center">Renegociar Dívidas</h3>
+          <p className="text-green-100 text-center text-sm mt-2">Estratégias de pagamento</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
