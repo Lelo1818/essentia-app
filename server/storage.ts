@@ -18,14 +18,18 @@ export interface IStorage {
   // Financial data methods
   getIncomesByUserId(userId: number): Promise<any[]>;
   createIncome(income: any): Promise<any>;
+  deleteIncome(id: number): Promise<boolean>;
   getExpensesByUserId(userId: number): Promise<any[]>;
   createExpense(expense: any): Promise<any>;
-  getBudgetsByUserId(userId: number): Promise<any[]>;
+  deleteExpense(id: number): Promise<boolean>;
+  getBudgetByUserId(userId: number): Promise<any>;
   createBudget(budget: any): Promise<any>;
+  updateBudget(id: number, updates: any): Promise<any>;
   getGoalsByUserId(userId: number): Promise<any[]>;
   createGoal(goal: any): Promise<any>;
   getDebtsByUserId(userId: number): Promise<any[]>;
   createDebt(debt: any): Promise<any>;
+  deleteDebt(id: number): Promise<boolean>;
 }
 
 class MemStorage implements IStorage {
@@ -35,6 +39,7 @@ class MemStorage implements IStorage {
   private expenses = new Map<number, any>();
   private budgets = new Map<number, any>();
   private goals = new Map<number, any>();
+  private debts = new Map<number, any>();
   private currentId = 1;
 
   constructor() {
@@ -44,6 +49,7 @@ class MemStorage implements IStorage {
     this.expenses = new Map();
     this.budgets = new Map();
     this.goals = new Map();
+    this.debts = new Map();
     this.currentId = 1;
     this.seedUsers();
     this.seedFinancialData();
@@ -268,6 +274,41 @@ class MemStorage implements IStorage {
     const newGoal = { ...goal, id, createdAt: new Date(), updatedAt: new Date() };
     this.goals.set(id, newGoal);
     return newGoal;
+  }
+
+  async getBudgetByUserId(userId: number): Promise<any> {
+    return Array.from(this.budgets.values()).find(budget => budget.userId === userId);
+  }
+
+  async createBudget(budget: any): Promise<any> {
+    const id = this.currentId++;
+    const newBudget = { ...budget, id, createdAt: new Date() };
+    this.budgets.set(id, newBudget);
+    return newBudget;
+  }
+
+  async updateBudget(id: number, updates: any): Promise<any> {
+    const budget = this.budgets.get(id);
+    if (!budget) return undefined;
+    const updatedBudget = { ...budget, ...updates, updatedAt: new Date() };
+    this.budgets.set(id, updatedBudget);
+    return updatedBudget;
+  }
+
+  async deleteExpense(id: number): Promise<boolean> {
+    const exists = this.expenses.has(id);
+    if (exists) {
+      this.expenses.delete(id);
+    }
+    return exists;
+  }
+
+  async deleteDebt(id: number): Promise<boolean> {
+    const exists = this.debts.has(id);
+    if (exists) {
+      this.debts.delete(id);
+    }
+    return exists;
   }
 
   async getDebtsByUserId(userId: number): Promise<any[]> {

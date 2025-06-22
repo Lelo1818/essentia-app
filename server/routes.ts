@@ -3,6 +3,7 @@ import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import path from "path";
+import fs from "fs";
 import { 
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
   insertGoalSchema, insertAchievementSchema
@@ -13,19 +14,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));
   
-  // Rota EduVie servindo arquivo estático
-  app.get('/eduvie', (req, res) => {
-    try {
-      const htmlPath = path.join(__dirname, 'eduvie-standalone.html');
-      const html = fs.readFileSync(htmlPath, 'utf8');
-      res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      res.setHeader('Cache-Control', 'no-cache');
-      res.send(html);
-    } catch (error) {
-      console.error('Erro ao carregar EduVie:', error);
-      res.status(500).send('Erro interno do servidor');
-    }
-  });
+  // Moved EduVie routes to after API routes to prevent conflicts
 
   // Rota alternativa para teste  
   app.get('/eduvie-test', (req, res) => {
@@ -53,23 +42,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
 </body></html>
     `);
   });
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; 
-            overflow-x: hidden;
-        }
-        .fade-in { animation: fadeIn 0.6s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .tab-active { background: #2563eb; color: white; }
-        .tab-inactive { color: #6b7280; }
-        .tab-inactive:hover { color: #2563eb; }
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-        .progress-bar { background: linear-gradient(to right, #3b82f6, #8b5cf6); }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
-    
-    <!-- Header -->
+
+  // Mock user ID for development (in real app, this would come from authentication)
+  const getCurrentUserId = () => 1;
+
+  // Income routes
+  app.get("/api/incomes", async (req, res) => {
+    try {
+      const userId = 1; // Fixed user ID
+      const incomes = await storage.getIncomesByUserId(userId);
+      res.json(incomes);
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao buscar rendas" });
+    }
+  });
+
+  app.post("/api/incomes", async (req, res) => {
+    try {
+      console.log("=== INCOME POST REQUEST ===");
+      console.log("Headers:", req.headers);
+      console.log("Body:", req.body);
+      
+      // Set JSON response header explicitly
+      res.setHeader('Content-Type', 'application/json');
+      
+      const userId = 1;
+      const processedData = {
+        userId,
+        description: req.body.description,
+        amount: typeof req.body.amount === 'string' ? parseFloat(req.body.amount) : req.body.amount,
+        frequency: req.body.frequency || "mensal",
+        date: req.body.date ? new Date(req.body.date) : new Date(),
+      };
+      
+      console.log("Processed income data:", processedData);
+      
+      const validatedData = insertIncomeSchema.parse(processedData);
+      const income = await storage.createIncome(validatedData);
+      
+      console.log("Created income SUCCESS:", income);
+      res.status(201).json(income);
+    } catch (error) {
+      console.error("Error creating income:", error);
+      res.setHeader('Content-Type', 'application/json');
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Erro ao criar renda", error: error.message });
+      }
+    }
+  });
+
+  // Add test route to verify API is working
+  app.get("/api/test", (req, res) => {
+    res.json({ message: "API funcionando!", timestamp: new Date().toISOString() });
+  });
+
+  // Expense routes
     <nav class="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
         <div class="px-4 md:px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -1029,6 +1058,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error in financial summary:", error);
       res.status(500).json({ message: "Erro ao buscar resumo financeiro" });
+    }
+  });
+
+  // EduVie HTML routes (moved to end to prevent API conflicts)
+  app.get('/eduvie', (req, res) => {
+    try {
+      const htmlPath = path.join(__dirname, 'eduvie-standalone.html');
+      const html = fs.readFileSync(htmlPath, 'utf8');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(html);
+    } catch (error) {
+      console.error('Erro ao carregar EduVie:', error);
+      res.status(500).send('Erro interno do servidor');
     }
   });
 

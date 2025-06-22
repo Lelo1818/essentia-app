@@ -304,9 +304,21 @@ export type InsertBudget = typeof budgets.$inferInsert;
 export type Goal = typeof goals.$inferSelect;
 export type InsertGoal = typeof goals.$inferInsert;
 
-// Zod schemas
-export const insertIncomeSchema = createInsertSchema(incomes);
-export const insertExpenseSchema = createInsertSchema(expenses);
+// Zod schemas with custom transformations
+export const insertIncomeSchema = createInsertSchema(incomes).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  amount: z.union([z.string(), z.number()]).transform(val => String(val)),
+});
+
+export const insertExpenseSchema = createInsertSchema(expenses).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  amount: z.union([z.string(), z.number()]).transform(val => String(val)),
+});
+
 export const insertBudgetSchema = createInsertSchema(budgets);
 export const insertGoalSchema = createInsertSchema(goals);
 

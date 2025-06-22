@@ -55,7 +55,11 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = await registerEcosystemRoutes(app);
+  // First register all API routes before Vite middleware
+  const { registerRoutes } = await import("./routes-clean");
+  const server = await registerRoutes(app);
+  
+  await registerEcosystemRoutes(app);
   await registerPurposeRoutes(app);
   await registerEduRoutes(app);
 
@@ -67,7 +71,7 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Always setup Vite for external access during development
+  // Setup Vite AFTER all API routes to prevent conflicts
   await setupVite(app, server);
 
   // ALWAYS serve the app on port 5000
