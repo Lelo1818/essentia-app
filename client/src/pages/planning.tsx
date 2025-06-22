@@ -336,11 +336,12 @@ export default function Planning() {
                             <span>Real: {formatCurrency(actualAmount)}</span>
                             <span>Planejado: {formatCurrency(plannedAmount)}</span>
                           </div>
-                          <Progress 
-                            value={Math.min(percentage, 100)} 
-                            className="h-2"
-                            key={`${category.key}-${plannedAmount}`}
-                          />
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div 
+                              className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-in-out"
+                              style={{ width: `${Math.min(percentage, 100)}%` }}
+                            />
+                          </div>
                         </div>
                       );
                     })}
