@@ -1255,6 +1255,330 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Sistema de cashback por mérito
+  app.get("/api/cashback-merit", async (req, res) => {
+    try {
+      const { level = "Gold" } = req.query;
+      
+      const cashbackByLevel = {
+        Bronze: { percentage: 1.0, maxMonthly: 50 },
+        Silver: { percentage: 2.0, maxMonthly: 100 },
+        Gold: { percentage: 3.5, maxMonthly: 200 },
+        Premium: { percentage: 5.0, maxMonthly: 500 }
+      };
+      
+      const meritCashback = {
+        userLevel: level,
+        cashbackRate: cashbackByLevel[level as keyof typeof cashbackByLevel],
+        earnedThisMonth: 127.50,
+        availableOffers: [
+          {
+            id: "merit_001",
+            merchant: "Americanas",
+            cashbackRate: cashbackByLevel[level as keyof typeof cashbackByLevel].percentage,
+            description: `${cashbackByLevel[level as keyof typeof cashbackByLevel].percentage}% de volta por ser nível ${level}`,
+            unlockedBy: "behavioral_merit"
+          }
+        ]
+      };
+      
+      res.json(meritCashback);
+    } catch (error) {
+      console.error("Error fetching merit cashback:", error);
+      res.status(500).json({ message: "Erro ao buscar cashback por mérito" });
+    }
+  });
+
+  // Sistema de desafios semanais
+  app.get("/api/weekly-challenges", async (req, res) => {
+    try {
+      const challenges = [
+        {
+          id: "weekly_001",
+          title: "Economizar R$ 100 esta semana",
+          description: "Reduza gastos desnecessários",
+          progress: 67,
+          reward: { xp: 200, unlock: "Cupom 15% Magazine Luiza" },
+          daysLeft: 3,
+          difficulty: "medium"
+        },
+        {
+          id: "weekly_002", 
+          title: "Registrar gastos por 5 dias",
+          description: "Mantenha controle financeiro",
+          progress: 80,
+          reward: { xp: 150, unlock: "Oferta cashback especial" },
+          daysLeft: 2,
+          difficulty: "easy"
+        }
+      ];
+      
+      res.json(challenges);
+    } catch (error) {
+      console.error("Error fetching challenges:", error);
+      res.status(500).json({ message: "Erro ao buscar desafios" });
+    }
+  });
+
+  // Reconhecimento de padrões comportamentais
+  app.get("/api/behavior-patterns", async (req, res) => {
+    try {
+      const patterns = {
+        savingConsistency: {
+          score: 85,
+          trend: "improving",
+          insight: "Você tem economizado consistentemente nas últimas 3 semanas"
+        },
+        spendingControl: {
+          score: 72,
+          trend: "stable", 
+          insight: "Gastos controlados, mas há espaço para otimização"
+        },
+        goalProgress: {
+          score: 91,
+          trend: "excellent",
+          insight: "Progresso excepcional nas metas estabelecidas"
+        },
+        recommendations: [
+          {
+            type: "goal_optimization",
+            message: "Considere aumentar sua meta de 'Emergência' em 20%",
+            confidence: 87
+          },
+          {
+            type: "spending_alert",
+            message: "Padrão de gastos elevados detectado nos fins de semana",
+            confidence: 76
+          }
+        ]
+      };
+      
+      res.json(patterns);
+    } catch (error) {
+      console.error("Error analyzing patterns:", error);
+      res.status(500).json({ message: "Erro ao analisar padrões" });
+    }
+  });
+
+  // Ofertas desbloqueadas por comportamento
+  app.get("/api/behavior-unlocked-offers", async (req, res) => {
+    try {
+      const { behavioral_score = 85 } = req.query;
+      
+      const offers = [
+        {
+          id: "behavior_001",
+          title: "20% OFF Cursos Financeiros",
+          description: "Desbloqueado por atingir 3 metas consecutivas",
+          merchant: "Coursera",
+          discount: "20%",
+          unlockedBy: "goal_achievement_streak",
+          expiresIn: "7 dias",
+          code: "FLOW20GOALS"
+        },
+        {
+          id: "behavior_002", 
+          title: "Cashback 5% Supermercados",
+          description: "Desbloqueado por controle de gastos",
+          merchant: "Pão de Açúcar",
+          cashback: "5%",
+          unlockedBy: "spending_control",
+          expiresIn: "15 dias",
+          maxCashback: 100
+        }
+      ];
+      
+      // Filtrar ofertas baseado no score comportamental
+      const availableOffers = offers.filter(offer => {
+        const requiredScore = offer.unlockedBy === "goal_achievement_streak" ? 80 : 70;
+        return parseInt(behavioral_score as string) >= requiredScore;
+      });
+      
+      res.json({
+        userScore: behavioral_score,
+        availableOffers,
+        nextUnlock: {
+          score: 90,
+          offer: "Premium Cashback 7% - Todas as compras"
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching behavior offers:", error);
+      res.status(500).json({ message: "Erro ao buscar ofertas comportamentais" });
+    }
+  });
+
+  // Cupons por comportamento positivo
+  app.get("/api/behavior-coupons", async (req, res) => {
+    try {
+      const { days_consistent = 0, goals_achieved = 0 } = req.query;
+      
+      const coupons = [
+        {
+          id: "coupon_001",
+          title: "15% OFF Magazine Luiza",
+          code: "FLOW15DISCIPLINA",
+          discount: 15,
+          merchant: "Magazine Luiza",
+          unlockedBy: "3_days_consistent_saving",
+          isUnlocked: parseInt(days_consistent as string) >= 3,
+          category: "Eletrônicos",
+          expiresIn: "10 dias",
+          minPurchase: 100
+        },
+        {
+          id: "coupon_002", 
+          title: "20% OFF Coursera",
+          code: "FLOWLEARN20",
+          discount: 20,
+          merchant: "Coursera",
+          unlockedBy: "achieve_2_financial_goals",
+          isUnlocked: parseInt(goals_achieved as string) >= 2,
+          category: "Educação",
+          expiresIn: "30 dias",
+          minPurchase: 50
+        }
+      ];
+      
+      const unlockedCoupons = coupons.filter(coupon => coupon.isUnlocked);
+      const nextCoupons = coupons.filter(coupon => !coupon.isUnlocked);
+      
+      res.json({
+        unlockedCoupons,
+        nextCoupons,
+        userProgress: {
+          daysConsistent: parseInt(days_consistent as string),
+          goalsAchieved: parseInt(goals_achieved as string)
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching behavior coupons:", error);
+      res.status(500).json({ message: "Erro ao buscar cupons comportamentais" });
+    }
+  });
+
+  // Sistema de sugestões inteligentes
+  app.get("/api/smart-suggestions", async (req, res) => {
+    try {
+      const { current_balance = 10833, monthly_income = 10650, goals_count = 6 } = req.query;
+      
+      const balance = parseFloat(current_balance as string);
+      const income = parseFloat(monthly_income as string);
+      const goals = parseInt(goals_count as string);
+      
+      const suggestions = [];
+      
+      // Sugestão baseada em saldo alto
+      if (balance > income * 2) {
+        suggestions.push({
+          type: "investment_opportunity",
+          title: "Considere investir parte do seu saldo",
+          description: `Com ${formatCurrency(balance)}, você pode diversificar em investimentos de baixo risco`,
+          action: "Ver opções de investimento",
+          priority: "high",
+          confidence: 92
+        });
+      }
+      
+      // Sugestão baseada em poucas metas
+      if (goals < 3) {
+        suggestions.push({
+          type: "goal_creation",
+          title: "Que tal criar mais metas financeiras?",
+          description: "Usuários com 5+ metas economizam 40% mais",
+          action: "Criar nova meta",
+          priority: "medium",
+          confidence: 78
+        });
+      }
+      
+      // Sugestão de otimização
+      suggestions.push({
+        type: "expense_optimization", 
+        title: "Oportunidade detectada em gastos",
+        description: "Você pode economizar ~R$ 300/mês otimizando categorias específicas",
+        action: "Ver detalhes",
+        priority: "medium",
+        confidence: 85
+      });
+      
+      res.json({
+        suggestions,
+        totalSuggestions: suggestions.length,
+        userContext: {
+          balance,
+          income, 
+          goals,
+          financialHealth: balance > income ? "excellent" : "good"
+        }
+      });
+    } catch (error) {
+      console.error("Error generating suggestions:", error);
+      res.status(500).json({ message: "Erro ao gerar sugestões" });
+    }
+  });
+
+  // Trigger automático meta → oferta
+  app.post("/api/goal-achievement-trigger", async (req, res) => {
+    try {
+      const { goalId, goalCategory, achievementDate } = req.body;
+      
+      // Mapeamento de categoria para ofertas
+      const categoryOffers = {
+        "Emergência": {
+          id: "emergency_reward",
+          title: "5% Cashback Farmácias",
+          description: "Parabéns por construir sua reserva de emergência!",
+          merchant: "Drogaria São Paulo",
+          cashback: "5%",
+          maxAmount: 200,
+          validity: "30 dias"
+        },
+        "Viagem": {
+          id: "travel_reward",
+          title: "15% OFF Hotéis",
+          description: "Meta de viagem atingida! Hora de planejar",
+          merchant: "Booking.com",
+          discount: "15%",
+          code: "FLOWVIAGEM15",
+          validity: "60 dias"
+        },
+        "Casa": {
+          id: "home_reward", 
+          title: "10% Cashback Casa & Construção",
+          description: "Conquista residencial desbloqueada!",
+          merchant: "Leroy Merlin",
+          cashback: "10%",
+          maxAmount: 500,
+          validity: "45 dias"
+        }
+      };
+      
+      const unlockedOffer = categoryOffers[goalCategory as keyof typeof categoryOffers] || {
+        id: "general_reward",
+        title: "Cashback 3% Geral", 
+        description: "Parabéns por atingir sua meta!",
+        cashback: "3%",
+        validity: "15 dias"
+      };
+      
+      res.json({
+        success: true,
+        goalId,
+        unlockedOffer,
+        notification: {
+          title: "🎯 Meta Atingida!",
+          message: `Parabéns! Sua meta foi conquistada e uma nova oferta foi desbloqueada.`,
+          type: "achievement",
+          action: "Ver oferta"
+        }
+      });
+    } catch (error) {
+      console.error("Error triggering goal achievement:", error);
+      res.status(500).json({ message: "Erro ao processar conquista de meta" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

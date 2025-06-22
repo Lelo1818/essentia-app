@@ -27,6 +27,7 @@ import NotFound from "@/pages/not-found";
 import NFTAchievements from "@/pages/nft-achievements";
 import MoodAnalysisPage from "@/pages/mood-analysis";
 import CashbackMarketplacePage from "@/pages/cashback-marketplace";
+import CashbackMerit from "@/pages/cashback-merit";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import FluxoCaixa from "@/pages/fluxo-caixa";
 import SimularCenarios from "@/pages/simular-cenarios";
