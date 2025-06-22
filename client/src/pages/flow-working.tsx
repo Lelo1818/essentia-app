@@ -250,6 +250,8 @@ function AlertEditor({ alert, onSave, onCancel }) {
 
 export default function FlowWorking() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [showIncomeModal, setShowIncomeModal] = useState(false);
+  const [showExpenseModal, setShowExpenseModal] = useState(false);
 
   // Real financial data
   const data = {
@@ -420,11 +422,18 @@ export default function FlowWorking() {
 
             {/* Quick Actions */}
             <div className="grid grid-cols-3 gap-3 mb-6">
-              <Button className="h-16 flex flex-col gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200">
+              <Button 
+                onClick={() => setShowIncomeModal(true)}
+                className="h-16 flex flex-col gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200"
+              >
                 <Plus className="w-5 h-5" />
                 <span className="text-xs">Nova Receita</span>
               </Button>
-              <Button variant="outline" className="h-16 flex flex-col gap-2 border-2 hover:bg-slate-50 transform hover:scale-105 transition-all duration-200">
+              <Button 
+                onClick={() => setShowExpenseModal(true)}
+                variant="outline" 
+                className="h-16 flex flex-col gap-2 border-2 hover:bg-slate-50 transform hover:scale-105 transition-all duration-200"
+              >
                 <CreditCard className="w-5 h-5" />
                 <span className="text-xs">Novo Gasto</span>
               </Button>
@@ -494,7 +503,203 @@ export default function FlowWorking() {
           </TabsContent>
 
         </Tabs>
+
+        {/* Income Modal */}
+        {showIncomeModal && (
+          <QuickIncomeModal onClose={() => setShowIncomeModal(false)} />
+        )}
+
+        {/* Expense Modal */}
+        {showExpenseModal && (
+          <QuickExpenseModal onClose={() => setShowExpenseModal(false)} />
+        )}
       </div>
+    </div>
+  );
+}
+
+// Quick Income Modal
+function QuickIncomeModal({ onClose }) {
+  const [formData, setFormData] = useState({
+    description: "",
+    amount: "",
+    frequency: "mensal"
+  });
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/incomes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          userId: 1,
+          date: new Date().toISOString().split('T')[0]
+        })
+      });
+      
+      if (response.ok) {
+        alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
+        onClose();
+      }
+    } catch (error) {
+      alert('Erro ao adicionar receita');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-green-600">Nova Receita</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Descrição</label>
+            <input 
+              type="text"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Ex: Salário, Freelance..."
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-2">Valor (R$)</label>
+            <input 
+              type="number"
+              step="0.01"
+              className="w-full p-3 border rounded-lg"
+              placeholder="0,00"
+              value={formData.amount}
+              onChange={(e) => setFormData({...formData, amount: e.target.value})}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Frequência</label>
+            <select 
+              className="w-full p-3 border rounded-lg"
+              value={formData.frequency}
+              onChange={(e) => setFormData({...formData, frequency: e.target.value})}
+            >
+              <option value="unica">Única</option>
+              <option value="mensal">Mensal</option>
+              <option value="semanal">Semanal</option>
+              <option value="trimestral">Trimestral</option>
+            </select>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button 
+              onClick={handleSubmit} 
+              className="flex-1 bg-green-600 hover:bg-green-700"
+              disabled={!formData.description || !formData.amount}
+            >
+              Adicionar Receita
+            </Button>
+            <Button variant="outline" onClick={onClose} className="flex-1">
+              Cancelar
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// Quick Expense Modal
+function QuickExpenseModal({ onClose }) {
+  const [formData, setFormData] = useState({
+    description: "",
+    amount: "",
+    category: "Outros"
+  });
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/expenses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          userId: 1,
+          date: new Date().toISOString().split('T')[0],
+          recurring: false
+        })
+      });
+      
+      if (response.ok) {
+        alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
+        onClose();
+      }
+    } catch (error) {
+      alert('Erro ao adicionar gasto');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-red-600">Novo Gasto</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Descrição</label>
+            <input 
+              type="text"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Ex: Supermercado, Gasolina..."
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-2">Valor (R$)</label>
+            <input 
+              type="number"
+              step="0.01"
+              className="w-full p-3 border rounded-lg"
+              placeholder="0,00"
+              value={formData.amount}
+              onChange={(e) => setFormData({...formData, amount: e.target.value})}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Categoria</label>
+            <select 
+              className="w-full p-3 border rounded-lg"
+              value={formData.category}
+              onChange={(e) => setFormData({...formData, category: e.target.value})}
+            >
+              <option value="Alimentação">Alimentação</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Moradia">Moradia</option>
+              <option value="Saúde">Saúde</option>
+              <option value="Entretenimento">Entretenimento</option>
+              <option value="Vestuário">Vestuário</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button 
+              onClick={handleSubmit} 
+              className="flex-1 bg-red-600 hover:bg-red-700"
+              disabled={!formData.description || !formData.amount}
+            >
+              Adicionar Gasto
+            </Button>
+            <Button variant="outline" onClick={onClose} className="flex-1">
+              Cancelar
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
