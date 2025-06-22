@@ -164,6 +164,81 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
+      {/* BOTÕES PRINCIPAIS - INSERÇÃO DIRETA */}
+      <div 
+        style={{
+          backgroundColor: 'white',
+          padding: '24px',
+          borderRadius: '12px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          margin: '24px 0',
+          border: '1px solid #e5e7eb'
+        }}
+      >
+        <h2 style={{fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '24px', color: '#111827'}}>
+          Ferramentas Financeiras
+        </h2>
+        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px'}}>
+          <button
+            onClick={() => window.location.href = '/agendar-pagamentos'}
+            style={{
+              background: 'linear-gradient(135deg, #3b82f6, #1e40af)',
+              color: 'white',
+              padding: '24px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              transition: 'transform 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            📅 Agendar Pagamentos
+          </button>
+          <button
+            onClick={() => window.location.href = '/simular-cenarios'}
+            style={{
+              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              color: 'white',
+              padding: '24px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              transition: 'transform 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            📊 Simular Cenários
+          </button>
+          <button
+            onClick={() => window.location.href = '/renegociar-dividas'}
+            style={{
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: 'white',
+              padding: '24px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              transition: 'transform 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            💰 Renegociar Dívidas
+          </button>
+        </div>
+      </div>
+
       {/* ✨ SEÇÃO PRINCIPAL DE FERRAMENTAS ✨ */}
       <div style={{
         backgroundColor: '#f8fafc', 
