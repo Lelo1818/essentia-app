@@ -444,7 +444,7 @@ export default function GestaoDividas() {
                     name="estrategia"
                     value="avalanche"
                     checked={estrategia === "avalanche"}
-                    onChange={(e) => setEstrategia(e.target.value as "avalanche")}
+                    onChange={(e) => setEstrategia(e.target.value as "avalanche" | "snowball")}
                   />
                   <div>
                     <div className="font-semibold">Avalanche (Recomendado)</div>
@@ -457,7 +457,7 @@ export default function GestaoDividas() {
                     name="estrategia"
                     value="snowball"
                     checked={estrategia === "snowball"}
-                    onChange={(e) => setEstrategia(e.target.value as "snowball")}
+                    onChange={(e) => setEstrategia(e.target.value as "avalanche" | "snowball")}
                   />
                   <div>
                     <div className="font-semibold">Snowball</div>
@@ -495,11 +495,11 @@ export default function GestaoDividas() {
           <div className="space-y-4">
             {simulacao.map((divida, index) => (
               <div key={divida.id} className="border rounded-lg p-4 relative">
-                {index === 0 && (
-                  <div className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                    Prioridade #{index + 1}
-                  </div>
-                )}
+                <div className={`absolute -top-2 -right-2 text-white text-xs px-2 py-1 rounded-full ${
+                  index === 0 ? 'bg-red-500' : index === 1 ? 'bg-orange-500' : 'bg-blue-500'
+                }`}>
+                  {estrategia === "avalanche" ? "Avalanche" : "Snowball"} #{index + 1}
+                </div>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="text-2xl">{getTipoIcon(divida.tipo)}</div>
@@ -530,13 +530,13 @@ export default function GestaoDividas() {
                   <div>
                     <div className="font-medium">Pagamento Sugerido</div>
                     <div className="text-lg text-green-600 font-bold">
-                      R$ {divida.pagamentoSugerido.toFixed(0)}
+                      R$ {divida.pagamentoSugerido?.toFixed(0) || divida.valorParcela}
                     </div>
                   </div>
                   <div>
                     <div className="font-medium">Economia em Juros</div>
                     <div className="text-lg text-blue-600 font-bold">
-                      R$ {divida.economiaJuros.toFixed(0)}
+                      R$ {divida.economiaJuros?.toFixed(0) || "0"}
                     </div>
                   </div>
                 </div>
