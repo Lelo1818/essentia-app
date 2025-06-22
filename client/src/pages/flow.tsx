@@ -38,6 +38,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/flow" component={FlowWorking} />
+      <Route path="/flow/" component={FlowWorking} />
       <Route path="/flow/dynamic" component={Dashboard} />
       <Route path="/flow/income" component={Income} />
       <Route path="/flow/expenses" component={Expenses} />

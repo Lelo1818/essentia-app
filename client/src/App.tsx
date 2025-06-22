@@ -36,6 +36,7 @@ import RenegociarDividas from "@/pages/renegociar-dividas";
 import KidsApp from "./App-kids";
 import EcosystemApp from "./App-ecosystem";
 import FlowApp from "./App-flow";
+import FlowWorking from "@/pages/flow-working";
 import EduApp from "./App-edu";
 import PurposeApp from "./App-purpose";
 import ContaFamilia from "@/pages/conta-familia";
@@ -51,7 +52,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={EcosystemApp} />
-      <Route path="/flow" component={FlowApp} />
+      <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKids} />
       <Route path="/dashboard-unificado" component={DashboardUnificado} />
