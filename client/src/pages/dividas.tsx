@@ -314,14 +314,54 @@ export default function GestaoDividas() {
               Revisar Sugestões
             </Button>
           </div>
+        </div>
+      </div>
 
-          <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-red-600 hover:bg-red-700">
-                <Plus className="w-4 h-4 mr-2" />
-                Adicionar Dívida
-              </Button>
-            </DialogTrigger>
+      {/* Sugestões da IA */}
+      {sugestoes.length > 0 && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h3 className="font-semibold text-green-800 mb-3">✅ Sugestões da IA Carregadas</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {sugestoes.map((sugestao) => (
+              <div key={sugestao.id} className="bg-white border border-green-200 rounded-lg p-3">
+                <div className="font-medium text-gray-900">{sugestao.nome}</div>
+                <div className="text-lg font-bold text-red-600">R$ {sugestao.valor.toLocaleString('pt-BR')}</div>
+                <div className="text-sm text-gray-600">{sugestao.descricao}</div>
+                <Button 
+                  size="sm" 
+                  className="mt-2 w-full"
+                  onClick={() => {
+                    setNovaDiv({
+                      nome: sugestao.nome,
+                      valorTotal: sugestao.valor.toString(),
+                      valorRestante: sugestao.valor.toString(),
+                      tipo: sugestao.tipo,
+                      jurosAM: "12.0",
+                      vencimento: "todo dia 10",
+                      parcelas: "12",
+                      parcelasRestantes: "12",
+                      valorParcela: Math.round(sugestao.valor / 12).toString(),
+                      prioridade: "alta"
+                    });
+                    setModalOpen(true);
+                  }}
+                >
+                  Adicionar Esta Dívida
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="space-y-6">
+        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-red-600 hover:bg-red-700">
+              <Plus className="w-4 h-4 mr-2" />
+              Adicionar Dívida
+            </Button>
+          </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Nova Dívida</DialogTitle>
@@ -456,7 +496,6 @@ export default function GestaoDividas() {
             </DialogContent>
           </Dialog>
         </div>
-      </div>
 
       {/* Resumo Geral */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
