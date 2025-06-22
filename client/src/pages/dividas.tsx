@@ -649,6 +649,30 @@ export default function GestaoDividas() {
                   <div className="text-xs text-gray-500 mt-1">
                     Pago: R$ {(divida.valorTotal - divida.valorRestante).toLocaleString()} de R$ {divida.valorTotal.toLocaleString()}
                   </div>
+                  <div className="mt-3 flex justify-end">
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => {
+                        try {
+                          setDividas(dividas.filter(d => d.id !== divida.id));
+                          toast({
+                            title: "Dívida removida",
+                            description: "A dívida foi removida com sucesso!",
+                          });
+                        } catch (error) {
+                          console.error("Erro ao remover dívida:", error);
+                          toast({
+                            title: "Erro",
+                            description: "Não foi possível remover a dívida",
+                            variant: "destructive",
+                          });
+                        }
+                      }}
+                    >
+                      Remover
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
