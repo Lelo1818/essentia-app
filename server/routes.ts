@@ -692,14 +692,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/incomes", async (req, res) => {
     try {
-      console.log("Received income data:", req.body);
+      console.log("=== INCOME POST REQUEST ===");
+      console.log("Headers:", req.headers);
+      console.log("Body:", req.body);
+      
+      // Set JSON response header explicitly
+      res.setHeader('Content-Type', 'application/json');
       
       const userId = 1;
       const processedData = {
         userId,
         description: req.body.description,
         amount: typeof req.body.amount === 'string' ? parseFloat(req.body.amount) : req.body.amount,
-        frequency: req.body.frequency || "unica",
+        frequency: req.body.frequency || "mensal",
         date: req.body.date ? new Date(req.body.date) : new Date(),
       };
       
@@ -708,10 +713,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertIncomeSchema.parse(processedData);
       const income = await storage.createIncome(validatedData);
       
-      console.log("Created income:", income);
+      console.log("Created income SUCCESS:", income);
       res.status(201).json(income);
     } catch (error) {
       console.error("Error creating income:", error);
+      res.setHeader('Content-Type', 'application/json');
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Dados inválidos", errors: error.errors });
       } else {

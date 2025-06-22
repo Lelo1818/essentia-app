@@ -224,7 +224,17 @@ class MemStorage implements IStorage {
     const id = this.currentId++;
     const newIncome = { ...income, id, createdAt: new Date() };
     this.incomes.set(id, newIncome);
+    console.log("Income created in storage:", newIncome);
+    console.log("Total incomes now:", this.incomes.size);
     return newIncome;
+  }
+
+  async deleteIncome(id: number): Promise<boolean> {
+    const exists = this.incomes.has(id);
+    if (exists) {
+      this.incomes.delete(id);
+    }
+    return exists;
   }
 
   async getExpensesByUserId(userId: number): Promise<any[]> {
