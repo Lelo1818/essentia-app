@@ -114,9 +114,7 @@ export default function Planning() {
   }
 
   const totalIncome = (summary as any)?.totalIncome || 0;
-  console.log("=== PLANNING DEBUG ===");
-  console.log("Summary data:", summary);
-  console.log("Total income from API:", totalIncome);
+
   const remainingIncome = totalIncome - totalAllocation;
   const expensesByCategory = (summary as any)?.expensesByCategory || {
     alimentacao: { total: 926.30, count: 4 },
