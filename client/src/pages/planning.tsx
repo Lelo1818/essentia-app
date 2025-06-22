@@ -40,16 +40,17 @@ export default function Planning() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fixedExpenses: budget ? String((budget as any).fixedExpenses || 0) : "0",
-      variableExpenses: budget ? String((budget as any).variableExpenses || 0) : "0",
-      savings: budget ? String((budget as any).savings || 0) : "0",
-      leisure: budget ? String((budget as any).leisure || 0) : "0",
+      fixedExpenses: "0",
+      variableExpenses: "0",
+      savings: "0",
+      leisure: "0",
     },
   });
 
   // Update form when budget data loads
   React.useEffect(() => {
-    if (budget) {
+    if (budget && !budgetLoading) {
+      console.log("Loading budget data:", budget);
       form.reset({
         fixedExpenses: String((budget as any).fixedExpenses || 0),
         variableExpenses: String((budget as any).variableExpenses || 0),
@@ -57,7 +58,7 @@ export default function Planning() {
         leisure: String((budget as any).leisure || 0),
       });
     }
-  }, [budget, form]);
+  }, [budget, budgetLoading, form]);
 
   // Watch form values to calculate total
   const watchedValues = form.watch();
@@ -246,7 +247,8 @@ export default function Planning() {
                               step="0.01" 
                               placeholder="0,00" 
                               className="mt-2"
-                              {...field} 
+                              value={field.value}
+                              onChange={field.onChange}
                             />
                           </FormControl>
                           <FormMessage />
