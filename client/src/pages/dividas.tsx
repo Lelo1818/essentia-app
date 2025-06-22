@@ -278,8 +278,6 @@ export default function GestaoDividas() {
               variant="outline" 
               className="mt-2 text-xs w-full border-blue-300 text-blue-700"
               onClick={() => {
-                // Limpar estado OCR primeiro
-                setUploadStatus("idle");
                 // Preencher com sugestão da IA
                 setNovaDiv({
                   nome: "Cartão Adicional",
