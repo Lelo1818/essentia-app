@@ -5,7 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertGoalSchema } from "@shared/schema";
+// Simplified schema without strict validation
+const goalFormSchema = z.object({
+  title: z.string().min(1, "Nome é obrigatório"),
+  description: z.string().optional(),
+  targetAmount: z.string().min(1, "Valor da meta é obrigatório"),
+  currentAmount: z.string().optional(),
+  targetDate: z.string().optional(),
+  category: z.string().optional(),
+  priority: z.string().optional(),
+});
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
