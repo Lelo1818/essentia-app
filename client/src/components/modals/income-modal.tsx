@@ -43,7 +43,7 @@ export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
     mutationFn: async (data: FormData) => {
       const payload = {
         description: data.description,
-        amount: data.amount,
+        amount: parseFloat(data.amount),
         frequency: data.frequency,
         date: data.date,
         userId: 1
@@ -61,7 +61,7 @@ export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
       form.reset({
         description: "",
         amount: "",
-        frequency: "unica",
+        frequency: "mensal",
         date: new Date().toISOString().split('T')[0],
       });
       onOpenChange(false);
