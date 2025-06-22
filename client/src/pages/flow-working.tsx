@@ -628,13 +628,15 @@ function QuickIncomeModal({ onClose }) {
   );
 }
 
-// Quick Expense Modal
+// Enhanced Quick Expense Modal with AI Category Suggester
 function QuickExpenseModal({ onClose }) {
   const [formData, setFormData] = useState({
     description: "",
     amount: "",
     category: "Outros"
   });
+  const [aiSuggestion, setAiSuggestion] = useState(null);
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
   const handleSubmit = async () => {
     try {
@@ -672,8 +674,46 @@ function QuickExpenseModal({ onClose }) {
               className="w-full p-3 border rounded-lg"
               placeholder="Ex: Supermercado, Gasolina..."
               value={formData.description}
-              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              onChange={(e) => {
+                const newDescription = e.target.value;
+                setFormData({...formData, description: newDescription});
+                
+                // AI Category Suggestion
+                if (newDescription.length > 3) {
+                  const suggestion = getAICategory(newDescription);
+                  setAiSuggestion(suggestion);
+                  setShowSuggestion(true);
+                } else {
+                  setShowSuggestion(false);
+                }
+              }}
             />
+            
+            {/* AI Suggestion Box */}
+            {showSuggestion && aiSuggestion && (
+              <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Star className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-800">IA Sugeriu:</span>
+                </div>
+                <div className="text-sm text-blue-700 mb-2">
+                  <strong>{aiSuggestion.category}</strong> ({aiSuggestion.confidence}% confiança)
+                </div>
+                <div className="text-xs text-blue-600 mb-3">
+                  {aiSuggestion.reason}
+                </div>
+                <Button 
+                  size="sm" 
+                  onClick={() => {
+                    setFormData({...formData, category: aiSuggestion.category});
+                    setShowSuggestion(false);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Aplicar Sugestão
+                </Button>
+              </div>
+            )}
           </div>
           
           <div>
