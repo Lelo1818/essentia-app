@@ -54,8 +54,11 @@ export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
       return apiRequest("POST", "/api/incomes", payload);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/incomes"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
+      // Force refresh all queries
+      queryClient.invalidateQueries();
+      queryClient.refetchQueries({ queryKey: ["/api/incomes"] });
+      queryClient.refetchQueries({ queryKey: ["/api/financial-summary"] });
+      
       toast({
         title: "Renda adicionada",
         description: "Sua renda foi registrada com sucesso!",
