@@ -231,6 +231,23 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
   };
 
   const handleActionClick = (action: string, data?: any) => {
+    console.log('AI Action:', action, data);
+    
+    // Execute real actions based on AI suggestions
+    if (action.includes("meta") || action.includes("goal")) {
+      // Trigger goal creation
+      window.location.href = '/flow#metas';
+    } else if (action.includes("alerta") || action.includes("alert")) {
+      // Trigger alert configuration
+      window.location.href = '/flow#alertas';
+    } else if (action.includes("investimento") || action.includes("investment")) {
+      // Trigger investment page
+      window.location.href = '/flow#investimentos';
+    } else if (action.includes("gasto") || action.includes("expense")) {
+      // Trigger expense analysis
+      window.location.href = '/flow#gastos';
+    }
+    
     if (onAction) {
       onAction(action, data);
     }
