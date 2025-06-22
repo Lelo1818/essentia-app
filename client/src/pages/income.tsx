@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate } from "@/lib/financial-utils";
 import { INCOME_FREQUENCIES } from "@/types";
-import { Plus, Trash2, Camera } from "lucide-react";
+import { Plus, Trash2, Camera, Wallet, TrendingUp } from "lucide-react";
 import IncomeModal from "@/components/modals/income-modal";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -46,6 +46,10 @@ export default function Income() {
 
   const { data: incomes = [], isLoading } = useQuery({
     queryKey: ["/api/incomes"],
+  });
+
+  const { data: summary } = useQuery({
+    queryKey: ['/api/financial-summary'],
   });
 
   const deleteIncomeMutation = useMutation({
