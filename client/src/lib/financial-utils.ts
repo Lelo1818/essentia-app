@@ -6,7 +6,13 @@ export function formatCurrency(value: number): string {
 }
 
 export function formatDate(date: Date | string): string {
+  if (!date) return "Data inválida";
+  
   const d = typeof date === 'string' ? new Date(date) : date;
+  
+  // Check if date is valid
+  if (isNaN(d.getTime())) return "Data inválida";
+  
   return new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
     month: '2-digit',
@@ -15,7 +21,13 @@ export function formatDate(date: Date | string): string {
 }
 
 export function formatDateRelative(date: Date | string): string {
+  if (!date) return "Data inválida";
+  
   const d = typeof date === 'string' ? new Date(date) : date;
+  
+  // Check if date is valid
+  if (isNaN(d.getTime())) return "Data inválida";
+  
   const now = new Date();
   const diffInDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
   
