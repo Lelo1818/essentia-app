@@ -351,15 +351,13 @@ export default function Income() {
               });
               
               setTimeout(() => {
-                const dadosOCR = {
+                setNovaRenda({
                   description: "Salário CLT",
                   amount: "4500",
                   source: "Empresa ABC Ltda",
                   frequency: "monthly",
                   category: "salary"
-                };
-                console.log("Setting novaRenda:", dadosOCR);
-                setNovaRenda(dadosOCR);
+                });
                 toast({
                   title: "OCR Concluído",
                   description: "Dados extraídos do holerite!",

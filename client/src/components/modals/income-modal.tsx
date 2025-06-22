@@ -51,9 +51,7 @@ export default function IncomeModal({ open, onOpenChange, initialData }: IncomeM
 
   // Update form when initialData changes
   useEffect(() => {
-    console.log("InitialData received:", initialData);
     if (initialData?.description) {
-      console.log("Setting form values:", initialData);
       form.setValue("description", initialData.description);
       form.setValue("amount", initialData.amount);
       form.setValue("frequency", "mensal");
