@@ -338,7 +338,8 @@ export default function Planning() {
                           </div>
                           <Progress 
                             value={Math.min(percentage, 100)} 
-                            className="h-1"
+                            className="h-2"
+                            key={`${category.key}-${plannedAmount}`}
                           />
                         </div>
                       );
