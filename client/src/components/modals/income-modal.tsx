@@ -18,8 +18,10 @@ interface IncomeModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const formSchema = insertIncomeSchema.extend({
+const formSchema = z.object({
+  description: z.string().min(1, "Descrição é obrigatória"),
   amount: z.string().min(1, "Valor é obrigatório"),
+  frequency: z.string().default("mensal"),
   date: z.string().min(1, "Data é obrigatória"),
 });
 
@@ -43,7 +45,7 @@ export default function IncomeModal({ open, onOpenChange }: IncomeModalProps) {
     mutationFn: async (data: FormData) => {
       const payload = {
         description: data.description,
-        amount: parseFloat(data.amount),
+        amount: data.amount, // Keep as string since server schema expects string
         frequency: data.frequency,
         date: data.date,
         userId: 1
