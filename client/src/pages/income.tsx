@@ -100,6 +100,8 @@ export default function Income() {
   }
 
   const totalIncome = incomes.reduce((sum: number, income: any) => sum + parseFloat(income.amount), 0);
+  const currentBalance = summary?.balance || 0;
+  const totalExpenses = summary?.totalExpenses || 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-purple-50">
