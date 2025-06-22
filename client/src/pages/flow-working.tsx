@@ -20,7 +20,12 @@ import {
   Star,
   Wallet,
   BarChart3,
-  User
+  User,
+  Bell,
+  Edit,
+  Power,
+  AlertTriangle,
+  CheckCircle
 } from "lucide-react";
 import Income from "@/pages/income";
 import Expenses from "@/pages/expenses";
@@ -109,12 +114,23 @@ function AlertsCenter() {
                         alert.active ? "bg-green-500" : "bg-gray-400"
                       }`} />
                       <h3 className="font-semibold">{alert.category}</h3>
-                      <Badge variant={status === "success" ? "default" : "destructive"}>
+                      <Badge 
+                        variant={status === "success" ? "default" : "destructive"}
+                        className={`${
+                          status === "success" ? "bg-green-100 text-green-800" :
+                          status === "warning" ? "bg-yellow-100 text-yellow-800" :
+                          "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {status === "success" && <CheckCircle className="w-3 h-3 mr-1" />}
+                        {status === "warning" && <AlertTriangle className="w-3 h-3 mr-1" />}
+                        {status === "danger" && <AlertTriangle className="w-3 h-3 mr-1" />}
                         {status === "success" ? "OK" : status === "warning" ? "ATENÇÃO" : "ALERTA"}
                       </Badge>
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => editAlert(alert)}>
+                        <Edit className="w-3 h-3 mr-1" />
                         Editar
                       </Button>
                       <Button 
@@ -122,6 +138,7 @@ function AlertsCenter() {
                         variant={alert.active ? "destructive" : "default"}
                         onClick={() => toggleAlert(alert.id)}
                       >
+                        <Power className="w-3 h-3 mr-1" />
                         {alert.active ? "Desativar" : "Ativar"}
                       </Button>
                     </div>
@@ -415,7 +432,7 @@ export default function FlowWorking() {
                 onClick={() => setActiveTab("alerts")}
                 className="h-16 flex flex-col gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-200"
               >
-                <Zap className="w-5 h-5" />
+                <Bell className="w-5 h-5" />
                 <span className="text-xs">Alertas</span>
               </Button>
             </div>
