@@ -31,6 +31,7 @@ import CashbackMerit from "@/pages/cashback-merit";
 import PainelValidacao from "@/pages/painel-validacao";
 import TesteAutomatico from "@/pages/teste-automatico";
 import ChecklistExecucao from "@/pages/checklist-execucao";
+import RelatorioFinal from "@/pages/relatorio-final";
 import AgendarPagamentos from "@/pages/agendar-pagamentos";
 import FluxoCaixa from "@/pages/fluxo-caixa";
 import SimularCenarios from "@/pages/simular-cenarios";
@@ -99,6 +100,7 @@ function Router() {
       <Route path="/painel-validacao" component={PainelValidacao} />
       <Route path="/teste-automatico" component={TesteAutomatico} />
       <Route path="/checklist-execucao" component={ChecklistExecucao} />
+      <Route path="/relatorio-final" component={RelatorioFinal} />
       <Route path="/profile" component={Profile} />
       <Route>
         <NotFound />
