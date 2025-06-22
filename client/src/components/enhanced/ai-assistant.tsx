@@ -167,9 +167,25 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
       } else if (message.includes("meta") || message.includes("objetivo")) {
         response = "Ótimo! Definir metas é essencial para o sucesso financeiro. Vou analisar suas metas atuais:\n\n🎯 **Suas Metas Ativas:**\n• Viagem Europa: 57% concluída\n• Reserva Emergência: 48% concluída\n• Casa Própria: 40% concluída\n\nCom sua taxa de economia atual, você pode acelerar essas metas!";
         suggestions = ["Acelerar metas", "Criar nova meta", "Priorizar objetivos"];
+      } else if (message.includes("alerta") || message.includes("configurar") || message.includes("notificação")) {
+        const totalExpenses = financialData?.totalExpenses || realTimeData?.totalExpenses || 4267.94;
+        const topCategories = ["Alimentação: R$ 571", "Transporte: R$ 461", "Moradia: R$ 2.200"];
+        
+        response = `🔔 **Configurar Alertas Personalizados**\n\nBaseado nos seus gastos atuais de ${formatCurrency(totalExpenses)}:\n\n📱 **Alertas Sugeridos:**\n• Gastos mensais > R$ 5.000\n• Alimentação > R$ 600/mês\n• Transporte > R$ 500/mês\n• Cartão de crédito > 70% do limite\n\n⚡ **Alertas Inteligentes:**\n• Quando sobra < R$ 10.000\n• Metas com atraso > 15 dias\n• Oportunidades de cashback\n\n🎯 **Quais alertas quer ativar?**`;
+        suggestions = ["Ativar todos os alertas", "Alertas por categoria", "Alertas de metas"];
+        actionData = { type: "configure_alerts", categories: ["expenses", "goals", "cashback"] };
+      } else if (message.includes("meta") || message.includes("objetivo") || message.includes("criar")) {
+        const balance = (financialData?.totalIncome || 20601.8) - (financialData?.totalExpenses || 4267.94);
+        
+        response = `🎯 **Criar Meta Personalizada**\n\nCom sua sobra mensal de ${formatCurrency(balance)}, você pode:\n\n💰 **Metas Rápidas (3-6 meses):**\n• iPhone 15: R$ 5.000 (3 meses)\n• Curso Online: R$ 2.000 (1 mês)\n• Viagem Nacional: R$ 3.500 (2 meses)\n\n🏠 **Metas Grandes (1-2 anos):**\n• Carro 0km: R$ 50.000 (25 meses)\n• Intercâmbio: R$ 25.000 (12 meses)\n• Casa própria: R$ 80.000 (40 meses)\n\n⚡ **Qual meta quer criar?**`;
+        suggestions = ["Criar meta de viagem", "Meta de casa própria", "Meta personalizada"];
+        actionData = { type: "create_goal", availableBalance: balance };
       } else {
-        response = "Como seu consultor financeiro, posso ajudar com análises detalhadas, planejamento de investimentos, otimização de gastos e definição de metas. O que gostaria de explorar?";
-        suggestions = ["Situação financeira atual", "Dicas de investimento", "Reduzir gastos"];
+        const totalIncome = financialData?.totalIncome || realTimeData?.totalIncome || 20601.8;
+        const balance = totalIncome - (financialData?.totalExpenses || realTimeData?.totalExpenses || 4267.94);
+        
+        response = `💡 **Análise Inteligente Disponível**\n\nCom seus dados reais:\n• Renda: ${formatCurrency(totalIncome)}\n• Sobra: ${formatCurrency(balance)}\n• ${incomes?.length || 8} fontes de renda\n\n🎯 **Ações Recomendadas:**\n• Otimizar gastos para ganhar +R$ 640/mês\n• Investir R$ 11.000 em renda fixa\n• Criar alertas para metas\n• Acelerar objetivos com sobra atual\n\n⚡ **O que quer fazer agora?**`;
+        suggestions = ["Criar meta inteligente", "Configurar alertas", "Otimizar investimentos"];
       }
     } else if (context === "educational") {
       if (message.includes("plano") || message.includes("estudo")) {
@@ -227,7 +243,25 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    setInputValue(suggestion);
+    // Auto-trigger responses for smart suggestions
+    if (suggestion.includes("alertas") || suggestion.includes("Configurar")) {
+      const userMessage: AIMessage = {
+        id: Date.now().toString(),
+        type: "user", 
+        content: "Configurar alertas",
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, userMessage]);
+      setIsTyping(true);
+      
+      setTimeout(async () => {
+        const aiResponse = await generateAIResponse("Configurar alertas");
+        setMessages(prev => [...prev, aiResponse]);
+        setIsTyping(false);
+      }, 1000);
+    } else {
+      setInputValue(suggestion);
+    }
   };
 
   const handleActionClick = (action: string, data?: any) => {
