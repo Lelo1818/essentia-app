@@ -5,12 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 
 export default function RenegociarDividas() {
   const [, setLocation] = useLocation();
   const [selectedDebt, setSelectedDebt] = useState<any>(null);
+  const [simulationValues, setSimulationValues] = useState({
+    cashValue: 0,
+    installments: 12
+  });
   
   // Capturar parâmetro da URL se vier da página de dívidas
   useEffect(() => {
@@ -287,12 +292,15 @@ export default function RenegociarDividas() {
                           onClick={() => {
                             console.log('Simular Acordo clicado para:', debt.name);
                             setSelectedDebt(debt);
+                            // Forçar re-render e scroll
                             setTimeout(() => {
                               const element = document.getElementById('simulation-section');
                               if (element) {
-                                element.scrollIntoView({ behavior: 'smooth' });
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              } else {
+                                console.log('Elemento simulation-section não encontrado');
                               }
-                            }, 100);
+                            }, 200);
                           }}
                         >
                           <Calculator className="h-4 w-4 mr-2" />
@@ -350,8 +358,8 @@ export default function RenegociarDividas() {
 
         {/* Seção de Simulação */}
         {selectedDebt && (
-          <div id="simulation-section">
-            <Card className="mt-8 border-2 border-green-200 bg-green-50">
+          <div id="simulation-section" className="mt-8">
+            <Card className="border-2 border-green-400 bg-gradient-to-r from-green-50 to-blue-50 shadow-lg">
               <CardHeader>
                 <CardTitle className="text-green-800 flex items-center gap-2">
                   <Calculator className="w-5 h-5" />
@@ -368,8 +376,10 @@ export default function RenegociarDividas() {
                       type="number"
                       placeholder="Ex: 2000"
                       className="w-full"
+                      value={simulationValues.cashValue || ''}
                       onChange={(e) => {
                         const valor = parseFloat(e.target.value) || 0;
+                        setSimulationValues(prev => ({ ...prev, cashValue: valor }));
                         console.log('Simulando valor:', valor);
                       }}
                     />
@@ -382,8 +392,10 @@ export default function RenegociarDividas() {
                       type="number"
                       placeholder="Ex: 12"
                       className="w-full"
+                      value={simulationValues.installments || ''}
                       onChange={(e) => {
-                        const parcelas = parseInt(e.target.value) || 0;
+                        const parcelas = parseInt(e.target.value) || 12;
+                        setSimulationValues(prev => ({ ...prev, installments: parcelas }));
                         console.log('Simulando parcelas:', parcelas);
                       }}
                     />
