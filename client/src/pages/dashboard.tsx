@@ -165,12 +165,44 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
-      <QuickActions
-        onOpenIncomeModal={() => setIncomeModalOpen(true)}
-        onOpenExpenseModal={() => setExpenseModalOpen(true)}
-        onOpenPlanningModal={() => setPlanningModalOpen(true)}
-        onOpenGoalsModal={() => setGoalsModalOpen(true)}
-      />
+      {/* Botões de ação rápida */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <button 
+          onClick={() => window.location.href = '/agendar-pagamentos'}
+          className="bg-blue-600 hover:bg-blue-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+        >
+          <Calendar className="w-6 h-6" />
+          <span className="font-medium">Agendar Pagamentos</span>
+        </button>
+
+        <button 
+          onClick={() => {
+            alert("Simulador de Cenários - Funcionalidade em desenvolvimento...");
+          }}
+          className="bg-purple-600 hover:bg-purple-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+        >
+          <Calculator className="w-6 h-6" />
+          <span className="font-medium">Simular Cenários</span>
+        </button>
+
+        <button 
+          onClick={() => {
+            alert("Renegociar Dívidas - Análise de renegociação em desenvolvimento...");
+          }}
+          className="bg-green-600 hover:bg-green-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+        >
+          <DollarSign className="w-6 h-6" />
+          <span className="font-medium">Renegociar Dívidas</span>
+        </button>
+
+        <button 
+          onClick={() => setExpenseModalOpen(true)}
+          className="bg-red-600 hover:bg-red-700 text-white p-6 h-auto flex flex-col items-center gap-2 rounded-lg transition-colors"
+        >
+          <Camera className="w-6 h-6" />
+          <span className="font-medium">Fotografar Gasto</span>
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <FinancialOverview
