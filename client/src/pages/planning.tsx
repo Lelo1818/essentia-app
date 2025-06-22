@@ -113,7 +113,7 @@ export default function Planning() {
     );
   }
 
-  const totalIncome = (summary as any)?.totalIncome || 11235; // Use realistic demo income
+  const totalIncome = (summary as any)?.totalIncome || 0;
   const remainingIncome = totalIncome - totalAllocation;
   const expensesByCategory = (summary as any)?.expensesByCategory || {
     alimentacao: { total: 926.30, count: 4 },
