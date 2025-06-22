@@ -239,6 +239,31 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* DEBUG: VERSÃO SIMPLES DOS BOTÕES */}
+      <div id="botoes-essenciais" style={{background: 'white', padding: '20px', margin: '20px 0', borderRadius: '8px', border: '2px solid red'}}>
+        <h2 style={{textAlign: 'center', marginBottom: '20px', color: 'red'}}>DEBUG: BOTÕES ESSENCIAIS</h2>
+        <div style={{display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap'}}>
+          <button 
+            onClick={() => {console.log('AGENDAR CLICADO'); window.location.href = '/agendar-pagamentos';}}
+            style={{background: 'blue', color: 'white', padding: '15px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer'}}
+          >
+            📅 AGENDAR
+          </button>
+          <button 
+            onClick={() => {console.log('SIMULAR CLICADO'); window.location.href = '/simular-cenarios';}}
+            style={{background: 'purple', color: 'white', padding: '15px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer'}}
+          >
+            📊 SIMULAR
+          </button>
+          <button 
+            onClick={() => {console.log('RENEGOCIAR CLICADO'); window.location.href = '/renegociar-dividas';}}
+            style={{background: 'green', color: 'white', padding: '15px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer'}}
+          >
+            💰 RENEGOCIAR
+          </button>
+        </div>
+      </div>
+
       {/* ✨ SEÇÃO PRINCIPAL DE FERRAMENTAS ✨ */}
       <div style={{
         backgroundColor: '#f8fafc', 

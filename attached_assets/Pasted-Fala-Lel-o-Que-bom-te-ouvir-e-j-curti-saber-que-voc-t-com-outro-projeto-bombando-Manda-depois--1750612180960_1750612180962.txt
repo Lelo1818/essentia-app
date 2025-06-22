@@ -1,0 +1,55 @@
+Fala, Lelão! Que bom te ouvir e já curti saber que você tá com outro projeto bombando. Manda depois pra eu conhecer esse Zero Financeiro — o nome já tem punch 🔥.
+
+Sobre o developer que está empacado nos 3 botões: entendo perfeitamente essa frustração. A mágica do produto diferenciado tá justamente nesses “detalhes que não dá pra abrir mão”. E você tá certo em não deixar simplificar pra baixo.
+
+Agora, direto ao ponto: como destravar esse cara?
+Aqui vão algumas abordagens práticas e estratégicas, pra manter o clima bom e ao mesmo tempo exigir entrega com padrão alto:
+
+🔧 1. Checklist Técnico Específico
+Pede pra ele te mandar (ou mostrar no debug) os seguintes pontos:
+
+Os IDs ou classes CSS dos 3 botões estão corretos?
+
+As funções JavaScript associadas estão sendo chamadas no clique (onClick, addEventListener, etc.)?
+
+Eles estão visíveis no DOM? (display: none? z-index errado? Estão “atrás” de algo?)
+
+O código que ativa a navegação dos botões está incluído no arquivo certo? (Às vezes o script carrega antes dos elementos existirem.)
+
+Comando:
+
+“Brother, antes de continuarmos, vamos validar juntos esses três pontos: se os botões estão com ID, se estão no DOM, e se o click está ouvindo. Porque o código já existe, eu vi. Então deve ser só uma ligação mal feita.”
+
+🧠 2. Prompt Técnico-psicológico (pra IA ou dev)
+Se for IA (tipo GPT com função de desenvolvedor), você pode usar algo assim:
+
+“Você já escreveu os códigos para os três botões que deveriam estar funcionando. No entanto, eles ainda não são acessíveis. Refaça a verificação da ligação dos botões com suas respectivas funções. Use debug passo-a-passo e me diga exatamente em qual parte o fluxo está quebrando. Não simplifique o design, apenas corrija a execução.”
+
+Se for dev humano, manda um:
+
+“Mano, esses três botões fazem parte do diferencial do projeto. Eu confio em você, então vamos tratar eles como prioridade máxima. Vamos só garantir juntos se o evento de clique está ativo, se o botão está visível e se ele chama a função esperada. Me mostra isso em 5 minutos e a gente mata esse entrave.”
+
+💣 3. Destravamento forçado
+Às vezes resolve pedindo:
+
+“Cria agora uma versão isolada com só esses 3 botões funcionando num HTML separado. Assim a gente elimina qualquer interferência de CSS ou JavaScript externo.”
+
+É o famoso sandbox de debug — 99% das vezes o bug aparece quando isola.
+
+🧠 Extra Brancola
+Se quiser, posso gerar aqui um modelo de verificação dos 3 botões (HTML + JS) que você pode mandar pra ele comparar.
+
+Quer? Só me diz o nome dos botões e o que eles deveriam fazer.
+
+Tô contigo, Lelão. Segurar o padrão é o que separa projeto medíocre de produto memorável. Não larga desses botões, porque eles são o detalhe que vende. Bora fazer esse app ser foda também.
+
+Quer que eu te ajude a bolar um texto simbólico pra explicar pro dev por que esses botões são inegociáveis?
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TESTE ISOLADO - 3 BOTÕES</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { 
+            background: white; 
+            padding: 24px; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            margin: 24px 0; 
+            border: 1px solid #e5e7eb; 
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+        }
+        .btn { 
+            color: white; 
+            padding: 24px; 
+            border-radius: 12px; 
+            border: none; 
+            cursor: pointer; 
+            text-align: center; 
+            font-size: 16px; 
+            font-weight: bold; 
+            transition: transform 0.2s; 
+        }
+        .btn:hover { transform: scale(1.02); }
+        .btn-blue { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+        .btn-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
+    </style>
+</head>
+<body>
+    <h1>TESTE ISOLADO - BOTÕES FUNCIONAIS</h1>
+    
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 24px;">Ferramentas Financeiras</h2>
+        <div class="grid">
+            <button class="btn btn-blue" onclick="testarAgendar()">
+                📅 Agendar Pagamentos
+            </button>
+            <button class="btn btn-purple" onclick="testarSimular()">
+                📊 Simular Cenários
+            </button>
+            <button class="btn btn-green" onclick="testarRenegociar()">
+                💰 Renegociar Dívidas
+            </button>
+        </div>
+    </div>
+
+    <div id="resultado" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+
+    <script>
+        function testarAgendar() {
+            document.getElementById('resultado').innerHTML = '✅ BOTÃO AGENDAR FUNCIONANDO!';
+            console.log('CLIQUE: Agendar Pagamentos');
+        }
+        
+        function testarSimular() {
+            document.getElementById('resultado').innerHTML = '✅ BOTÃO SIMULAR FUNCIONANDO!';
+            console.log('CLIQUE: Simular Cenários');
+        }
+        
+        function testarRenegociar() {
+            document.getElementById('resultado').innerHTML = '✅ BOTÃO RENEGOCIAR FUNCIONANDO!';
+            console.log('CLIQUE: Renegociar Dívidas');
+        }
+        
+        // Debug: Verificar se os botões existem no DOM
+        window.onload = function() {
+            const botoes = document.querySelectorAll('.btn');
+            console.log('Botões encontrados no DOM:', botoes.length);
+            botoes.forEach((btn, index) => {
+                console.log(`Botão ${index + 1}:`, btn.textContent.trim());
+            });
+        }
+    </script>
+</body>
+</html>
