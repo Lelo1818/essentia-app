@@ -6,7 +6,7 @@ export default function MobileNavigation() {
 
   const navItems = [
     { path: "/", icon: Home, label: "Home" },
-    { path: "/flow", icon: TrendingUp, label: "Flow" },
+    { path: "/fluxo-caixa", icon: TrendingUp, label: "Flow" },
     { path: "/dividas", icon: CreditCard, label: "Dívidas" },
     { path: "/goals", icon: Trophy, label: "Metas" },
     { path: "/agendar-pagamentos", icon: Clock, label: "Agendar" },

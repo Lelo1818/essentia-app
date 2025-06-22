@@ -20,10 +20,10 @@ export default function BottomNavigation() {
       activePattern: /^\/$/
     },
     { 
-      path: "/flow", 
+      path: "/fluxo-caixa", 
       icon: TrendingUp, 
       label: "Flow",
-      activePattern: /^\/flow(\/.*)?$/
+      activePattern: /^\/fluxo-caixa$/
     },
     { 
       path: "/flow/cartoes", 
