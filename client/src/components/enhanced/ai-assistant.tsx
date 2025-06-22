@@ -109,6 +109,17 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
     let suggestions: string[] = [];
     let actionData: any = undefined;
 
+    // Fetch real-time financial data
+    let realTimeData = userData;
+    try {
+      const response = await fetch('/api/financial-summary');
+      if (response.ok) {
+        realTimeData = await response.json();
+      }
+    } catch (error) {
+      console.log('Using fallback data');
+    }
+
     // Simple AI logic based on context and keywords
     const message = userMessage.toLowerCase();
 
@@ -121,9 +132,9 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
         response = "Com base no seu perfil conservador e reserva de emergência adequada, recomendo:\n\n🏦 **Renda Fixa (70%)**\n• CDB 110% CDI\n• Tesouro Selic\n\n📈 **Renda Variável (30%)**\n• Fundos de índice (ETFs)\n• Ações de empresas consolidadas\n\nEssa distribuição oferece segurança com potencial de crescimento!";
         suggestions = ["Simular investimentos", "Ver carteira recomendada", "Estudar sobre investimentos"];
       } else if (message.includes("orçamento") || message.includes("analisa")) {
-        const totalIncome = userData?.totalIncome || 20601.8;
-        const totalExpenses = userData?.totalExpenses || 4267.94;
-        const balance = userData?.balance || 16333.86;
+        const totalIncome = realTimeData?.totalIncome || 20601.8;
+        const totalExpenses = realTimeData?.totalExpenses || 4267.94;
+        const balance = realTimeData?.balance || 16333.86;
         
         response = `📊 **Análise do Seu Orçamento**\n\n💰 **Receita Total:** R$ ${totalIncome.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💸 **Gastos Totais:** R$ ${totalExpenses.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💵 **Saldo Disponível:** R$ ${balance.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n\n✅ **Situação:** Muito positiva! Você está poupando ${((balance/totalIncome)*100).toFixed(1)}% da sua receita.\n\n**Recomendações:**\n• Continue esse padrão de economia\n• Considere investir parte do saldo\n• Mantenha reserva de emergência`;
         suggestions = ["Como investir o saldo", "Otimizar gastos", "Planejar aposentadoria"];
