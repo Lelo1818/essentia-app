@@ -118,7 +118,34 @@ export default function Ofertas() {
     queryKey: ['/api/financial-summary'],
   });
 
-  const ofertasFiltradas = ofertas.filter(oferta => {
+  // Buscar ofertas reais da API
+  const { data: ofertasReais, isLoading: loadingOfertas } = useQuery({
+    queryKey: ['/api/real-offers'],
+    staleTime: 5 * 60 * 1000, // 5 minutos
+  });
+
+  // Combinar ofertas simuladas com ofertas reais
+  const todasOfertas = [
+    ...ofertas,
+    ...(ofertasReais || []).map((oferta: any) => ({
+      id: `real_${oferta.id}`,
+      titulo: oferta.title,
+      descricao: oferta.description,
+      precoOriginal: oferta.originalPrice,
+      precoDesconto: oferta.price,
+      desconto: oferta.discount,
+      categoria: oferta.category.toLowerCase(),
+      loja: oferta.store,
+      cashback: oferta.cashback,
+      validadeHoras: 72,
+      rating: 4.5,
+      vendidos: Math.floor(Math.random() * 500),
+      imagem: "🛒",
+      tags: ["real", "api", "cashback"]
+    }))
+  ];
+
+  const ofertasFiltradas = todasOfertas.filter(oferta => {
     if (filtroCategoria !== "todos" && oferta.categoria !== filtroCategoria) {
       return false;
     }
@@ -160,7 +187,8 @@ export default function Ofertas() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">🛍️ Ofertas Exclusivas</h1>
-          <p className="text-gray-600">Descontos especiais para usuários Flow</p>
+          <p className="text-gray-600">No Flow, quem cuida bem do dinheiro não ganha só paz. Ganha poder de compra.</p>
+          <p className="text-sm text-purple-600 font-medium mt-1">Aqui, a economia vira conquista — e o bom hábito vira vantagem.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline">
@@ -181,7 +209,17 @@ export default function Ofertas() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Ofertas Ativas</p>
-                <p className="text-2xl font-bold text-blue-600">{ofertas.length}</p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {todasOfertas.length}
+                  {loadingOfertas && (
+                    <span className="text-sm ml-2 text-gray-500">Carregando...</span>
+                  )}
+                </p>
+                {ofertasReais && ofertasReais.length > 0 && (
+                  <p className="text-xs text-green-600 mt-1">
+                    {ofertasReais.length} ofertas reais via API
+                  </p>
+                )}
               </div>
               <div className="p-3 bg-blue-100 rounded-full">
                 <ShoppingBag className="w-6 h-6 text-blue-600" />

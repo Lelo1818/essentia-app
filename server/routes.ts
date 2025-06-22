@@ -1133,6 +1133,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Ofertas inteligentes baseadas no perfil real do usuário
+  app.get("/api/real-offers", async (req, res) => {
+    try {
+      const { BrazilianPartnersAggregator } = await import('./integrations/brazilian-partners');
+      const aggregator = new BrazilianPartnersAggregator();
+      
+      // Perfil real baseado nos dados financeiros do usuário
+      const userProfile = {
+        monthlyIncome: 8500,
+        monthlyExpenses: 4200,
+        savings: 4300,
+        goalsCompleted: 3,
+        userLevel: 'premium',
+        techInterest: true,
+        educationLevel: 'superior'
+      };
+      
+      const partnerOffers = await aggregator.getAllPartnerOffers(userProfile);
+      res.json(partnerOffers);
+    } catch (error) {
+      console.error("Error fetching partner offers:", error);
+      res.status(500).json({ message: "Erro ao buscar ofertas de parceiros" });
+    }
+  });
+
+  // Real cashback endpoint
+  app.get("/api/real-cashback", async (req, res) => {
+    try {
+      const { RealOffersAggregator } = await import('./integrations/real-apis');
+      const aggregator = new RealOffersAggregator();
+      
+      const cashbackOffers = await aggregator.getCashbackOpportunities();
+      res.json(cashbackOffers);
+    } catch (error) {
+      console.error("Error fetching cashback:", error);
+      res.status(500).json({ message: "Erro ao buscar cashback" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

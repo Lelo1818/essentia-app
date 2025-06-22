@@ -1,168 +1,280 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Plane, CreditCard, Target, TrendingUp, MapPin, Calendar, Gift } from "lucide-react";
+import { Plane, Star, TrendingUp, Gift, Map, Clock, Award } from "lucide-react";
+import { formatCurrency } from "@/lib/financial-utils";
+import { useToast } from "@/hooks/use-toast";
 
-interface ProgramaMilhas {
-  id: string;
-  nome: string;
-  saldo: number;
-  validade: string;
-  valorMilha: number;
-  cartaoVinculado?: string;
-  logo: string;
-}
+export default function Milhas() {
+  const [selectedProgram, setSelectedProgram] = useState<string>("all");
+  const { toast } = useToast();
 
-interface SonhoViagem {
-  id: string;
-  destino: string;
-  custoPassagem: number;
-  milhasNecessarias: number;
-  dataDesejada: string;
-  prioridade: "alta" | "media" | "baixa";
-  progresso: number;
-}
-
-export default function GestaoMilhas() {
-  const [programas, setProgramas] = useState<ProgramaMilhas[]>([]);
-  const [sonhosViagem, setSonhosViagem] = useState<SonhoViagem[]>([]);
-  const [novoSonho, setNovoSonho] = useState({
-    destino: "",
-    dataDesejada: "",
-    custoPassagem: 0
+  const { data: summary } = useQuery({
+    queryKey: ['/api/financial-summary'],
   });
 
-  useEffect(() => {
-    const programasExemplo: ProgramaMilhas[] = [
-      {
-        id: "1",
-        nome: "LATAM Pass",
-        saldo: 45000,
-        validade: "Dec 2024",
-        valorMilha: 0.018,
-        cartaoVinculado: "Itaú LATAM",
-        logo: "✈️"
-      },
-      {
-        id: "2",
-        nome: "Smiles",
-        saldo: 28000,
-        validade: "Mar 2025",
-        valorMilha: 0.015,
-        cartaoVinculado: "Santander Smiles",
-        logo: "🛫"
-      },
-      {
-        id: "3",
-        nome: "TudoAzul",
-        saldo: 12000,
-        validade: "Jun 2024",
-        valorMilha: 0.020,
-        logo: "🔵"
-      }
-    ];
-
-    const sonhosExemplo: SonhoViagem[] = [
-      {
-        id: "1",
-        destino: "Paris, França",
-        custoPassagem: 4200,
-        milhasNecessarias: 85000,
-        dataDesejada: "2024-12-20",
-        prioridade: "alta",
-        progresso: 53
-      },
-      {
-        id: "2",
-        destino: "Tóquio, Japão",
-        custoPassagem: 6800,
-        milhasNecessarias: 120000,
-        dataDesejada: "2025-06-15",
-        prioridade: "media",
-        progresso: 28
-      },
-      {
-        id: "3",
-        destino: "Buenos Aires, Argentina",
-        custoPassagem: 1200,
-        milhasNecessarias: 35000,
-        dataDesejada: "2024-09-10",
-        prioridade: "alta",
-        progresso: 85
-      }
-    ];
-
-    setProgramas(programasExemplo);
-    setSonhosViagem(sonhosExemplo);
-  }, []);
-
-  const totalMilhas = programas.reduce((acc, p) => acc + p.saldo, 0);
-  const valorTotalMilhas = programas.reduce((acc, p) => acc + (p.saldo * p.valorMilha), 0);
-
-  const calcularEstrategia = (sonho: SonhoViagem) => {
-    const milhasDisponiveis = totalMilhas;
-    const milhasFaltando = Math.max(0, sonho.milhasNecessarias - milhasDisponiveis);
-    const custoComprarMilhas = milhasFaltando * 0.025; // Média compra de milhas
-    const economiaVsPassagem = sonho.custoPassagem - custoComprarMilhas;
-    
-    return {
-      milhasFaltando,
-      custoComprarMilhas,
-      economiaVsPassagem,
-      viavel: economiaVsPassagem > 500
-    };
+  // Sistema de milhas baseado no comportamento financeiro
+  const userMiles = {
+    total: 47850,
+    thisMonth: 8420,
+    level: "Gold",
+    nextLevel: "Platinum",
+    milesNeeded: 12150,
+    multiplier: 2.5
   };
 
-  const getPrioridadeColor = (prioridade: string) => {
-    switch (prioridade) {
-      case "alta": return "text-red-600 bg-red-100";
-      case "media": return "text-yellow-600 bg-yellow-100";
-      case "baixa": return "text-green-600 bg-green-100";
-      default: return "text-gray-600 bg-gray-100";
+  const milesPrograms = [
+    {
+      id: "smiles",
+      name: "Smiles",
+      logo: "✈️",
+      balance: 28450,
+      category: "aviacao",
+      partner: "Gol",
+      multiplier: 3.0,
+      lastEarned: 1250,
+      status: "ativo",
+      transferRate: 1.2, // R$ por milha
+      minRedemption: 5000
+    },
+    {
+      id: "latam",
+      name: "LATAM Pass",
+      logo: "🛫",
+      balance: 19400,
+      category: "aviacao",
+      partner: "LATAM",
+      multiplier: 2.8,
+      lastEarned: 920,
+      status: "ativo",
+      transferRate: 1.1,
+      minRedemption: 6000
+    },
+    {
+      id: "livelo",
+      name: "Livelo",
+      logo: "🎁",
+      balance: 12580,
+      category: "multibeneficio",
+      partner: "Bradesco",
+      multiplier: 2.0,
+      lastEarned: 580,
+      status: "ativo",
+      transferRate: 0.8,
+      minRedemption: 2000
+    },
+    {
+      id: "tudo_azul",
+      name: "TudoAzul",
+      logo: "💙",
+      balance: 8970,
+      category: "aviacao",
+      partner: "Azul",
+      multiplier: 2.5,
+      lastEarned: 350,
+      status: "ativo",
+      transferRate: 1.0,
+      minRedemption: 4500
     }
+  ];
+
+  const milesOpportunities = [
+    {
+      id: 1,
+      title: "Compras no Cartão - Milhas Dobradas",
+      description: "Use o cartão Flow e ganhe 2x mais milhas em todas as compras",
+      milesRate: "2 milhas por R$ 1 gasto",
+      category: "cartao",
+      partner: "Todos os programas",
+      requirement: "Cartão Flow Premium",
+      available: true,
+      bonus: 5000,
+      validUntil: "2025-12-31"
+    },
+    {
+      id: 2,
+      title: "Meta Atingida = Milhas Bônus",
+      description: "Complete suas metas mensais e ganhe milhas extras",
+      milesRate: "1000 milhas por meta",
+      category: "metas",
+      partner: "Sistema Flow",
+      requirement: "Meta mensal completa",
+      available: true,
+      bonus: 3000,
+      validUntil: "2025-08-31"
+    },
+    {
+      id: 3,
+      title: "Transferência Inteligente",
+      description: "Transfira pontos de cartão para milhas com 30% de bônus",
+      milesRate: "1 ponto = 1.3 milhas",
+      category: "transferencia",
+      partner: "Smiles + LATAM",
+      requirement: "Saldo > R$ 5.000",
+      available: summary?.balance ? summary.balance > 5000 : false,
+      bonus: 2000,
+      validUntil: "2025-07-30"
+    },
+    {
+      id: 4,
+      title: "Cashback → Milhas",
+      description: "Converta seu cashback acumulado em milhas",
+      milesRate: "R$ 1 = 50 milhas",
+      category: "conversao",
+      partner: "Livelo",
+      requirement: "Cashback > R$ 100",
+      available: true,
+      bonus: 1500,
+      validUntil: "2025-09-15"
+    }
+  ];
+
+  const recentActivity = [
+    {
+      id: 1,
+      date: "2025-06-20",
+      action: "Compra cartão",
+      miles: 1250,
+      program: "Smiles",
+      details: "Magazine Luiza - R$ 625",
+      multiplier: "2x"
+    },
+    {
+      id: 2,
+      date: "2025-06-18",
+      action: "Meta completada",
+      miles: 1000,
+      program: "Sistema Flow",
+      details: "Meta de economia - Junho",
+      multiplier: "Bônus"
+    },
+    {
+      id: 3,
+      date: "2025-06-15",
+      action: "Transferência",
+      miles: 2500,
+      program: "LATAM Pass",
+      details: "Pontos cartão → milhas",
+      multiplier: "1.3x"
+    },
+    {
+      id: 4,
+      date: "2025-06-12",
+      action: "Cashback conversão",
+      miles: 750,
+      program: "Livelo",
+      details: "R$ 15 cashback → milhas",
+      multiplier: "50x"
+    }
+  ];
+
+  const activateOpportunity = (title: string) => {
+    toast({
+      title: "Oportunidade Ativada!",
+      description: `${title} foi ativado na sua conta. Comece a ganhar milhas extras!`,
+    });
   };
+
+  const redeemMiles = (program: string, miles: number) => {
+    toast({
+      title: "Resgate Processado",
+      description: `Processando resgate de ${miles.toLocaleString()} milhas do ${program}`,
+    });
+  };
+
+  const totalMilesValue = milesPrograms.reduce(
+    (sum, program) => sum + (program.balance * program.transferRate), 0
+  );
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestão de Milhas</h1>
-          <p className="text-gray-600">Otimize suas milhas para realizar sonhos de viagem</p>
+          <h1 className="text-3xl font-bold">✈️ Milhas Inteligentes</h1>
+          <p className="text-gray-600">Maximize suas milhas com comportamento financeiro inteligente</p>
         </div>
-        <div className="text-right">
-          <div className="text-2xl font-bold text-blue-600">{totalMilhas.toLocaleString()}</div>
-          <div className="text-sm text-gray-600">Total de Milhas</div>
+        <div className="flex gap-3">
+          <Button variant="outline">
+            <Map className="w-4 h-4 mr-2" />
+            Simulador Viagem
+          </Button>
+          <Button>
+            <Gift className="w-4 h-4 mr-2" />
+            Resgatar Milhas
+          </Button>
         </div>
       </div>
 
-      {/* Resumo Geral */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      {/* Cards de Resumo */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{totalMilhas.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Total Milhas</div>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Total Milhas</p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {userMiles.total.toLocaleString()}
+                </p>
+              </div>
+              <div className="p-3 bg-blue-100 rounded-full">
+                <Plane className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">R$ {valorTotalMilhas.toFixed(0)}</div>
-            <div className="text-sm text-gray-600">Valor Estimado</div>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Valor Estimado</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {formatCurrency(totalMilesValue)}
+                </p>
+              </div>
+              <div className="p-3 bg-green-100 rounded-full">
+                <Star className="w-6 h-6 text-green-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">{programas.length}</div>
-            <div className="text-sm text-gray-600">Programas Ativos</div>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Nível Atual</p>
+                <p className="text-2xl font-bold text-purple-600">{userMiles.level}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {userMiles.milesNeeded.toLocaleString()} para {userMiles.nextLevel}
+                </p>
+              </div>
+              <div className="p-3 bg-purple-100 rounded-full">
+                <Award className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-orange-600">{sonhosViagem.length}</div>
-            <div className="text-sm text-gray-600">Sonhos de Viagem</div>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Este Mês</p>
+                <p className="text-2xl font-bold text-yellow-600">
+                  +{userMiles.thisMonth.toLocaleString()}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Multiplicador: {userMiles.multiplier}x
+                </p>
+              </div>
+              <div className="p-3 bg-yellow-100 rounded-full">
+                <TrendingUp className="w-6 h-6 text-yellow-600" />
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -173,35 +285,61 @@ export default function GestaoMilhas() {
           <CardTitle>Seus Programas de Milhas</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {programas.map((programa) => (
-              <div key={programa.id} className="border rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-2xl">{programa.logo}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {milesPrograms.map((program) => (
+              <div key={program.id} className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="text-3xl">{program.logo}</div>
                     <div>
-                      <h4 className="font-semibold">{programa.nome}</h4>
-                      {programa.cartaoVinculado && (
-                        <div className="text-xs text-gray-600">{programa.cartaoVinculado}</div>
-                      )}
+                      <h3 className="font-semibold">{program.name}</h3>
+                      <p className="text-sm text-gray-600">{program.partner}</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-bold">{programa.saldo.toLocaleString()}</div>
-                    <div className="text-xs text-gray-600">milhas</div>
-                  </div>
+                  <Badge className="bg-green-100 text-green-800">
+                    {program.status}
+                  </Badge>
                 </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Validade:</span>
-                    <span className="font-medium">{programa.validade}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Valor estimado:</span>
-                    <span className="font-medium text-green-600">
-                      R$ {(programa.saldo * programa.valorMilha).toFixed(0)}
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Saldo:</span>
+                    <span className="font-bold text-lg">
+                      {program.balance.toLocaleString()} milhas
                     </span>
                   </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Valor estimado:</span>
+                    <span className="font-medium text-green-600">
+                      {formatCurrency(program.balance * program.transferRate)}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Último ganho:</span>
+                    <span className="font-medium">
+                      +{program.lastEarned} milhas
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Multiplicador:</span>
+                    <Badge variant="outline">
+                      {program.multiplier}x pontos
+                    </Badge>
+                  </div>
+
+                  <Button 
+                    className="w-full mt-4"
+                    onClick={() => redeemMiles(program.name, program.balance)}
+                    disabled={program.balance < program.minRedemption}
+                  >
+                    {program.balance >= program.minRedemption 
+                      ? `Resgatar ${program.minRedemption.toLocaleString()}+ milhas`
+                      : `Mín. ${program.minRedemption.toLocaleString()} milhas`
+                    }
+                  </Button>
                 </div>
               </div>
             ))}
@@ -209,150 +347,112 @@ export default function GestaoMilhas() {
         </CardContent>
       </Card>
 
-      {/* Sonhos de Viagem */}
+      {/* Oportunidades de Milhas */}
       <Card>
         <CardHeader>
-          <CardTitle>Seus Sonhos de Viagem</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Star className="w-5 h-5 text-yellow-500" />
+            Oportunidades de Milhas Extras
+          </CardTitle>
+          <p className="text-sm text-gray-600">
+            Ganhe mais milhas com base no seu comportamento financeiro
+          </p>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {sonhosViagem.map((sonho) => {
-              const estrategia = calcularEstrategia(sonho);
-              return (
-                <div key={sonho.id} className="border rounded-lg p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      <MapPin className="w-6 h-6 text-blue-500" />
-                      <div>
-                        <h4 className="font-semibold text-lg">{sonho.destino}</h4>
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <Calendar className="w-4 h-4" />
-                          <span>{new Date(sonho.dataDesejada).toLocaleDateString()}</span>
-                          <Badge className={`text-xs ${getPrioridadeColor(sonho.prioridade)}`}>
-                            {sonho.prioridade === "alta" ? "Alta" : 
-                             sonho.prioridade === "media" ? "Média" : "Baixa"} Prioridade
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-blue-600">
-                        {sonho.milhasNecessarias.toLocaleString()} milhas
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        ou R$ {sonho.custoPassagem.toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Progresso das Milhas</span>
-                      <span className="text-sm font-bold">{sonho.progresso}%</span>
-                    </div>
-                    <Progress value={sonho.progresso} className="h-3" />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div className="bg-gray-50 p-3 rounded">
-                      <div className="font-medium">Milhas Necessárias</div>
-                      <div className="text-lg font-bold">{sonho.milhasNecessarias.toLocaleString()}</div>
-                    </div>
-                    <div className="bg-blue-50 p-3 rounded">
-                      <div className="font-medium">Milhas Faltando</div>
-                      <div className="text-lg font-bold text-blue-600">
-                        {estrategia.milhasFaltando.toLocaleString()}
-                      </div>
-                    </div>
-                    <div className="bg-green-50 p-3 rounded">
-                      <div className="font-medium">Economia vs Passagem</div>
-                      <div className="text-lg font-bold text-green-600">
-                        R$ {estrategia.economiaVsPassagem.toFixed(0)}
-                      </div>
-                    </div>
-                  </div>
-
-                  {estrategia.viavel ? (
-                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded">
-                      <div className="flex items-center space-x-2">
-                        <Target className="w-4 h-4 text-green-600" />
-                        <span className="font-semibold text-green-800">Estratégia Recomendada</span>
-                      </div>
-                      <p className="text-green-700 text-sm mt-1">
-                        Compre {estrategia.milhasFaltando.toLocaleString()} milhas por R$ {estrategia.custoComprarMilhas.toFixed(0)} 
-                        e economize R$ {estrategia.economiaVsPassagem.toFixed(0)} vs comprar passagem diretamente.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {milesOpportunities.map((opportunity) => (
+              <div key={opportunity.id} className={`p-4 border rounded-lg transition-colors ${
+                opportunity.available ? 'hover:bg-gray-50 border-green-200' : 'opacity-75 border-gray-200'
+              }`}>
+                <div className="space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="font-semibold">{opportunity.title}</h3>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {opportunity.description}
                       </p>
                     </div>
-                  ) : (
-                    <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-                      <div className="flex items-center space-x-2">
-                        <CreditCard className="w-4 h-4 text-yellow-600" />
-                        <span className="font-semibold text-yellow-800">Sugestão de Acúmulo</span>
-                      </div>
-                      <p className="text-yellow-700 text-sm mt-1">
-                        Use cartão de crédito com programa de milhas para gastos mensais. 
-                        Estimativa: +2.000 milhas/mês com gastos atuais.
-                      </p>
-                    </div>
-                  )}
+                    <Badge className={opportunity.available ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}>
+                      {opportunity.available ? 'Disponível' : 'Bloqueado'}
+                    </Badge>
+                  </div>
 
-                  <div className="flex items-center justify-between mt-4">
-                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                      <Plane className="w-4 h-4 mr-2" />
-                      Buscar Passagens
-                    </Button>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">
-                        Comprar Milhas
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        Ajustar Meta
-                      </Button>
+                  <div className="bg-blue-50 p-3 rounded">
+                    <p className="text-sm font-medium text-blue-900">
+                      {opportunity.milesRate}
+                    </p>
+                    <p className="text-xs text-blue-700 mt-1">
+                      Bônus de ativação: +{opportunity.bonus.toLocaleString()} milhas
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Parceiro:</span>
+                      <span className="font-medium">{opportunity.partner}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Requisito:</span>
+                      <span className="font-medium">{opportunity.requirement}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Válido até:</span>
+                      <span className="font-medium">
+                        {new Date(opportunity.validUntil).toLocaleDateString('pt-BR')}
+                      </span>
                     </div>
                   </div>
+
+                  <Button 
+                    className="w-full"
+                    onClick={() => activateOpportunity(opportunity.title)}
+                    disabled={!opportunity.available}
+                  >
+                    {opportunity.available ? 'Ativar Agora' : 'Indisponível'}
+                  </Button>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Dicas de Otimização */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-blue-200 bg-blue-50">
-          <CardHeader>
-            <div className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-blue-600" />
-              <CardTitle className="text-blue-800">Dicas de Acúmulo</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-blue-700 text-sm">
-              <li>• Use cartão LATAM para gastos recorrentes (+2.000 milhas/mês)</li>
-              <li>• Transfira pontos do Livelo (1:1 para Smiles)</li>
-              <li>• Promoções: 100% bonus até 31/Jul</li>
-              <li>• Parcerias: Uber, iFood, Magazine Luiza</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card className="border-green-200 bg-green-50">
-          <CardHeader>
-            <div className="flex items-center space-x-2">
-              <Gift className="w-5 h-5 text-green-600" />
-              <CardTitle className="text-green-800">Alertas Inteligentes</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-green-700 text-sm">
-              <li>• 12.000 milhas TudoAzul vencem em 3 meses</li>
-              <li>• Promoção 50% off para Buenos Aires ativa</li>
-              <li>• Meta Paris: faltam 40.000 milhas (viável)</li>
-              <li>• Cartão Smiles: próxima anuidade em 45 dias</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Atividade Recente */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Atividade Recente</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentActivity.map((activity) => (
+              <div key={activity.id} className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <Plane className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium">{activity.action}</h4>
+                    <p className="text-sm text-gray-600">{activity.details}</p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(activity.date).toLocaleDateString('pt-BR')}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="text-right">
+                  <div className="font-bold text-green-600">
+                    +{activity.miles.toLocaleString()} milhas
+                  </div>
+                  <div className="text-sm text-gray-600">{activity.program}</div>
+                  <Badge variant="outline" className="mt-1">
+                    {activity.multiplier}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
