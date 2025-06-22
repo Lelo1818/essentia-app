@@ -333,7 +333,10 @@ export default function Expenses() {
       
       <ExpenseModal 
         isOpen={manualModalOpen}
-        onClose={() => setManualModalOpen(false)}
+        onClose={() => {
+          console.log("=== EXPENSE PAGE: CLOSING MODAL ===");
+          setManualModalOpen(false);
+        }}
       />
     </div>
   );

@@ -74,8 +74,7 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
       }
     },
     onSuccess: (result) => {
-      console.log("=== SUCCESS ===");
-      console.log("API response:", result);
+      console.log("=== SUCCESS - MODAL WILL CLOSE ===");
       queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
       queryClient.invalidateQueries({ queryKey: ["/api/financial-summary"] });
       toast({
@@ -83,8 +82,12 @@ export function ExpenseModal({ isOpen, onClose, expense }: ExpenseModalProps) {
         description: expense ? "Despesa foi atualizada com sucesso." : "Nova despesa foi registrada.",
       });
       form.reset();
-      console.log("=== CLOSING MODAL ===");
-      onClose();
+      
+      // Force close modal
+      setTimeout(() => {
+        console.log("=== FORCING MODAL CLOSE ===");
+        onClose();
+      }, 100);
     },
     onError: (error) => {
       console.error("=== MUTATION ERROR ===", error);
