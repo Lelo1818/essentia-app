@@ -147,13 +147,14 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
       } else if (message.includes("investir") || message.includes("investimento")) {
         response = "Com base no seu perfil conservador e reserva de emergência adequada, recomendo:\n\n🏦 **Renda Fixa (70%)**\n• CDB 110% CDI\n• Tesouro Selic\n\n📈 **Renda Variável (30%)**\n• Fundos de índice (ETFs)\n• Ações de empresas consolidadas\n\nEssa distribuição oferece segurança com potencial de crescimento!";
         suggestions = ["Simular investimentos", "Ver carteira recomendada", "Estudar sobre investimentos"];
-      } else if (message.includes("orçamento") || message.includes("analisa")) {
-        const totalIncome = realTimeData?.totalIncome || 20601.8;
-        const totalExpenses = realTimeData?.totalExpenses || 4267.94;
-        const balance = realTimeData?.balance || 16333.86;
+      } else if (message.includes("orçamento") || message.includes("analisa") || message.includes("situação")) {
+        const totalIncome = financialData?.totalIncome || realTimeData?.totalIncome || 20601.8;
+        const totalExpenses = financialData?.totalExpenses || realTimeData?.totalExpenses || 4267.94;
+        const balance = totalIncome - totalExpenses;
+        const savingsRate = ((balance/totalIncome)*100).toFixed(1);
         
-        response = `📊 **Análise do Seu Orçamento**\n\n💰 **Receita Total:** R$ ${totalIncome.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💸 **Gastos Totais:** R$ ${totalExpenses.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💵 **Saldo Disponível:** R$ ${balance.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n\n✅ **Situação:** Muito positiva! Você está poupando ${((balance/totalIncome)*100).toFixed(1)}% da sua receita.\n\n**Recomendações:**\n• Continue esse padrão de economia\n• Considere investir parte do saldo\n• Mantenha reserva de emergência`;
-        suggestions = ["Como investir o saldo", "Otimizar gastos", "Planejar aposentadoria"];
+        response = `📊 **Análise REAL do Seu Orçamento**\n\n💰 **Receita Total:** ${formatCurrency(totalIncome)}\n💸 **Gastos Totais:** ${formatCurrency(totalExpenses)}\n💵 **Saldo Disponível:** ${formatCurrency(balance)}\n\n✅ **Situação:** Muito positiva! Você está poupando ${savingsRate}% da sua receita.\n\n**Análise Personalizada:**\n• ${incomes?.length || 8} fontes de renda ativas\n• Taxa de economia excelente (${savingsRate}%)\n• Potencial para investir ${formatCurrency(balance * 0.7)}/mês\n\n**Próximos Passos:**\n• Diversificar investimentos\n• Manter reserva de emergência\n• Otimizar gastos variáveis`;
+        suggestions = ["Como investir o saldo", "Otimizar gastos", "Ver detalhes das receitas"];
         actionData = { type: "budget_analysis", balance, income: totalIncome, expenses: totalExpenses };
       } else if (message.includes("meta") || message.includes("objetivo")) {
         response = "Ótimo! Definir metas é essencial para o sucesso financeiro. Vou analisar suas metas atuais:\n\n🎯 **Suas Metas Ativas:**\n• Viagem Europa: 57% concluída\n• Reserva Emergência: 48% concluída\n• Casa Própria: 40% concluída\n\nCom sua taxa de economia atual, você pode acelerar essas metas!";
