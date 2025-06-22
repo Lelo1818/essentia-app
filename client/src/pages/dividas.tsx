@@ -28,6 +28,7 @@ interface Divida {
 export default function GestaoDividas() {
   const [dividas, setDividas] = useState<Divida[]>([]);
   const [estrategia, setEstrategia] = useState<"avalanche" | "snowball">("avalanche");
+  const [sugestoes, setSugestoes] = useState<any[]>([]);
   const [valorExtra, setValorExtra] = useState("200");
   const [modalOpen, setModalOpen] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<"idle" | "uploading" | "success">("idle");
