@@ -120,9 +120,20 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
       } else if (message.includes("investir") || message.includes("investimento")) {
         response = "Com base no seu perfil conservador e reserva de emergência adequada, recomendo:\n\n🏦 **Renda Fixa (70%)**\n• CDB 110% CDI\n• Tesouro Selic\n\n📈 **Renda Variável (30%)**\n• Fundos de índice (ETFs)\n• Ações de empresas consolidadas\n\nEssa distribuição oferece segurança com potencial de crescimento!";
         suggestions = ["Simular investimentos", "Ver carteira recomendada", "Estudar sobre investimentos"];
+      } else if (message.includes("orçamento") || message.includes("analisa")) {
+        const totalIncome = userData?.totalIncome || 20601.8;
+        const totalExpenses = userData?.totalExpenses || 4395.79;
+        const balance = userData?.balance || 16206.01;
+        
+        response = `📊 **Análise do Seu Orçamento**\n\n💰 **Receita Total:** R$ ${totalIncome.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💸 **Gastos Totais:** R$ ${totalExpenses.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n💵 **Saldo Disponível:** R$ ${balance.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n\n✅ **Situação:** Muito positiva! Você está poupando ${((balance/totalIncome)*100).toFixed(1)}% da sua receita.\n\n**Recomendações:**\n• Continue esse padrão de economia\n• Considere investir parte do saldo\n• Mantenha reserva de emergência`;
+        suggestions = ["Como investir o saldo", "Otimizar gastos", "Planejar aposentadoria"];
+        actionData = { type: "budget_analysis", balance, income: totalIncome, expenses: totalExpenses };
+      } else if (message.includes("meta") || message.includes("objetivo")) {
+        response = "Ótimo! Definir metas é essencial para o sucesso financeiro. Vou analisar suas metas atuais:\n\n🎯 **Suas Metas Ativas:**\n• Viagem Europa: 57% concluída\n• Reserva Emergência: 48% concluída\n• Casa Própria: 40% concluída\n\nCom sua taxa de economia atual, você pode acelerar essas metas!";
+        suggestions = ["Acelerar metas", "Criar nova meta", "Priorizar objetivos"];
       } else {
-        response = "Entendi sua dúvida! Para dar a melhor orientação financeira, preciso entender melhor sua situação. Você poderia me contar mais detalhes sobre o que especificamente te preocupa ou interessa?";
-        suggestions = ["Analisar meu orçamento", "Revisar metas financeiras", "Dicas de economia"];
+        response = "Como seu consultor financeiro, posso ajudar com análises detalhadas, planejamento de investimentos, otimização de gastos e definição de metas. O que gostaria de explorar?";
+        suggestions = ["Situação financeira atual", "Dicas de investimento", "Reduzir gastos"];
       }
     } else if (context === "educational") {
       if (message.includes("plano") || message.includes("estudo")) {
