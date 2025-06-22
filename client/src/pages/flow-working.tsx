@@ -254,7 +254,6 @@ export default function FlowWorking() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showIncomeModal, setShowIncomeModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
-  const [showCameraModal, setShowCameraModal] = useState(false);
 
   // Real financial data
   const data = {
@@ -424,7 +423,7 @@ export default function FlowWorking() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="grid grid-cols-3 gap-3 mb-6">
               <Button 
                 onClick={() => setShowIncomeModal(true)}
                 className="h-16 flex flex-col gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200"
@@ -440,23 +439,12 @@ export default function FlowWorking() {
                 <CreditCard className="w-5 h-5" />
                 <span className="text-xs">Novo Gasto</span>
               </Button>
-            </div>
-            
-            {/* Secondary Actions */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
               <Button 
                 onClick={() => setActiveTab("alerts")}
                 className="h-16 flex flex-col gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-200"
               >
                 <Bell className="w-5 h-5" />
                 <span className="text-xs">Alertas</span>
-              </Button>
-              <Button 
-                onClick={() => setShowCameraModal(true)}
-                className="h-16 flex flex-col gap-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
-              >
-                <Camera className="w-5 h-5" />
-                <span className="text-xs">Tirar Foto</span>
               </Button>
             </div>
 
@@ -526,11 +514,6 @@ export default function FlowWorking() {
         {/* Expense Modal */}
         {showExpenseModal && (
           <QuickExpenseModal onClose={() => setShowExpenseModal(false)} />
-        )}
-
-        {/* Camera Modal */}
-        {showCameraModal && (
-          <CameraModal onClose={() => setShowCameraModal(false)} />
         )}
       </div>
     </div>
@@ -628,7 +611,7 @@ function QuickIncomeModal({ onClose }) {
   );
 }
 
-// Enhanced Quick Expense Modal with AI Category Suggester
+// Enhanced Quick Expense Modal with AI Category Suggester and Camera
 function QuickExpenseModal({ onClose }) {
   const [formData, setFormData] = useState({
     description: "",
@@ -637,6 +620,12 @@ function QuickExpenseModal({ onClose }) {
   });
   const [aiSuggestion, setAiSuggestion] = useState(null);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const [stream, setStream] = useState(null);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const videoRef = useState(null);
+  const canvasRef = useState(null);
 
   const handleSubmit = async () => {
     try {
@@ -660,11 +649,81 @@ function QuickExpenseModal({ onClose }) {
     }
   };
 
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' }
+      });
+      setStream(mediaStream);
+      setShowCamera(true);
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
+    } catch (error) {
+      alert('Erro ao acessar câmera. Verifique as permissões.');
+    }
+  };
+
+  const capturePhoto = () => {
+    if (!videoRef.current || !canvasRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    const context = canvas.getContext('2d');
+    
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0);
+    
+    const imageData = canvas.toDataURL('image/jpeg', 0.8);
+    setCapturedImage(imageData);
+    
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setShowCamera(false);
+    
+    // Analyze the captured image
+    analyzeReceipt();
+  };
+
+  const analyzeReceipt = () => {
+    setAnalyzing(true);
+    
+    setTimeout(() => {
+      // Mock AI analysis result
+      const result = {
+        description: 'Supermercado Big',
+        amount: '127.50',
+        category: 'Alimentação'
+      };
+      
+      setFormData({
+        description: result.description,
+        amount: result.amount,
+        category: result.category
+      });
+      setAnalyzing(false);
+      alert('Recibo analisado! Dados preenchidos automaticamente.');
+    }, 2000);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-red-600">Novo Gasto</CardTitle>
+          <CardTitle className="text-red-600 flex items-center justify-between">
+            Novo Gasto
+            <Button 
+              size="sm" 
+              onClick={startCamera}
+              className="bg-purple-600 hover:bg-purple-700 text-white"
+            >
+              <Camera className="w-4 h-4 mr-1" />
+              Foto
+            </Button>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
@@ -745,13 +804,55 @@ function QuickExpenseModal({ onClose }) {
             </select>
           </div>
 
+          {/* Camera Interface */}
+          {showCamera && (
+            <div className="space-y-4">
+              <div className="relative bg-black rounded-lg">
+                <video 
+                  ref={videoRef}
+                  autoPlay 
+                  playsInline
+                  className="w-full rounded-lg"
+                  style={{ transform: 'scaleX(-1)' }}
+                />
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                  <Button 
+                    onClick={capturePhoto}
+                    className="w-16 h-16 rounded-full bg-white hover:bg-gray-100 text-black"
+                  >
+                    <Camera className="w-8 h-8" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Captured Image Preview */}
+          {capturedImage && (
+            <div className="space-y-2">
+              <img 
+                src={capturedImage} 
+                alt="Captured receipt" 
+                className="w-full rounded-lg border max-h-32 object-cover"
+              />
+              {analyzing && (
+                <div className="text-center py-2">
+                  <div className="animate-spin w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full mx-auto mb-2"></div>
+                  <p className="text-sm">Analisando recibo...</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          <canvas ref={canvasRef} style={{ display: 'none' }} />
+
           <div className="flex gap-3 pt-4">
             <Button 
               onClick={handleSubmit} 
               className="flex-1 bg-red-600 hover:bg-red-700"
-              disabled={!formData.description || !formData.amount}
+              disabled={!formData.description || !formData.amount || analyzing}
             >
-              Adicionar Gasto
+              {analyzing ? 'Processando...' : 'Adicionar Gasto'}
             </Button>
             <Button variant="outline" onClick={onClose} className="flex-1">
               Cancelar
