@@ -28,6 +28,209 @@ import Planning from "@/pages/planning";
 import Goals from "@/pages/goals";
 import Profile from "@/pages/profile";
 
+// Alert Center Component
+function AlertsCenter() {
+  const [alerts, setAlerts] = useState([
+    { id: 1, category: "Gastos Mensais", limit: 5000, current: 4267, active: true, type: "success" },
+    { id: 2, category: "Alimentação", limit: 600, current: 571, active: true, type: "success" },
+    { id: 3, category: "Transporte", limit: 500, current: 461, active: true, type: "success" },
+    { id: 4, category: "Sobra Mínima", limit: 10000, current: 16333, active: true, type: "success" }
+  ]);
+  
+  const [showEditor, setShowEditor] = useState(false);
+  const [editingAlert, setEditingAlert] = useState(null);
+
+  const createNewAlert = () => {
+    setEditingAlert({
+      id: Date.now(),
+      category: "",
+      limit: 0,
+      current: 0,
+      active: true,
+      type: "info"
+    });
+    setShowEditor(true);
+  };
+
+  const editAlert = (alert) => {
+    setEditingAlert(alert);
+    setShowEditor(true);
+  };
+
+  const saveAlert = (alertData) => {
+    if (editingAlert.id && alerts.find(a => a.id === editingAlert.id)) {
+      setAlerts(alerts.map(a => a.id === editingAlert.id ? alertData : a));
+    } else {
+      setAlerts([...alerts, alertData]);
+    }
+    setShowEditor(false);
+    setEditingAlert(null);
+  };
+
+  const toggleAlert = (id) => {
+    setAlerts(alerts.map(a => a.id === id ? {...a, active: !a.active} : a));
+  };
+
+  const deleteAlert = (id) => {
+    setAlerts(alerts.filter(a => a.id !== id));
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Central de Alertas</h2>
+        <Button onClick={createNewAlert} className="bg-blue-600 hover:bg-blue-700">
+          <Plus className="w-4 h-4 mr-2" />
+          Novo Alerta
+        </Button>
+      </div>
+
+      {/* Active Alerts */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Alertas Ativos ({alerts.filter(a => a.active).length})</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {alerts.map(alert => {
+              const percentage = (alert.current / alert.limit) * 100;
+              const status = percentage >= 100 ? "danger" : percentage >= 80 ? "warning" : "success";
+              
+              return (
+                <div key={alert.id} className={`p-4 rounded-lg border ${
+                  status === "danger" ? "bg-red-50 border-red-200" : 
+                  status === "warning" ? "bg-yellow-50 border-yellow-200" :
+                  "bg-green-50 border-green-200"
+                }`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${
+                        alert.active ? "bg-green-500" : "bg-gray-400"
+                      }`} />
+                      <h3 className="font-semibold">{alert.category}</h3>
+                      <Badge variant={status === "success" ? "default" : "destructive"}>
+                        {status === "success" ? "OK" : status === "warning" ? "ATENÇÃO" : "ALERTA"}
+                      </Badge>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" onClick={() => editAlert(alert)}>
+                        Editar
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant={alert.active ? "destructive" : "default"}
+                        onClick={() => toggleAlert(alert.id)}
+                      >
+                        {alert.active ? "Desativar" : "Ativar"}
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-600">Atual: </span>
+                      <span className="font-semibold">R$ {alert.current.toLocaleString()}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Limite: </span>
+                      <span className="font-semibold">R$ {alert.limit.toLocaleString()}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-3">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span>Progresso</span>
+                      <span>{percentage.toFixed(1)}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className={`h-2 rounded-full ${
+                          status === "danger" ? "bg-red-500" :
+                          status === "warning" ? "bg-yellow-500" :
+                          "bg-green-500"
+                        }`}
+                        style={{ width: `${Math.min(percentage, 100)}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Alert Editor Modal */}
+      {showEditor && (
+        <AlertEditor
+          alert={editingAlert}
+          onSave={saveAlert}
+          onCancel={() => {
+            setShowEditor(false);
+            setEditingAlert(null);
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+// Alert Editor Component
+function AlertEditor({ alert, onSave, onCancel }) {
+  const [formData, setFormData] = useState(alert);
+
+  const handleSave = () => {
+    onSave(formData);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>{alert.id ? "Editar Alerta" : "Novo Alerta"}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Categoria</label>
+            <select 
+              className="w-full p-2 border rounded"
+              value={formData.category}
+              onChange={(e) => setFormData({...formData, category: e.target.value})}
+            >
+              <option value="">Selecione...</option>
+              <option value="Gastos Mensais">Gastos Mensais</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Entretenimento">Entretenimento</option>
+              <option value="Sobra Mínima">Sobra Mínima</option>
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-2">Limite (R$)</label>
+            <input 
+              type="number"
+              className="w-full p-2 border rounded"
+              value={formData.limit}
+              onChange={(e) => setFormData({...formData, limit: parseFloat(e.target.value) || 0})}
+            />
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button onClick={handleSave} className="flex-1">
+              Salvar Alerta
+            </Button>
+            <Button variant="outline" onClick={onCancel} className="flex-1">
+              Cancelar
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export default function FlowWorking() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -199,14 +402,21 @@ export default function FlowWorking() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-3 gap-3 mb-6">
               <Button className="h-16 flex flex-col gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200">
-                <Plus className="w-6 h-6" />
-                <span>Nova Receita</span>
+                <Plus className="w-5 h-5" />
+                <span className="text-xs">Nova Receita</span>
               </Button>
               <Button variant="outline" className="h-16 flex flex-col gap-2 border-2 hover:bg-slate-50 transform hover:scale-105 transition-all duration-200">
-                <CreditCard className="w-6 h-6" />
-                <span>Novo Gasto</span>
+                <CreditCard className="w-5 h-5" />
+                <span className="text-xs">Novo Gasto</span>
+              </Button>
+              <Button 
+                onClick={() => setActiveTab("alerts")}
+                className="h-16 flex flex-col gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-200"
+              >
+                <Zap className="w-5 h-5" />
+                <span className="text-xs">Alertas</span>
               </Button>
             </div>
 
@@ -259,6 +469,11 @@ export default function FlowWorking() {
           {/* Planning Tab */}
           <TabsContent value="planning" className="mt-0">
             <Planning />
+          </TabsContent>
+
+          {/* Alerts Tab - NEW FUNCTIONAL INTERFACE */}
+          <TabsContent value="alerts" className="mt-0">
+            <AlertsCenter />
           </TabsContent>
 
         </Tabs>
