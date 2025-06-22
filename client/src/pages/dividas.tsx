@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { AlertTriangle, TrendingDown, Calculator, Target, CreditCard, Calendar, DollarSign, CheckCircle, Plus, Camera, Upload, HandHeart } from "lucide-react";
+import { DebtNegotiationCard } from "@/components/debt-negotiation-card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -649,6 +650,14 @@ export default function GestaoDividas() {
                   <div className="text-xs text-gray-500 mt-1">
                     Pago: R$ {(divida.valorTotal - divida.valorRestante).toLocaleString()} de R$ {divida.valorTotal.toLocaleString()}
                   </div>
+                  <div className="mt-4">
+                    <DebtNegotiationCard 
+                      debt={divida}
+                      onViewDetails={(debtId) => window.location.href = `/renegociar-dividas?debt=${debtId}`}
+                      onCallNegotiate={() => window.open('tel:0800-000-0000', '_self')}
+                    />
+                  </div>
+                  
                   <div className="mt-3 flex justify-end">
                     <Button
                       variant="destructive"
@@ -723,7 +732,10 @@ export default function GestaoDividas() {
           <Calculator className="w-4 h-4 mr-2" />
           Simular Cenários
         </Button>
-        <Button variant="outline">
+        <Button 
+          variant="outline"
+          onClick={() => window.location.href = '/renegociar-dividas'}
+        >
           <DollarSign className="w-4 h-4 mr-2" />
           Renegociar Dívidas
         </Button>
