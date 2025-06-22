@@ -277,19 +277,24 @@ export default function GestaoDividas() {
               </DialogHeader>
               <div className="space-y-6">
                 {/* Upload OCR */}
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <div className="border-2 border-dashed border-blue-200 rounded-lg p-6 text-center bg-gradient-to-r from-blue-50 to-purple-50">
                   <div className="space-y-2">
-                    <Camera className="w-8 h-8 mx-auto text-gray-400" />
-                    <div className="text-sm font-medium">Extrair dados automaticamente</div>
-                    <div className="text-xs text-gray-500">
-                      Tire uma foto ou faça upload da fatura/contrato
+                    <div className="flex justify-center">
+                      <div className="p-3 bg-blue-100 rounded-full">
+                        <Camera className="w-8 h-8 text-blue-600" />
+                      </div>
+                    </div>
+                    <div className="text-sm font-medium text-gray-900">🤖 IA de Extração Automática</div>
+                    <div className="text-xs text-gray-600">
+                      Tire uma foto da fatura, boleto ou contrato.<br/>
+                      Nossa IA extrai todos os dados automaticamente!
                     </div>
                     <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2">
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => handleOCRUpload(new File([], "camera"))}
-                        className="w-full sm:w-auto"
+                        onClick={() => handleOCRUpload('camera')}
+                        className="w-full sm:w-auto hover:bg-blue-50"
                       >
                         <Camera className="w-4 h-4 mr-1" />
                         Tirar Foto
@@ -297,8 +302,8 @@ export default function GestaoDividas() {
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => handleOCRUpload(new File([], "upload"))}
-                        className="w-full sm:w-auto"
+                        onClick={() => handleOCRUpload('upload')}
+                        className="w-full sm:w-auto hover:bg-green-50"
                       >
                         <Upload className="w-4 h-4 mr-1" />
                         Upload
