@@ -55,6 +55,7 @@ class MemStorage implements IStorage {
     this.currentId = 1;
     this.seedUsers();
     this.seedFinancialData();
+    this.seedPlanningData();
   }
 
   private seedUsers() {
@@ -172,6 +173,20 @@ class MemStorage implements IStorage {
       const debt = { id: this.currentId++, ...debtData, createdAt: new Date(), updatedAt: new Date() };
       this.expenses.set(debt.id, debt); // Using expenses map for debts
     });
+  }
+
+  private seedPlanningData() {
+    const samplePlanning = {
+      userId: 1,
+      fixedExpenses: 4000,
+      variableExpenses: 2500,
+      savings: 2500,
+      leisure: 1200,
+      id: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.plannings.set(1, samplePlanning);
   }
 
   async getUser(id: number): Promise<User | undefined> {
