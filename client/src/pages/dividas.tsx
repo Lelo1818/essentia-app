@@ -27,8 +27,8 @@ interface Divida {
 
 export default function GestaoDividas() {
   const [dividas, setDividas] = useState<Divida[]>([]);
-  const [estrategia, setEstrategia] = useState<"snowball" | "avalanche">("avalanche");
-  const [valorExtra, setValorExtra] = useState<number>(200);
+  const [estrategia, setEstrategia] = useState<"avalanche" | "snowball">("avalanche");
+  const [valorExtra, setValorExtra] = useState("200");
   const [modalOpen, setModalOpen] = useState(false);
   const [novaDiv, setNovaDiv] = useState({
     nome: "",
@@ -471,9 +471,9 @@ export default function GestaoDividas() {
               <Input
                 type="number"
                 value={valorExtra}
-                onChange={(e) => setValorExtra(Number(e.target.value))}
+                onChange={(e) => setValorExtra(e.target.value)}
                 className="mb-2"
-                placeholder="R$ 200"
+                placeholder="200"
               />
               <div className="text-sm text-gray-600">
                 Quanto você consegue pagar além do mínimo por mês?
