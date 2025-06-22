@@ -135,8 +135,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Budget routes
   app.get("/api/budget", async (req, res) => {
     try {
-      const userId = getCurrentUserId();
-      const budget = await storage.getBudgetByUserId(userId);
+      const userId = 1;
+      const budget = await storage.getPlanningByUserId(userId);
       res.json(budget);
     } catch (error) {
       res.status(500).json({ message: "Erro ao buscar orçamento" });
@@ -145,23 +145,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/budget", async (req, res) => {
     try {
-      const userId = getCurrentUserId();
-      const existingBudget = await storage.getBudgetByUserId(userId);
-      const validatedData = insertBudgetSchema.parse({ ...req.body, userId });
+      const userId = 1;
+      const planningData = {
+        userId,
+        fixedExpenses: parseFloat(req.body.fixedExpenses || 0),
+        variableExpenses: parseFloat(req.body.variableExpenses || 0),
+        savings: parseFloat(req.body.savings || 0),
+        leisure: parseFloat(req.body.leisure || 0),
+      };
       
-      if (existingBudget) {
-        const updatedBudget = await storage.updateBudget(existingBudget.id, validatedData);
-        res.json(updatedBudget);
-      } else {
-        const budget = await storage.createBudget(validatedData);
-        res.status(201).json(budget);
-      }
+      console.log("Saving planning data:", planningData);
+      const planning = await storage.savePlanning(planningData);
+      res.json(planning);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
-      } else {
-        res.status(500).json({ message: "Erro ao salvar orçamento" });
-      }
+      console.error("Error saving planning:", error);
+      res.status(500).json({ message: "Erro ao salvar orçamento" });
     }
   });
 
