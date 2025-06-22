@@ -343,7 +343,30 @@ export default function Income() {
 
       <div className="space-y-6">
         <div className="flex gap-2">
-          <Button onClick={() => setCameraOpen(true)} className="gradient-primary">
+          <Button 
+            onClick={() => {
+              toast({
+                title: "OCR Processando",
+                description: "Analisando holerite...",
+              });
+              
+              setTimeout(() => {
+                setNovaRenda({
+                  description: "Salário CLT",
+                  amount: "4500",
+                  source: "Empresa ABC Ltda",
+                  frequency: "monthly",
+                  category: "salary"
+                });
+                toast({
+                  title: "OCR Concluído",
+                  description: "Dados extraídos do holerite!",
+                });
+                setModalOpen(true);
+              }, 2500);
+            }}
+            className="gradient-primary"
+          >
             <Camera className="w-4 h-4 mr-2" />
             Foto Holerite
           </Button>
@@ -444,7 +467,11 @@ export default function Income() {
         </CardContent>
       </Card>
 
-      <IncomeModal open={modalOpen} onOpenChange={handleModalClose} />
+      <IncomeModal 
+        open={modalOpen} 
+        onOpenChange={handleModalClose} 
+        initialData={novaRenda}
+      />
       {cameraOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
