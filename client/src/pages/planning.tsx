@@ -50,10 +50,10 @@ export default function Planning() {
   // Update form when budget data loads
   React.useEffect(() => {
     if (budget) {
-      form.setValue("fixedExpenses", (budget as any).fixedExpenses || "0");
-      form.setValue("variableExpenses", (budget as any).variableExpenses || "0");
-      form.setValue("savings", (budget as any).savings || "0");
-      form.setValue("leisure", (budget as any).leisure || "0");
+      form.setValue("fixedExpenses", String((budget as any).fixedExpenses || 0));
+      form.setValue("variableExpenses", String((budget as any).variableExpenses || 0));
+      form.setValue("savings", String((budget as any).savings || 0));
+      form.setValue("leisure", String((budget as any).leisure || 0));
     }
   }, [budget, form]);
 
