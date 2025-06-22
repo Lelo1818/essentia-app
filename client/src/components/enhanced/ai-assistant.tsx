@@ -140,13 +140,21 @@ export function AIAssistant({ context, userData, onAction, className }: AIAssist
     const message = userMessage.toLowerCase();
 
     if (context === "financial") {
-      if (message.includes("economizar") || message.includes("poupar")) {
-        response = "Excelente pergunta! Baseado em seus dados, identifiquei algumas oportunidades:\n\n• Reduza gastos com entretenimento em 15% (economia de R$ 120/mês)\n• Revise assinaturas não utilizadas\n• Aproveite cashbacks em compras essenciais\n\nCom essas mudanças, você pode economizar cerca de R$ 200 mensais!";
-        suggestions = ["Criar meta de economia", "Ver detalhes dos gastos", "Configurar alertas"];
-        actionData = { type: "savings_plan", amount: 200 };
-      } else if (message.includes("investir") || message.includes("investimento")) {
-        response = "Com base no seu perfil conservador e reserva de emergência adequada, recomendo:\n\n🏦 **Renda Fixa (70%)**\n• CDB 110% CDI\n• Tesouro Selic\n\n📈 **Renda Variável (30%)**\n• Fundos de índice (ETFs)\n• Ações de empresas consolidadas\n\nEssa distribuição oferece segurança com potencial de crescimento!";
-        suggestions = ["Simular investimentos", "Ver carteira recomendada", "Estudar sobre investimentos"];
+      if (message.includes("economizar") || message.includes("poupar") || message.includes("gastos") || message.includes("reduzir")) {
+        const totalExpenses = financialData?.totalExpenses || realTimeData?.totalExpenses || 4267.94;
+        const savingsPotential = Math.floor(totalExpenses * 0.15);
+        
+        response = `💰 **Análise de Gastos Personalizada**\n\nSeus gastos atuais: ${formatCurrency(totalExpenses)}/mês\n\n🎯 **Oportunidades de Economia:**\n• Entretenimento: reduzir 15% = R$ 120/mês\n• Assinaturas não utilizadas = R$ 150/mês\n• Cashback compras essenciais = R$ 180/mês\n• Negociação de planos = R$ 200/mês\n\n💡 **Potencial de economia:** ${formatCurrency(savingsPotential)}/mês\n\nIsso aumentaria sua sobra para ${formatCurrency(16333.86 + savingsPotential)}!`;
+        suggestions = ["Ver detalhes dos gastos", "Configurar alertas", "Criar meta de economia"];
+        actionData = { type: "savings_plan", amount: savingsPotential };
+      } else if (message.includes("investir") || message.includes("investimento") || message.includes("carteira")) {
+        const totalIncome = financialData?.totalIncome || realTimeData?.totalIncome || 20601.8;
+        const balance = totalIncome - (financialData?.totalExpenses || realTimeData?.totalExpenses || 4267.94);
+        const investmentAmount = Math.floor(balance * 0.7);
+        
+        response = `💼 **Carteira Recomendada Personalizada**\n\nBaseado na sua sobra mensal de ${formatCurrency(balance)}:\n\n🏦 **Renda Fixa (70% = ${formatCurrency(investmentAmount * 0.7)})**\n• CDB 110% CDI\n• Tesouro Selic\n• LCI/LCA\n\n📈 **Renda Variável (30% = ${formatCurrency(investmentAmount * 0.3)})**\n• Fundos de índice (ETFs)\n• Ações blue chips\n• REITs\n\n🎯 **Valor mensal sugerido:** ${formatCurrency(investmentAmount)}`;
+        suggestions = ["Simular investimentos", "Começar com renda fixa", "Estudar sobre ações"];
+        actionData = { type: "investment_plan", amount: investmentAmount, risk: "moderado" };
       } else if (message.includes("orçamento") || message.includes("analisa") || message.includes("situação")) {
         const totalIncome = financialData?.totalIncome || realTimeData?.totalIncome || 20601.8;
         const totalExpenses = financialData?.totalExpenses || realTimeData?.totalExpenses || 4267.94;
