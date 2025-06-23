@@ -119,16 +119,16 @@ export default function LiveFinancialCards() {
                   {' '}desde o mês passado
                 </p>
                 {isInvestments && (
-                  <div className="mt-3">
+                  <div className="mt-2">
                     <button 
-                      className="text-xs text-purple-600 hover:text-purple-800 font-medium"
+                      className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 py-1 px-2 rounded font-medium transition-colors"
                       onClick={(e) => {
                         e.stopPropagation();
-                        console.log('Botão Investimentos clicado');
+                        console.log('Navegando para Investimentos');
                         setLocation('/investments');
                       }}
                     >
-                      Ver Detalhes →
+                      📈 Ver Detalhes
                     </button>
                   </div>
                 )}

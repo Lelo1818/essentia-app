@@ -98,7 +98,6 @@ export default function Investments() {
     {
       id: 5,
       name: "FIDC Kinea Crédito",
-      type: "Crédito Privado",
       type: "Renda Fixa", 
       amount: 32500,
       invested: 30000,
