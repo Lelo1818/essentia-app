@@ -604,14 +604,16 @@ export default function PersonalizedSuggestions() {
                     alert('🚀 Renda adicionada com sucesso! Nova fonte: R$ ' + monthlyAmount + '/mês em ' + 
                           (selectedOpportunity === 'consultoria' ? 'Consultoria Financeira' :
                            selectedOpportunity === 'cursos' ? 'Cursos Online' : 'Marketing de Afiliados') + 
-                          '. Refresh a página para ver no dashboard.');
+                          '. A página será atualizada para mostrar no dashboard.');
                     
                     // Force page refresh to update dashboard
                     setTimeout(() => {
                       window.location.reload();
-                    }, 2000);
+                    }, 1500);
                   } else {
-                    throw new Error('Failed to create income');
+                    const errorData = await response.text();
+                    console.error('API Error:', errorData);
+                    throw new Error('Failed to create income: ' + response.status);
                   }
                 } catch (error) {
                   console.error('Error creating opportunity income:', error);
