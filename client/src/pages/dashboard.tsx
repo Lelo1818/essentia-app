@@ -199,15 +199,32 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
-      {/* BOTÃO DEBUG TEMPORÁRIO */}
-      <div className="mb-4 p-4 bg-red-100 border border-red-300 rounded">
+      {/* BOTÃO DEBUG TEMPORÁRIO - MUITO VISÍVEL */}
+      <div style={{
+        backgroundColor: '#fee2e2',
+        border: '3px solid #dc2626', 
+        padding: '20px',
+        margin: '20px 0',
+        borderRadius: '12px',
+        textAlign: 'center'
+      }}>
         <button 
           onClick={forceRefresh}
-          className="bg-red-500 text-white px-4 py-2 rounded mr-4"
+          style={{
+            backgroundColor: '#dc2626',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            border: 'none',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            marginRight: '20px'
+          }}
         >
-          🔄 FORÇAR ATUALIZAÇÃO
+          🔄 FORÇAR ATUALIZAÇÃO DASHBOARD
         </button>
-        <span className="text-sm">
+        <span style={{ fontSize: '14px', color: '#374151' }}>
           DEBUG: totalIncome = R$ {summary.totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
         </span>
       </div>
