@@ -386,11 +386,12 @@ export default function FlowKidsStandalone() {
               onClick={(e) => {
                 e.preventDefault();
                 console.log('FlowKids: Iniciando lição "Necessidade vs Desejo"');
-                setActiveTab("jogos");
                 // Simular início da lição
                 setTimeout(() => {
                   console.log('Lição iniciada com sucesso!');
                   alert('Parabéns! Você iniciou a lição "Necessidade vs Desejo". +40 pontos ganhos!');
+                  // Simular navegação para área de jogos
+                  setActiveTab("jogos");
                 }, 500);
               }}
             >
@@ -458,13 +459,79 @@ export default function FlowKidsStandalone() {
         </CardContent>
       </Card>
 
+      {/* Sistema de Abas */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsTrigger value="dashboard" className="text-sm">
+            Dashboard
+          </TabsTrigger>
+          <TabsTrigger value="jogos" className="text-sm">
+            Jogos
+          </TabsTrigger>
+          <TabsTrigger value="conquistas" className="text-sm">
+            Conquistas
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="dashboard">
+          {/* Conteúdo atual do dashboard já está acima */}
+          <div className="text-center text-purple-600 font-medium">
+            Conteúdo do Dashboard acima
+          </div>
+        </TabsContent>
+
+        <TabsContent value="jogos">
+          <Card className="bg-gradient-to-r from-green-500 to-blue-500 text-white">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Gamepad2 className="w-6 h-6 mr-2" />
+                Lição: Necessidade vs Desejo
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p>Parabéns! Você iniciou a lição sobre diferença entre o que precisamos e o que queremos.</p>
+                <div className="bg-white/20 rounded-lg p-4">
+                  <h4 className="font-bold mb-2">🎯 Seu Progresso:</h4>
+                  <Progress value={75} className="mb-2" />
+                  <p className="text-sm">75% concluído - Continue assim!</p>
+                </div>
+                <Button 
+                  className="w-full bg-white text-green-600 hover:bg-gray-100"
+                  onClick={() => {
+                    alert('Continuando a lição... +20 pontos extras!');
+                  }}
+                >
+                  Continuar Lição
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="conquistas">
+          <div className="grid grid-cols-2 gap-4">
+            {achievements.filter(a => a.earned).map((achievement) => (
+              <Card key={achievement.id} className={achievement.color}>
+                <CardContent className="p-4 text-center">
+                  <achievement.icon className="w-8 h-8 mx-auto mb-2" />
+                  <h4 className="font-bold text-sm">{achievement.title}</h4>
+                  <p className="text-xs opacity-75">{achievement.description}</p>
+                  <Badge className="mt-2">{achievement.points} pts</Badge>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
+
       {/* Link para voltar */}
       <div style={{
         textAlign: 'center',
         marginTop: '32px'
       }}>
         <Button 
-          onClick={() => window.location.href = '/dashboard-unificado'}
+          onClick={() => setLocation('/ecosystem-selector')}
           style={{
             background: 'linear-gradient(to right, #6366f1, #8b5cf6)',
             color: 'white',
@@ -474,7 +541,7 @@ export default function FlowKidsStandalone() {
             fontWeight: '600'
           }}
         >
-          ← Voltar ao Dashboard
+          ← Voltar ao Ecossistema
         </Button>
       </div>
     </div>
