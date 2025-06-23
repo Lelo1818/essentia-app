@@ -617,7 +617,8 @@ export default function PersonalizedSuggestions() {
                   }
                 } catch (error) {
                   console.error('Error creating opportunity income:', error);
-                  alert('❌ Erro ao adicionar renda. Tente novamente.');
+                  console.error('Full error details:', error);
+                  alert('❌ Erro ao adicionar renda. Verifique o console para detalhes. Erro: ' + error.message);
                 }
               } else {
                 alert('📝 Análise salva! Explore as oportunidades e volte quando estiver pronto para começar.');
