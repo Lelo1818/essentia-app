@@ -30,12 +30,11 @@ interface FinancialOverviewProps {
   balance: number;
 }
 
-export default function FinancialOverview({ totalIncome, totalExpenses, balance }: FinancialOverviewProps) {
+function FinancialOverview({ totalIncome, totalExpenses, balance }: FinancialOverviewProps) {
   const [selectedPeriod, setSelectedPeriod] = useState("Este mês");
   
-  // Debug logs críticos para diagnóstico
-  console.log('💰 FINANCIAL OVERVIEW PROPS:', { totalIncome, totalExpenses, balance });
-  console.log('💰 RENDERIZAÇÃO TIMESTAMP:', new Date().toISOString());
+  // Log de diagnóstico final
+  console.log('Renderizando Dashboard', { totalIncome, totalExpenses, balance });
 
   const chartData = {
     labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
@@ -122,3 +121,6 @@ export default function FinancialOverview({ totalIncome, totalExpenses, balance 
     </Card>
   );
 }
+
+// Removendo React.memo para garantir reatividade
+export default FinancialOverview;

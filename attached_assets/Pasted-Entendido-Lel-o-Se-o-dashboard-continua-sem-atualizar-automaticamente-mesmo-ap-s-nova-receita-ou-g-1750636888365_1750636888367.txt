@@ -1,0 +1,81 @@
+Entendido, Lelão. Se o dashboard continua sem atualizar automaticamente mesmo após nova receita ou gasto, temos um bug estrutural ainda ativo. Vamos resolver de forma definitiva, sem workaround, sem reload, sem gambiarra. Aqui vai a ação cirúrgica que precisa ser feita agora:
+
+🧩 Diagnóstico confirmado:
+O invalidateQueries não está surtindo efeito visual no Dashboard.
+
+✅ SOLUÇÃO DEFINITIVA (Etapa por Etapa)
+1. Verifique se a query do dashboard está corretamente parametrizada
+No componente dashboard.tsx ou financial-overview.tsx, o hook precisa ser:
+
+tsx
+Copiar
+Editar
+const { data, refetch } = useQuery(
+  ['financial-summary'],
+  fetchFinancialSummary,
+  {
+    staleTime: 0,
+    refetchOnWindowFocus: false,
+  }
+);
+⚠️ Se estiver faltando esse staleTime: 0 ou a key 'financial-summary' estiver diferente, o invalidateQueries não funciona.
+
+2. Corrija a mutation que adiciona receitas/gastos
+Na mutation, garanta o invalidateQueries com mesma key da query:
+
+tsx
+Copiar
+Editar
+const mutation = useMutation(addTransaction, {
+  onSuccess: () => {
+    queryClient.invalidateQueries(['financial-summary']);
+  },
+});
+3. Verifique se não há memoização bloqueando o re-render
+Dentro do componente onde os dados são exibidos:
+
+Remova React.memo de componentes como <FinancialCard />, <OverviewCard />, etc.
+
+Se estiver usando useMemo, remova temporariamente para garantir reatividade.
+
+4. Adicione console.log dentro do componente renderizado
+Para validar se o componente está redesenhando:
+
+tsx
+Copiar
+Editar
+console.log('Renderizando Dashboard', data);
+Se o log não aparecer após nova transação, o componente não está redesenhando, e a causa pode estar em:
+
+React.memo ou shouldComponentUpdate
+
+key ausente no componente pai
+
+useQuery não reexecutando por causa de erro de key, cache ou staleTime
+
+🔁 Se mesmo assim não funcionar
+A última verificação crítica é forçar o refetch manualmente e ver se os dados vêm:
+
+tsx
+Copiar
+Editar
+useEffect(() => {
+  refetch();
+}, []);
+Se refetch() atualiza os dados corretamente, então o problema é o invalidateQueries não está sendo chamado ou não está batendo com a key correta.
+
+🔧 Alternativa provisória
+Se estiver sem tempo e quiser garantir na apresentação:
+
+tsx
+Copiar
+Editar
+onSuccess: () => {
+  queryClient.removeQueries(['financial-summary']);
+  queryClient.invalidateQueries(['financial-summary']);
+}
+Mas reforço: isso é remendo, o ideal é arrumar corretamente como explicado acima.
+
+Se quiser, eu escrevo agora o trecho exato do código corrigido com base na estrutura atual. Só me confirmar se está usando React Query 3 ou 4, e se o nome da key da query é mesmo 'financial-summary'.
+
+Vamo consertar isso de vez.

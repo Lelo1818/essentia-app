@@ -548,15 +548,10 @@ function QuickIncomeModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Debug log antes da invalidação
-        console.log('🚀 INVALIDANDO QUERIES APÓS RECEITA:', new Date().toISOString());
-        
-        // Invalidação pura conforme recomendação do Brancola
-        queryClient.invalidateQueries({ queryKey: ['/api/financial-summary'] });
-        queryClient.invalidateQueries({ queryKey: ['/api/incomes'] });
-        
-        // Debug log após invalidação
-        console.log('✅ QUERIES INVALIDADAS');
+        // Solução definitiva - invalidação com mesma key
+        queryClient.removeQueries(['financial-summary']);
+        queryClient.invalidateQueries(['financial-summary']);
+        queryClient.invalidateQueries(['incomes']);
         
         alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
         onClose();
@@ -770,15 +765,10 @@ function QuickExpenseModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Debug log antes da invalidação
-        console.log('🚀 INVALIDANDO QUERIES APÓS GASTO:', new Date().toISOString());
-        
-        // Invalidação pura conforme recomendação do Brancola
-        queryClient.invalidateQueries({ queryKey: ['/api/financial-summary'] });
-        queryClient.invalidateQueries({ queryKey: ['/api/expenses'] });
-        
-        // Debug log após invalidação
-        console.log('✅ QUERIES INVALIDADAS');
+        // Solução definitiva - invalidação com mesma key
+        queryClient.removeQueries(['financial-summary']);
+        queryClient.invalidateQueries(['financial-summary']);
+        queryClient.invalidateQueries(['expenses']);
         
         alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
         onClose();

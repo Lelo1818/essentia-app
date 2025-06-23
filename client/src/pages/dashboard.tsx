@@ -63,15 +63,12 @@ export default function Dashboard() {
 
   useKeyboardShortcuts(shortcuts);
 
-  // Query key DEVE coincidir com a invalidação
-  const queryKey = ['/api/financial-summary'];
-  
-  // Fetch real financial data com refetchInterval para reatividade
-  const { data: realSummary, isLoading: summaryLoading } = useQuery({
-    queryKey,
-    refetchInterval: 3000, // Atualiza automaticamente a cada 3 segundos
-    staleTime: 0, // Sempre considera dados stale
-    refetchOnWindowFocus: true
+  // Query key simplificado conforme solução definitiva
+  const { data: realSummary, isLoading: summaryLoading, refetch } = useQuery({
+    queryKey: ['financial-summary'],
+    staleTime: 0,
+    refetchOnWindowFocus: false,
+    refetchInterval: 3000
   });
 
   const summary = realSummary ? {
