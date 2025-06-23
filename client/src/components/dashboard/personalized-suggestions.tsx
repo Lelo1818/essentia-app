@@ -325,230 +325,266 @@ export default function PersonalizedSuggestions() {
       buttonText: "Adicionar Renda",
       buttonColor: "bg-purple-500 hover:bg-purple-600",
       action: () => {
-        // Implementar funcionalidade real de oportunidade de renda
+        FeedbackUtils.feedbackAction('interaction');
+        console.log('Opening opportunities modal...');
+        
+        // Simpler React modal without dynamic import
         const modal = document.createElement('div');
-        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
         modal.innerHTML = `
-          <div class="bg-white rounded-lg p-6 max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
-            <h3 class="text-xl font-bold mb-4 text-purple-600">💼 Oportunidades de Renda Extra - Análise IA</h3>
-            
-            <div class="space-y-6">
-              <!-- Análise de Perfil -->
-              <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                <h4 class="font-semibold text-purple-800 mb-3">🎯 Perfil Analisado por IA</h4>
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <div class="font-medium text-purple-700">Habilidades Identificadas:</div>
-                    <ul class="text-purple-600 space-y-1 mt-1">
-                      <li>• Organização financeira</li>
-                      <li>• Uso de tecnologia</li>
-                      <li>• Planejamento estratégico</li>
-                    </ul>
+          <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-purple-600">🚀 Oportunidades de Renda Personalizadas</h3>
+                <button onclick="this.closest('.fixed').remove()" class="p-2 hover:bg-gray-100 rounded">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <div class="space-y-6">
+                <!-- Análise de Perfil -->
+                <div class="bg-purple-50 border-purple-200 border p-4 rounded-lg">
+                  <h4 class="font-semibold text-purple-800 mb-3">👤 Análise do Seu Perfil</h4>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                    <div class="text-center">
+                      <div class="font-semibold text-purple-700">💼 Disciplinado</div>
+                      <div class="text-purple-600">95% de consistência</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="font-semibold text-purple-700">📊 Analítico</div>
+                      <div class="text-purple-600">Bom com números</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="font-semibold text-purple-700">💰 Investidor</div>
+                      <div class="text-purple-600">R$ 8.750 aplicados</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="font-semibold text-purple-700">🎯 Focado</div>
+                      <div class="text-purple-600">Metas claras</div>
+                    </div>
                   </div>
-                  <div>
-                    <div class="font-medium text-purple-700">Tempo Disponível:</div>
-                    <ul class="text-purple-600 space-y-1 mt-1">
-                      <li>• Finais de semana: 6h</li>
-                      <li>• Noites: 2h/dia</li>
-                      <li>• Total/semana: 20h</li>
-                    </ul>
+                </div>
+
+                <!-- Oportunidades -->
+                <div class="space-y-4">
+                  <h4 class="font-semibold text-gray-800">🏆 Top 3 Oportunidades Para Você</h4>
+                  
+                  <div class="opportunity-card bg-green-50 border-green-200 border cursor-pointer hover:shadow-md transition-all duration-200 active:scale-98 p-4 rounded-lg" data-opportunity="consultoria">
+                    <div class="flex justify-between items-start mb-2">
+                      <h5 class="font-semibold text-green-800">💼 Consultoria Financeira</h5>
+                      <div class="text-right">
+                        <div class="text-lg font-bold text-green-700">R$ 400-800/mês</div>
+                        <div class="text-xs text-green-600 flex items-center gap-1">
+                          ⭐ Alta compatibilidade
+                        </div>
+                      </div>
+                    </div>
+                    <p class="text-sm text-green-700 mb-3">Ajude pessoas a organizarem suas finanças usando o conhecimento que você já tem.</p>
+                    <div class="flex items-center justify-between text-xs">
+                      <div class="flex space-x-4">
+                        <span>⏰ 3-5h/semana</span>
+                        <span>📈 Demanda alta</span>
+                        <span>🎯 Baixa barreira entrada</span>
+                      </div>
+                      <input type="radio" name="opportunity" value="consultoria" class="ml-2">
+                    </div>
+                  </div>
+
+                  <div class="opportunity-card bg-blue-50 border-blue-200 border cursor-pointer hover:shadow-md transition-all duration-200 active:scale-98 p-4 rounded-lg" data-opportunity="cursos">
+                    <div class="flex justify-between items-start mb-2">
+                      <h5 class="font-semibold text-blue-800">🎓 Criação de Cursos Online</h5>
+                      <div class="text-right">
+                        <div class="text-lg font-bold text-blue-700">R$ 600-1200/mês</div>
+                        <div class="text-xs text-blue-600 flex items-center gap-1">
+                          ⭐ Potencial escalável
+                        </div>
+                      </div>
+                    </div>
+                    <p class="text-sm text-blue-700 mb-3">Ensine educação financeira criando cursos na Udemy, Hotmart ou plataforma própria.</p>
+                    <div class="flex items-center justify-between text-xs">
+                      <div class="flex space-x-4">
+                        <span>⏰ 8-12h/semana</span>
+                        <span>📈 Renda passiva</span>
+                        <span>🎯 Investimento inicial baixo</span>
+                      </div>
+                      <input type="radio" name="opportunity" value="cursos" class="ml-2">
+                    </div>
+                  </div>
+
+                  <div class="opportunity-card bg-orange-50 border-orange-200 border cursor-pointer hover:shadow-md transition-all duration-200 active:scale-98 p-4 rounded-lg" data-opportunity="afiliados">
+                    <div class="flex justify-between items-start mb-2">
+                      <h5 class="font-semibold text-orange-800">🤝 Marketing de Afiliados</h5>
+                      <div class="text-right">
+                        <div class="text-lg font-bold text-orange-700">R$ 200-600/mês</div>
+                        <div class="text-xs text-orange-600 flex items-center gap-1">
+                          ⭐ Rápido para começar
+                        </div>
+                      </div>
+                    </div>
+                    <p class="text-sm text-orange-700 mb-3">Promova produtos financeiros que você já usa e recomendaria para amigos.</p>
+                    <div class="flex items-center justify-between text-xs">
+                      <div class="flex space-x-4">
+                        <span>⏰ 2-4h/semana</span>
+                        <span>📈 Comissões recorrentes</span>
+                        <span>🎯 Zero investimento</span>
+                      </div>
+                      <input type="radio" name="opportunity" value="afiliados" class="ml-2">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Plano de Ação -->
+                <div id="action-plan" class="bg-gray-50 border-gray-200 border p-4 rounded-lg hidden">
+                  <h4 class="font-semibold text-gray-800 mb-3">📋 Plano de Ação Personalizado</h4>
+                  <div id="plan-content"></div>
+                </div>
+
+                <!-- Simulador de Impacto -->
+                <div class="bg-yellow-50 border-yellow-200 border p-4 rounded-lg">
+                  <h4 class="font-semibold text-yellow-800 mb-3">📊 Simulador de Impacto Financeiro</h4>
+                  <div class="space-y-3">
+                    <div>
+                      <label class="block text-sm font-medium mb-1">Renda extra mensal desejada:</label>
+                      <input type="range" min="200" max="1500" value="500" class="w-full" id="income-slider">
+                      <div class="flex justify-between text-xs text-yellow-600">
+                        <span>R$ 200</span>
+                        <span id="selected-income" class="font-semibold">R$ 500</span>
+                        <span>R$ 1.500</span>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 text-center text-sm">
+                      <div class="bg-white p-2 rounded">
+                        <div class="font-semibold text-green-600" id="yearly-extra">R$ 6.000</div>
+                        <div class="text-xs text-gray-600">Extra/ano</div>
+                      </div>
+                      <div class="bg-white p-2 rounded">
+                        <div class="font-semibold text-blue-600" id="goal-acceleration">40%</div>
+                        <div class="text-xs text-gray-600">Aceleração metas</div>
+                      </div>
+                      <div class="bg-white p-2 rounded">
+                        <div class="font-semibold text-purple-600" id="investment-potential">R$ 2.400</div>
+                        <div class="text-xs text-gray-600">Para investir</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               
-              <!-- Oportunidades Rankeadas -->
-              <div class="space-y-4">
-                <h4 class="font-semibold text-gray-800">🚀 Oportunidades Rankeadas por Potencial</h4>
-                
-                <!-- Oportunidade 1 -->
-                <div class="border border-green-200 rounded-lg p-4 bg-green-50 cursor-pointer hover:shadow-md transition-shadow" onclick="selectOpportunity(this, 'consultoria')">
-                  <div class="flex justify-between items-start mb-2">
-                    <h5 class="font-semibold text-green-800">💡 Consultoria Financeira Online</h5>
-                    <div class="text-right">
-                      <div class="text-lg font-bold text-green-700">R$ 400-800/mês</div>
-                      <div class="text-xs text-green-600">⭐ Alta compatibilidade</div>
-                    </div>
-                  </div>
-                  <p class="text-sm text-green-700 mb-3">Ajude pessoas a organizarem suas finanças usando o conhecimento que você já tem.</p>
-                  <div class="flex items-center justify-between text-xs">
-                    <div class="flex space-x-4">
-                      <span>⏰ 3-5h/semana</span>
-                      <span>📈 Demanda alta</span>
-                      <span>🎯 Baixa barreira entrada</span>
-                    </div>
-                    <input type="radio" name="opportunity" value="consultoria" class="ml-2">
-                  </div>
-                </div>
-                
-                <!-- Oportunidade 2 -->
-                <div class="border border-blue-200 rounded-lg p-4 bg-blue-50 cursor-pointer hover:shadow-md transition-shadow" onclick="selectOpportunity(this, 'cursos')">
-                  <div class="flex justify-between items-start mb-2">
-                    <h5 class="font-semibold text-blue-800">🎓 Criação de Cursos Online</h5>
-                    <div class="text-right">
-                      <div class="text-lg font-bold text-blue-700">R$ 600-1200/mês</div>
-                      <div class="text-xs text-blue-600">⭐ Potencial escalável</div>
-                    </div>
-                  </div>
-                  <p class="text-sm text-blue-700 mb-3">Ensine educação financeira através de cursos na Udemy, Hotmart ou plataforma própria.</p>
-                  <div class="flex items-center justify-between text-xs">
-                    <div class="flex space-x-4">
-                      <span>⏰ 8-12h/semana</span>
-                      <span>📈 Renda passiva</span>
-                      <span>🎯 Investimento inicial baixo</span>
-                    </div>
-                    <input type="radio" name="opportunity" value="cursos" class="ml-2">
-                  </div>
-                </div>
-                
-                <!-- Oportunidade 3 -->
-                <div class="border border-orange-200 rounded-lg p-4 bg-orange-50 cursor-pointer hover:shadow-md transition-shadow" onclick="selectOpportunity(this, 'afiliados')">
-                  <div class="flex justify-between items-start mb-2">
-                    <h5 class="font-semibold text-orange-800">🤝 Marketing de Afiliados</h5>
-                    <div class="text-right">
-                      <div class="text-lg font-bold text-orange-700">R$ 200-600/mês</div>
-                      <div class="text-xs text-orange-600">⭐ Rápido para começar</div>
-                    </div>
-                  </div>
-                  <p class="text-sm text-orange-700 mb-3">Promova produtos financeiros que você já usa e recomendaria para amigos.</p>
-                  <div class="flex items-center justify-between text-xs">
-                    <div class="flex space-x-4">
-                      <span>⏰ 2-4h/semana</span>
-                      <span>📈 Comissões recorrentes</span>
-                      <span>🎯 Zero investimento</span>
-                    </div>
-                    <input type="radio" name="opportunity" value="afiliados" class="ml-2">
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Plano de Ação -->
-              <div id="action-plan" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
-                <h4 class="font-semibold text-gray-800 mb-3">📋 Plano de Ação Personalizado</h4>
-                <div id="plan-content"></div>
-              </div>
-              
-              <!-- Simulador de Impacto -->
-              <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                <h4 class="font-semibold text-yellow-800 mb-3">📊 Simulador de Impacto Financeiro</h4>
-                <div class="space-y-3">
-                  <div>
-                    <label class="block text-sm font-medium mb-1">Renda extra mensal desejada:</label>
-                    <input type="range" min="200" max="1500" value="500" class="w-full" 
-                           oninput="updateImpact(this.value)">
-                    <div class="flex justify-between text-xs text-yellow-600">
-                      <span>R$ 200</span>
-                      <span id="selected-income" class="font-semibold">R$ 500</span>
-                      <span>R$ 1.500</span>
-                    </div>
-                  </div>
-                  <div class="grid grid-cols-3 gap-3 text-center text-sm">
-                    <div class="bg-white p-2 rounded">
-                      <div class="font-semibold text-green-600" id="yearly-extra">R$ 6.000</div>
-                      <div class="text-xs text-gray-600">Extra/ano</div>
-                    </div>
-                    <div class="bg-white p-2 rounded">
-                      <div class="font-semibold text-blue-600" id="goal-acceleration">40%</div>
-                      <div class="text-xs text-gray-600">Aceleração metas</div>
-                    </div>
-                    <div class="bg-white p-2 rounded">
-                      <div class="font-semibold text-purple-600" id="investment-potential">R$ 2.400</div>
-                      <div class="text-xs text-gray-600">Para investir</div>
-                    </div>
-                  </div>
-                </div>
+              <div class="flex gap-3 mt-6">
+                <button id="create-plan-btn" class="flex-1 bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded transition-colors">
+                  🎯 Criar Plano de Renda
+                </button>
+                <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded transition-colors">
+                  Fechar
+                </button>
               </div>
             </div>
-            
-            <div class="flex gap-3 mt-6">
-              <button onclick="
-                const selected = document.querySelector('input[name=opportunity]:checked');
-                if (selected) {
-                  alert('🚀 Plano de renda criado! Você receberá um guia passo-a-passo para ' + selected.value + ' e acompanhamento semanal por IA.');
-                } else {
-                  alert('📝 Análise salva! Explore as oportunidades e volte quando estiver pronto para começar.');
-                }
-                this.closest('.fixed').remove();
-              " class="flex-1 bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors font-semibold">
-                🎯 Criar Plano de Renda
-              </button>
-              <button onclick="this.closest('.fixed').remove()" 
-                      class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-colors">
-                Fechar
-              </button>
-            </div>
-            
-            <script>
-              function selectOpportunity(element, type) {
-                document.querySelectorAll('.border-green-200, .border-blue-200, .border-orange-200').forEach(el => {
-                  el.classList.remove('ring-2', 'ring-purple-400');
-                });
-                element.classList.add('ring-2', 'ring-purple-400');
-                element.querySelector('input').checked = true;
-                
-                const plans = {
-                  consultoria: \`
-                    <div class="space-y-2 text-sm">
-                      <h5 class="font-semibold">Primeiros Passos (Semana 1-2):</h5>
-                      <ul class="space-y-1 text-gray-700 ml-4">
-                        <li>• Criar perfil no LinkedIn como consultor financeiro</li>
-                        <li>• Desenvolver 3 casos de sucesso (pode usar exemplos do app)</li>
-                        <li>• Definir pacotes: básico (R$ 100), intermediário (R$ 200), avançado (R$ 350)</li>
-                      </ul>
-                      <h5 class="font-semibold mt-3">Execução (Semana 3-4):</h5>
-                      <ul class="space-y-1 text-gray-700 ml-4">
-                        <li>• Oferecer 3 consultorias gratuitas para conseguir depoimentos</li>
-                        <li>• Criar conteúdo no Instagram/TikTok sobre dicas financeiras</li>
-                        <li>• Começar a cobrar pelos serviços</li>
-                      </ul>
-                    </div>
-                  \`,
-                  cursos: \`
-                    <div class="space-y-2 text-sm">
-                      <h5 class="font-semibold">Primeiros Passos (Semana 1-3):</h5>
-                      <ul class="space-y-1 text-gray-700 ml-4">
-                        <li>• Definir nicho: "Finanças Pessoais para Iniciantes"</li>
-                        <li>• Criar estrutura do curso: 8 módulos de 10min cada</li>
-                        <li>• Gravar módulo piloto usando smartphone</li>
-                      </ul>
-                      <h5 class="font-semibold mt-3">Lançamento (Semana 4-6):</h5>
-                      <ul class="space-y-1 text-gray-700 ml-4">
-                        <li>• Publicar na Udemy por R$ 97</li>
-                        <li>• Criar funil de vendas simples</li>
-                        <li>• Meta: 20 vendas no primeiro mês</li>
-                      </ul>
-                    </div>
-                  \`,
-                  afiliados: \`
-                    <div class="space-y-2 text-sm">
-                      <h5 class="font-semibold">Primeiros Passos (Semana 1):</h5>
-                      <ul class="space-y-1 text-gray-700 ml-4">
-                        <li>• Cadastrar em 3 programas: Nubank, Inter, C6 Bank</li>
-                        <li>• Criar conta business no Instagram</li>
-                        <li>• Definir estratégia de conteúdo: dicas + indicações</li>
-                      </ul>
-                      <h5 class="font-semibold mt-3">Execução (Semana 2-4):</h5>
-                      <ul class="space-y-1 text-gray-700 ml-4">
-                        <li>• Postar 1 dica financeira + 1 indicação por dia</li>
-                        <li>• Focar em produtos que você realmente usa</li>
-                        <li>• Meta: 5 indicações por semana</li>
-                      </ul>
-                    </div>
-                  \`
-                };
-                
-                document.getElementById('action-plan').classList.remove('hidden');
-                document.getElementById('plan-content').innerHTML = plans[type];
-              }
-              
-              function updateImpact(value) {
-                document.getElementById('selected-income').textContent = 'R$ ' + value;
-                document.getElementById('yearly-extra').textContent = 'R$ ' + (value * 12).toLocaleString();
-                document.getElementById('goal-acceleration').textContent = Math.round((value / 500) * 40) + '%';
-                document.getElementById('investment-potential').textContent = 'R$ ' + Math.round(value * 0.6 * 8).toLocaleString();
-              }
-            </script>
           </div>
         `;
+
+        // Add event listeners after modal is created
+        setTimeout(() => {
+          const cards = modal.querySelectorAll('.opportunity-card');
+          const actionPlan = modal.querySelector('#action-plan');
+          const planContent = modal.querySelector('#plan-content');
+          const incomeSlider = modal.querySelector('#income-slider');
+          const createPlanBtn = modal.querySelector('#create-plan-btn');
+          
+          let selectedOpportunity = null;
+
+          cards.forEach(card => {
+            card.addEventListener('click', function() {
+              // Remove selection from all cards
+              cards.forEach(c => c.classList.remove('ring-2', 'ring-purple-400'));
+              // Add selection to clicked card
+              this.classList.add('ring-2', 'ring-purple-400');
+              // Check radio button
+              this.querySelector('input[type="radio"]').checked = true;
+              
+              selectedOpportunity = this.dataset.opportunity;
+              
+              const plans = {
+                consultoria: `
+                  <div class="space-y-2 text-sm">
+                    <h5 class="font-semibold">Primeiros Passos (Semana 1-2):</h5>
+                    <ul class="space-y-1 text-gray-700 ml-4">
+                      <li>• Criar perfil no LinkedIn como consultor financeiro</li>
+                      <li>• Desenvolver 3 casos de sucesso (pode usar exemplos do app)</li>
+                      <li>• Definir pacotes: básico (R$ 100), intermediário (R$ 200), avançado (R$ 350)</li>
+                    </ul>
+                    <h5 class="font-semibold mt-3">Execução (Semana 3-4):</h5>
+                    <ul class="space-y-1 text-gray-700 ml-4">
+                      <li>• Oferecer 3 consultorias gratuitas para conseguir depoimentos</li>
+                      <li>• Criar conteúdo no Instagram/TikTok sobre dicas financeiras</li>
+                      <li>• Começar a cobrar pelos serviços</li>
+                    </ul>
+                  </div>
+                `,
+                cursos: `
+                  <div class="space-y-2 text-sm">
+                    <h5 class="font-semibold">Preparação (Semana 1-3):</h5>
+                    <ul class="space-y-1 text-gray-700 ml-4">
+                      <li>• Definir nicho: iniciantes, investimentos, ou negócios</li>
+                      <li>• Criar outline de 10-15 aulas de 10-15min cada</li>
+                      <li>• Gravar aulas piloto e teste com amigos</li>
+                    </ul>
+                    <h5 class="font-semibold mt-3">Lançamento (Semana 4-6):</h5>
+                    <ul class="space-y-1 text-gray-700 ml-4">
+                      <li>• Upload na Udemy ou Hotmart (R$ 47-97)</li>
+                      <li>• Criar material bônus (planilhas, checklists)</li>
+                      <li>• Promover em redes sociais e grupos</li>
+                    </ul>
+                  </div>
+                `,
+                afiliados: `
+                  <div class="space-y-2 text-sm">
+                    <h5 class="font-semibold">Setup Inicial (Semana 1):</h5>
+                    <ul class="space-y-1 text-gray-700 ml-4">
+                      <li>• Escolher 3-5 produtos financeiros que você usa</li>
+                      <li>• Aplicar para programas de afiliados (Nubank, C6, etc)</li>
+                      <li>• Criar conteúdo autêntico sobre experiências</li>
+                    </ul>
+                    <h5 class="font-semibold mt-3">Crescimento (Semana 2-4):</h5>
+                    <ul class="space-y-1 text-gray-700 ml-4">
+                      <li>• Posts diários com dicas e links nos stories</li>
+                      <li>• Participar de grupos sobre finanças</li>
+                      <li>• Acompanhar métricas e otimizar</li>
+                    </ul>
+                  </div>
+                `
+              };
+              
+              actionPlan.classList.remove('hidden');
+              planContent.innerHTML = plans[selectedOpportunity] || 'Plano em desenvolvimento...';
+            });
+          });
+
+          // Income slider
+          if (incomeSlider) {
+            incomeSlider.addEventListener('input', function() {
+              const value = this.value;
+              modal.querySelector('#selected-income').textContent = 'R$ ' + value;
+              modal.querySelector('#yearly-extra').textContent = 'R$ ' + (value * 12).toLocaleString();
+              modal.querySelector('#goal-acceleration').textContent = Math.round((value / 500) * 40) + '%';
+              modal.querySelector('#investment-potential').textContent = 'R$ ' + (value * 0.4 * 12).toLocaleString();
+            });
+          }
+
+          // Create plan button
+          if (createPlanBtn) {
+            createPlanBtn.addEventListener('click', function() {
+              if (selectedOpportunity) {
+                alert('🚀 Plano de renda criado! Você receberá um guia passo-a-passo para ' + selectedOpportunity + ' e acompanhamento semanal por IA.');
+              } else {
+                alert('📝 Análise salva! Explore as oportunidades e volte quando estiver pronto para começar.');
+              }
+              modal.remove();
+            });
+          }
+        }, 100);
+
         document.body.appendChild(modal);
       }
     }
