@@ -71,7 +71,8 @@ export default function LiveFinancialCards() {
       icon: PiggyBank,
       color: "text-purple-600",
       bgColor: "bg-purple-50", 
-      change: "+15,3%"
+      change: "+15,3%",
+      hasButton: true
     }
   ];
 
@@ -120,15 +121,14 @@ export default function LiveFinancialCards() {
                   {' '}desde o mês passado
                 </p>
                 
-                {/* Botão específico para Investimentos */}
-                {card.title === "Investimentos" && (
+                {/* Botão Investimentos - DEFINITIVO */}
+                {card.hasButton && (
                   <div className="mt-3 w-full">
                     <button 
                       type="button"
-                      className="w-full text-sm bg-purple-600 text-white hover:bg-purple-700 py-2 px-3 rounded-md font-medium transition-colors"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
+                      className="w-full text-sm bg-purple-600 text-white hover:bg-purple-700 py-2 px-3 rounded-md font-medium transition-colors shadow-sm"
+                      onClick={() => {
+                        console.log('Navegando para /investments');
                         setLocation('/investments');
                       }}
                     >
