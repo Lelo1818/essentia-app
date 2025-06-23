@@ -118,22 +118,17 @@ export default function LiveFinancialCards() {
                   </span>
                   {' '}desde o mês passado
                 </p>
-                {/* Botão específico para Investimentos */}
-                {(card.title === 'Investimentos' || card.icon === PiggyBank) && (
+                {/* Botão para Investimentos */}
+                {card.title === 'Investimentos' && (
                   <div className="mt-3 w-full">
                     <button 
                       type="button"
-                      className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 active:bg-purple-300 py-2 px-3 rounded-md font-medium transition-colors border border-purple-200 touch-manipulation"
+                      className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 active:bg-purple-300 py-2 px-3 rounded-md font-medium transition-colors border border-purple-200"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('🚀 NAVEGAÇÃO: Botão investimentos clicado');
+                        console.log('Navegando para investments');
                         window.location.href = '/investments';
-                      }}
-                      style={{ 
-                        WebkitTouchCallout: 'none',
-                        WebkitUserSelect: 'none',
-                        touchAction: 'manipulation'
                       }}
                     >
                       📈 Ver Detalhes
