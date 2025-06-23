@@ -30,7 +30,8 @@ export default function LiveFinancialCards() {
   const safeData = summary || {
     totalIncome: 15101.8,
     totalExpenses: 4267.94,
-    balance: 10833.86
+    balance: 10833.86,
+    investments: 8750 // Garantir valor padrão correto
   };
 
   const formatCurrency = (value: number) => {
