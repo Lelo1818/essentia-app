@@ -93,14 +93,18 @@ export default function LiveFinancialCards() {
           console.log(`🔍 CARD ${index} VALUE:`, card.value, 'TYPE:', typeof card.value);
           
           const Icon = card.icon;
-          const isInvestments = card.title === "Investimentos";
+          // FORÇAR detecção de investimentos por múltiplos critérios
+          const isInvestments = card.title === "Investimentos" || 
+                              card.value === 8750 || 
+                              (safeData.investments && card.value === safeData.investments) ||
+                              index === 2; // terceiro card é sempre investimentos
           
           return (
             <Card 
               key={index} 
               className={`relative overflow-hidden ${isInvestments ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
               onClick={isInvestments ? () => {
-                console.log('Clicando em Investimentos - navegando para /investments');
+                console.log('Navegando para investimentos via card click');
                 setLocation('/investments');
               } : undefined}
             >
@@ -122,29 +126,28 @@ export default function LiveFinancialCards() {
                   </span>
                   {' '}desde o mês passado
                 </p>
-                {/* DEBUG VISUAL */}
-                <div className="mt-2 text-xs bg-yellow-200 p-2 rounded border-2 border-red-500">
-                  <div>TÍTULO: "{card.title}" ({typeof card.title})</div>
-                  <div>VALOR: {card.value} ({typeof card.value})</div>
-                  <div>ÍCONE: {card.icon?.name || 'sem nome'}</div>
-                  <div>INDEX: {index}</div>
-                </div>
-                
-                {/* Botão FORÇADO para valor 8750 */}
-                {card.value === 8750 && (
-                  <div className="mt-3 w-full bg-green-200 p-1">
+                {/* Botão Investimentos - GARANTIDO */}
+                {isInvestments && (
+                  <div className="mt-4 w-full">
                     <button 
                       type="button"
-                      className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 py-2 px-3 rounded-md font-medium border border-purple-200"
+                      className="w-full text-sm bg-purple-600 text-white hover:bg-purple-700 active:bg-purple-800 py-2.5 px-4 rounded-lg font-medium transition-colors shadow-sm"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('🚀 NAVEGAÇÃO FORÇADA');
-                        window.location.href = '/investments';
+                        console.log('Navegando para investments');
+                        setLocation('/investments');
                       }}
                     >
-                      📈 Ver Detalhes (FORÇADO)
+                      📈 Ver Detalhes
                     </button>
+                  </div>
+                )}
+                
+                {/* Indicador visual se é investimentos */}
+                {isInvestments && (
+                  <div className="absolute top-2 right-2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
+                    💼
                   </div>
                 )}
               </CardContent>
