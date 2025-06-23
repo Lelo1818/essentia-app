@@ -40,7 +40,7 @@ import { PredictiveDashboard } from "@/components/enhanced/predictive-dashboard"
 import EcosystemStats from "@/components/dashboard/ecosystem-stats";
 import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
-import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera } from "lucide-react";
+import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera, Gift, Percent, Plane, BookOpen } from "lucide-react";
 
 import type { FinancialSummary } from "@/types";
 
@@ -341,46 +341,60 @@ export default function Dashboard() {
           🚀 Ferramentas Essenciais
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           <button
             onClick={() => {
-              console.log('CLIQUE: Agendar Pagamentos');
-              window.location.href = '/agendar-pagamentos';
+              console.log('CLIQUE: Cashback');
+              window.location.href = '/cashback-marketplace';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
           >
             <div className="text-center">
-              <Calendar className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold mb-2">Agendar Pagamentos</h3>
-              <p className="text-blue-100 text-sm">Organize suas contas</p>
+              <Gift className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-sm md:text-xl font-bold mb-1 md:mb-2">Cashback</h3>
+              <p className="text-green-100 text-xs md:text-sm hidden md:block">Ganhe dinheiro de volta</p>
             </div>
           </button>
 
           <button
             onClick={() => {
-              console.log('CLIQUE: Simular Cenários');
-              window.location.href = '/simular-cenarios';
+              console.log('CLIQUE: Cupons');
+              window.location.href = '/cupons';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
           >
             <div className="text-center">
-              <Calculator className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold mb-2">Simular Cenários</h3>
-              <p className="text-purple-100 text-sm">Projete o futuro</p>
+              <Percent className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-sm md:text-xl font-bold mb-1 md:mb-2">Cupons</h3>
+              <p className="text-purple-100 text-xs md:text-sm hidden md:block">Descontos exclusivos</p>
             </div>
           </button>
 
           <button
             onClick={() => {
-              console.log('CLIQUE: Renegociar Dívidas');
-              window.location.href = '/renegociar-dividas';
+              console.log('CLIQUE: Milhas');
+              window.location.href = '/milhas';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
           >
             <div className="text-center">
-              <DollarSign className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold mb-2">Renegociar Dívidas</h3>
-              <p className="text-green-100 text-sm">Estratégias inteligentes</p>
+              <Plane className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-sm md:text-xl font-bold mb-1 md:mb-2">Milhas</h3>
+              <p className="text-blue-100 text-xs md:text-sm hidden md:block">Acumule e troque</p>
+            </div>
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('CLIQUE: Educação');
+              window.location.href = '/educacao';
+            }}
+            className="group relative overflow-hidden bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+          >
+            <div className="text-center">
+              <BookOpen className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-sm md:text-xl font-bold mb-1 md:mb-2">Educação</h3>
+              <p className="text-orange-100 text-xs md:text-sm hidden md:block">Aprenda e cresça</p>
             </div>
           </button>
         </div>
