@@ -18,7 +18,7 @@ export default function LiveFinancialCards() {
     refetchOnWindowFocus: true,
   });
 
-  console.log('🔥 LIVE CARDS:', { summary, timestamp: new Date().toISOString() });
+  // Debug removido para estabilidade
 
   if (isLoading) return <div className="text-center py-8">Carregando dados...</div>;
   
