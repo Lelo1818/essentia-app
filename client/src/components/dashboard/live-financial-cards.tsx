@@ -95,7 +95,10 @@ export default function LiveFinancialCards() {
             <Card 
               key={index} 
               className={`relative overflow-hidden ${isInvestments ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
-              onClick={isInvestments ? () => setLocation('/investments') : undefined}
+              onClick={isInvestments ? () => {
+                console.log('Clicando em Investimentos - navegando para /investments');
+                setLocation('/investments');
+              } : undefined}
             >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">
@@ -115,6 +118,20 @@ export default function LiveFinancialCards() {
                   </span>
                   {' '}desde o mês passado
                 </p>
+                {isInvestments && (
+                  <div className="mt-3">
+                    <button 
+                      className="text-xs text-purple-600 hover:text-purple-800 font-medium"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Botão Investimentos clicado');
+                        setLocation('/investments');
+                      }}
+                    >
+                      Ver Detalhes →
+                    </button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           );
