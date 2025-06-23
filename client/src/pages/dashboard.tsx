@@ -86,9 +86,14 @@ export default function Dashboard() {
   };
 
   // Debug logs para diagnóstico completo
-  console.log('🔍 DASHBOARD DEBUG:', { realSummary, isLoading: summaryLoading });
-  console.log('🔍 SUMMARY CALCULADO:', summary);
-  console.log('🔍 TIMESTAMP DASHBOARD:', new Date().toISOString());
+  console.log('🔍 DASHBOARD DEBUG - DADOS RECEBIDOS:', { 
+    realSummary, 
+    isLoading: summaryLoading,
+    totalIncome: realSummary?.totalIncome,
+    totalExpenses: realSummary?.totalExpenses 
+  });
+  console.log('🔍 SUMMARY FINAL CALCULADO:', summary);
+  console.log('🔍 TIMESTAMP:', new Date().toISOString());
   
   const goals = [
     { id: 1, title: "Viagem Europa", progress: 57, target: 15000, current: 8500 },
