@@ -52,6 +52,7 @@ import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
 import SimpleApp from "./App-simple";
 import SuperSimple from "./pages/super-simple";
+import EcosystemSelector from "@/pages/ecosystem-selector";
 
 
 function Router() {
@@ -69,6 +70,7 @@ function Router() {
       <Route path="/eduvie-standalone" component={EduVieStandalone} />
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
+      <Route path="/ecosystem-selector" component={EcosystemSelector} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/investor-demo" component={InvestorDemo} />
       <Route path="/mobile-test" component={MobileTest} />
