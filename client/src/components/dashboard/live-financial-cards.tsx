@@ -73,12 +73,14 @@ export default function LiveFinancialCards() {
 
   return (
     <>
-      {/* Debug visual */}
-      <div className="bg-yellow-100 p-2 rounded mb-4 text-sm">
-        <strong>LIVE UPDATE:</strong> Receitas = R$ {safeData.totalIncome?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} 
-        | Timestamp: {new Date().toLocaleTimeString()}
-        | API Status: {summary ? '✅ Conectado' : '⚠️ Usando valores seguros'}
-      </div>
+      {/* Debug visual - apenas em modo dev */}
+      {!window?.isDemoMode && (
+        <div className="bg-yellow-100 p-2 rounded mb-4 text-sm">
+          <strong>LIVE UPDATE:</strong> Receitas = R$ {safeData.totalIncome?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} 
+          | Timestamp: {new Date().toLocaleTimeString()}
+          | API Status: {summary ? '✅ Conectado' : '⚠️ Usando valores seguros'}
+        </div>
+      )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {cards.map((card, index) => {

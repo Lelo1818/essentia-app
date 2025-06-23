@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -256,6 +256,12 @@ export default function FlowWorking() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showIncomeModal, setShowIncomeModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
+
+  // Set global demo mode
+  useEffect(() => {
+    window.isDemoMode = isDemoMode;
+  }, [isDemoMode]);
 
   // Real financial data
   const { data: summary } = useQuery({
