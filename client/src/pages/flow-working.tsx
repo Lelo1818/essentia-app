@@ -548,6 +548,9 @@ function QuickIncomeModal({ onClose }) {
       });
       
       if (response.ok) {
+        // Invalidate queries to update dashboard
+        queryClient.invalidateQueries({ queryKey: ['/api/incomes'] });
+        queryClient.invalidateQueries({ queryKey: ['/api/financial-summary'] });
         // Invalidação com key correta da API
         queryClient.removeQueries(['/api/financial-summary']);
         queryClient.invalidateQueries(['/api/financial-summary']);
