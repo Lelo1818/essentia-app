@@ -53,6 +53,7 @@ const playSuccessSound = () => {
 };
 
 export default function EcosystemSelector() {
+  // Force refresh timestamp: 1750643415
   const apps = [
     {
       id: "essentia",
