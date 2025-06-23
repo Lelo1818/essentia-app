@@ -4,12 +4,17 @@ import { TrendingUp, TrendingDown, DollarSign, PiggyBank } from "lucide-react";
 
 export default function SimpleFinancialOverview() {
   // Buscar dados com invalidação automática
-  const { data: summary, isLoading, error } = useQuery({
+  const { data: summary, isLoading, error, refetch } = useQuery({
     queryKey: ['/api/financial-summary'],
     staleTime: 0,
     refetchOnWindowFocus: true,
-    refetchInterval: 2000, // Atualizar a cada 2 segundos
+    refetchInterval: 1000, // Atualizar a cada 1 segundo
+    refetchOnMount: true,
+    refetchIntervalInBackground: true,
   });
+
+  // Debug para verificar se os dados estão chegando
+  console.log('🔍 SIMPLE FINANCIAL OVERVIEW:', { summary, isLoading, error });
 
   if (isLoading) return <div>Carregando dados financeiros...</div>;
   if (error) return <div>Erro ao carregar dados</div>;
@@ -59,6 +64,10 @@ export default function SimpleFinancialOverview() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      {/* Debug info - remover depois */}
+      <div className="col-span-full text-xs text-gray-500 mb-2">
+        Debug: totalIncome = {summary?.totalIncome || 'loading...'} | timestamp = {new Date().toLocaleTimeString()}
+      </div>
       {cards.map((card, index) => {
         const Icon = card.icon;
         return (
