@@ -165,9 +165,13 @@ export default function EcosystemSelector() {
           <div className="flex justify-center gap-4 mb-8">
             <Button 
               className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 playSuccessSound();
-                setTimeout(() => window.location.href = '/investor-demo', 100);
+                console.log('Navegando para: /investor-demo');
+                setTimeout(() => {
+                  window.location.href = '/investor-demo';
+                }, 100);
               }}
             >
               <Play className="w-5 h-5 mr-2" />
@@ -176,9 +180,13 @@ export default function EcosystemSelector() {
             <Button 
               variant="outline" 
               className="text-purple-400 border-purple-400 px-8 py-4 text-lg hover:bg-purple-600 hover:text-white"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 playButtonSound();
-                setTimeout(() => window.location.href = '/investor-demo', 100);
+                console.log('Navegando para: /investor-demo');
+                setTimeout(() => {
+                  window.location.href = '/investor-demo';
+                }, 100);
               }}
             >
               Demo Técnica
@@ -254,31 +262,20 @@ export default function EcosystemSelector() {
 
                     {/* Action Button */}
                     <div className="flex justify-center">
-                      {app.status === 'Completo' ? (
-                        <Link href={app.route}>
-                          <Button 
-                            className={`bg-gradient-to-r ${app.color} hover:opacity-90 text-white w-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105`}
-                            onClick={() => {
-                              playButtonSound();
-                              setTimeout(() => window.location.href = app.route, 100);
-                            }}
-                          >
-                            <Play className="w-5 h-5 mr-2" />
-                            Testar Agora
-                          </Button>
-                        </Link>
-                      ) : (
-                        <Button 
-                          className={`bg-gradient-to-r ${app.color} hover:opacity-90 text-white w-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105`}
-                          onClick={() => {
-                            playButtonSound();
-                            setTimeout(() => window.location.href = app.route, 100);
-                          }}
-                        >
-                          <Play className="w-5 h-5 mr-2" />
-                          {app.status}
-                        </Button>
-                      )}
+                      <Button 
+                        className={`bg-gradient-to-r ${app.color} hover:opacity-90 text-white w-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          playButtonSound();
+                          console.log(`Navegando para: ${app.route}`);
+                          setTimeout(() => {
+                            window.location.href = app.route;
+                          }, 100);
+                        }}
+                      >
+                        <Play className="w-5 h-5 mr-2" />
+                        {app.status === 'Completo' ? 'Testar Agora' : app.status}
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
