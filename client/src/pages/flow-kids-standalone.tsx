@@ -28,8 +28,9 @@ export default function FlowKidsStandalone() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [selectedAvatar, setSelectedAvatar] = useState("unicorn");
   const [, setLocation] = useLocation();
-
-  const kidProfile = {
+  
+  // Sistema de pontuação dinâmico
+  const [kidProfile, setKidProfile] = useState({
     name: "Sofia",
     age: 8,
     level: 5,
@@ -39,6 +40,32 @@ export default function FlowKidsStandalone() {
     savings: 125.50,
     goals: 3,
     completedLessons: 18
+  });
+
+  // Função para adicionar pontos
+  const addPoints = (points: number, description: string) => {
+    setKidProfile(prev => {
+      const newTotalPoints = prev.totalPoints + points;
+      let newLevel = prev.level;
+      let newNextLevelPoints = prev.nextLevelPoints;
+      
+      // Verificar se subiu de nível
+      if (newTotalPoints >= prev.nextLevelPoints) {
+        newLevel = prev.level + 1;
+        newNextLevelPoints = prev.nextLevelPoints + 250; // Próximo nível precisa de 250 pontos a mais
+      }
+
+      return {
+        ...prev,
+        totalPoints: newTotalPoints,
+        level: newLevel,
+        nextLevelPoints: newNextLevelPoints,
+        completedLessons: prev.completedLessons + 1
+      };
+    });
+    
+    console.log(`FlowKids: +${points} pontos adicionados por: ${description}`);
+    return kidProfile.totalPoints + points;
   };
 
   const achievements = [
@@ -386,12 +413,15 @@ export default function FlowKidsStandalone() {
               onClick={(e) => {
                 e.preventDefault();
                 console.log('FlowKids: Iniciando lição "Necessidade vs Desejo"');
+                
+                // Adicionar pontos e mudar para jogos
+                const newPoints = addPoints(40, 'Lição "Necessidade vs Desejo" iniciada');
+                setActiveTab("jogos");
+                
                 // Simular início da lição
                 setTimeout(() => {
                   console.log('Lição iniciada com sucesso!');
-                  alert('Parabéns! Você iniciou a lição "Necessidade vs Desejo". +40 pontos ganhos!');
-                  // Simular navegação para área de jogos
-                  setActiveTab("jogos");
+                  alert(`Parabéns! Você iniciou a lição "Necessidade vs Desejo". +40 pontos ganhos! Total: ${newPoints} pontos`);
                 }, 500);
               }}
             >
@@ -499,7 +529,13 @@ export default function FlowKidsStandalone() {
                 <Button 
                   className="w-full bg-white text-green-600 hover:bg-gray-100"
                   onClick={() => {
-                    alert('Continuando a lição... +20 pontos extras!');
+                    const newPoints = addPoints(20, 'Continuação da lição "Necessidade vs Desejo"');
+                    alert(`Continuando a lição... +20 pontos extras! Total: ${newPoints} pontos`);
+                    
+                    // Atualizar progresso
+                    setTimeout(() => {
+                      console.log(`FlowKids: Progresso atualizado. Pontos totais: ${newPoints}`);
+                    }, 100);
                   }}
                 >
                   Continuar Lição
