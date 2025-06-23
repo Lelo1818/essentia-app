@@ -233,17 +233,17 @@ export default function Dashboard() {
           
           <div
             onClick={() => {
-              console.log('🔵 DASHBOARD → AGENDAR PAGAMENTOS');
-              window.location.href = '/agendar-pagamentos';
+              console.log('🔵 DASHBOARD → PIX');
+              window.location.href = '/pix';
             }}
             style={{
-              background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
               color: 'white',
               padding: '24px',
               borderRadius: '16px',
               cursor: 'pointer',
               textAlign: 'center',
-              boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
               transition: 'all 0.3s ease',
               border: 'none'
             }}

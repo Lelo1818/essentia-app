@@ -185,19 +185,19 @@ export default function Investments() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Investimentos</h1>
-            <p className="text-gray-600 mt-2">Faça seu dinheiro trabalhar para você</p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8">
+          <div className="mb-4 md:mb-0">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Investimentos</h1>
+            <p className="text-gray-600 mt-2 text-sm md:text-base">Faça seu dinheiro trabalhar para você</p>
           </div>
-          <div className="flex gap-3">
-            <Button className="bg-blue-600 hover:bg-blue-700">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <Button className="bg-blue-600 hover:bg-blue-700 flex-1 sm:flex-none">
               <Plus className="w-4 h-4 mr-2" />
               Novo Investimento
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="flex-1 sm:flex-none">
               <Eye className="w-4 h-4 mr-2" />
               Análise
             </Button>
@@ -205,7 +205,7 @@ export default function Investments() {
         </div>
 
         {/* Portfolio Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">

@@ -68,6 +68,7 @@ export default function Navigation() {
     { path: "/", label: "Dashboard" },
     { path: "/income", label: "Renda" },
     { path: "/expenses", label: "Gastos" },
+    { path: "/investments", label: "Investimentos" },
     { path: "/dividas", label: "Dívidas" },
     { path: "/planning", label: "Planejamento" },
     { path: "/goals", label: "Metas" },
