@@ -375,7 +375,7 @@ export default function PersonalizedSuggestions() {
                     <div class="flex justify-between items-start mb-2">
                       <h5 class="font-semibold text-green-800">💼 Consultoria Financeira</h5>
                       <div class="text-right">
-                        <div class="text-lg font-bold text-green-700">R$ 400-800/mês</div>
+                        <div class="text-lg font-bold text-green-700">R$ 600/mês</div>
                         <div class="text-xs text-green-600 flex items-center gap-1">
                           ⭐ Alta compatibilidade
                         </div>
@@ -396,7 +396,7 @@ export default function PersonalizedSuggestions() {
                     <div class="flex justify-between items-start mb-2">
                       <h5 class="font-semibold text-blue-800">🎓 Criação de Cursos Online</h5>
                       <div class="text-right">
-                        <div class="text-lg font-bold text-blue-700">R$ 600-1200/mês</div>
+                        <div class="text-lg font-bold text-blue-700">R$ 900/mês</div>
                         <div class="text-xs text-blue-600 flex items-center gap-1">
                           ⭐ Potencial escalável
                         </div>
@@ -417,7 +417,7 @@ export default function PersonalizedSuggestions() {
                     <div class="flex justify-between items-start mb-2">
                       <h5 class="font-semibold text-orange-800">🤝 Marketing de Afiliados</h5>
                       <div class="text-right">
-                        <div class="text-lg font-bold text-orange-700">R$ 200-600/mês</div>
+                        <div class="text-lg font-bold text-orange-700">R$ 400/mês</div>
                         <div class="text-xs text-orange-600 flex items-center gap-1">
                           ⭐ Rápido para começar
                         </div>
@@ -474,7 +474,7 @@ export default function PersonalizedSuggestions() {
               
               <div class="flex gap-3 mt-6">
                 <button id="create-plan-btn" class="flex-1 bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded transition-colors">
-                  🎯 Criar Plano de Renda
+                  💰 Adicionar Renda ao Sistema
                 </button>
                 <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded transition-colors">
                   Fechar
@@ -574,9 +574,49 @@ export default function PersonalizedSuggestions() {
 
           // Create plan button
           if (createPlanBtn) {
-            createPlanBtn.addEventListener('click', function() {
+            createPlanBtn.addEventListener('click', async function() {
               if (selectedOpportunity) {
-                alert('🚀 Plano de renda criado! Você receberá um guia passo-a-passo para ' + selectedOpportunity + ' e acompanhamento semanal por IA.');
+                try {
+                  // Calculate income amount based on opportunity
+                  const incomeValues = {
+                    consultoria: 600, // Middle of R$ 400-800 range
+                    cursos: 900,      // Middle of R$ 600-1200 range
+                    afiliados: 400    // Middle of R$ 200-600 range
+                  };
+
+                  const monthlyAmount = incomeValues[selectedOpportunity] || 500;
+
+                  // Create income via API
+                  const response = await fetch('/api/opportunity-income', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      opportunity: selectedOpportunity,
+                      monthlyAmount: monthlyAmount,
+                      startDate: new Date().toISOString()
+                    })
+                  });
+
+                  if (response.ok) {
+                    const newIncome = await response.json();
+                    alert('🚀 Renda adicionada com sucesso! Nova fonte: R$ ' + monthlyAmount + '/mês em ' + 
+                          (selectedOpportunity === 'consultoria' ? 'Consultoria Financeira' :
+                           selectedOpportunity === 'cursos' ? 'Cursos Online' : 'Marketing de Afiliados') + 
+                          '. Refresh a página para ver no dashboard.');
+                    
+                    // Force page refresh to update dashboard
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  } else {
+                    throw new Error('Failed to create income');
+                  }
+                } catch (error) {
+                  console.error('Error creating opportunity income:', error);
+                  alert('❌ Erro ao adicionar renda. Tente novamente.');
+                }
               } else {
                 alert('📝 Análise salva! Explore as oportunidades e volte quando estiver pronto para começar.');
               }
