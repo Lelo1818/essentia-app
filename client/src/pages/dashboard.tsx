@@ -41,6 +41,8 @@ import EcosystemStats from "@/components/dashboard/ecosystem-stats";
 import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
 import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera, Gift, Percent, Plane, BookOpen } from "lucide-react";
+import { FeedbackUtils } from "@/utils/feedbackUtils";
+import { AmbientPlayer } from "@/components/audio/ambient-player";
 
 import type { FinancialSummary } from "@/types";
 
@@ -192,7 +194,10 @@ export default function Dashboard() {
       
       <AppShowcase />
       
-      <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
+      <div className="flex justify-between items-center mb-6">
+        <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
+        <AmbientPlayer enabled={false} className="hidden md:block" />
+      </div>
       
       {/* FORÇA RENDERIZAÇÃO DO LIVE FINANCIAL CARDS */}
       <LiveFinancialCards />
@@ -234,6 +239,7 @@ export default function Dashboard() {
           <div
             onClick={() => {
               console.log('🔵 DASHBOARD → PIX');
+              FeedbackUtils.feedbackAction('navigate');
               window.location.href = '/pix';
             }}
             style={{
@@ -345,9 +351,10 @@ export default function Dashboard() {
           <button
             onClick={() => {
               console.log('CLIQUE: Cashback');
+              FeedbackUtils.feedbackAction('navigate');
               window.location.href = '/cashback-marketplace';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer active:scale-95"
           >
             <div className="text-center">
               <Gift className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
@@ -359,9 +366,10 @@ export default function Dashboard() {
           <button
             onClick={() => {
               console.log('CLIQUE: Cupons');
+              FeedbackUtils.feedbackAction('navigate');
               window.location.href = '/cupons';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer active:scale-95"
           >
             <div className="text-center">
               <Percent className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
@@ -373,9 +381,10 @@ export default function Dashboard() {
           <button
             onClick={() => {
               console.log('CLIQUE: Milhas');
+              FeedbackUtils.feedbackAction('navigate');
               window.location.href = '/milhas';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer active:scale-95"
           >
             <div className="text-center">
               <Plane className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />
@@ -387,9 +396,10 @@ export default function Dashboard() {
           <button
             onClick={() => {
               console.log('CLIQUE: Educação');
+              FeedbackUtils.feedbackAction('navigate');
               window.location.href = '/educacao';
             }}
-            className="group relative overflow-hidden bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 md:p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 cursor-pointer active:scale-95"
           >
             <div className="text-center">
               <BookOpen className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-4 group-hover:scale-110 transition-transform" />

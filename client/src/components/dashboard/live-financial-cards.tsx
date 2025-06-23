@@ -100,6 +100,7 @@ export default function LiveFinancialCards() {
               className={`relative overflow-hidden ${isInvestments ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
               onClick={isInvestments ? () => {
                 console.log('Navegando para investimentos via card click');
+                FeedbackUtils.feedbackAction('navigate');
                 setLocation('/investments');
               } : undefined}
             >

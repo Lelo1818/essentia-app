@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Home, Plus, Camera, PieChart, Trophy, Gift, CreditCard, BookOpen, Percent, Plane, Brain, Baby, TrendingUp, Shield, Receipt, Clock, Menu, X, Heart, Users, Zap } from "lucide-react";
+import { FeedbackUtils } from "@/utils/feedbackUtils";
 
 export default function MobileNavigation() {
   const [location] = useLocation();
@@ -47,10 +48,13 @@ export default function MobileNavigation() {
                 return (
                   <Link key={item.path} href={item.path}>
                     <div 
-                      className={`flex flex-col items-center p-4 rounded-lg transition-colors cursor-pointer ${
+                      className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 cursor-pointer active:scale-95 ${
                         isActive ? "text-purple-600 bg-purple-50" : "text-gray-600 hover:text-purple-600 hover:bg-gray-50"
                       }`}
-                      onClick={() => setShowMore(false)}
+                      onClick={() => {
+                        FeedbackUtils.feedbackAction('navigate');
+                        setShowMore(false);
+                      }}
                     >
                       <Icon className="w-6 h-6 mb-2" />
                       <span className="text-xs font-medium text-center">{item.label}</span>
@@ -72,9 +76,12 @@ export default function MobileNavigation() {
             
             return (
               <Link key={item.path} href={item.path}>
-                <div className={`flex flex-col items-center py-2 px-1 transition-colors cursor-pointer ${
-                  isActive ? "text-purple-600 bg-purple-50" : "text-gray-500 hover:text-purple-600"
-                }`}>
+                <div 
+                  className={`flex flex-col items-center py-2 px-1 transition-all duration-200 cursor-pointer active:scale-95 ${
+                    isActive ? "text-purple-600 bg-purple-50" : "text-gray-500 hover:text-purple-600"
+                  }`}
+                  onClick={() => FeedbackUtils.feedbackAction('navigate')}
+                >
                   <Icon className="w-5 h-5 mb-1" />
                   <span className="text-xs font-medium">{item.label}</span>
                 </div>
@@ -84,8 +91,11 @@ export default function MobileNavigation() {
           
           {/* Botão "Mais" */}
           <button
-            onClick={() => setShowMore(true)}
-            className="flex flex-col items-center py-2 px-1 transition-colors cursor-pointer text-gray-500 hover:text-purple-600"
+            onClick={() => {
+              FeedbackUtils.feedbackAction('interaction');
+              setShowMore(true);
+            }}
+            className="flex flex-col items-center py-2 px-1 transition-all duration-200 cursor-pointer text-gray-500 hover:text-purple-600 active:scale-95"
           >
             <Menu className="w-5 h-5 mb-1" />
             <span className="text-xs font-medium">Mais</span>
