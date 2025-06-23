@@ -63,9 +63,9 @@ export default function Dashboard() {
 
   useKeyboardShortcuts(shortcuts);
 
-  // Query key simplificado conforme solução definitiva
+  // Query key corrigido para coincidir com a API
   const { data: realSummary, isLoading: summaryLoading, refetch } = useQuery({
-    queryKey: ['financial-summary'],
+    queryKey: ['/api/financial-summary'],
     staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: 3000

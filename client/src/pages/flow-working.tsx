@@ -548,10 +548,10 @@ function QuickIncomeModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Solução definitiva - invalidação com mesma key
-        queryClient.removeQueries(['financial-summary']);
-        queryClient.invalidateQueries(['financial-summary']);
-        queryClient.invalidateQueries(['incomes']);
+        // Invalidação com key correta da API
+        queryClient.removeQueries(['/api/financial-summary']);
+        queryClient.invalidateQueries(['/api/financial-summary']);
+        queryClient.invalidateQueries(['/api/incomes']);
         
         alert(`Nova receita adicionada!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nFrequência: ${formData.frequency}`);
         onClose();
@@ -765,10 +765,10 @@ function QuickExpenseModal({ onClose }) {
       });
       
       if (response.ok) {
-        // Solução definitiva - invalidação com mesma key
-        queryClient.removeQueries(['financial-summary']);
-        queryClient.invalidateQueries(['financial-summary']);
-        queryClient.invalidateQueries(['expenses']);
+        // Invalidação com key correta da API
+        queryClient.removeQueries(['/api/financial-summary']);
+        queryClient.invalidateQueries(['/api/financial-summary']);
+        queryClient.invalidateQueries(['/api/expenses']);
         
         alert(`Novo gasto adicionado!\n\n${formData.description}: ${formatCurrency(parseFloat(formData.amount))}\nCategoria: ${formData.category}`);
         onClose();

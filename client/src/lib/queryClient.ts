@@ -50,10 +50,16 @@ export const getQueryFn: <T>(options: {
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      queryFn: getQueryFn({ on401: "throw" }),
+      queryFn: ({ queryKey }) => {
+        const url = Array.isArray(queryKey) ? queryKey[0] : queryKey;
+        return fetch(url).then(res => {
+          if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
+          return res.json();
+        });
+      },
       refetchInterval: false,
       refetchOnWindowFocus: false,
-      staleTime: 0, // Sempre considera dados stale para reatividade máxima
+      staleTime: 0,
       retry: false,
     },
     mutations: {
