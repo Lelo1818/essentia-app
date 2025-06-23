@@ -7,8 +7,7 @@ import { mockEduData } from "@/data/mock-edu-data";
 import { mockPurposeData } from "@/data/mock-purpose-data";
 import WelcomeHeader from "@/components/dashboard/welcome-header";
 
-import FinancialOverview from "@/components/dashboard/financial-overview";
-import FinancialCards from "@/components/dashboard/financial-cards";
+import SimpleFinancialOverview from "@/components/dashboard/simple-financial-overview";
 import ExpenseCategories from "@/components/dashboard/expense-categories";
 import DebtOptimization from "@/components/dashboard/debt-optimization";
 import PersonalizedSuggestions from "@/components/dashboard/personalized-suggestions";
@@ -71,11 +70,7 @@ export default function Dashboard() {
     refetchInterval: 1000 // Aumentado para debug
   });
 
-  // Botão de teste para forçar atualização
-  const forceRefresh = () => {
-    console.log('🔄 FORÇANDO REFETCH MANUAL');
-    refetch();
-  };
+
 
   const summary = realSummary ? {
     totalIncome: realSummary.totalIncome,
@@ -199,35 +194,7 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
-      {/* BOTÃO DEBUG TEMPORÁRIO - MUITO VISÍVEL */}
-      <div style={{
-        backgroundColor: '#fee2e2',
-        border: '3px solid #dc2626', 
-        padding: '20px',
-        margin: '20px 0',
-        borderRadius: '12px',
-        textAlign: 'center'
-      }}>
-        <button 
-          onClick={forceRefresh}
-          style={{
-            backgroundColor: '#dc2626',
-            color: 'white',
-            padding: '12px 24px',
-            borderRadius: '8px',
-            border: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            marginRight: '20px'
-          }}
-        >
-          🔄 FORÇAR ATUALIZAÇÃO DASHBOARD
-        </button>
-        <span style={{ fontSize: '14px', color: '#374151' }}>
-          DEBUG: totalIncome = R$ {summary.totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-        </span>
-      </div>
+
       
 
 
@@ -419,12 +386,6 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <FinancialOverview
-          totalIncome={totalIncome}
-          totalExpenses={totalExpenses}
-          balance={balance}
-        />
-        
         <div>
           <Card className="mb-4">
             <CardHeader>
