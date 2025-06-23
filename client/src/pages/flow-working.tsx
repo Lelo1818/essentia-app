@@ -257,10 +257,16 @@ export default function FlowWorking() {
   const [showExpenseModal, setShowExpenseModal] = useState(false);
 
   // Real financial data
+  const { data: summary } = useQuery({
+    queryKey: ['/api/financial-summary'],
+    staleTime: 0,
+    refetchInterval: 1000
+  });
+
   const data = {
-    totalIncome: 10050,
-    totalExpenses: 3730,
-    balance: 6320,
+    totalIncome: summary?.totalIncome || 0,
+    totalExpenses: summary?.totalExpenses || 0,
+    balance: summary?.balance || 0,
     savings: 15420,
     investments: 8750,
     creditCards: 2100,
