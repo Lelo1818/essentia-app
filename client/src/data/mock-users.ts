@@ -46,7 +46,7 @@ export const mockUsers = [
     role: "Desenvolvedor", 
     avatar: "",
     stats: {
-      flow: { balance: 8750.90, savings: 2500.00, investments: 1800.45 },
+      flow: { balance: 8750.90, savings: 2500.00, investments: 8750.00 },
       edu: { coursesCompleted: 22, hoursStudied: 445, streak: 67 },
       purpose: { journeyProgress: 85, ritualsCompleted: 18, insightsGained: 35 }
     }
