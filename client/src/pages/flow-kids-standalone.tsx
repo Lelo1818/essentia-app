@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -26,6 +27,7 @@ import {
 export default function FlowKidsStandalone() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [selectedAvatar, setSelectedAvatar] = useState("unicorn");
+  const [, setLocation] = useLocation();
 
   const kidProfile = {
     name: "Sofia",
@@ -371,14 +373,27 @@ export default function FlowKidsStandalone() {
             }}>
               Vamos aprender sobre "Necessidade vs Desejo"! Complete a lição e ganhe 40 pontos.
             </p>
-            <Button style={{
-              background: 'white',
-              color: '#8b5cf6',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              fontWeight: '600'
-            }}>
+            <Button 
+              style={{
+                background: 'white',
+                color: '#8b5cf6',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                console.log('FlowKids: Iniciando lição "Necessidade vs Desejo"');
+                setActiveTab("jogos");
+                // Simular início da lição
+                setTimeout(() => {
+                  console.log('Lição iniciada com sucesso!');
+                  alert('Parabéns! Você iniciou a lição "Necessidade vs Desejo". +40 pontos ganhos!');
+                }, 500);
+              }}
+            >
               Começar Agora! 🚀
             </Button>
           </div>
