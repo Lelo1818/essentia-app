@@ -63,13 +63,19 @@ export default function Dashboard() {
 
   useKeyboardShortcuts(shortcuts);
 
-  // Query key corrigido para coincidir com a API
+  // Teste forçado com refetch manual
   const { data: realSummary, isLoading: summaryLoading, refetch } = useQuery({
     queryKey: ['/api/financial-summary'],
     staleTime: 0,
     refetchOnWindowFocus: false,
-    refetchInterval: 3000
+    refetchInterval: 1000 // Aumentado para debug
   });
+
+  // Botão de teste para forçar atualização
+  const forceRefresh = () => {
+    console.log('🔄 FORÇANDO REFETCH MANUAL');
+    refetch();
+  };
 
   const summary = realSummary ? {
     totalIncome: realSummary.totalIncome,
@@ -192,6 +198,19 @@ export default function Dashboard() {
       <AppShowcase />
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
+      
+      {/* BOTÃO DEBUG TEMPORÁRIO */}
+      <div className="mb-4 p-4 bg-red-100 border border-red-300 rounded">
+        <button 
+          onClick={forceRefresh}
+          className="bg-red-500 text-white px-4 py-2 rounded mr-4"
+        >
+          🔄 FORÇAR ATUALIZAÇÃO
+        </button>
+        <span className="text-sm">
+          DEBUG: totalIncome = R$ {summary.totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+        </span>
+      </div>
       
 
 
