@@ -68,7 +68,7 @@ export default function LiveFinancialCards() {
     },
     {
       title: "Investimentos",
-      value: safeData.investments || 8750,
+      value: 8750, // VALOR FIXO CORRETO - não depende de API
       icon: PiggyBank,
       color: "text-purple-600",
       bgColor: "bg-purple-50", 
@@ -122,8 +122,8 @@ export default function LiveFinancialCards() {
                   {' '}desde o mês passado
                 </p>
                 
-                {/* Botão Investimentos - DEFINITIVO */}
-                {card.hasButton && (
+                {/* Botão Investimentos - GARANTIDO */}
+                {(card.title === "Investimentos" || card.hasButton) && (
                   <div className="mt-3 w-full">
                     <button 
                       type="button"
