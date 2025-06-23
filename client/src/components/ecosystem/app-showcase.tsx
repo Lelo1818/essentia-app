@@ -120,7 +120,7 @@ export default function AppShowcase() {
                   <>
                     <div className="text-center p-3 bg-white/50 rounded-lg">
                       <div className="text-lg font-bold text-green-600">
-                        R$ <CounterAnimation value={appData.stats.balance} />
+                        R$ <CounterAnimation value={1200} />
                       </div>
                       <div className="text-xs text-gray-600">Saldo</div>
                     </div>
