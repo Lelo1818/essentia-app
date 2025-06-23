@@ -87,6 +87,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // CRITICAL: Opportunity income routes - MUST be before any HTML routes
+  app.post("/api/opportunity-income", async (req, res) => {
+    try {
+      console.log("=== OPPORTUNITY INCOME POST REQUEST ===");
+      console.log("Headers:", req.headers);
+      console.log("Body:", req.body);
+      
+      // Set JSON response header explicitly  
+      res.setHeader('Content-Type', 'application/json');
+      
+      const { opportunity, monthlyAmount, startDate } = req.body;
+      
+      if (!opportunity || !monthlyAmount) {
+        return res.status(400).json({ 
+          message: "Parâmetros obrigatórios: opportunity e monthlyAmount" 
+        });
+      }
+      
+      // Create income based on opportunity type
+      const opportunityNames = {
+        consultoria: "Consultoria Financeira",
+        cursos: "Cursos Online", 
+        afiliados: "Marketing de Afiliados"
+      };
+
+      const userId = 1;
+      const processedData = {
+        userId,
+        description: opportunityNames[opportunity] || "Renda Extra",
+        amount: typeof monthlyAmount === 'string' ? parseFloat(monthlyAmount) : monthlyAmount,
+        frequency: "mensal",
+        date: startDate ? new Date(startDate) : new Date(),
+        category: "Renda Extra"
+      };
+
+      console.log("Processed opportunity income data:", processedData);
+      
+      const validatedData = insertIncomeSchema.parse(processedData);
+      console.log("Validated data:", validatedData);
+      
+      const createdIncome = await storage.createIncome(validatedData);
+      console.log("Opportunity income created successfully:", createdIncome);
+      
+      res.status(201).json(createdIncome);
+    } catch (error) {
+      console.error("Error creating opportunity income:", error);
+      res.setHeader('Content-Type', 'application/json');
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        res.status(500).json({ 
+          message: "Erro ao criar renda de oportunidade", 
+          error: error.message,
+          details: error 
+        });
+      }
+    }
+  });
+
   // Expense routes
   app.get("/api/expenses", async (req, res) => {
     try {

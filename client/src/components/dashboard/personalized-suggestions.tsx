@@ -587,6 +587,13 @@ export default function PersonalizedSuggestions() {
                   const monthlyAmount = incomeValues[selectedOpportunity] || 500;
 
                   // Create income via API
+                  console.log("Making API request to /api/opportunity-income");
+                  console.log("Request data:", {
+                    opportunity: selectedOpportunity,
+                    monthlyAmount: monthlyAmount,
+                    startDate: new Date().toISOString()
+                  });
+
                   const response = await fetch('/api/opportunity-income', {
                     method: 'POST',
                     headers: {
@@ -599,21 +606,32 @@ export default function PersonalizedSuggestions() {
                     })
                   });
 
+                  console.log("Response status:", response.status);
+                  console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+                  
+                  const responseText = await response.text();
+                  console.log("Response text (first 200 chars):", responseText.substring(0, 200));
+
                   if (response.ok) {
-                    const newIncome = await response.json();
-                    alert('🚀 Renda adicionada com sucesso! Nova fonte: R$ ' + monthlyAmount + '/mês em ' + 
-                          (selectedOpportunity === 'consultoria' ? 'Consultoria Financeira' :
-                           selectedOpportunity === 'cursos' ? 'Cursos Online' : 'Marketing de Afiliados') + 
-                          '. A página será atualizada para mostrar no dashboard.');
-                    
-                    // Force page refresh to update dashboard
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 1500);
+                    try {
+                      const newIncome = JSON.parse(responseText);
+                      alert('🚀 Renda adicionada com sucesso! Nova fonte: R$ ' + monthlyAmount + '/mês em ' + 
+                            (selectedOpportunity === 'consultoria' ? 'Consultoria Financeira' :
+                             selectedOpportunity === 'cursos' ? 'Cursos Online' : 'Marketing de Afiliados') + 
+                            '. A página será atualizada para mostrar no dashboard.');
+                      
+                      // Force page refresh to update dashboard
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1500);
+                    } catch (parseError) {
+                      console.error('JSON Parse Error:', parseError);
+                      console.error('Response was not JSON:', responseText);
+                      throw new Error('Server returned invalid JSON: ' + responseText.substring(0, 100));
+                    }
                   } else {
-                    const errorData = await response.text();
-                    console.error('API Error:', errorData);
-                    throw new Error('Failed to create income: ' + response.status);
+                    console.error('API Error Response:', responseText);
+                    throw new Error('API Error: ' + response.status + ' - ' + responseText.substring(0, 100));
                   }
                 } catch (error) {
                   console.error('Error creating opportunity income:', error);
