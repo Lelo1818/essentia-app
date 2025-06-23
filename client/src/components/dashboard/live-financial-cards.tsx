@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLocation } from "wouter";
 import { TrendingUp, TrendingDown, DollarSign, PiggyBank } from "lucide-react";
+import { formatCurrency } from "@/lib/financial-utils";
 
 export default function LiveFinancialCards() {
+  const [, setLocation] = useLocation();
+  
   // Query com timestamp para evitar cache
   const { data: summary, isLoading } = useQuery({
     queryKey: [`/api/financial-summary-${Date.now()}`],
@@ -85,8 +89,14 @@ export default function LiveFinancialCards() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {cards.map((card, index) => {
           const Icon = card.icon;
+          const isInvestments = card.title === "Investimentos";
+          
           return (
-            <Card key={index} className="relative overflow-hidden">
+            <Card 
+              key={index} 
+              className={`relative overflow-hidden ${isInvestments ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
+              onClick={isInvestments ? () => setLocation('/investments') : undefined}
+            >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">
                   {card.title}

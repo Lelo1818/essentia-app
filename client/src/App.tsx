@@ -53,6 +53,7 @@ import MinimalTest from "./pages/minimal-test";
 import SimpleApp from "./App-simple";
 import SuperSimple from "./pages/super-simple";
 import EcosystemSelector from "@/pages/ecosystem-selector";
+import Investments from "@/pages/investments";
 
 
 function Router() {
@@ -104,6 +105,7 @@ function Router() {
       <Route path="/checklist-execucao" component={ChecklistExecucao} />
       <Route path="/relatorio-final" component={RelatorioFinal} />
       <Route path="/profile" component={Profile} />
+      <Route path="/investments" component={Investments} />
       <Route>
         <NotFound />
       </Route>
