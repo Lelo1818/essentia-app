@@ -42,6 +42,41 @@ export default function FlowKidsStandalone() {
     completedLessons: 18
   });
 
+  // Sistema de lição interativa
+  const [lessonState, setLessonState] = useState({
+    isActive: false,
+    currentQuestion: 0,
+    progress: 0,
+    completed: false
+  });
+
+  const lessonQuestions = [
+    {
+      id: 1,
+      question: "Sofia quer comprar um novo brinquedo, mas precisa de material escolar. O que ela deve escolher primeiro?",
+      options: [
+        { text: "📚 Material Escolar", correct: true, reason: "Material escolar é uma NECESSIDADE para estudar!" },
+        { text: "🧸 Brinquedo Novo", correct: false, reason: "Brinquedo é um DESEJO. Necessidades vêm primeiro!" }
+      ]
+    },
+    {
+      id: 2,
+      question: "Qual dessas opções é uma NECESSIDADE básica?",
+      options: [
+        { text: "🍎 Comida nutritiva", correct: true, reason: "Perfeito! Comida é essencial para viver e crescer saudável!" },
+        { text: "🎮 Videogame novo", correct: false, reason: "Videogame é divertido, mas é um DESEJO, não necessidade!" }
+      ]
+    },
+    {
+      id: 3,
+      question: "João tem R$ 20. Deve comprar lanche ou guardar para o livro da escola?",
+      options: [
+        { text: "📖 Guardar para o livro", correct: true, reason: "Excelente escolha! Livro escolar é investimento no futuro!" },
+        { text: "🍿 Comprar lanche", correct: false, reason: "Se não está com fome, melhor guardar para algo necessário!" }
+      ]
+    }
+  ];
+
   // Função para adicionar pontos
   const addPoints = (points: number, description: string) => {
     setKidProfile(prev => {
@@ -414,11 +449,18 @@ export default function FlowKidsStandalone() {
                 e.preventDefault();
                 console.log('FlowKids: Iniciando lição "Necessidade vs Desejo"');
                 
-                // Adicionar pontos e mudar para jogos
-                const newPoints = addPoints(40, 'Lição "Necessidade vs Desejo" iniciada');
+                // Iniciar lição interativa
+                setLessonState({
+                  isActive: true,
+                  currentQuestion: 0,
+                  progress: 0,
+                  completed: false
+                });
                 setActiveTab("jogos");
                 
-                // Simular início da lição
+                // Adicionar pontos por iniciar
+                const newPoints = addPoints(40, 'Lição "Necessidade vs Desejo" iniciada');
+                
                 setTimeout(() => {
                   console.log('Lição iniciada com sucesso!');
                   alert(`Parabéns! Você iniciou a lição "Necessidade vs Desejo". +40 pontos ganhos! Total: ${newPoints} pontos`);
@@ -511,38 +553,105 @@ export default function FlowKidsStandalone() {
         </TabsContent>
 
         <TabsContent value="jogos">
-          <Card className="bg-gradient-to-r from-green-500 to-blue-500 text-white">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Gamepad2 className="w-6 h-6 mr-2" />
-                Lição: Necessidade vs Desejo
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <p>Parabéns! Você iniciou a lição sobre diferença entre o que precisamos e o que queremos.</p>
-                <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-bold mb-2">🎯 Seu Progresso:</h4>
-                  <Progress value={75} className="mb-2" />
-                  <p className="text-sm">75% concluído - Continue assim!</p>
+          {lessonState.isActive ? (
+            <Card className="bg-gradient-to-r from-green-500 to-blue-500 text-white">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Gamepad2 className="w-6 h-6 mr-2" />
+                  Lição: Necessidade vs Desejo
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {!lessonState.completed ? (
+                    <>
+                      <div className="bg-white/20 rounded-lg p-4">
+                        <h4 className="font-bold mb-2">Pergunta {lessonState.currentQuestion + 1} de {lessonQuestions.length}</h4>
+                        <Progress value={(lessonState.currentQuestion / lessonQuestions.length) * 100} className="mb-4" />
+                      </div>
+                      
+                      <div className="bg-white/10 rounded-lg p-6">
+                        <h3 className="text-xl font-bold mb-6">{lessonQuestions[lessonState.currentQuestion]?.question}</h3>
+                        
+                        <div className="space-y-3">
+                          {lessonQuestions[lessonState.currentQuestion]?.options.map((option, index) => (
+                            <Button
+                              key={index}
+                              className="w-full bg-white/20 hover:bg-white/30 text-white border border-white/30 p-4 text-left justify-start"
+                              onClick={() => {
+                                const isCorrect = option.correct;
+                                const points = isCorrect ? 30 : 5;
+                                const newPoints = addPoints(points, `Resposta ${isCorrect ? 'correta' : 'incorreta'} na pergunta ${lessonState.currentQuestion + 1}`);
+                                
+                                alert(`${option.reason}\n\n${isCorrect ? '+30 pontos!' : '+5 pontos pelo esforço!'}\n\nTotal: ${newPoints} pontos`);
+                                
+                                setTimeout(() => {
+                                  if (lessonState.currentQuestion < lessonQuestions.length - 1) {
+                                    setLessonState(prev => ({
+                                      ...prev,
+                                      currentQuestion: prev.currentQuestion + 1,
+                                      progress: ((prev.currentQuestion + 1) / lessonQuestions.length) * 100
+                                    }));
+                                  } else {
+                                    setLessonState(prev => ({
+                                      ...prev,
+                                      completed: true,
+                                      progress: 100
+                                    }));
+                                    const bonusPoints = addPoints(50, 'Lição completa - Bônus de conclusão!');
+                                    setTimeout(() => {
+                                      alert(`🎉 PARABÉNS! Você completou a lição!\n\n+50 pontos bônus!\n\nTotal final: ${bonusPoints} pontos`);
+                                    }, 500);
+                                  }
+                                }, 1500);
+                              }}
+                            >
+                              {option.text}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center space-y-4">
+                      <div className="text-6xl">🎉</div>
+                      <h3 className="text-2xl font-bold">Lição Completa!</h3>
+                      <p className="text-lg">Você aprendeu sobre Necessidade vs Desejo!</p>
+                      <div className="bg-white/20 rounded-lg p-4">
+                        <Progress value={100} className="mb-2" />
+                        <p className="font-bold">100% Concluído!</p>
+                      </div>
+                      <Button
+                        className="bg-white text-green-600 hover:bg-gray-100 px-8"
+                        onClick={() => {
+                          setLessonState({
+                            isActive: false,
+                            currentQuestion: 0,
+                            progress: 0,
+                            completed: false
+                          });
+                        }}
+                      >
+                        Voltar ao Dashboard
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                <Button 
-                  className="w-full bg-white text-green-600 hover:bg-gray-100"
-                  onClick={() => {
-                    const newPoints = addPoints(20, 'Continuação da lição "Necessidade vs Desejo"');
-                    alert(`Continuando a lição... +20 pontos extras! Total: ${newPoints} pontos`);
-                    
-                    // Atualizar progresso
-                    setTimeout(() => {
-                      console.log(`FlowKids: Progresso atualizado. Pontos totais: ${newPoints}`);
-                    }, 100);
-                  }}
-                >
-                  Continuar Lição
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🎮</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Nenhuma lição ativa</h3>
+              <p className="text-gray-600 mb-6">Clique em "Começar Agora!" no Dashboard para iniciar uma lição.</p>
+              <Button
+                onClick={() => setActiveTab("dashboard")}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+              >
+                Ir para Dashboard
+              </Button>
+            </div>
+          )}
         </TabsContent>
 
         <TabsContent value="conquistas">
