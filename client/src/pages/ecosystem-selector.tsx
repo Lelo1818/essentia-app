@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -53,6 +53,7 @@ const playSuccessSound = () => {
 };
 
 export default function EcosystemSelector() {
+  const [, setLocation] = useLocation();
   // Force refresh timestamp: 1750643415
   const apps = [
     {
@@ -170,7 +171,7 @@ export default function EcosystemSelector() {
                 playSuccessSound();
                 console.log('Navegando para: /investor-demo');
                 setTimeout(() => {
-                  window.location.href = '/investor-demo';
+                  setLocation('/investor-demo');
                 }, 100);
               }}
             >
@@ -185,7 +186,7 @@ export default function EcosystemSelector() {
                 playButtonSound();
                 console.log('Navegando para: /investor-demo');
                 setTimeout(() => {
-                  window.location.href = '/investor-demo';
+                  setLocation('/investor-demo');
                 }, 100);
               }}
             >
@@ -269,7 +270,7 @@ export default function EcosystemSelector() {
                           playButtonSound();
                           console.log(`Navegando para: ${app.route}`);
                           setTimeout(() => {
-                            window.location.href = app.route;
+                            setLocation(app.route);
                           }, 100);
                         }}
                       >
