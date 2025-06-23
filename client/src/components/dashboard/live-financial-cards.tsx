@@ -118,8 +118,17 @@ export default function LiveFinancialCards() {
                   </span>
                   {' '}desde o mês passado
                 </p>
-                {/* Botão para Investimentos */}
-                {card.title === 'Investimentos' && (
+                {/* DEBUG: Mostrar todos os títulos dos cards */}
+                <div className="mt-2 text-xs text-red-600 bg-yellow-100 p-1 rounded">
+                  CARD TITLE: "{card.title}" | ICON: {card.icon?.name || 'undefined'}
+                </div>
+                
+                {/* Botão para Investimentos - Múltiplas condições */}
+                {(card.title === 'Investimentos' || 
+                  card.title === 'Investimento' || 
+                  card.icon === PiggyBank ||
+                  card.value === 8750 ||
+                  JSON.stringify(card).includes('Investiment')) && (
                   <div className="mt-3 w-full">
                     <button 
                       type="button"
@@ -127,7 +136,7 @@ export default function LiveFinancialCards() {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('Navegando para investments');
+                        console.log('🚀 NAVEGAÇÃO INVESTIMENTOS - card.title:', card.title);
                         window.location.href = '/investments';
                       }}
                     >
