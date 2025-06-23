@@ -60,7 +60,7 @@ function Router() {
       <Route path="/" component={Dashboard} />
       <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
-      <Route path="/flow-kids" component={FlowKids} />
+      <Route path="/flow-kids" component={FlowKidsStandalone} />
       <Route path="/dashboard-unificado" component={DashboardUnificado} />
       <Route path="/kids-standalone" component={FlowKidsStandalone} />
       <Route path="/conta-familia" component={ContaFamilia} />
