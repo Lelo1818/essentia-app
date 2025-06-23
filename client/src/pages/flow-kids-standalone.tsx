@@ -47,7 +47,8 @@ export default function FlowKidsStandalone() {
     isActive: false,
     currentQuestion: 0,
     progress: 0,
-    completed: false
+    completed: false,
+    answeredQuestions: []
   });
 
   const lessonQuestions = [
@@ -454,7 +455,8 @@ export default function FlowKidsStandalone() {
                   isActive: true,
                   currentQuestion: 0,
                   progress: 0,
-                  completed: false
+                  completed: false,
+                  answeredQuestions: []
                 });
                 setActiveTab("jogos");
                 
@@ -585,25 +587,7 @@ export default function FlowKidsStandalone() {
                                 
                                 alert(`${option.reason}\n\n${isCorrect ? '+30 pontos!' : '+5 pontos pelo esforço!'}\n\nTotal: ${newPoints} pontos`);
                                 
-                                setTimeout(() => {
-                                  if (lessonState.currentQuestion < lessonQuestions.length - 1) {
-                                    setLessonState(prev => ({
-                                      ...prev,
-                                      currentQuestion: prev.currentQuestion + 1,
-                                      progress: ((prev.currentQuestion + 1) / lessonQuestions.length) * 100
-                                    }));
-                                  } else {
-                                    setLessonState(prev => ({
-                                      ...prev,
-                                      completed: true,
-                                      progress: 100
-                                    }));
-                                    const bonusPoints = addPoints(50, 'Lição completa - Bônus de conclusão!');
-                                    setTimeout(() => {
-                                      alert(`🎉 PARABÉNS! Você completou a lição!\n\n+50 pontos bônus!\n\nTotal final: ${bonusPoints} pontos`);
-                                    }, 500);
-                                  }
-                                }, 1500);
+                                // Não avança automaticamente - usuário deve responder todas
                               }}
                             >
                               {option.text}
