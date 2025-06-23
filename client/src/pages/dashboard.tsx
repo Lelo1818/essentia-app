@@ -7,7 +7,7 @@ import { mockEduData } from "@/data/mock-edu-data";
 import { mockPurposeData } from "@/data/mock-purpose-data";
 import WelcomeHeader from "@/components/dashboard/welcome-header";
 
-import SimpleFinancialOverview from "@/components/dashboard/simple-financial-overview";
+import LiveFinancialCards from "@/components/dashboard/live-financial-cards";
 import ExpenseCategories from "@/components/dashboard/expense-categories";
 import DebtOptimization from "@/components/dashboard/debt-optimization";
 import PersonalizedSuggestions from "@/components/dashboard/personalized-suggestions";
