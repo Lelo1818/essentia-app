@@ -98,12 +98,12 @@ export default function EcosystemSelector() {
       name: "Flow Kids",
       subtitle: "Educação Financeira Infantil", 
       description: "Ensino lúdico de finanças para crianças com jogos e atividades interativas.",
-      features: ["Gamificação Total", "Realidade Aumentada", "Pais & Filhos", "Certificação Digital"],
-      metrics: "Conceito validado | Protótipo Q4 2025",
+      features: ["Gamificação Total", "Avatares 3D", "Missões Educativas", "Sistema de Conquistas"],
+      metrics: "85% progresso | 12 conquistas | Interface completa",
       icon: Baby,
       color: "from-orange-600 to-yellow-600",
-      route: "/conta-familia",
-      status: "Ver Conta Família", 
+      route: "/flow-kids",
+      status: "Completo", 
       image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop"
     }
   ];
