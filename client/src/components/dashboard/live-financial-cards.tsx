@@ -88,6 +88,10 @@ export default function LiveFinancialCards() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {cards.map((card, index) => {
+          // DEBUG: Log completo do card
+          console.log(`🔍 CARD ${index}:`, JSON.stringify(card, null, 2));
+          console.log(`🔍 CARD ${index} VALUE:`, card.value, 'TYPE:', typeof card.value);
+          
           const Icon = card.icon;
           const isInvestments = card.title === "Investimentos";
           
@@ -118,29 +122,28 @@ export default function LiveFinancialCards() {
                   </span>
                   {' '}desde o mês passado
                 </p>
-                {/* DEBUG: Mostrar todos os títulos dos cards */}
-                <div className="mt-2 text-xs text-red-600 bg-yellow-100 p-1 rounded">
-                  CARD TITLE: "{card.title}" | ICON: {card.icon?.name || 'undefined'}
+                {/* DEBUG VISUAL */}
+                <div className="mt-2 text-xs bg-yellow-200 p-2 rounded border-2 border-red-500">
+                  <div>TÍTULO: "{card.title}" ({typeof card.title})</div>
+                  <div>VALOR: {card.value} ({typeof card.value})</div>
+                  <div>ÍCONE: {card.icon?.name || 'sem nome'}</div>
+                  <div>INDEX: {index}</div>
                 </div>
                 
-                {/* Botão para Investimentos - Múltiplas condições */}
-                {(card.title === 'Investimentos' || 
-                  card.title === 'Investimento' || 
-                  card.icon === PiggyBank ||
-                  card.value === 8750 ||
-                  JSON.stringify(card).includes('Investiment')) && (
-                  <div className="mt-3 w-full">
+                {/* Botão FORÇADO para valor 8750 */}
+                {card.value === 8750 && (
+                  <div className="mt-3 w-full bg-green-200 p-1">
                     <button 
                       type="button"
-                      className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 active:bg-purple-300 py-2 px-3 rounded-md font-medium transition-colors border border-purple-200"
+                      className="w-full text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 py-2 px-3 rounded-md font-medium border border-purple-200"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('🚀 NAVEGAÇÃO INVESTIMENTOS - card.title:', card.title);
+                        console.log('🚀 NAVEGAÇÃO FORÇADA');
                         window.location.href = '/investments';
                       }}
                     >
-                      📈 Ver Detalhes
+                      📈 Ver Detalhes (FORÇADO)
                     </button>
                   </div>
                 )}
