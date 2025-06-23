@@ -194,7 +194,8 @@ export default function Dashboard() {
       
       <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
       
-
+      {/* FORÇA RENDERIZAÇÃO DO LIVE FINANCIAL CARDS */}
+      <LiveFinancialCards />
       
 
 
