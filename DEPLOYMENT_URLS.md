@@ -1,14 +1,17 @@
 # Flow Ecosystem - URLs de Demonstração
 
+## LINK FUNCIONANDO PARA MOBILE/APRESENTAÇÃO
+**URL BASE:** https://419a61c3-e864-45d3-b12f-7c82749a509b-00-257d51k0bcjei.kirk.replit.dev
+
 ## Apps Principais (Todos Funcionais)
 
 ### 🏠 Dashboard Principal
-- **URL:** `/`
+- **URL:** https://419a61c3-e864-45d3-b12f-7c82749a509b-00-257d51k0bcjei.kirk.replit.dev/
 - **Status:** ✅ Operacional
 - **Descrição:** Visão geral do ecossistema completo
 
 ### 💰 Flow - Gestão Financeira
-- **URL:** `/flow`
+- **URL:** https://419a61c3-e864-45d3-b12f-7c82749a509b-00-257d51k0bcjei.kirk.replit.dev/flow
 - **Status:** ✅ Operacional
 - **Funcionalidades:** Dashboard IA, análise preditiva, gamificação completa
 
