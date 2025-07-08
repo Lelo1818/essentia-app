@@ -80,7 +80,12 @@ export default function ProfileManager() {
   };
 
   const saveCurrentProfile = async () => {
+    console.log("🚀 FUNÇÃO SALVAR INICIADA");
+    console.log("Nome do perfil:", profileName);
+    console.log("Descrição:", profileDescription);
+    
     if (!profileName.trim()) {
+      console.log("❌ Nome vazio - exibindo erro");
       toast({
         title: "Nome Obrigatório",
         description: "Digite um nome para o perfil",
@@ -89,22 +94,34 @@ export default function ProfileManager() {
       return;
     }
 
+    console.log("✅ Validação passou - continuando...");
+
     try {
-      console.log("🔍 Iniciando salvamento do perfil...");
+      console.log("🔍 Coletando dados do sistema...");
       
-      // Coleta dados do sistema
-      const financialSummary = await fetch('/api/financial-summary').then(r => r.json());
-      console.log("📊 Dados financeiros coletados:", financialSummary);
+      // Coleta dados do sistema com tratamento de erro
+      let financialSummary;
+      try {
+        const response = await fetch('/api/financial-summary');
+        financialSummary = await response.json();
+        console.log("📊 Dados financeiros OK:", financialSummary);
+      } catch (fetchError) {
+        console.log("⚠️ Erro na API, usando dados padrão:", fetchError);
+        financialSummary = { balance: 0, totalIncome: 0, totalExpenses: 0 };
+      }
       
       const achievements = JSON.parse(localStorage.getItem('flow-achievements') || '[]');
       const goals = JSON.parse(localStorage.getItem('flow-goals') || '[]');
       const preferences = JSON.parse(localStorage.getItem('flow-preferences') || '{}');
 
-      console.log("📈 Conquistas:", achievements.length);
-      console.log("🎯 Metas:", goals.length);
+      console.log("📈 Dados coletados:");
+      console.log("- Conquistas:", achievements.length);
+      console.log("- Metas:", goals.length);
+      console.log("- Preferências:", Object.keys(preferences).length);
 
+      const timestamp = Date.now();
       const newProfile: SavedProfile = {
-        id: `profile-${Date.now()}`,
+        id: `profile-${timestamp}`,
         name: profileName.trim(),
         description: profileDescription.trim(),
         createdAt: new Date(),
@@ -121,56 +138,56 @@ export default function ProfileManager() {
         }
       };
 
-      console.log("💾 Perfil criado:", newProfile);
+      console.log("💾 Perfil montado:", newProfile);
 
-      // Salva no localStorage
-      const updatedProfiles = [...savedProfiles, newProfile];
-      setSavedProfiles(updatedProfiles);
-      localStorage.setItem('flow-saved-profiles', JSON.stringify(updatedProfiles));
-      localStorage.setItem('flow-current-profile', JSON.stringify(newProfile));
-      setCurrentProfile(newProfile);
-
-      console.log("✅ Perfil salvo no localStorage");
-
-      // Tenta salvar no servidor também
+      // FORÇA o salvamento no localStorage primeiro
       try {
-        const response = await fetch('/api/profiles', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: 1, // ID fixo do usuário demo
-            name: newProfile.name,
-            description: newProfile.description,
-            data: newProfile.data,
-            stats: newProfile.stats
-          }),
-        });
-
-        if (response.ok) {
-          console.log("✅ Perfil salvo no servidor também");
-        } else {
-          console.warn("⚠️ Erro ao salvar no servidor, mas localStorage funcionou");
-        }
-      } catch (serverError) {
-        console.warn("⚠️ Servidor indisponível, usando apenas localStorage:", serverError);
+        const currentProfiles = JSON.parse(localStorage.getItem('flow-saved-profiles') || '[]');
+        console.log("📁 Perfis existentes:", currentProfiles.length);
+        
+        const updatedProfiles = [...currentProfiles, newProfile];
+        const profilesJson = JSON.stringify(updatedProfiles);
+        
+        localStorage.setItem('flow-saved-profiles', profilesJson);
+        localStorage.setItem('flow-current-profile', JSON.stringify(newProfile));
+        
+        console.log("✅ LOCALSTORAGE ATUALIZADO!");
+        console.log("- Total de perfis agora:", updatedProfiles.length);
+        
+        // Atualiza o estado do React
+        setSavedProfiles(updatedProfiles);
+        setCurrentProfile(newProfile);
+        
+        console.log("✅ ESTADO REACT ATUALIZADO!");
+        
+      } catch (localError) {
+        console.error("❌ ERRO NO LOCALSTORAGE:", localError);
+        throw localError;
       }
 
+      // Limpa os campos e fecha o dialog
       setProfileName("");
       setProfileDescription("");
       setShowSaveDialog(false);
+      
+      console.log("✅ FORMULÁRIO LIMPO E DIALOG FECHADO");
 
+      // Mostra sucesso
       toast({
-        title: "Perfil Salvo!",
+        title: "✅ Perfil Salvo!",
         description: `Perfil "${newProfile.name}" foi salvo com sucesso`,
         variant: "default"
       });
+      
+      console.log("✅ TOAST DE SUCESSO EXIBIDO");
+      
     } catch (error) {
-      console.error("❌ Erro ao salvar perfil:", error);
+      console.error("💥 ERRO CRÍTICO NO SALVAMENTO:", error);
+      console.error("Stack:", error.stack);
+      
       toast({
-        title: "Erro ao Salvar",
-        description: "Não foi possível salvar o perfil",
+        title: "❌ Erro Crítico",
+        description: `Falha: ${error.message}`,
         variant: "destructive"
       });
     }
@@ -338,12 +355,16 @@ export default function ProfileManager() {
                       Cancelar
                     </InteractiveButton>
                     <InteractiveButton 
-                      onClick={saveCurrentProfile} 
+                      onClick={() => {
+                        console.log("🖱️ BOTÃO CLICADO!");
+                        console.log("Nome atual:", profileName);
+                        saveCurrentProfile();
+                      }} 
                       soundType="success"
                       disabled={!profileName.trim()}
-                      className={!profileName.trim() ? "opacity-50 cursor-not-allowed" : ""}
+                      className={!profileName.trim() ? "opacity-50 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"}
                     >
-                      Salvar Perfil
+                      💾 Salvar Perfil
                     </InteractiveButton>
                   </div>
                 </div>
