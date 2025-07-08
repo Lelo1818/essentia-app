@@ -271,7 +271,11 @@ export default function EduVibeEnhanced() {
 
   // Função para processar upload de YouTube
   const processYouTubeVideo = async () => {
+    console.log("🎬 INICIANDO PROCESSAMENTO YOUTUBE");
+    console.log("📍 URL:", youtubeUrl);
+    
     if (!youtubeUrl) {
+      console.log("❌ URL vazia");
       toast({
         title: "URL necessária",
         description: "Por favor, cole o link do YouTube",
@@ -284,7 +288,10 @@ export default function EduVibeEnhanced() {
     const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/;
     const match = youtubeUrl.match(youtubeRegex);
     
+    console.log("🔍 Regex match:", match);
+    
     if (!match) {
+      console.log("❌ URL inválida");
       toast({
         title: "URL inválida",
         description: "Por favor, cole um link válido do YouTube",
@@ -294,32 +301,46 @@ export default function EduVibeEnhanced() {
     }
 
     setIsProcessing(true);
+    console.log("⏳ Iniciando processamento...");
+    
     try {
       const videoId = match[1];
+      console.log("🎬 Video ID:", videoId);
       
       // Busca informações reais do vídeo via API do YouTube
-      const response = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(youtubeUrl)}`);
+      const apiUrl = `https://noembed.com/embed?url=${encodeURIComponent(youtubeUrl)}`;
+      console.log("🌐 API URL:", apiUrl);
+      
+      const response = await fetch(apiUrl);
+      console.log("📡 Response status:", response.status);
+      
       const videoData = await response.json();
+      console.log("📊 Video data:", videoData);
       
       const newFile = {
         id: Date.now().toString(),
         name: videoData.title || `YouTube: ${videoId}`,
         type: 'youtube' as const,
         content: youtubeUrl,
-        size: `Duração: ${Math.floor(videoData.duration/60)}:${(videoData.duration%60).toString().padStart(2,'0')}`,
+        size: videoData.duration ? `Duração: ${Math.floor(videoData.duration/60)}:${(videoData.duration%60).toString().padStart(2,'0')}` : "Duração: N/A",
         uploadDate: new Date().toLocaleString(),
         thumbnail: videoData.thumbnail_url,
         author: videoData.author_name
       };
       
+      console.log("📁 Arquivo criado:", newFile);
+      
       setUploadedFiles(prev => [...prev, newFile]);
       setYoutubeUrl("");
       
+      console.log("✅ Processamento concluído");
       toast({
         title: "Vídeo processado!",
-        description: `"${videoData.title}" adicionado à biblioteca`,
+        description: `"${videoData.title || 'Video'}" adicionado à biblioteca`,
       });
     } catch (error) {
+      console.log("❌ Erro na API, usando fallback:", error);
+      
       // Fallback se API falhar
       const videoId = match[1];
       const newFile = {
@@ -330,6 +351,8 @@ export default function EduVibeEnhanced() {
         uploadDate: new Date().toLocaleString()
       };
       
+      console.log("📁 Arquivo fallback:", newFile);
+      
       setUploadedFiles(prev => [...prev, newFile]);
       setYoutubeUrl("");
       
@@ -339,6 +362,7 @@ export default function EduVibeEnhanced() {
       });
     } finally {
       setIsProcessing(false);
+      console.log("🏁 Processamento finalizado");
     }
   };
 
@@ -426,7 +450,12 @@ export default function EduVibeEnhanced() {
 
   // Função para processar texto direto
   const processTextInput = async () => {
+    console.log("📝 INICIANDO PROCESSAMENTO TEXTO");
+    console.log("📍 Texto length:", textInput.length);
+    console.log("📍 Texto preview:", textInput.substring(0, 100));
+    
     if (!textInput.trim()) {
+      console.log("❌ Texto vazio");
       toast({
         title: "Texto necessário",
         description: "Digite algum conteúdo para processar",
@@ -436,6 +465,7 @@ export default function EduVibeEnhanced() {
     }
 
     setIsProcessing(true);
+    console.log("⏳ Iniciando análise...");
     
     try {
       // Análise real do texto
@@ -446,11 +476,15 @@ export default function EduVibeEnhanced() {
         readingTime: Math.ceil(textInput.trim().split(/\s+/).length / 200) // 200 palavras por minuto
       };
       
+      console.log("📊 Estatísticas:", textStats);
+      
       // Detecta se é URL, código, ou texto normal
       let textType = "Texto";
       if (textInput.includes('http')) textType = "URL/Link";
       if (textInput.includes('{') || textInput.includes('function') || textInput.includes('class')) textType = "Código";
       if (textInput.split('\n').length > 10 && textInput.length > 500) textType = "Documento";
+      
+      console.log("🔍 Tipo detectado:", textType);
       
       const newFile = {
         id: Date.now().toString(),
@@ -464,15 +498,19 @@ export default function EduVibeEnhanced() {
         textType: textType
       };
       
+      console.log("📁 Arquivo criado:", newFile);
+      
       setUploadedFiles(prev => [...prev, newFile]);
       setTextInput("");
       setIsProcessing(false);
       
+      console.log("✅ Processamento concluído");
       toast({
         title: "Texto processado!",
         description: `${textType} com ${textStats.words} palavras adicionado`,
       });
     } catch (error) {
+      console.log("❌ Erro no processamento:", error);
       setIsProcessing(false);
       toast({
         title: "Erro no processamento",
@@ -1059,7 +1097,10 @@ export default function EduVibeEnhanced() {
                         onChange={(e) => setYoutubeUrl(e.target.value)}
                       />
                       <Button 
-                        onClick={processYouTubeVideo}
+                        onClick={() => {
+                          console.log("🖱️ CLIQUE NO BOTÃO YOUTUBE");
+                          processYouTubeVideo();
+                        }}
                         disabled={isProcessing}
                         className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50"
                       >
@@ -1091,7 +1132,10 @@ export default function EduVibeEnhanced() {
                       <input 
                         type="file" 
                         accept=".pdf"
-                        onChange={processPDFUpload}
+                        onChange={(e) => {
+                          console.log("🖱️ SELEÇÃO DE PDF");
+                          processPDFUpload(e);
+                        }}
                         disabled={isProcessing}
                         className="w-full p-3 border-2 border-dashed border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 disabled:opacity-50"
                       />
@@ -1121,7 +1165,10 @@ export default function EduVibeEnhanced() {
                         onChange={(e) => setTextInput(e.target.value)}
                       />
                       <Button 
-                        onClick={processTextInput}
+                        onClick={() => {
+                          console.log("🖱️ CLIQUE NO BOTÃO TEXTO");
+                          processTextInput();
+                        }}
                         disabled={isProcessing}
                         className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50"
                       >
