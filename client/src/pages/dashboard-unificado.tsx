@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import ProfileManager from "@/components/profile/profile-manager";
 import SimpleProfileSaver from "@/components/profile/simple-profile-saver";
 import MobileProfileManager from "@/components/profile/mobile-profile-manager";
+import MobileFixedManager from "@/components/profile/mobile-fixed-manager";
 import { 
   DollarSign, 
   BookOpen, 
@@ -288,6 +289,11 @@ export default function DashboardUnificado() {
         {/* Mobile Profile Manager - TESTE MOBILE */}
         <div className="mt-4 flex justify-center">
           <MobileProfileManager />
+        </div>
+
+        {/* Mobile Fixed Manager - SOLUÇÃO FINAL */}
+        <div className="mt-4 flex justify-center">
+          <MobileFixedManager />
         </div>
       </div>
     </div>
