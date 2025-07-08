@@ -203,6 +203,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Profile routes
+  app.get('/api/profiles/:userId', async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profiles = await storage.getUserProfiles(userId);
+      res.json(profiles);
+    } catch (error: any) {
+      res.status(500).json({ message: "Erro ao buscar perfis", error: error.message });
+    }
+  });
+
+  app.post('/api/profiles', async (req, res) => {
+    try {
+      const profile = await storage.createProfile(req.body);
+      res.status(201).json(profile);
+    } catch (error: any) {
+      res.status(500).json({ message: "Erro ao criar perfil", error: error.message });
+    }
+  });
+
+  app.put('/api/profiles/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const profile = await storage.updateProfile(id, req.body);
+      if (profile) {
+        res.json(profile);
+      } else {
+        res.status(404).json({ message: "Perfil não encontrado" });
+      }
+    } catch (error: any) {
+      res.status(500).json({ message: "Erro ao atualizar perfil", error: error.message });
+    }
+  });
+
+  app.delete('/api/profiles/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteProfile(id);
+      if (deleted) {
+        res.json({ success: true, message: "Perfil excluído com sucesso" });
+      } else {
+        res.status(404).json({ message: "Perfil não encontrado" });
+      }
+    } catch (error: any) {
+      res.status(500).json({ message: "Erro ao excluir perfil", error: error.message });
+    }
+  });
+
   // EduVie HTML routes - moved to bottom to avoid API conflicts
   app.get('/eduvie-clean', (req, res) => {
     res.send(`

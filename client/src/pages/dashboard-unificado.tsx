@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import ProfileManager from "@/components/profile/profile-manager";
 import { 
   DollarSign, 
   BookOpen, 
@@ -156,6 +157,9 @@ export default function DashboardUnificado() {
         </div>
 
         <div className="max-w-7xl mx-auto space-y-8">
+          {/* Profile Manager */}
+          <ProfileManager />
+
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickStats.map((stat, index) => (

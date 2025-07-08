@@ -30,6 +30,12 @@ export interface IStorage {
   getDebtsByUserId(userId: number): Promise<any[]>;
   createDebt(debt: any): Promise<any>;
   deleteDebt(id: number): Promise<boolean>;
+  
+  // Profile methods
+  getUserProfiles(userId: number): Promise<any[]>;
+  createProfile(profile: any): Promise<any>;
+  updateProfile(id: number, updates: any): Promise<any>;
+  deleteProfile(id: number): Promise<boolean>;
 }
 
 class MemStorage implements IStorage {
@@ -41,6 +47,7 @@ class MemStorage implements IStorage {
   private goals = new Map<number, any>();
   private debts = new Map<number, any>();
   private plannings = new Map<number, any>();
+  private profiles = new Map<number, any>();
   private currentId = 1;
 
   constructor() {
@@ -48,6 +55,7 @@ class MemStorage implements IStorage {
     this.achievements = new Map();
     this.incomes = new Map();
     this.expenses = new Map();
+    this.profiles = new Map();
     this.budgets = new Map();
     this.goals = new Map();
     this.debts = new Map();
@@ -358,6 +366,32 @@ class MemStorage implements IStorage {
       this.plannings.set(id, newPlanning);
       return newPlanning;
     }
+  }
+
+  // Profile methods
+  async getUserProfiles(userId: number): Promise<any[]> {
+    return Array.from(this.profiles.values()).filter(profile => profile.userId === userId);
+  }
+
+  async createProfile(profile: any): Promise<any> {
+    const id = this.currentId++;
+    const newProfile = { ...profile, id, createdAt: new Date(), updatedAt: new Date() };
+    this.profiles.set(id, newProfile);
+    return newProfile;
+  }
+
+  async updateProfile(id: number, updates: any): Promise<any> {
+    const profile = this.profiles.get(id);
+    if (profile) {
+      const updatedProfile = { ...profile, ...updates, updatedAt: new Date() };
+      this.profiles.set(id, updatedProfile);
+      return updatedProfile;
+    }
+    return null;
+  }
+
+  async deleteProfile(id: number): Promise<boolean> {
+    return this.profiles.delete(id);
   }
 }
 
