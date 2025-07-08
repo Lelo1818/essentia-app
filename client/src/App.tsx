@@ -48,6 +48,7 @@ import PurposeApp from "./App-purpose";
 import ContaFamilia from "@/pages/conta-familia";
 import EduVieClean from "@/pages/eduvie-clean";
 import EduVieStandalone from "@/pages/eduvie-standalone";
+import FlowStandalone from "@/pages/flow-standalone";
 import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
 import SimpleApp from "./App-simple";
@@ -106,6 +107,7 @@ function Router() {
       <Route path="/relatorio-final" component={RelatorioFinal} />
       <Route path="/profile" component={Profile} />
       <Route path="/investments" component={Investments} />
+      <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>
         <NotFound />
       </Route>
