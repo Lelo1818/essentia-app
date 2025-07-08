@@ -57,10 +57,10 @@ export const queryClient = new QueryClient({
           return res.json();
         });
       },
-      refetchInterval: false,
+      refetchInterval: 30000, // 30 seconds
       refetchOnWindowFocus: false,
-      staleTime: 0,
-      retry: false,
+      staleTime: 30000, // 30 seconds cache
+      retry: 1,
     },
     mutations: {
       retry: false,

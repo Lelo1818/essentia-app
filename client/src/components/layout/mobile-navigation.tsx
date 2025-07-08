@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Home, Plus, Camera, PieChart, Trophy, Gift, CreditCard, BookOpen, Percent, Plane, Brain, Baby, TrendingUp, Shield, Receipt, Clock, Menu, X, Heart, Users, Zap } from "lucide-react";
-import { FeedbackUtils } from "@/utils/feedbackUtils";
+
 
 export default function MobileNavigation() {
   const [location] = useLocation();
@@ -80,7 +80,7 @@ export default function MobileNavigation() {
                   className={`flex flex-col items-center py-2 px-1 transition-all duration-200 cursor-pointer active:scale-95 ${
                     isActive ? "text-purple-600 bg-purple-50" : "text-gray-500 hover:text-purple-600"
                   }`}
-                  onClick={() => FeedbackUtils.feedbackAction('navigate')}
+
                 >
                   <Icon className="w-5 h-5 mb-1" />
                   <span className="text-xs font-medium">{item.label}</span>
@@ -91,10 +91,7 @@ export default function MobileNavigation() {
           
           {/* Botão "Mais" */}
           <button
-            onClick={() => {
-              FeedbackUtils.feedbackAction('interaction');
-              setShowMore(true);
-            }}
+            onClick={() => setShowMore(true)}
             className="flex flex-col items-center py-2 px-1 transition-all duration-200 cursor-pointer text-gray-500 hover:text-purple-600 active:scale-95"
           >
             <Menu className="w-5 h-5 mb-1" />
