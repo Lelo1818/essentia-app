@@ -1,68 +1,8 @@
 import { Link, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { AppLogo, AppName } from "@/components/ui/app-logo";
-import { UserAvatar } from "@/components/ui/user-avatar";
-import { getCurrentUser } from "@/data/mock-users";
 import { cn } from "@/lib/utils";
-import { 
-  Home, 
-  TrendingUp, 
-  GraduationCap, 
-  Heart,
-  Settings,
-  Bell,
-  Search,
-  User,
-  Menu,
-  Crown
-} from "lucide-react";
 
 export default function Navigation() {
   const [location] = useLocation();
-  const currentUser = getCurrentUser();
-
-  const navigationItems = [
-    {
-      href: "/",
-      label: "Dashboard",
-      icon: Home,
-      badge: null,
-      description: "Visão geral do ecossistema"
-    },
-    {
-      href: "/flow",
-      label: "Flow",
-      icon: TrendingUp,
-      badge: null,
-      description: "Gestão financeira inteligente",
-      app: "flow" as const
-    },
-    {
-      href: "/edu",
-      label: "EduVie",
-      icon: GraduationCap,
-      badge: "3",
-      description: "Educação personalizada com IA",
-      app: "edu" as const
-    },
-    {
-      href: "/investor-demo",
-      label: "Demo Investidor",
-      icon: Crown,
-      badge: "VIP",
-      description: "Apresentação para investidores",
-      app: "demo" as const
-    },
-    {
-      href: "/purpose",
-      label: "Essentia",
-      icon: Heart,
-      badge: null,
-      description: "Jornada de autoconhecimento",
-      app: "purpose" as const
-    }
-  ];
 
   const navItems = [
     { path: "/", label: "Dashboard" },
@@ -117,13 +57,7 @@ export default function Navigation() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <UserAvatar size="sm" showEditButton={true} />
-            <Link href="/profile">
-              <Button variant="default" className="gradient-primary">
-                <User className="w-4 h-4 mr-2" />
-                Perfil
-              </Button>
-            </Link>
+            {/* Profile removed to avoid navigation interference */}
           </div>
         </div>
       </div>
