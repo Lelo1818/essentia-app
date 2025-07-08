@@ -330,6 +330,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Download endpoint for documentation
+  app.get('/download/docs', (req, res) => {
+    const filePath = path.join(process.cwd(), 'flow_docs.tar.gz');
+    
+    res.download(filePath, 'flow_ecosystem_docs.tar.gz', (err) => {
+      if (err) {
+        console.error('Download error:', err);
+        res.status(404).send('File not found');
+      }
+    });
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
