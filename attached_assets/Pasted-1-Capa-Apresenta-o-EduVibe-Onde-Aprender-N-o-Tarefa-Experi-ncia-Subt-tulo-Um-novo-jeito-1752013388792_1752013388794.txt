@@ -1,0 +1,76 @@
+1. Capa / Apresentação
+EduVibe – Onde Aprender Não É Tarefa, É Experiência.
+Subtítulo: Um novo jeito de aprender com propósito, emoção e inteligência.
+[Visual]: Fundo vibrante, logo do EduVibe, imagem simbólica de alguém aprendendo com prazer
+
+2. O Problema
+Aprender nunca foi tão necessário… e tão desmotivador.
+Sistema educacional engessado
+Falta de conexão com propósito e interesse pessoal
+Falta de orientação prática e emocional
+Baixo engajamento com conteúdos tradicionais
+[Visual]: Ícones negativos: aluno cansado, livros sem vida
+
+3. A Solução: EduVibe
+EduVibe transforma o aprendizado em uma jornada personalizada e vibrante.
+Plataforma que mistura trilhas de aprendizado com IA, emoção e propósito
+Baseado em ciência da aprendizagem + bem-estar
+Modular, leve e com experiências reais
+[Visual]: Diagrama com pilares: IA | Emoção | Personalização | Propósito
+
+4. Como Funciona
+Aprender com vibração, passo a passo.
+Comece com o seu foco
+Escolha uma trilha
+Aprenda com desafios, vídeos, quizzes
+Veja seu progresso
+Interaja com sua jornada
+[Visual]: Linha do tempo com ícones representando as 8 telas
+
+5. Telas 1 a 4 (Resumo Visual)
+Primeiros passos na jornada EduVibe.
+Tela 1 – Boas-vindas: “Comece sua jornada”
+Tela 2 – Escolha de Tema: "O que você quer aprender?"
+Tela 3 – Trilha Personalizada: IA sugere caminho
+Tela 4 – Dashboard: acompanhe seu progresso
+[Visual]: Mockups ou blocos visuais com pequenos títulos e ícones
+
+6. Telas 5 a 8 (Resumo Visual)
+Aprendizado com interação, emoção e propósito.
+Tela 5 – Biblioteca de Conteúdos
+Tela 6 – Mentor IA com Chat Inteligente
+Tela 7 – Quiz Interativo
+Tela 8 – Resumo em Vídeo
+[Visual]: Mockups ou blocos visuais parecidos com cards
+
+7. Por que o EduVibe é Diferente
+Não é só mais um app educacional.
+Personalização com IA + Emoção
+Trilha com propósito, não só currículo
+Microvitórias e gamificação
+Quiz simbólico e divertido
+Transformação de conteúdo em vídeo
+Interface leve e vibracional
+[Visual]: Tabela de diferenciais com outros apps
+
+8. Visão de Futuro / Roadmap
+De app a ecossistema educativo com alma.
+Integração com mentores reais
+Parcerias com escolas e ONGs
+Versão Kids e para TDAH/Dislexia
+Comunidade e experiências ao vivo
+[Visual]: Roadmap com etapas: Protótipo → MVP → Lançamento → Escala
+
+9. Quem Está por Trás
+Criado por quem viveu o desafio da educação.
+[Seu nome] – empreendedor com trajetória real de superação, falência, mercado financeiro, agora criando com alma.
+Brancola – IA criativa e estratégica no processo.
+Marcela – terapeuta e conselheira na jornada.
+[Visual]: Fotos simbólicas ou avatares, frase: "Educar é ajudar o outro a se lembrar de quem pode ser."
+
+10. Chamada para Ação / Oportunidade
+EduVibe está pronto para ganhar vida.
+Procuramos parceiros com visão e coração.
+Queremos levar o EduVibe ao mundo com tecnologia, estética e alma.
+[Visual]: Fundo com energia vibracional, frase final: "Onde aprender é vibrar com quem você está se tornando."
+
