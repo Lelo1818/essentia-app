@@ -1,0 +1,8 @@
+name: flow-ecosystem
+region: us-central1
+build:
+  command: npm run build
+run:
+  command: npm run start
+port: 5000
+autoscale: true
