@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import SimpleDemoSystem from "@/components/profile/simple-demo-system";
 import { 
   DollarSign, 
   BookOpen, 
@@ -278,10 +277,7 @@ export default function DashboardUnificado() {
           </Card>
         </div>
 
-        {/* Sistema Demo Simples - Disponível para testes quando necessário */}
-        <div className="mt-12 flex justify-center">
-          <SimpleDemoSystem />
-        </div>
+
       </div>
     </div>
   );
