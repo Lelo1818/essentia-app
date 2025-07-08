@@ -1,15 +1,28 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
 import { formatCurrency } from "@/lib/financial-utils";
+import { useToast } from "@/hooks/use-toast";
 import { 
   TrendingUp, 
   TrendingDown, 
   PiggyBank, 
   Trophy,
-  Star
+  Star,
+  Plus,
+  CreditCard,
+  Target,
+  DollarSign,
+  Eye,
+  Settings
 } from "lucide-react";
 
 export default function FlowStandalone() {
