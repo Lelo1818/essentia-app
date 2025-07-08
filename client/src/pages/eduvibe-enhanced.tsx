@@ -28,7 +28,8 @@ import {
   Share,
   Bookmark,
   Sparkles,
-  BarChart3
+  BarChart3,
+  PlayCircle
 } from "lucide-react";
 
 interface Module {
@@ -169,6 +170,17 @@ export default function EduVibeEnhanced() {
   const [currentVideo, setCurrentVideo] = useState("");
   const [showingText, setShowingText] = useState(false);
   const [currentText, setCurrentText] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState<Array<{
+    id: string;
+    name: string;
+    type: 'youtube' | 'pdf' | 'text';
+    content: string;
+    size?: string;
+    uploadDate: string;
+  }>>([]);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [textInput, setTextInput] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
 
   // Força refresh de cache para mobile/desktop
@@ -240,6 +252,123 @@ export default function EduVibeEnhanced() {
         description: "Material de estudo disponível",
       });
     }
+  };
+
+  // Função para processar upload de YouTube
+  const processYouTubeVideo = async () => {
+    if (!youtubeUrl) {
+      toast({
+        title: "URL necessária",
+        description: "Por favor, cole o link do YouTube",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      // Simula processamento real
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const videoId = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)?.[1];
+      const newFile = {
+        id: Date.now().toString(),
+        name: `YouTube: ${videoId || 'Video'}`,
+        type: 'youtube' as const,
+        content: youtubeUrl,
+        uploadDate: new Date().toLocaleString()
+      };
+      
+      setUploadedFiles(prev => [...prev, newFile]);
+      setYoutubeUrl("");
+      
+      toast({
+        title: "Vídeo processado!",
+        description: "YouTube video adicionado à sua biblioteca",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro no processamento",
+        description: "Tente novamente",
+        variant: "destructive"
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  // Função para processar upload de PDF
+  const processPDFUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      toast({
+        title: "Arquivo inválido",
+        description: "Por favor, selecione um arquivo PDF",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+    
+    // Simula processamento do PDF
+    setTimeout(() => {
+      const newFile = {
+        id: Date.now().toString(),
+        name: file.name,
+        type: 'pdf' as const,
+        content: `PDF processado: ${file.name}`,
+        size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+        uploadDate: new Date().toLocaleString()
+      };
+      
+      setUploadedFiles(prev => [...prev, newFile]);
+      setIsProcessing(false);
+      
+      toast({
+        title: "PDF processado!",
+        description: `${file.name} adicionado à sua biblioteca`,
+      });
+    }, 1500);
+  };
+
+  // Função para processar texto direto
+  const processTextInput = () => {
+    if (!textInput.trim()) {
+      toast({
+        title: "Texto necessário",
+        description: "Por favor, digite algum conteúdo",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const newFile = {
+      id: Date.now().toString(),
+      name: `Texto: ${textInput.substring(0, 30)}...`,
+      type: 'text' as const,
+      content: textInput,
+      uploadDate: new Date().toLocaleString()
+    };
+    
+    setUploadedFiles(prev => [...prev, newFile]);
+    setTextInput("");
+    
+    toast({
+      title: "Texto adicionado!",
+      description: "Conteúdo salvo na sua biblioteca",
+    });
+  };
+
+  // Função para remover arquivo
+  const removeFile = (id: string) => {
+    setUploadedFiles(prev => prev.filter(file => file.id !== id));
+    toast({
+      title: "Arquivo removido",
+      description: "Item removido da biblioteca",
+    });
   };
 
   const goBack = () => {
@@ -795,10 +924,25 @@ export default function EduVibeEnhanced() {
                       <Input 
                         placeholder="https://youtube.com/watch?v=..."
                         className="w-full"
+                        value={youtubeUrl}
+                        onChange={(e) => setYoutubeUrl(e.target.value)}
                       />
-                      <Button className="w-full bg-red-600 hover:bg-red-700">
-                        <Download className="w-4 h-4 mr-2" />
-                        Processar Vídeo
+                      <Button 
+                        onClick={processYouTubeVideo}
+                        disabled={isProcessing}
+                        className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50"
+                      >
+                        {isProcessing ? (
+                          <div className="flex items-center">
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            Processando...
+                          </div>
+                        ) : (
+                          <>
+                            <Download className="w-4 h-4 mr-2" />
+                            Processar Vídeo
+                          </>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -813,14 +957,19 @@ export default function EduVibeEnhanced() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-green-500 transition-colors cursor-pointer">
-                        <FileText className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-600">Clique para selecionar PDF</p>
-                      </div>
-                      <Button className="w-full bg-green-600 hover:bg-green-700">
-                        <Upload className="w-4 h-4 mr-2" />
-                        Extrair Texto
-                      </Button>
+                      <input 
+                        type="file" 
+                        accept=".pdf"
+                        onChange={processPDFUpload}
+                        disabled={isProcessing}
+                        className="w-full p-3 border-2 border-dashed border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 disabled:opacity-50"
+                      />
+                      {isProcessing && (
+                        <div className="flex items-center justify-center py-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-600 mr-2"></div>
+                          <span className="text-green-600">Processando PDF...</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -837,8 +986,13 @@ export default function EduVibeEnhanced() {
                       <textarea 
                         placeholder="Cole seu texto aqui ou digite conteúdo personalizado..."
                         className="w-full h-32 p-3 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        value={textInput}
+                        onChange={(e) => setTextInput(e.target.value)}
                       />
-                      <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                      <Button 
+                        onClick={processTextInput}
+                        className="w-full bg-purple-600 hover:bg-purple-700"
+                      >
                         <Brain className="w-4 h-4 mr-2" />
                         Processar IA
                       </Button>
@@ -854,88 +1008,113 @@ export default function EduVibeEnhanced() {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Sparkles className="w-6 h-6 mr-2 text-yellow-600" />
-                    IA Processamento
+                    Biblioteca Pessoal ({uploadedFiles.length} itens)
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {/* Simulação de resultado IA */}
-                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Brain className="w-5 h-5 text-yellow-600" />
-                        <span className="font-semibold text-yellow-800">IA Analisando...</span>
-                      </div>
-                      <p className="text-sm text-yellow-700">
-                        Aguardando conteúdo para processar. A IA criará resumos, questões e materiais de estudo personalizados.
-                      </p>
+                  {uploadedFiles.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Brain className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                      <p className="text-gray-500">Faça upload de conteúdo para começar...</p>
                     </div>
-
-                    {/* Botões de ação */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <Download className="w-4 h-4" />
-                        Baixar PDF
-                      </Button>
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <Share className="w-4 h-4" />
-                        Compartilhar
-                      </Button>
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <Bookmark className="w-4 h-4" />
-                        Salvar
-                      </Button>
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <PlayCircle className="w-4 h-4" />
-                        Áudio
-                      </Button>
+                  ) : (
+                    <div className="space-y-3 max-h-96 overflow-y-auto">
+                      {uploadedFiles.map((file) => (
+                        <div key={file.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                          <div className="flex items-center gap-3 flex-1">
+                            {file.type === 'youtube' && <Video className="w-5 h-5 text-red-600" />}
+                            {file.type === 'pdf' && <FileText className="w-5 h-5 text-orange-600" />}
+                            {file.type === 'text' && <Edit className="w-5 h-5 text-purple-600" />}
+                            <div className="flex-1">
+                              <p className="font-medium text-sm">{file.name}</p>
+                              <p className="text-xs text-gray-600">{file.uploadDate}</p>
+                              {file.size && <p className="text-xs text-gray-500">{file.size}</p>}
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            {file.type === 'youtube' && (
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => {
+                                  setCurrentVideo(file.content);
+                                  setShowingVideo(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4" />
+                              </Button>
+                            )}
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setCurrentText(file.content);
+                                setShowingText(true);
+                              }}
+                            >
+                              {file.type === 'text' ? <Edit className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => removeFile(file.id)}
+                              className="hover:bg-red-50 hover:text-red-600"
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
 
-              {/* Progresso e estatísticas */}
               <Card className="bg-white shadow-xl">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <BarChart3 className="w-6 h-6 mr-2 text-blue-600" />
-                    Seu Progresso
+                    Estatísticas de Uso
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span>Módulo Atual</span>
-                        <span>75%</span>
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="bg-red-50 p-3 rounded-lg">
+                      <div className="text-2xl font-bold text-red-600">
+                        {uploadedFiles.filter(f => f.type === 'youtube').length}
                       </div>
-                      <Progress value={75} className="h-2" />
+                      <div className="text-xs text-red-700">Vídeos</div>
                     </div>
-                    
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div className="bg-blue-50 p-3 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">12</div>
-                        <div className="text-xs text-blue-700">Materiais processados</div>
+                    <div className="bg-orange-50 p-3 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-600">
+                        {uploadedFiles.filter(f => f.type === 'pdf').length}
                       </div>
-                      <div className="bg-green-50 p-3 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">8h</div>
-                        <div className="text-xs text-green-700">Tempo estudado</div>
-                      </div>
+                      <div className="text-xs text-orange-700">PDFs</div>
                     </div>
-
-                    <Button 
-                      onClick={() => {
-                        toast({
-                          title: "Módulo concluído!",
-                          description: "Parabéns pelo progresso!"
-                        });
-                        setCurrentStep(5);
-                      }}
-                      className="w-full bg-blue-600 hover:bg-blue-700"
-                    >
-                      <CheckCircle className="w-4 h-4 mr-2" />
-                      Concluir Módulo
-                    </Button>
+                    <div className="bg-purple-50 p-3 rounded-lg">
+                      <div className="text-2xl font-bold text-purple-600">
+                        {uploadedFiles.filter(f => f.type === 'text').length}
+                      </div>
+                      <div className="text-xs text-purple-700">Textos</div>
+                    </div>
                   </div>
+                  {uploadedFiles.length > 0 && (
+                    <div className="mt-4">
+                      <Button 
+                        onClick={() => {
+                          setUploadedFiles([]);
+                          toast({
+                            title: "Biblioteca limpa!",
+                            description: "Todos os arquivos foram removidos",
+                          });
+                        }}
+                        variant="outline"
+                        className="w-full"
+                      >
+                        Limpar Biblioteca
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
