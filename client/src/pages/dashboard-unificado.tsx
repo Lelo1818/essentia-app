@@ -156,8 +156,7 @@ export default function DashboardUnificado() {
         </div>
 
         <div className="max-w-7xl mx-auto space-y-8">
-          {/* Profile Manager */}
-          <ProfileManager />
+          {/* Profile Section - Temporarily disabled */}
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
