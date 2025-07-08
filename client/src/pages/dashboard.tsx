@@ -5,7 +5,7 @@ import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
 import { mockEduData } from "@/data/mock-edu-data";
 import { mockPurposeData } from "@/data/mock-purpose-data";
-import WelcomeHeader from "@/components/dashboard/welcome-header";
+
 
 import LiveFinancialCards from "@/components/dashboard/live-financial-cards";
 import ExpenseCategories from "@/components/dashboard/expense-categories";
@@ -194,8 +194,7 @@ export default function Dashboard() {
       
       <AppShowcase />
       
-      <div className="flex justify-between items-center mb-6">
-        <WelcomeHeader userName={currentUser.name.split(' ')[0]} level={3} progress={progress} />
+      <div className="flex justify-end items-center mb-6">
         <AmbientPlayer enabled={false} className="hidden md:block" />
       </div>
       
