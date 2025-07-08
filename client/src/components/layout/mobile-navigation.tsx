@@ -51,10 +51,7 @@ export default function MobileNavigation() {
                       className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 cursor-pointer active:scale-95 ${
                         isActive ? "text-purple-600 bg-purple-50" : "text-gray-600 hover:text-purple-600 hover:bg-gray-50"
                       }`}
-                      onClick={() => {
-                        FeedbackUtils.feedbackAction('navigate');
-                        setShowMore(false);
-                      }}
+                      onClick={() => setShowMore(false)}
                     >
                       <Icon className="w-6 h-6 mb-2" />
                       <span className="text-xs font-medium text-center">{item.label}</span>

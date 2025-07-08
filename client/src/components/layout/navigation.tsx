@@ -11,7 +11,11 @@ export default function Navigation() {
     { path: "/", label: "Dashboard", icon: Home },
     { path: "/income", label: "Renda", icon: DollarSign },
     { path: "/expenses", label: "Gastos", icon: TrendingUp },
-    { path: "/goals", label: "Metas", icon: Target }
+    { path: "/investments", label: "Investimentos", icon: TrendingUp },
+    { path: "/goals", label: "Metas", icon: Target },
+    { path: "/planning", label: "Planejamento", icon: Target },
+    { path: "/cashback-marketplace", label: "Cashback", icon: DollarSign },
+    { path: "/educacao", label: "Educação", icon: Target }
   ];
 
   return (
@@ -31,8 +35,8 @@ export default function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {mainNavItems.map((item) => {
+          <div className="hidden md:flex items-center space-x-1 overflow-x-auto">
+            {mainNavItems.slice(0, 6).map((item) => {
               const Icon = item.icon;
               const isActive = location === item.path;
               
@@ -41,10 +45,10 @@ export default function Navigation() {
                   <Button
                     variant={isActive ? "default" : "ghost"}
                     size="sm"
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-1 whitespace-nowrap"
                   >
                     <Icon className="w-4 h-4" />
-                    <span>{item.label}</span>
+                    <span className="text-xs">{item.label}</span>
                   </Button>
                 </Link>
               );
