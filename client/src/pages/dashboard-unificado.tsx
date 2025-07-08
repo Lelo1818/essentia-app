@@ -2,12 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import ProfileManager from "@/components/profile/profile-manager";
-import SimpleProfileSaver from "@/components/profile/simple-profile-saver";
-import MobileProfileManager from "@/components/profile/mobile-profile-manager";
-import MobileFixedManager from "@/components/profile/mobile-fixed-manager";
-import CompleteProfileSystem from "@/components/profile/complete-profile-system";
-import DemoModeManager from "@/components/profile/demo-mode-manager";
 import SimpleDemoSystem from "@/components/profile/simple-demo-system";
 import { 
   DollarSign, 
@@ -284,34 +278,9 @@ export default function DashboardUnificado() {
           </Card>
         </div>
 
-        {/* Simple Profile Saver - TESTE DEBUG */}
-        <div className="mt-8 flex justify-center">
-          <SimpleProfileSaver />
-        </div>
-
-        {/* Mobile Profile Manager - TESTE MOBILE */}
-        <div className="mt-4 flex justify-center">
-          <MobileProfileManager />
-        </div>
-
-        {/* Mobile Fixed Manager - SOLUÇÃO FINAL */}
-        <div className="mt-4 flex justify-center">
-          <MobileFixedManager />
-        </div>
-
-        {/* Sistema Demo Simples - VERSÃO ESTÁVEL */}
-        <div className="mt-8 flex justify-center">
+        {/* Sistema Demo Simples - Disponível para testes quando necessário */}
+        <div className="mt-12 flex justify-center">
           <SimpleDemoSystem />
-        </div>
-
-        {/* Sistema Demo/Real - IMPLEMENTAÇÃO FINAL */}
-        <div className="mt-8 flex justify-center">
-          <DemoModeManager />
-        </div>
-
-        {/* Sistema Completo de Perfis - SOLUÇÃO DEFINITIVA */}
-        <div className="mt-8 flex justify-center">
-          <CompleteProfileSystem />
         </div>
       </div>
     </div>
