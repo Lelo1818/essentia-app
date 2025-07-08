@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { X, Star, Clock, TrendingUp, Target } from "lucide-react";
-import { FeedbackUtils } from "@/utils/feedbackUtils";
 
 interface OpportunitiesModalProps {
   onClose: () => void;

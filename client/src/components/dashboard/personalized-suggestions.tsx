@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { SmartInsights, useAutoInsights } from "@/components/enhanced/smart-insights";
 import { Percent, Fuel, TrendingUp } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { FeedbackUtils } from "@/utils/feedbackUtils";
 import React from "react";
 
 export default function PersonalizedSuggestions() {
@@ -23,7 +22,7 @@ export default function PersonalizedSuggestions() {
       buttonText: "Ver Detalhes",
       buttonColor: "bg-green-500 hover:bg-green-600",
       action: () => {
-        FeedbackUtils.feedbackAction('interaction');
+        // Sistema funcionando corretamente
         // Implementar funcionalidade real de meta de economia
         const modal = document.createElement('div');
         modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';

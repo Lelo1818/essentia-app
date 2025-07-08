@@ -41,7 +41,6 @@ import EcosystemStats from "@/components/dashboard/ecosystem-stats";
 import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
 import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera, Gift, Percent, Plane, BookOpen } from "lucide-react";
-import { FeedbackUtils } from "@/utils/feedbackUtils";
 import { AmbientPlayer } from "@/components/audio/ambient-player";
 
 import type { FinancialSummary } from "@/types";
@@ -88,15 +87,7 @@ export default function Dashboard() {
     investments: 0
   };
 
-  // Debug logs para diagnóstico completo
-  console.log('🔍 DASHBOARD DEBUG - DADOS RECEBIDOS:', { 
-    realSummary, 
-    isLoading: summaryLoading,
-    totalIncome: realSummary?.totalIncome,
-    totalExpenses: realSummary?.totalExpenses 
-  });
-  console.log('🔍 SUMMARY FINAL CALCULADO:', summary);
-  console.log('🔍 TIMESTAMP:', new Date().toISOString());
+  // Sistema funcionando corretamente
   
   const goals = [
     { id: 1, title: "Viagem Europa", progress: 57, target: 15000, current: 8500 },
