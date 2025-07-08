@@ -8,6 +8,7 @@ import MobileProfileManager from "@/components/profile/mobile-profile-manager";
 import MobileFixedManager from "@/components/profile/mobile-fixed-manager";
 import CompleteProfileSystem from "@/components/profile/complete-profile-system";
 import DemoModeManager from "@/components/profile/demo-mode-manager";
+import SimpleDemoSystem from "@/components/profile/simple-demo-system";
 import { 
   DollarSign, 
   BookOpen, 
@@ -296,6 +297,11 @@ export default function DashboardUnificado() {
         {/* Mobile Fixed Manager - SOLUÇÃO FINAL */}
         <div className="mt-4 flex justify-center">
           <MobileFixedManager />
+        </div>
+
+        {/* Sistema Demo Simples - VERSÃO ESTÁVEL */}
+        <div className="mt-8 flex justify-center">
+          <SimpleDemoSystem />
         </div>
 
         {/* Sistema Demo/Real - IMPLEMENTAÇÃO FINAL */}
