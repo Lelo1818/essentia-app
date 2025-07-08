@@ -144,6 +144,21 @@ Investir é fundamental para fazer seu dinheiro crescer ao longo do tempo. Neste
 };
 
 export default function EduVibeEnhanced() {
+  // Botão flutuante para Central Downloads
+  const FloatingDownloadButton = () => (
+    <div className="fixed bottom-6 right-6 z-50">
+      <Button 
+        onClick={() => {
+          setCurrentModuleId("1");
+          setCurrentStep(6);
+        }}
+        className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl"
+        title="Central Downloads"
+      >
+        <Download className="w-8 h-8" />
+      </Button>
+    </div>
+  );
   // Força limpeza de cache e garante que sempre carregue a versão completa
   useEffect(() => {
     localStorage.removeItem('eduvibe-cache');
@@ -477,6 +492,7 @@ export default function EduVibeEnhanced() {
   if (currentStep === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 flex items-center justify-center p-6">
+        <FloatingDownloadButton />
         <Card className="max-w-md w-full bg-white/95 backdrop-blur-sm shadow-2xl">
           <CardContent className="p-8 text-center">
             <div className="mb-6">
@@ -852,6 +868,16 @@ export default function EduVibeEnhanced() {
                         <FileText className="w-4 h-4 mr-2" />
                         Ler Material
                       </Button>
+                      <Button 
+                        onClick={() => {
+                          setCurrentModuleId(module.id);
+                          setCurrentStep(6);
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Central Downloads
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -1124,5 +1150,26 @@ export default function EduVibeEnhanced() {
     );
   }
 
-  return null;
+  return (
+    <div>
+      <FloatingDownloadButton />
+      {/* Tela padrão se nenhuma condição foi atendida */}
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">EduVibe Enhanced</h1>
+          <p className="text-gray-600 mb-6">Sistema carregando...</p>
+          <Button 
+            onClick={() => {
+              setCurrentStep(0);
+              setUserName("");
+              setCurrentModuleId(null);
+            }}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            Reiniciar Sistema
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 }
