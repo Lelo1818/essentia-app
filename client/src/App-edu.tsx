@@ -19,7 +19,7 @@ export default function EduApp() {
               >
                 ← Ecossistema
               </a>
-              <h1 className="text-lg font-bold text-blue-600">EduVie</h1>
+              <h1 className="text-lg font-bold text-blue-600">EduVibe</h1>
               <div className="w-20"></div>
             </div>
           </div>

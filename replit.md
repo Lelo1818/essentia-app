@@ -23,7 +23,7 @@ The Flow Ecosystem is a comprehensive digital platform consisting of four interc
 ### Application Structure
 The ecosystem consists of four main applications:
 1. **Flow** - Financial management system
-2. **EduVie** - Educational platform
+2. **EduVibe** - Educational platform
 3. **Essentia** - Self-development and wellness
 4. **Flow Kids** - Children's financial education
 
@@ -41,7 +41,7 @@ Each application operates independently while sharing common infrastructure and 
 - Smart budget tracking with category-based analysis
 - Brazilian market integration with real cashback partners
 
-#### EduVie Educational Platform (`/eduvie-clean`)
+#### EduVibe Educational Platform (`/eduvie-clean`)
 - Five main modules: Dashboard, Courses, Study Sessions, Content Creation, Analytics
 - AI-powered personalized learning paths
 - Multiple content formats (video, audio, text, interactive)

@@ -259,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>EduVie Pro - Dashboard de Aprendizado</title>
+        <title>EduVibe Pro - Dashboard de Aprendizado</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
@@ -270,7 +270,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     <span class="text-white font-bold text-lg">E</span>
                 </div>
                 <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    EduVie Pro
+                    EduVibe Pro
                 </h1>
             </div>
             <div class="flex items-center gap-3">

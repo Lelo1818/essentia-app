@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useInteractiveActions } from "@/hooks/useInteractiveActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -65,6 +67,9 @@ interface LearningStats {
 }
 
 export default function EduVieClean() {
+  const { toast } = useToast();
+  const { handleEducationAction } = useInteractiveActions();
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [courses, setCourses] = useState<Course[]>([]);
   const [todaysSessions, setTodaysSessions] = useState<StudySession[]>([]);
   const [stats, setStats] = useState<LearningStats>({
@@ -76,7 +81,6 @@ export default function EduVieClean() {
     monthlyGoal: 0,
     currentMonth: 0
   });
-  const [activeTab, setActiveTab] = useState("dashboard");
   const [newContent, setNewContent] = useState({
     title: "",
     description: "",
@@ -301,7 +305,7 @@ export default function EduVieClean() {
               <span className="text-white font-bold text-sm">E</span>
             </div>
             <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              EduVie Pro
+              EduVibe Pro
             </h1>
           </div>
           <div className="flex items-center gap-2">
