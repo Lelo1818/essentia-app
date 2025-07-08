@@ -75,13 +75,13 @@ export default function DashboardUnificado() {
       lastAccess: "Hoje"
     },
     {
-      id: "eduvie",
-      title: "EduVie",
+      id: "eduvibe",
+      title: "EduVibe",
       subtitle: "Aprendizado Personalizado",
       description: "Plataforma educacional com IA adaptativa e múltiplos formatos",
       icon: BookOpen,
       color: "from-blue-500 to-cyan-600",
-      url: "/eduvie-clean",
+      url: "/eduvibe-functional",
       status: "Ativo",
       lastAccess: "2 horas atrás"
     },
@@ -111,7 +111,7 @@ export default function DashboardUnificado() {
 
   const recentActivity = [
     { app: "Flow", action: "Nova receita registrada", time: "5 min atrás", amount: "R$ 2.450" },
-    { app: "EduVie", action: "Curso 'JavaScript Avançado' concluído", time: "2 horas atrás", points: "150 pts" },
+    { app: "EduVibe", action: "Curso 'JavaScript Avançado' concluído", time: "2 horas atrás", points: "150 pts" },
     { app: "Essentia", action: "Ritual de respiração completado", time: "1 dia atrás", progress: "Clareza +5%" },
     { app: "Flow Kids", action: "Sofia alcançou nível 5", time: "3 dias atrás", achievement: "Super Poupador" }
   ];

@@ -444,10 +444,13 @@ export default function EduVibeFunctional() {
           </Card>
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 space-x-4">
           <Button onClick={() => setCurrentStep(4)}>
             <ArrowRight className="w-4 h-4 mr-2" />
             Voltar ao Dashboard
+          </Button>
+          <Button variant="outline" onClick={() => window.location.href = "/dashboard-unificado"}>
+            Dashboard Principal
           </Button>
         </div>
       </div>
@@ -524,9 +527,12 @@ export default function EduVibeFunctional() {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 space-x-4">
           <Button onClick={() => setCurrentStep(4)} variant="outline">
             Voltar ao Dashboard
+          </Button>
+          <Button variant="outline" onClick={() => window.location.href = "/dashboard-unificado"}>
+            Dashboard Principal
           </Button>
         </div>
       </div>
@@ -709,6 +715,9 @@ export default function EduVibeFunctional() {
               </Button>
               <Button variant="outline" onClick={() => setCurrentStep(1)}>
                 Começar Nova Trilha
+              </Button>
+              <Button variant="ghost" onClick={() => window.location.href = "/dashboard-unificado"}>
+                Dashboard Principal
               </Button>
             </div>
           </CardContent>
