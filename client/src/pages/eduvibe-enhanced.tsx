@@ -148,11 +148,14 @@ export default function EduVibeEnhanced() {
   const FloatingDownloadButton = () => (
     <div className="fixed bottom-6 right-6 z-50">
       <Button 
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log("🖱️ CLIQUE NO BOTÃO FLUTUANTE");
           setCurrentModuleId("1");
           setCurrentStep(6);
         }}
-        className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl"
+        className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110"
         title="Central Downloads"
       >
         <Download className="w-8 h-8" />
@@ -667,6 +670,22 @@ export default function EduVibeEnhanced() {
               >
                 Começar Jornada
               </Button>
+              
+              <div className="border-t pt-4">
+                <p className="text-xs text-gray-500 mb-2">Teste direto a funcionalidade:</p>
+                <Button 
+                  onClick={() => {
+                    console.log("🖱️ ACESSO DIRETO AO TESTE");
+                    setUserName("Teste");
+                    setCurrentModuleId("1");
+                    setCurrentStep(6);
+                  }}
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Testar Central Downloads
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -1051,8 +1070,13 @@ export default function EduVibeEnhanced() {
 
   // Tela 6: Estudo de Módulo (CORAÇÃO DA APLICAÇÃO - Input/Download)
   if (currentStep === 6 && currentModuleId) {
-    const module = selectedPath?.modules.find(m => m.id === currentModuleId);
-    if (!module) return null;
+    const module = selectedPath?.modules.find(m => m.id === parseInt(currentModuleId)) || {
+      id: 1,
+      title: "Central Downloads",
+      type: 'text' as const,
+      completed: false,
+      content: "Centro de processamento de conteúdo"
+    };
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
