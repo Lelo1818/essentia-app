@@ -115,9 +115,9 @@ export default function NFTGenerator() {
         };
       default:
         return {
-          background: "bg-gradient-to-br from-gray-700 via-slate-700 to-gray-700",
-          pattern: "bg-[radial-gradient(circle_at_50%_50%,rgba(148,163,184,0.2),transparent_50%)]",
-          frame: "border-2 border-gray-400 shadow-[0_0_10px_rgba(148,163,184,0.3)]",
+          background: "bg-gradient-to-br from-gray-800 via-slate-800 to-gray-800",
+          pattern: "bg-[radial-gradient(circle_at_50%_50%,rgba(148,163,184,0.3),transparent_50%)]",
+          frame: "border-2 border-gray-300 shadow-[0_0_10px_rgba(148,163,184,0.4)]",
           glow: ""
         };
     }
@@ -187,30 +187,35 @@ export default function NFTGenerator() {
                   key={achievement.id}
                   className={`${design.background} ${design.pattern} ${design.frame} ${design.glow} relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-300`}
                 >
-                  <CardContent className="p-6 text-white relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <Badge className={`bg-gradient-to-r ${achievement.color} text-white border-0`}>
-                        {achievement.rarity.toUpperCase()}
-                      </Badge>
-                      <IconComponent className="w-8 h-8" />
-                    </div>
+                  <CardContent className="p-6 relative z-10">
+                    {/* Overlay escuro para garantir contraste */}
+                    <div className="absolute inset-0 bg-black/30 rounded-lg"></div>
                     
-                    <h3 className="text-xl font-bold mb-2">{achievement.title}</h3>
-                    <p className="text-gray-200 text-sm mb-4">{achievement.description}</p>
-                    
-                    <div className="flex justify-between items-center">
-                      <div className="text-xs text-gray-300">
-                        {achievement.date.toLocaleDateString('pt-BR')}
+                    <div className="relative z-10 text-white">
+                      <div className="flex items-center justify-between mb-4">
+                        <Badge className={`bg-gradient-to-r ${achievement.color} text-white border-0 shadow-md`}>
+                          {achievement.rarity.toUpperCase()}
+                        </Badge>
+                        <IconComponent className="w-8 h-8 text-white drop-shadow-lg" />
                       </div>
-                      <InteractiveButton
-                        onClick={() => generateNFT(achievement)}
-                        className="bg-white/20 hover:bg-white/30 text-white border-white/20"
-                        size="sm"
-                        soundType="success"
-                      >
-                        <Zap className="w-4 h-4 mr-1" />
-                        Gerar NFT
-                      </InteractiveButton>
+                      
+                      <h3 className="text-xl font-bold mb-2 text-white drop-shadow-lg">{achievement.title}</h3>
+                      <p className="text-gray-100 text-sm mb-4 drop-shadow-sm">{achievement.description}</p>
+                      
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs text-gray-200 drop-shadow-sm">
+                          {achievement.date.toLocaleDateString('pt-BR')}
+                        </div>
+                        <InteractiveButton
+                          onClick={() => generateNFT(achievement)}
+                          className="bg-white/20 hover:bg-white/30 text-white border-white/20 shadow-lg"
+                          size="sm"
+                          soundType="success"
+                        >
+                          <Zap className="w-4 h-4 mr-1" />
+                          Gerar NFT
+                        </InteractiveButton>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -247,13 +252,16 @@ export default function NFTGenerator() {
               {/* NFT Preview */}
               <div className="flex justify-center">
                 <div className={`${getRarityConfig(selectedAchievement.rarity).background} ${getRarityConfig(selectedAchievement.rarity).pattern} ${getRarityConfig(selectedAchievement.rarity).frame} ${getRarityConfig(selectedAchievement.rarity).glow} w-64 h-64 rounded-lg relative overflow-hidden`}>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
-                    <selectedAchievement.icon className="w-16 h-16 mb-4" />
-                    <h3 className="text-lg font-bold text-center mb-2">{selectedAchievement.title}</h3>
-                    <Badge className={`bg-gradient-to-r ${selectedAchievement.color} text-white border-0 mb-2`}>
+                  {/* Overlay escuro para garantir contraste */}
+                  <div className="absolute inset-0 bg-black/30 rounded-lg"></div>
+                  
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4 relative z-10">
+                    <selectedAchievement.icon className="w-16 h-16 mb-4 text-white drop-shadow-lg" />
+                    <h3 className="text-lg font-bold text-center mb-2 text-white drop-shadow-lg">{selectedAchievement.title}</h3>
+                    <Badge className={`bg-gradient-to-r ${selectedAchievement.color} text-white border-0 mb-2 shadow-md`}>
                       {selectedAchievement.rarity.toUpperCase()}
                     </Badge>
-                    <p className="text-xs text-center text-gray-200">#{generatedNFT}</p>
+                    <p className="text-xs text-center text-gray-200 drop-shadow-sm">#{generatedNFT}</p>
                   </div>
                 </div>
               </div>
