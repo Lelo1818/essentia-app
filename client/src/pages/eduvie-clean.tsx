@@ -498,6 +498,7 @@ export default function EduVieClean() {
                             size="sm" 
                             variant={session.completed ? "outline" : "default"}
                             className={session.completed ? "border-green-300 text-green-700" : "bg-blue-600 hover:bg-blue-700 text-white"}
+                            onClick={() => handleEducationAction("complete-lesson", session.title)}
                           >
                             {session.completed ? (
                               <><CheckCircle className="w-4 h-4 mr-1" /> Concluído</>
@@ -599,7 +600,10 @@ export default function EduVieClean() {
                       <p className="text-gray-600">{course.completedLessons}/{course.totalLessons} aulas • {course.category}</p>
                     </div>
 
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                    <Button 
+                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                      onClick={() => handleEducationAction("start-course", course.title)}
+                    >
                       <Play className="w-4 h-4 mr-2" />
                       {course.progress > 0 ? 'Continuar' : 'Começar'} Curso
                     </Button>
@@ -662,6 +666,7 @@ export default function EduVieClean() {
                           : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700'
                         }`}
                         disabled={session.completed}
+                        onClick={() => !session.completed && handleEducationAction("complete-lesson", session.title)}
                       >
                         {session.completed ? (
                           <><CheckCircle className="w-4 h-4 mr-2" /> Concluído</>
@@ -692,25 +697,41 @@ export default function EduVieClean() {
                 <CardContent className="space-y-6">
                   {/* Upload Options */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <Button variant="outline" className="h-32 flex-col gap-3 border-dashed border-2 hover:border-blue-400 hover:bg-blue-50">
+                    <Button 
+                      variant="outline" 
+                      className="h-32 flex-col gap-3 border-dashed border-2 hover:border-blue-400 hover:bg-blue-50"
+                      onClick={() => handleEducationAction("create-content", "PDF")}
+                    >
                       <FileText className="w-8 h-8 text-blue-600" />
                       <span className="font-medium">Upload PDF</span>
                       <span className="text-xs text-gray-500">Documentos, livros, artigos</span>
                     </Button>
                     
-                    <Button variant="outline" className="h-32 flex-col gap-3 border-dashed border-2 hover:border-red-400 hover:bg-red-50">
+                    <Button 
+                      variant="outline" 
+                      className="h-32 flex-col gap-3 border-dashed border-2 hover:border-red-400 hover:bg-red-50"
+                      onClick={() => handleEducationAction("create-content", "YouTube")}
+                    >
                       <Video className="w-8 h-8 text-red-600" />
                       <span className="font-medium">Link YouTube</span>
                       <span className="text-xs text-gray-500">Vídeos educacionais</span>
                     </Button>
                     
-                    <Button variant="outline" className="h-32 flex-col gap-3 border-dashed border-2 hover:border-green-400 hover:bg-green-50">
+                    <Button 
+                      variant="outline" 
+                      className="h-32 flex-col gap-3 border-dashed border-2 hover:border-green-400 hover:bg-green-50"
+                      onClick={() => handleEducationAction("create-content", "Texto")}
+                    >
                       <BookOpen className="w-8 h-8 text-green-600" />
                       <span className="font-medium">Texto/Artigo</span>
                       <span className="text-xs text-gray-500">Cole ou digite conteúdo</span>
                     </Button>
                     
-                    <Button variant="outline" className="h-32 flex-col gap-3 border-dashed border-2 hover:border-purple-400 hover:bg-purple-50">
+                    <Button 
+                      variant="outline" 
+                      className="h-32 flex-col gap-3 border-dashed border-2 hover:border-purple-400 hover:bg-purple-50"
+                      onClick={() => handleEducationAction("create-content", "Imagem")}
+                    >
                       <Upload className="w-8 h-8 text-purple-600" />
                       <span className="font-medium">Imagem/Slide</span>
                       <span className="text-xs text-gray-500">Fotos de anotações, slides</span>
@@ -756,7 +777,10 @@ export default function EduVieClean() {
                         onChange={(e) => setNewContent({...newContent, description: e.target.value})}
                       />
                     </div>
-                    <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                    <Button 
+                      className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                      onClick={() => handleEducationAction("create-content", newContent.title || "Novo Curso")}
+                    >
                       <Plus className="w-4 h-4 mr-2" />
                       Criar com IA
                     </Button>
