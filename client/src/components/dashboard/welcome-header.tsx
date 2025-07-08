@@ -2,7 +2,6 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, TrendingUp, Target, Sparkles, Crown, Zap } from "lucide-react";
-import UserAvatar from "@/components/ui/user-avatar";
 
 interface WelcomeHeaderProps {
   userName: string;
@@ -42,7 +41,6 @@ export default function WelcomeHeader({ userName, level, progress }: WelcomeHead
           <div className="flex items-start justify-between">
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
-                <UserAvatar size="lg" showEditButton={false} />
                 <div>
                   <CardTitle className="text-3xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text">
                     {getCurrentHour()}, {userName}!
