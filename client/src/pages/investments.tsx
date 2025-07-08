@@ -260,28 +260,28 @@ export default function Investments() {
         </div>
 
         <Tabs defaultValue="portfolio" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-100 p-1 rounded-lg">
+          <TabsList className="grid w-full grid-cols-4 bg-white border border-gray-200 p-2 rounded-xl shadow-sm">
             <TabsTrigger 
               value="portfolio" 
-              className="data-[state=active]:bg-blue-500 data-[state=active]:text-white text-blue-600 font-medium"
+              className="data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-md text-blue-600 font-medium bg-blue-50 border border-blue-200 rounded-lg transition-all duration-200 hover:bg-blue-100"
             >
               Carteira
             </TabsTrigger>
             <TabsTrigger 
               value="allocation" 
-              className="data-[state=active]:bg-green-500 data-[state=active]:text-white text-green-600 font-medium"
+              className="data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md text-green-600 font-medium bg-green-50 border border-green-200 rounded-lg transition-all duration-200 hover:bg-green-100"
             >
               Alocação
             </TabsTrigger>
             <TabsTrigger 
               value="recommendations" 
-              className="data-[state=active]:bg-orange-500 data-[state=active]:text-white text-orange-600 font-medium"
+              className="data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-md text-orange-600 font-medium bg-orange-50 border border-orange-200 rounded-lg transition-all duration-200 hover:bg-orange-100"
             >
               Recomendações
             </TabsTrigger>
             <TabsTrigger 
               value="analysis" 
-              className="data-[state=active]:bg-purple-500 data-[state=active]:text-white text-purple-600 font-medium"
+              className="data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-md text-purple-600 font-medium bg-purple-50 border border-purple-200 rounded-lg transition-all duration-200 hover:bg-purple-100"
             >
               Análise
             </TabsTrigger>
