@@ -29,7 +29,7 @@ export default function Ofertas() {
       validadeHoras: 48,
       rating: 4.8,
       vendidos: 247,
-      imagem: "📱",
+      imagem: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=300&h=200&fit=crop",
       tags: ["premium", "tech", "cashback alto"]
     },
     {
@@ -45,7 +45,7 @@ export default function Ofertas() {
       validadeHoras: 72,
       rating: 4.9,
       vendidos: 1834,
-      imagem: "📚",
+      imagem: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop",
       tags: ["educacao", "investimentos", "meta reward"]
     },
     {
@@ -61,7 +61,7 @@ export default function Ofertas() {
       validadeHoras: 24,
       rating: 4.6,
       vendidos: 89,
-      imagem: "💻",
+      imagem: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=200&fit=crop",
       tags: ["parcelamento", "sem juros", "tech"]
     },
     {
@@ -77,7 +77,7 @@ export default function Ofertas() {
       validadeHoras: 168,
       rating: 4.7,
       vendidos: 456,
-      imagem: "🏥",
+      imagem: "https://images.unsplash.com/photo-1582560469781-1e985b6b2c41?w=300&h=200&fit=crop",
       tags: ["saude", "promocao especial", "gratuito"]
     },
     {
@@ -93,7 +93,7 @@ export default function Ofertas() {
       validadeHoras: 96,
       rating: 4.9,
       vendidos: 23,
-      imagem: "✈️",
+      imagem: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300&h=200&fit=crop",
       tags: ["viagem", "milhas", "nivel alto"]
     },
     {
@@ -109,7 +109,7 @@ export default function Ofertas() {
       validadeHoras: 240,
       rating: 5.0,
       vendidos: 7,
-      imagem: "🚗",
+      imagem: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=300&h=200&fit=crop",
       tags: ["automotivo", "eletrico", "financiamento"]
     }
   ];
@@ -331,9 +331,17 @@ export default function Ofertas() {
         {ofertasFiltradas.map((oferta) => (
           <Card key={oferta.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 relative">
-              <div className="absolute inset-0 flex items-center justify-center text-6xl">
-                {oferta.imagem}
-              </div>
+              {oferta.imagem.startsWith('http') ? (
+                <img 
+                  src={oferta.imagem} 
+                  alt={oferta.titulo}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-6xl">
+                  {oferta.imagem}
+                </div>
+              )}
               <div className="absolute top-3 left-3">
                 <Badge className="bg-red-100 text-red-800">
                   -{oferta.desconto}%

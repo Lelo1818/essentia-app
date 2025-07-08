@@ -12,10 +12,20 @@ export default function Navigation() {
     { path: "/income", label: "Renda", icon: DollarSign },
     { path: "/expenses", label: "Gastos", icon: TrendingUp },
     { path: "/investments", label: "Investimentos", icon: TrendingUp },
-    { path: "/goals", label: "Metas", icon: Target },
+    { path: "/dividas", label: "Dívidas", icon: Target },
     { path: "/planning", label: "Planejamento", icon: Target },
+    { path: "/goals", label: "Metas", icon: Target },
+    { path: "/nft-achievements", label: "NFT", icon: Target },
+    { path: "/mood-analysis", label: "Humor", icon: Target },
     { path: "/cashback-marketplace", label: "Cashback", icon: DollarSign },
-    { path: "/educacao", label: "Educação", icon: Target }
+    { path: "/cupons", label: "Cupons", icon: Target },
+    { path: "/milhas", label: "Milhas", icon: Target },
+    { path: "/educacao", label: "Educação", icon: Target },
+    { path: "/flow-kids", label: "Flow Kids", icon: Target },
+    { path: "/feedback-ia", label: "IA", icon: Target },
+    { path: "/familias", label: "Família", icon: Target },
+    { path: "/ocr-avancado", label: "OCR", icon: Target },
+    { path: "/ofertas", label: "Ofertas", icon: Target }
   ];
 
   return (
@@ -35,8 +45,8 @@ export default function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1 overflow-x-auto">
-            {mainNavItems.slice(0, 6).map((item) => {
+          <div className="hidden md:flex items-center space-x-1 overflow-x-auto max-w-3xl">
+            {mainNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = location === item.path;
               
