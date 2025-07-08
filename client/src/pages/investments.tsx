@@ -260,11 +260,31 @@ export default function Investments() {
         </div>
 
         <Tabs defaultValue="portfolio" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="portfolio">Carteira</TabsTrigger>
-            <TabsTrigger value="allocation">Alocação</TabsTrigger>
-            <TabsTrigger value="recommendations">Recomendações</TabsTrigger>
-            <TabsTrigger value="analysis">Análise</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-4 bg-gray-100 p-1 rounded-lg">
+            <TabsTrigger 
+              value="portfolio" 
+              className="data-[state=active]:bg-blue-500 data-[state=active]:text-white text-blue-600 font-medium"
+            >
+              Carteira
+            </TabsTrigger>
+            <TabsTrigger 
+              value="allocation" 
+              className="data-[state=active]:bg-green-500 data-[state=active]:text-white text-green-600 font-medium"
+            >
+              Alocação
+            </TabsTrigger>
+            <TabsTrigger 
+              value="recommendations" 
+              className="data-[state=active]:bg-orange-500 data-[state=active]:text-white text-orange-600 font-medium"
+            >
+              Recomendações
+            </TabsTrigger>
+            <TabsTrigger 
+              value="analysis" 
+              className="data-[state=active]:bg-purple-500 data-[state=active]:text-white text-purple-600 font-medium"
+            >
+              Análise
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="portfolio" className="space-y-6">
