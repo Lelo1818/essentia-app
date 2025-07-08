@@ -20,7 +20,9 @@ import {
   ArrowRight,
   Star,
   Award,
-  Lightbulb
+  Lightbulb,
+  ArrowLeft,
+  Home
 } from "lucide-react";
 
 interface LearningPath {

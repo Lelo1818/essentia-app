@@ -49,6 +49,7 @@ import ContaFamilia from "@/pages/conta-familia";
 import EduVieClean from "@/pages/eduvie-clean";
 import EduVieStandalone from "@/pages/eduvie-standalone";
 import EduVibeFunctional from "@/pages/eduvibe-functional";
+import EduVibeEnhanced from "@/pages/eduvibe-enhanced";
 import FlowStandalone from "@/pages/flow-standalone";
 import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
@@ -72,6 +73,7 @@ function Router() {
       <Route path="/eduvie-clean" component={EduVieClean} />
       <Route path="/eduvie-standalone" component={EduVieStandalone} />
       <Route path="/eduvibe-functional" component={EduVibeFunctional} />
+      <Route path="/eduvibe-enhanced" component={EduVibeEnhanced} />
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />

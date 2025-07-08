@@ -81,7 +81,7 @@ export default function DashboardUnificado() {
       description: "Plataforma educacional com IA adaptativa e múltiplos formatos",
       icon: BookOpen,
       color: "from-blue-500 to-cyan-600",
-      url: "/eduvibe-functional",
+      url: "/eduvibe-enhanced",
       status: "Ativo",
       lastAccess: "2 horas atrás"
     },
