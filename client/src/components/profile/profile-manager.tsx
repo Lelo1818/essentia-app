@@ -90,11 +90,18 @@ export default function ProfileManager() {
     }
 
     try {
-      // Simular coleta de dados do sistema
+      console.log("🔍 Iniciando salvamento do perfil...");
+      
+      // Coleta dados do sistema
       const financialSummary = await fetch('/api/financial-summary').then(r => r.json());
+      console.log("📊 Dados financeiros coletados:", financialSummary);
+      
       const achievements = JSON.parse(localStorage.getItem('flow-achievements') || '[]');
       const goals = JSON.parse(localStorage.getItem('flow-goals') || '[]');
       const preferences = JSON.parse(localStorage.getItem('flow-preferences') || '{}');
+
+      console.log("📈 Conquistas:", achievements.length);
+      console.log("🎯 Metas:", goals.length);
 
       const newProfile: SavedProfile = {
         id: `profile-${Date.now()}`,
@@ -114,11 +121,41 @@ export default function ProfileManager() {
         }
       };
 
+      console.log("💾 Perfil criado:", newProfile);
+
+      // Salva no localStorage
       const updatedProfiles = [...savedProfiles, newProfile];
       setSavedProfiles(updatedProfiles);
       localStorage.setItem('flow-saved-profiles', JSON.stringify(updatedProfiles));
       localStorage.setItem('flow-current-profile', JSON.stringify(newProfile));
       setCurrentProfile(newProfile);
+
+      console.log("✅ Perfil salvo no localStorage");
+
+      // Tenta salvar no servidor também
+      try {
+        const response = await fetch('/api/profiles', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: 1, // ID fixo do usuário demo
+            name: newProfile.name,
+            description: newProfile.description,
+            data: newProfile.data,
+            stats: newProfile.stats
+          }),
+        });
+
+        if (response.ok) {
+          console.log("✅ Perfil salvo no servidor também");
+        } else {
+          console.warn("⚠️ Erro ao salvar no servidor, mas localStorage funcionou");
+        }
+      } catch (serverError) {
+        console.warn("⚠️ Servidor indisponível, usando apenas localStorage:", serverError);
+      }
 
       setProfileName("");
       setProfileDescription("");
@@ -130,6 +167,7 @@ export default function ProfileManager() {
         variant: "default"
       });
     } catch (error) {
+      console.error("❌ Erro ao salvar perfil:", error);
       toast({
         title: "Erro ao Salvar",
         description: "Não foi possível salvar o perfil",
@@ -264,13 +302,18 @@ export default function ProfileManager() {
                 </DialogHeader>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="profileName">Nome do Perfil</Label>
+                    <Label htmlFor="profileName">Nome do Perfil *</Label>
                     <Input
                       id="profileName"
                       value={profileName}
                       onChange={(e) => setProfileName(e.target.value)}
                       placeholder="Ex: Perfil Principal, Teste, Backup..."
+                      required
+                      autoFocus
                     />
+                    {!profileName.trim() && (
+                      <p className="text-sm text-red-500 mt-1">Nome é obrigatório</p>
+                    )}
                   </div>
                   <div>
                     <Label htmlFor="profileDescription">Descrição (opcional)</Label>
@@ -281,11 +324,25 @@ export default function ProfileManager() {
                       placeholder="Breve descrição do perfil..."
                     />
                   </div>
+                  <div className="bg-blue-50 p-3 rounded-lg text-sm text-blue-700">
+                    <p><strong>O que será salvo:</strong></p>
+                    <ul className="list-disc ml-4 mt-1">
+                      <li>Dados financeiros atuais (R$ {currentProfile?.stats?.totalBalance?.toLocaleString('pt-BR') || '0,00'})</li>
+                      <li>Conquistas desbloqueadas ({JSON.parse(localStorage.getItem('flow-achievements') || '[]').length})</li>
+                      <li>Metas definidas ({JSON.parse(localStorage.getItem('flow-goals') || '[]').length})</li>
+                      <li>Configurações personalizadas</li>
+                    </ul>
+                  </div>
                   <div className="flex justify-end space-x-2">
                     <InteractiveButton variant="outline" onClick={() => setShowSaveDialog(false)} soundType="click">
                       Cancelar
                     </InteractiveButton>
-                    <InteractiveButton onClick={saveCurrentProfile} soundType="success">
+                    <InteractiveButton 
+                      onClick={saveCurrentProfile} 
+                      soundType="success"
+                      disabled={!profileName.trim()}
+                      className={!profileName.trim() ? "opacity-50 cursor-not-allowed" : ""}
+                    >
                       Salvar Perfil
                     </InteractiveButton>
                   </div>
