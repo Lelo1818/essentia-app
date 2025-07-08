@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import ProfileManager from "@/components/profile/profile-manager";
+import SimpleProfileSaver from "@/components/profile/simple-profile-saver";
 import { 
   DollarSign, 
   BookOpen, 
@@ -276,6 +277,11 @@ export default function DashboardUnificado() {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Simple Profile Saver - TESTE DEBUG */}
+        <div className="mt-8 flex justify-center">
+          <SimpleProfileSaver />
         </div>
       </div>
     </div>
