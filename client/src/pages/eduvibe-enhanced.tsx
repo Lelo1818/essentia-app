@@ -280,15 +280,51 @@ export default function EduVibeEnhanced() {
       return;
     }
 
+    // Validação real de URL do YouTube
+    const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/;
+    const match = youtubeUrl.match(youtubeRegex);
+    
+    if (!match) {
+      toast({
+        title: "URL inválida",
+        description: "Por favor, cole um link válido do YouTube",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsProcessing(true);
     try {
-      // Simula processamento real
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const videoId = match[1];
       
-      const videoId = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)?.[1];
+      // Busca informações reais do vídeo via API do YouTube
+      const response = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(youtubeUrl)}`);
+      const videoData = await response.json();
+      
       const newFile = {
         id: Date.now().toString(),
-        name: `YouTube: ${videoId || 'Video'}`,
+        name: videoData.title || `YouTube: ${videoId}`,
+        type: 'youtube' as const,
+        content: youtubeUrl,
+        size: `Duração: ${Math.floor(videoData.duration/60)}:${(videoData.duration%60).toString().padStart(2,'0')}`,
+        uploadDate: new Date().toLocaleString(),
+        thumbnail: videoData.thumbnail_url,
+        author: videoData.author_name
+      };
+      
+      setUploadedFiles(prev => [...prev, newFile]);
+      setYoutubeUrl("");
+      
+      toast({
+        title: "Vídeo processado!",
+        description: `"${videoData.title}" adicionado à biblioteca`,
+      });
+    } catch (error) {
+      // Fallback se API falhar
+      const videoId = match[1];
+      const newFile = {
+        id: Date.now().toString(),
+        name: `YouTube: ${videoId}`,
         type: 'youtube' as const,
         content: youtubeUrl,
         uploadDate: new Date().toLocaleString()
@@ -301,19 +337,13 @@ export default function EduVibeEnhanced() {
         title: "Vídeo processado!",
         description: "YouTube video adicionado à sua biblioteca",
       });
-    } catch (error) {
-      toast({
-        title: "Erro no processamento",
-        description: "Tente novamente",
-        variant: "destructive"
-      });
     } finally {
       setIsProcessing(false);
     }
   };
 
   // Função para processar upload de PDF
-  const processPDFUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const processPDFUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -328,53 +358,128 @@ export default function EduVibeEnhanced() {
 
     setIsProcessing(true);
     
-    // Simula processamento do PDF
-    setTimeout(() => {
-      const newFile = {
-        id: Date.now().toString(),
-        name: file.name,
-        type: 'pdf' as const,
-        content: `PDF processado: ${file.name}`,
-        size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
-        uploadDate: new Date().toLocaleString()
+    try {
+      // Processamento real do PDF
+      const reader = new FileReader();
+      
+      reader.onload = async () => {
+        try {
+          // Converte para base64 para armazenamento
+          const base64 = reader.result as string;
+          
+          // Extrai informações reais do PDF
+          const pdfInfo = {
+            name: file.name,
+            size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+            lastModified: new Date(file.lastModified).toLocaleDateString(),
+            pages: "Estimado: " + Math.ceil(file.size / 50000) + " páginas" // Estimativa baseada no tamanho
+          };
+          
+          const newFile = {
+            id: Date.now().toString(),
+            name: file.name,
+            type: 'pdf' as const,
+            content: base64, // Armazena o PDF real em base64
+            size: pdfInfo.size,
+            uploadDate: new Date().toLocaleString(),
+            pages: pdfInfo.pages,
+            lastModified: pdfInfo.lastModified
+          };
+          
+          setUploadedFiles(prev => [...prev, newFile]);
+          setIsProcessing(false);
+          
+          toast({
+            title: "PDF processado!",
+            description: `${file.name} (${pdfInfo.size}) adicionado à biblioteca`,
+          });
+        } catch (error) {
+          setIsProcessing(false);
+          toast({
+            title: "Erro no processamento",
+            description: "Falha ao processar o PDF",
+            variant: "destructive"
+          });
+        }
       };
       
-      setUploadedFiles(prev => [...prev, newFile]);
-      setIsProcessing(false);
+      reader.onerror = () => {
+        setIsProcessing(false);
+        toast({
+          title: "Erro na leitura",
+          description: "Não foi possível ler o arquivo",
+          variant: "destructive"
+        });
+      };
       
+      reader.readAsDataURL(file);
+      
+    } catch (error) {
+      setIsProcessing(false);
       toast({
-        title: "PDF processado!",
-        description: `${file.name} adicionado à sua biblioteca`,
+        title: "Erro no upload",
+        description: "Tente novamente",
+        variant: "destructive"
       });
-    }, 1500);
+    }
   };
 
   // Função para processar texto direto
-  const processTextInput = () => {
+  const processTextInput = async () => {
     if (!textInput.trim()) {
       toast({
         title: "Texto necessário",
-        description: "Por favor, digite algum conteúdo",
+        description: "Digite algum conteúdo para processar",
         variant: "destructive"
       });
       return;
     }
 
-    const newFile = {
-      id: Date.now().toString(),
-      name: `Texto: ${textInput.substring(0, 30)}...`,
-      type: 'text' as const,
-      content: textInput,
-      uploadDate: new Date().toLocaleString()
-    };
+    setIsProcessing(true);
     
-    setUploadedFiles(prev => [...prev, newFile]);
-    setTextInput("");
-    
-    toast({
-      title: "Texto adicionado!",
-      description: "Conteúdo salvo na sua biblioteca",
-    });
+    try {
+      // Análise real do texto
+      const textStats = {
+        words: textInput.trim().split(/\s+/).length,
+        characters: textInput.length,
+        paragraphs: textInput.split('\n\n').filter(p => p.trim()).length,
+        readingTime: Math.ceil(textInput.trim().split(/\s+/).length / 200) // 200 palavras por minuto
+      };
+      
+      // Detecta se é URL, código, ou texto normal
+      let textType = "Texto";
+      if (textInput.includes('http')) textType = "URL/Link";
+      if (textInput.includes('{') || textInput.includes('function') || textInput.includes('class')) textType = "Código";
+      if (textInput.split('\n').length > 10 && textInput.length > 500) textType = "Documento";
+      
+      const newFile = {
+        id: Date.now().toString(),
+        name: `${textType}: ${textInput.substring(0, 40)}${textInput.length > 40 ? '...' : ''}`,
+        type: 'text' as const,
+        content: textInput,
+        size: `${textStats.words} palavras, ${textStats.characters} chars`,
+        uploadDate: new Date().toLocaleString(),
+        readingTime: `~${textStats.readingTime} min de leitura`,
+        paragraphs: textStats.paragraphs,
+        textType: textType
+      };
+      
+      setUploadedFiles(prev => [...prev, newFile]);
+      setTextInput("");
+      setIsProcessing(false);
+      
+      toast({
+        title: "Texto processado!",
+        description: `${textType} com ${textStats.words} palavras adicionado`,
+      });
+    } catch (error) {
+      setIsProcessing(false);
+      toast({
+        title: "Erro no processamento",
+        description: "Tente novamente",
+        variant: "destructive"
+      });
+    }
   };
 
   // Função para remover arquivo
@@ -1017,10 +1122,20 @@ export default function EduVibeEnhanced() {
                       />
                       <Button 
                         onClick={processTextInput}
-                        className="w-full bg-purple-600 hover:bg-purple-700"
+                        disabled={isProcessing}
+                        className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50"
                       >
-                        <Brain className="w-4 h-4 mr-2" />
-                        Processar IA
+                        {isProcessing ? (
+                          <div className="flex items-center">
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            Analisando...
+                          </div>
+                        ) : (
+                          <>
+                            <Brain className="w-4 h-4 mr-2" />
+                            Processar IA
+                          </>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -1055,6 +1170,9 @@ export default function EduVibeEnhanced() {
                               <p className="font-medium text-sm">{file.name}</p>
                               <p className="text-xs text-gray-600">{file.uploadDate}</p>
                               {file.size && <p className="text-xs text-gray-500">{file.size}</p>}
+                              {file.author && <p className="text-xs text-blue-600">Por: {file.author}</p>}
+                              {file.readingTime && <p className="text-xs text-purple-600">{file.readingTime}</p>}
+                              {file.pages && <p className="text-xs text-orange-600">{file.pages}</p>}
                             </div>
                           </div>
                           <div className="flex gap-2">
@@ -1074,11 +1192,28 @@ export default function EduVibeEnhanced() {
                               variant="outline" 
                               size="sm"
                               onClick={() => {
-                                setCurrentText(file.content);
-                                setShowingText(true);
+                                if (file.type === 'pdf') {
+                                  // Abre PDF em nova aba
+                                  const newWindow = window.open();
+                                  if (newWindow) {
+                                    newWindow.document.write(`
+                                      <html>
+                                        <head><title>${file.name}</title></head>
+                                        <body style="margin:0;background:#222;">
+                                          <iframe src="${file.content}" width="100%" height="100%" style="border:none;"></iframe>
+                                        </body>
+                                      </html>
+                                    `);
+                                  }
+                                } else {
+                                  setCurrentText(file.content);
+                                  setShowingText(true);
+                                }
                               }}
                             >
-                              {file.type === 'text' ? <Edit className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                              {file.type === 'text' ? <Edit className="w-4 h-4" /> : 
+                               file.type === 'pdf' ? <FileText className="w-4 h-4" /> : 
+                               <FileText className="w-4 h-4" />}
                             </Button>
                             <Button 
                               variant="outline" 
