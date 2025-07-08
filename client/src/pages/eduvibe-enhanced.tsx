@@ -143,6 +143,21 @@ Investir é fundamental para fazer seu dinheiro crescer ao longo do tempo. Neste
 };
 
 export default function EduVibeEnhanced() {
+  // Força limpeza de cache e garante que sempre carregue a versão completa
+  useEffect(() => {
+    localStorage.removeItem('eduvibe-cache');
+    localStorage.removeItem('eduvibe-version');
+    localStorage.setItem('eduvibe-version', 'enhanced');
+    
+    // Adiciona meta tag para evitar cache
+    const metaTag = document.createElement('meta');
+    metaTag.httpEquiv = 'cache-control';
+    metaTag.content = 'no-cache, no-store, must-revalidate';
+    document.head.appendChild(metaTag);
+    
+    console.log('EduVibe Enhanced - Versão completa das 6 telas carregada!');
+  }, []);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedPath, setSelectedPath] = useState<LearningPath | null>(null);
   const [userName, setUserName] = useState("");

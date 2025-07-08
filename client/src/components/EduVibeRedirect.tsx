@@ -8,7 +8,11 @@ export default function EduVibeRedirect({ fromPath }: EduVibeRedirectProps) {
   useEffect(() => {
     // Força o redirecionamento imediato
     console.log(`Redirecionando de ${fromPath || 'página'} para /eduvibe-enhanced`);
-    window.location.replace('/eduvibe-enhanced');
+    // Limpa cache antes de redirecionar
+    localStorage.removeItem('eduvibe-cache');
+    localStorage.removeItem('eduvibe-version');
+    // Usa replace para evitar loop de história
+    window.location.replace('/eduvibe-enhanced?force=true');
   }, [fromPath]);
 
   // Exibe uma mensagem de carregamento enquanto redireciona
