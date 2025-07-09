@@ -75,7 +75,7 @@ export default function EcosystemSelector() {
       subtitle: "Educação Personalizada",
       description: "Aprendizado adaptativo com IA, trilhas personalizadas e gamificação.",
       features: ["IA Adaptativa", "Trilhas Personalizadas", "Gamificação", "Analytics Avançado"],
-      metrics: "85% retenção | 150+ cursos | 12k usuários",
+      metrics: "30% retenção | 50+ cursos | 1.5k usuários",
       icon: GraduationCap,
       color: "from-blue-600 to-indigo-600", 
       route: "/edu",
@@ -129,7 +129,7 @@ export default function EcosystemSelector() {
             Ecossistema Digital
           </h1>
           <p className="text-lg md:text-2xl text-gray-300 mb-4 max-w-4xl mx-auto px-4">
-            Quatro aplicativos revolucionários que transformam vida, educação e finanças
+            Dois aplicativos revolucionários que transformam vida, educação e finanças
           </p>
           <p className="text-lg text-purple-300 mb-4">
             Fundado por Marcelo Rymer (Lelão) - Empreendedor com 20+ anos de experiência
@@ -143,21 +143,21 @@ export default function EcosystemSelector() {
             <div className="text-center">
               <div className="text-3xl font-bold text-white flex items-center gap-2">
                 <Users className="w-8 h-8 text-purple-400" />
-                50K+
+                10K-20K
               </div>
               <p className="text-gray-400">Usuários Potenciais</p>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-white flex items-center gap-2">
                 <Award className="w-8 h-8 text-blue-400" />
-                4 Apps
+                2-3 Apps
               </div>
               <p className="text-gray-400">Verticais de Mercado</p>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-white flex items-center gap-2">
                 <Zap className="w-8 h-8 text-green-400" />
-                85%
+                20-40%
               </div>
               <p className="text-gray-400">Retenção Média</p>
             </div>
@@ -295,7 +295,7 @@ export default function EcosystemSelector() {
               A Jornada Até US$ 1 Bilhão
             </h3>
             <p className="text-2xl text-gray-300 max-w-4xl mx-auto">
-              Do MVP funcional ao império digital que transformará 100 milhões de vidas
+              Do MVP funcional ao negócio sustentável que gerará impacto real e duradouro
             </p>
           </div>
 
@@ -318,12 +318,12 @@ export default function EcosystemSelector() {
                     </div>
                     <div className="space-y-3 text-gray-300">
                       <div className="flex justify-end gap-2"><span className="text-green-400">✓</span> Essentia funcionando (500 usuários beta)</div>
-                      <div className="flex justify-end gap-2"><span className="text-green-400">✓</span> EduVie MVP lançado (1.2K usuários)</div>
+                      <div className="flex justify-end gap-2"><span className="text-green-400">✓</span> EduVie MVP lançado (1.5K usuários)</div>
                       <div className="flex justify-end gap-2"><span className="text-blue-400">→</span> Flow desenvolvimento acelerado</div>
                       <div className="flex justify-end gap-2"><span className="text-blue-400">→</span> Primeira rodada R$ 500K</div>
                     </div>
                     <div className="mt-6 text-right">
-                      <div className="text-3xl font-bold text-green-400">R$ 1.2M</div>
+                      <div className="text-3xl font-bold text-green-400">R$ 150K - R$ 300K</div>
                       <div className="text-green-300">Revenue Run Rate</div>
                     </div>
                   </div>
@@ -346,13 +346,13 @@ export default function EcosystemSelector() {
                       </div>
                     </div>
                     <div className="space-y-3 text-gray-300">
-                      <div className="flex gap-2"><span className="text-blue-400">→</span> Flow lançamento público (5K usuários)</div>
+                      <div className="flex gap-2"><span className="text-blue-400">→</span> Flow lançamento público (1.5K-2K usuários)</div>
                       <div className="flex gap-2"><span className="text-blue-400">→</span> Integração completa entre apps</div>
                       <div className="flex gap-2"><span className="text-blue-400">→</span> Parcerias estratégicas (bancos/escolas)</div>
                       <div className="flex gap-2"><span className="text-blue-400">→</span> Primeira mídia nacional</div>
                     </div>
                     <div className="mt-6">
-                      <div className="text-3xl font-bold text-blue-400">15K usuários</div>
+                      <div className="text-3xl font-bold text-blue-400">3K-5K usuários</div>
                       <div className="text-blue-300">Base ativa total</div>
                     </div>
                   </div>
@@ -372,12 +372,12 @@ export default function EcosystemSelector() {
                     </div>
                     <div className="space-y-3 text-gray-300">
                       <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> Flow Kids revoluciona mercado infantil</div>
-                      <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> 100K usuários pagantes</div>
+                      <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> 15K-30K usuários pagantes</div>
                       <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> Série A: R$ 15M</div>
                       <div className="flex justify-end gap-2"><span className="text-purple-400">→</span> Expansão LATAM</div>
                     </div>
                     <div className="mt-6 text-right">
-                      <div className="text-3xl font-bold text-purple-400">R$ 50M</div>
+                      <div className="text-3xl font-bold text-purple-400">R$ 20M - R$ 35M</div>
                       <div className="text-purple-300">Valuation</div>
                     </div>
                   </div>
@@ -400,10 +400,10 @@ export default function EcosystemSelector() {
                       </div>
                     </div>
                     <div className="space-y-3 text-gray-300">
-                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> 10M+ usuários globalmente</div>
+                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> 1M-3M+ usuários globalmente</div>
                       <div className="flex gap-2"><span className="text-orange-400">🌟</span> IPO ou aquisição estratégica</div>
                       <div className="flex gap-2"><span className="text-orange-400">🌟</span> Expandimos para IA, Saúde, Sustentabilidade</div>
-                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> Transformamos 100M de vidas</div>
+                      <div className="flex gap-2"><span className="text-orange-400">🌟</span> Impacto qualitativo significativo em vidas</div>
                     </div>
                     <div className="mt-6">
                       <div className="text-4xl font-bold text-orange-400 animate-pulse">US$ 1B+</div>
@@ -461,7 +461,7 @@ export default function EcosystemSelector() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-2xl font-bold text-purple-300">R$ 2.5M</div>
+                <div className="text-2xl font-bold text-purple-300">R$ 1.5M - R$ 2.0M</div>
                 <p className="text-gray-400">Valuation Proposto</p>
               </div>
               <div>
@@ -469,7 +469,7 @@ export default function EcosystemSelector() {
                 <p className="text-gray-400">Projeção 24 meses</p>
               </div>
               <div>
-                <div className="text-2xl font-bold text-blue-300">Q4 2025</div>
+                <div className="text-2xl font-bold text-blue-300">Q2-Q4 2026</div>
                 <p className="text-gray-400">Break-even Point</p>
               </div>
             </div>
