@@ -39,6 +39,7 @@ export default function EduVibeSimple() {
   const [currentQuiz, setCurrentQuiz] = useState<any>(null);
   const [quizScore, setQuizScore] = useState(0);
   const [totalQuizzes, setTotalQuizzes] = useState(0);
+  const [quizResult, setQuizResult] = useState({ message: '', color: '', show: false });
   const { toast } = useToast();
 
   // Salva automaticamente no localStorage
@@ -474,18 +475,31 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
       'dificil': 'red', 'baixo': 'red'
     };
 
+    // Atualiza estatísticas
     setTotalQuizzes(prev => prev + 1);
     if (['entendi', 'alto', 'muito', 'normal'].includes(answerId)) {
       setQuizScore(prev => prev + 1);
     }
 
-    toast({
-      title: responses[answerId] || "Obrigado pelo feedback!",
-      description: `Quiz ${totalQuizzes + 1} concluído!`,
+    // MOSTRA RESULTADO DO QUIZ IMEDIATAMENTE
+    const feedbackMessage = responses[answerId] || "Obrigado pelo feedback!";
+    setQuizResult({
+      message: feedbackMessage,
+      color: colors[answerId] || 'blue',
+      show: true
     });
 
-    setShowQuiz(false);
-    setCurrentQuiz(null);
+    // Esconde o quiz após mostrar resultado
+    setTimeout(() => {
+      setShowQuiz(false);
+      setCurrentQuiz(null);
+      setQuizResult({ message: '', color: '', show: false });
+    }, 3000); // Mostra resultado por 3 segundos
+
+    toast({
+      title: feedbackMessage,
+      description: `Quiz ${totalQuizzes + 1} concluído!`,
+    });
   };
 
   // Função para iniciar quiz após análise
@@ -1023,57 +1037,102 @@ ${file.analysis.practiceExercises ? file.analysis.practiceExercises.map((exercis
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 animate-in fade-in duration-300">
               <div className="p-6">
-                <div className="text-center mb-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">🎯</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">
-                    {currentQuiz.question}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Sobre: {currentQuiz.fileName.substring(0, 50)}...
-                  </p>
-                </div>
+                {!quizResult.show ? (
+                  <>
+                    {/* QUIZ NORMAL */}
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                        <span className="text-2xl">🎯</span>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">
+                        {currentQuiz.question}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        Sobre: {currentQuiz.fileName.substring(0, 50)}...
+                      </p>
+                    </div>
 
-                <div className="space-y-3 mb-6">
-                  {currentQuiz.options.map((option: any) => (
+                    <div className="space-y-3 mb-6">
+                      {currentQuiz.options.map((option: any) => (
+                        <Button
+                          key={option.id}
+                          onClick={() => handleQuizAnswer(option.id)}
+                          variant="outline"
+                          className={`w-full p-4 h-auto text-left justify-start transition-all duration-200 ${
+                            option.color === 'green' 
+                              ? 'hover:bg-green-50 hover:border-green-300 hover:text-green-700'
+                              : option.color === 'yellow'
+                              ? 'hover:bg-yellow-50 hover:border-yellow-300 hover:text-yellow-700'
+                              : option.color === 'red'
+                              ? 'hover:bg-red-50 hover:border-red-300 hover:text-red-700'
+                              : 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+                          }`}
+                        >
+                          <span className="text-left leading-relaxed">
+                            {option.text}
+                          </span>
+                        </Button>
+                      ))}
+                    </div>
+
+                    <div className="flex justify-between items-center text-xs text-gray-500">
+                      <span>Progresso de aprendizado</span>
+                      <span>Quiz {totalQuizzes + 1}</span>
+                    </div>
+
                     <Button
-                      key={option.id}
-                      onClick={() => handleQuizAnswer(option.id)}
-                      variant="outline"
-                      className={`w-full p-4 h-auto text-left justify-start transition-all duration-200 ${
-                        option.color === 'green' 
-                          ? 'hover:bg-green-50 hover:border-green-300 hover:text-green-700'
-                          : option.color === 'yellow'
-                          ? 'hover:bg-yellow-50 hover:border-yellow-300 hover:text-yellow-700'
-                          : option.color === 'red'
-                          ? 'hover:bg-red-50 hover:border-red-300 hover:text-red-700'
-                          : 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
-                      }`}
+                      onClick={() => {
+                        setShowQuiz(false);
+                        setCurrentQuiz(null);
+                      }}
+                      variant="ghost"
+                      size="sm"
+                      className="w-full mt-4 text-gray-600 hover:text-gray-800"
                     >
-                      <span className="text-left leading-relaxed">
-                        {option.text}
-                      </span>
+                      Pular por agora
                     </Button>
-                  ))}
-                </div>
-
-                <div className="flex justify-between items-center text-xs text-gray-500">
-                  <span>Progresso de aprendizado</span>
-                  <span>Quiz {totalQuizzes + 1}</span>
-                </div>
-
-                <Button
-                  onClick={() => {
-                    setShowQuiz(false);
-                    setCurrentQuiz(null);
-                  }}
-                  variant="ghost"
-                  size="sm"
-                  className="w-full mt-4 text-gray-600 hover:text-gray-800"
-                >
-                  Pular por agora
-                </Button>
+                  </>
+                ) : (
+                  <>
+                    {/* RESULTADO DO QUIZ */}
+                    <div className="text-center">
+                      <div className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
+                        quizResult.color === 'green' ? 'bg-gradient-to-br from-green-400 to-green-600' :
+                        quizResult.color === 'yellow' ? 'bg-gradient-to-br from-yellow-400 to-yellow-600' :
+                        quizResult.color === 'red' ? 'bg-gradient-to-br from-red-400 to-red-600' :
+                        'bg-gradient-to-br from-blue-400 to-blue-600'
+                      }`}>
+                        <span className="text-3xl">
+                          {quizResult.color === 'green' ? '🎉' :
+                           quizResult.color === 'yellow' ? '📚' :
+                           quizResult.color === 'red' ? '💡' : '🚀'}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                        {quizResult.message}
+                      </h3>
+                      
+                      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                        <p className="text-sm text-gray-600 mb-2">
+                          ✅ Quiz {totalQuizzes} concluído!
+                        </p>
+                        <div className="flex justify-center gap-6 text-xs">
+                          <span className="text-blue-600">
+                            Total: {totalQuizzes} quizzes
+                          </span>
+                          <span className="text-green-600">
+                            Acertos: {Math.round((quizScore / totalQuizzes) * 100)}%
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mb-4">
+                        Continue aprendendo para melhorar ainda mais!
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
