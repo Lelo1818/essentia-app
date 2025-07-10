@@ -197,23 +197,21 @@ export default function EduVibeEnhanced() {
     content: string;
     size?: string;
     uploadDate: string;
+    analysis?: any;
+    readingTime?: string;
+    author?: string;
+    pages?: string;
   }>>([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [textInput, setTextInput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
 
-  // Força refresh de cache para mobile/desktop
+  // Simplificado para melhor performance
   useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.httpEquiv = 'Cache-Control';
-    meta.content = 'no-cache, no-store, must-revalidate';
-    document.head.appendChild(meta);
-    
-    // Força reload da aplicação
-    if (window.location.search.indexOf('refreshed=true') === -1) {
-      window.location.search += (window.location.search ? '&' : '?') + 'refreshed=true';
-    }
+    // Remove meta de cache anterior se existir
+    const existingMeta = document.querySelector('meta[http-equiv="Cache-Control"]');
+    if (existingMeta) existingMeta.remove();
   }, []);
 
   // Função para gerar trilha baseada no objetivo escolhido
@@ -1139,9 +1137,8 @@ export default function EduVibeEnhanced() {
                   <p className="text-purple-100">IA real conectada - Teste com qualquer texto</p>
                 </div>
               </div>
+              <AITextAnalyzer className="bg-white rounded-lg p-4" />
             </div>
-            
-            <AITextAnalyzer />
 
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Coluna 1: Janelas de Input */}
@@ -1222,17 +1219,7 @@ export default function EduVibeEnhanced() {
                     </div>
                   </div>
 
-                  {/* Análise de Texto com IA */}
-                  <div className="p-4 border-2 border-dashed border-purple-300 rounded-lg hover:border-purple-500 transition-colors">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Zap className="w-8 h-8 text-purple-600" />
-                      <div>
-                        <h3 className="font-bold text-gray-800">Análise Inteligente</h3>
-                        <p className="text-sm text-gray-600">IA real para estudos</p>
-                      </div>
-                    </div>
-                    <AITextAnalyzer className="border-0 p-0" />
-                  </div>
+
                 </CardContent>
               </Card>
             </div>
