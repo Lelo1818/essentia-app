@@ -51,6 +51,12 @@ function getAreaSpecificInstructions(area: string): string {
       return "Foque em metodologias pedagógicas, teorias de aprendizagem e práticas educativas. Sugira técnicas de ensino e avaliação.";
     case 'economia':
       return "Analise conceitos econômicos, indicadores financeiros e impactos socioeconômicos. Sugira análises de mercado e estudos de caso.";
+    case 'tecnologia':
+      return "Explore inovações tecnológicas, desenvolvimento de software, tendências digitais e impactos da tecnologia na sociedade.";
+    case 'saude':
+      return "Aborde conceitos médicos, práticas de saúde pública, bem-estar e prevenção. Sugira aplicações práticas na área da saúde.";
+    case 'negocios':
+      return "Analise estratégias empresariais, gestão, empreendedorismo e desenvolvimento de negócios. Foque em casos práticos e aplicações.";
     case 'outros':
       return "Aplique uma abordagem interdisciplinar, conectando conceitos de diferentes áreas do conhecimento.";
     default:
