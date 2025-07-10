@@ -129,7 +129,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen bg-gray-50">
-          <Router />
+          <Navigation />
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
+            <Router />
+          </main>
+          <MobileNavigation />
           <Toaster />
           
           {/* Mobile Touch Optimization */}

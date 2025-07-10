@@ -118,23 +118,6 @@ export default function DashboardUnificado() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <style>
-        {`
-          /* Dashboard isolation */
-          #dashboard-unificado {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
-            z-index: 9999 !important;
-            background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 50%, #eef2ff 100%) !important;
-            overflow-y: auto !important;
-          }
-        `}
-      </style>
-
-      <div id="dashboard-unificado" className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
         {/* Header Principal */}
         <div className="max-w-7xl mx-auto mb-8">
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
@@ -255,19 +238,35 @@ export default function DashboardUnificado() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <Button variant="secondary" className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0">
+                <Button 
+                  variant="secondary" 
+                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  onClick={() => window.location.href = '/flow'}
+                >
                   <DollarSign className="w-6 h-6" />
                   <span className="text-sm">Nova Receita</span>
                 </Button>
-                <Button variant="secondary" className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0">
+                <Button 
+                  variant="secondary" 
+                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  onClick={() => window.location.href = '/eduvibe'}
+                >
                   <BookOpen className="w-6 h-6" />
                   <span className="text-sm">Continuar Curso</span>
                 </Button>
-                <Button variant="secondary" className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0">
+                <Button 
+                  variant="secondary" 
+                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  onClick={() => window.location.href = '/purpose'}
+                >
                   <Heart className="w-6 h-6" />
                   <span className="text-sm">Ritual Diário</span>
                 </Button>
-                <Button variant="secondary" className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0">
+                <Button 
+                  variant="secondary" 
+                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  onClick={() => window.location.href = '/flow-kids'}
+                >
                   <Users className="w-6 h-6" />
                   <span className="text-sm">Ver Progresso Kids</span>
                 </Button>
@@ -275,9 +274,6 @@ export default function DashboardUnificado() {
             </CardContent>
           </Card>
         </div>
-
-
       </div>
-    </div>
   );
 }
