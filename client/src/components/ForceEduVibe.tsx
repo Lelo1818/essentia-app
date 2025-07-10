@@ -6,11 +6,8 @@ export default function ForceEduVibe() {
     localStorage.clear();
     sessionStorage.clear();
     
-    // FORÇA NAVEGAÇÃO
-    if (window.location.pathname === '/' || window.location.pathname === '/dashboard') {
-      console.log('FORÇANDO REDIRECIONAMENTO PARA EDUVIBE');
-      window.location.replace('/eduvibe-enhanced?forced=true&t=' + Date.now());
-    }
+    // DESABILITADO - Não força mais redirecionamento
+    console.log('ForceEduVibe - DESABILITADO');
   }, []);
 
   return (
