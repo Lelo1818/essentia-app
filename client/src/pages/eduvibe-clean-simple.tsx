@@ -4,14 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Download, FileText, Video, Brain, X, BarChart3, Upload, Link, Edit, BookOpen, TrendingUp, Eye, AlertTriangle } from "lucide-react";
+import { Download, FileText, Video, Brain, X, BarChart3, Upload, Link, Edit, BookOpen, TrendingUp, Eye, AlertTriangle, Camera } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function EduVibeCleanSimple() {
   const [uploadedFiles, setUploadedFiles] = useState<Array<{
     id: string;
     name: string;
-    type: 'youtube' | 'pdf' | 'text';
+    type: 'youtube' | 'pdf' | 'text' | 'camera';
     content: string;
     size?: string;
     uploadDate: string;
@@ -295,6 +295,151 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
       
       toast({
         title: "Erro na análise",
+        description: "Tente novamente",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Função para simular captura de câmera/foto
+  const simulateCamera = async () => {
+    setIsProcessing(true);
+    
+    try {
+      // Simula tempo de captura
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Conteúdo simulado de uma página de livro
+      const bookPages = [
+        `📖 CAPÍTULO 3: ESTRATÉGIAS DE APRENDIZADO EFICAZ
+
+O aprendizado ativo é uma metodologia que coloca o estudante no centro do processo educativo, diferindo da abordagem tradicional onde o professor apenas transmite informações passivamente.
+
+PRINCÍPIOS FUNDAMENTAIS:
+• Engajamento ativo do estudante
+• Construção colaborativa do conhecimento  
+• Reflexão crítica sobre o conteúdo
+• Aplicação prática dos conceitos
+
+A neurociência comprova que quando o cérebro está ativamente engajado, a retenção de informações aumenta significativamente. Estudos mostram que a memorização passiva retém apenas 10% do conteúdo, enquanto a prática ativa pode chegar a 90%.
+
+TÉCNICAS COMPROVADAS:
+1. Técnica Pomodoro para gestão de tempo
+2. Mapas mentais para visualização
+3. Ensino para outros (método Feynman)
+4. Revisão espaçada
+5. Auto-questionamento socrático`,
+
+        `📚 GESTÃO FINANCEIRA PESSOAL - CAPÍTULO 7
+
+A educação financeira é um pilar fundamental para a construção de patrimônio e segurança econômica familiar. No Brasil, apenas 35% da população possui conhecimentos básicos sobre finanças.
+
+ORÇAMENTO DOMÉSTICO:
+A regra 50-30-20 é amplamente aceita:
+• 50% - Gastos essenciais (moradia, alimentação)
+• 30% - Gastos pessoais (lazer, hobbies)  
+• 20% - Poupança e investimentos
+
+INVESTIMENTOS BÁSICOS:
+1. Poupança (baixo risco, baixo retorno)
+2. CDB (Certificado de Depósito Bancário)
+3. Tesouro Direto (títulos públicos)
+4. Fundos de investimento
+5. Ações (maior risco, maior potencial)
+
+O importante é começar cedo e ser consistente. Investir R$ 100 mensais aos 25 anos pode resultar em mais de R$ 500.000 aos 65 anos com juros compostos.`,
+
+        `🧠 NEUROCIÊNCIA E TECNOLOGIA - SEÇÃO 4.2
+
+A digitalização está transformando nossos padrões cognitivos de forma sem precedentes. Pesquisas recentes indicam mudanças significativas na capacidade de atenção sustentada.
+
+IMPACTOS OBSERVADOS:
+• Redução da atenção de 12 para 8 segundos
+• Aumento de 40% na velocidade de processamento
+• Fragmentação do foco cognitivo
+• Desenvolvimento de pensamento multilinear
+
+NEUROPLASTICIDADE DIGITAL:
+O cérebro se adapta constantemente aos estímulos tecnológicos. Áreas como o córtex pré-frontal mostram atividade aumentada em usuários frequentes de dispositivos.
+
+ESTRATÉGIAS DE EQUILÍBRIO:
+1. Pausas digitais regulares
+2. Prática de mindfulness
+3. Exercícios de atenção plena
+4. Leitura linear (livros físicos)
+5. Meditação 10-15 min/dia
+
+A chave está no uso consciente da tecnologia como ferramenta, não como substituto do pensamento crítico.`
+      ];
+      
+      const randomBook = bookPages[Math.floor(Math.random() * bookPages.length)];
+      
+      // Chama a IA real para analisar o texto capturado
+      let realAnalysis = null;
+      try {
+        const response = await fetch('/api/ai/analyze-text', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text: randomBook,
+            studyArea: studyArea || 'geral',
+            context: `Análise de texto capturado via câmera de página de livro na área de ${studyArea || 'estudos gerais'}.`
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          realAnalysis = result.analysis;
+        }
+      } catch (error) {
+        console.log("Erro na análise IA, usando conteúdo base");
+      }
+      
+      const words = randomBook.trim().split(/\s+/).length;
+      const readingTime = Math.ceil(words / 200);
+      
+      const newFile = {
+        id: Date.now().toString(),
+        name: `📸 Página Capturada - ${studyArea || 'Livro Geral'}`,
+        type: 'camera' as const,
+        content: randomBook,
+        size: `${words} palavras escaneadas`,
+        uploadDate: new Date().toLocaleString(),
+        readingTime: `~${readingTime} min de leitura`,
+        author: "Captura IA EduVibe",
+        analysis: realAnalysis || {
+          summary: `Página de livro capturada e processada pela IA EduVibe. Conteúdo educativo extraído automaticamente através de simulação de OCR inteligente, oferecendo material estruturado para estudo na área de ${studyArea || 'conhecimento geral'}.`,
+          studySuggestions: [
+            "Fazer resumos dos conceitos principais identificados na página",
+            "Criar conexões com conhecimentos prévios sobre o tema",
+            "Pesquisar referências adicionais mencionadas no texto",
+            "Praticar exercícios relacionados aos tópicos apresentados",
+            "Compartilhar aprendizados em grupos de estudo"
+          ],
+          practiceExercises: [
+            "Elaborar um mapa mental baseado nos pontos principais",
+            "Formular 3 perguntas críticas sobre o conteúdo",
+            "Criar exemplos práticos dos conceitos apresentados",
+            "Redigir um resumo de 2 parágrafos com suas palavras",
+            "Identificar como aplicar esse conhecimento no cotidiano"
+          ]
+        }
+      };
+
+      setUploadedFiles(prev => [...prev, newFile]);
+      setIsProcessing(false);
+      
+      // Incrementa contador de análises
+      setTotalAnalysis(prev => prev + 1);
+      
+      toast({
+        title: realAnalysis ? "📸 Foto analisada com IA!" : "📖 Página capturada!",
+        description: realAnalysis ? "Texto extraído e analisado automaticamente" : "Conteúdo processado via OCR simulado",
+      });
+    } catch (error) {
+      setIsProcessing(false);
+      toast({
+        title: "Erro na captura",
         description: "Tente novamente",
         variant: "destructive"
       });
@@ -658,6 +803,57 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                 </div>
               </CardContent>
             </Card>
+
+            {/* 4. CÂMERA/FOTO (QUARTO) */}
+            <Card className="bg-gradient-to-br from-purple-50 to-pink-50 shadow-xl border-2 border-purple-200">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Camera className="w-6 h-6 mr-2 text-purple-600" />
+                  📸 Captura de Página
+                </CardTitle>
+                <p className="text-sm text-gray-600 mt-1">
+                  Simule fotografar páginas de livros e documentos
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {studyArea && (
+                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-3 rounded-lg border-2 border-purple-200">
+                      <p className="text-sm text-purple-800 flex items-center">
+                        <span className="w-2 h-2 bg-purple-600 rounded-full mr-2"></span>
+                        📚 Área: <span className="font-semibold capitalize ml-1">{studyArea}</span>
+                      </p>
+                    </div>
+                  )}
+                  <div className="border-2 border-dashed border-purple-300 rounded-lg p-8 text-center bg-purple-25">
+                    <Camera className="w-8 h-8 text-purple-500 mx-auto mb-2" />
+                    <p className="text-sm text-purple-700 font-medium mb-1">
+                      Modo Simulação Ativado
+                    </p>
+                    <p className="text-xs text-purple-600 mb-4">
+                      Capture páginas de livros automaticamente
+                    </p>
+                  </div>
+                  <Button 
+                    onClick={simulateCamera}
+                    disabled={isProcessing}
+                    className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-gray-400 disabled:to-gray-500"
+                  >
+                    {isProcessing ? (
+                      <>
+                        <span className="animate-spin mr-2">🔄</span>
+                        Capturando página...
+                      </>
+                    ) : (
+                      <>
+                        <Camera className="w-4 h-4 mr-2" />
+                        📖 Capturar Página
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Seção de Biblioteca */}
@@ -697,6 +893,7 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                               {file.type === 'youtube' && <Video className="w-4 h-4 text-red-500" />}
                               {file.type === 'pdf' && <FileText className="w-4 h-4 text-blue-500" />}
                               {file.type === 'text' && <Edit className="w-4 h-4 text-green-500" />}
+                              {file.type === 'camera' && <Camera className="w-4 h-4 text-purple-500" />}
                               <h4 className="font-medium text-sm text-gray-800 truncate">
                                 {file.name}
                               </h4>
