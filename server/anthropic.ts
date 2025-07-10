@@ -36,33 +36,27 @@ export async function analyzeTextWithAI(inputText: string, studyArea?: string, c
       const youtubeId = extractYouTubeId(inputText);
       console.log("📺 YouTube ID extraído:", youtubeId);
       
-      // Para YouTube, instruir a IA a analisar baseado no ID específico
+      // Para YouTube, criar análise educativa baseada no contexto
       prompt = `
-Você precisa analisar este vídeo ESPECÍFICO do YouTube:
+Baseado nesta URL do YouTube, crie uma análise educativa útil:
 
 URL: ${inputText}
 ID DO VÍDEO: ${youtubeId}
+ÁREA DE ESTUDO: ${studyArea || 'geral'}
 
-INSTRUÇÕES CRÍTICAS:
-- Este é um vídeo REAL no YouTube com ID específico: ${youtubeId}
-- NÃO analise vídeos genéricos sobre matemática ou pedagogia
-- Baseie sua análise no conteúdo que seria realmente encontrado neste ID específico
-- Se não souber o conteúdo exato, admita isso e forneça uma análise baseada no ID
+CONTEXTO: Usuário quer analisar este vídeo específico para fins educativos.
 
-Se você reconhecer este ID específico ou puder inferir o conteúdo real, forneça:
+Como não tenho acesso direto ao conteúdo, forneça uma análise educativa robusta baseada no que seria uma boa metodologia para qualquer vídeo educativo desta URL:
 
-1. **RESUMO ESPECÍFICO**: Conteúdo real deste vídeo (máximo 250 palavras)
-2. **SUGESTÕES DE ESTUDO**: 5 sugestões baseadas no tema real
-3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios relacionados ao conteúdo específico
+1. **RESUMO EDUCATIVO**: Como abordar de forma eficaz o estudo de vídeos educativos online, com foco em extração de conhecimento e retenção de informações.
 
-Se não reconhecer o ID específico, responda:
-{
-  "summary": "Vídeo do YouTube com ID ${youtubeId}. Não posso fornecer análise específica sem acesso ao conteúdo real do vídeo.",
-  "studySuggestions": ["Assistir ao vídeo completo", "Fazer anotações durante a visualização", "Pesquisar sobre o canal que publicou", "Verificar comentários para insights adicionais", "Buscar vídeos relacionados do mesmo autor"],
-  "practiceExercises": ["Resumir o vídeo em suas próprias palavras", "Identificar 3 pontos principais", "Criar perguntas sobre o conteúdo", "Discutir o tema com outras pessoas", "Aplicar os conceitos em exemplos práticos"]
-}
+2. **SUGESTÕES DE ESTUDO**: 5 técnicas comprovadas para maximizar o aprendizado ao assistir vídeos educativos.
 
-Responda APENAS com JSON válido.
+3. **EXERCÍCIOS PRÁTICOS**: 5 atividades concretas para aplicar e fixar o conhecimento obtido de vídeos.
+
+Importante: Foque em metodologias de aprendizado eficaz, não no conteúdo específico desconhecido.
+
+Responda em JSON com as chaves: summary, studySuggestions, practiceExercises
 `;
     } else {
       const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";

@@ -705,31 +705,31 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                                   // MOSTRA ANÁLISE REAL DA IA QUE ESTÁ FUNCIONANDO
                                   console.log("🎯 ANALYSIS REAL:", file.analysis);
                                   
+                                  if (!file.analysis) {
+                                    toast({
+                                      title: "Sem análise IA",
+                                      description: "Este arquivo não possui análise da IA",
+                                      variant: "destructive"
+                                    });
+                                    return;
+                                  }
+                                  
                                   const formattedAnalysis = `
-📚 ANÁLISE ESPECÍFICA - Metodologias Ativas de Ensino - Pedagogia Moderna
+🧠 ANÁLISE INTELIGENTE DA IA EDUVIBE
 ═══════════════════════════════════════════════
 
-🎬 DADOS REAIS DO VÍDEO:
-• Título: Metodologias Ativas de Ensino - Pedagogia Moderna
-• Canal: Educação em Foco  
-• Duração: 22:15
-• Categoria: Educação
+📌 RESUMO COMPLETO:
+${file.analysis.summary}
 
-📌 RESUMO ESPECÍFICO DA IA:
-${file.analysis?.summary ? file.analysis.summary.substring(0, 500) + '...' : 'Análise sobre metodologias ativas: aprendizagem centrada no estudante, construtivismo (Piaget/Vygotsky), sala de aula invertida, uso pedagógico de tecnologia. Fundamentação científica para práticas pedagógicas modernas.'}
+📚 SUGESTÕES DE ESTUDO PERSONALIZADAS:
+${file.analysis.studySuggestions ? file.analysis.studySuggestions.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n\n') : 'Nenhuma sugestão disponível'}
 
-📘 SUGESTÕES ESPECÍFICAS DA IA:
-${file.analysis?.studySuggestions ? file.analysis.studySuggestions.slice(0, 3).map((suggestion, i) => `${i + 1}. ${suggestion.substring(0, 80)}...`).join('\n') : `1. Estude Piaget, Vygotsky e construtivismo
-2. Pesquise sala de aula invertida e PBL  
-3. Explore ferramentas tech educacionais`}
-
-💡 EXERCÍCIOS ESPECÍFICOS DA IA:
-${file.analysis?.practiceExercises ? file.analysis.practiceExercises.slice(0, 3).map((exercise, i) => `${i + 1}. ${exercise.substring(0, 70)}...`).join('\n') : `1. Plano de aula com metodologia invertida
-2. Atividade PBL colaborativa
-3. Avaliação formativa tecnológica`}
+💡 EXERCÍCIOS PRÁTICOS RECOMENDADOS:
+${file.analysis.practiceExercises ? file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n\n') : 'Nenhum exercício disponível'}
 
 ═══════════════════════════════════════════════
-✅ Análise baseada em dados reais do vídeo YouTube
+✅ Análise gerada pela IA em ${file.uploadDate}
+🔍 Tipo: ${file.type.toUpperCase()} | Área: ${studyArea || 'Geral'}
                                   `;
                                   setCurrentText(formattedAnalysis);
                                   setShowingText(true);
