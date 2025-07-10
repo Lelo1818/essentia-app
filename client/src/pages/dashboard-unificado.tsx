@@ -117,30 +117,34 @@ export default function DashboardUnificado() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6 relative overflow-hidden">
-        {/* Elementos decorativos sutis de fundo */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 p-6 relative overflow-hidden">
+        {/* Elementos decorativos coloridos de fundo */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-purple-100/30 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-gradient-to-tr from-green-100/30 to-blue-100/30 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-100/20 to-pink-100/20 rounded-full blur-2xl"></div>
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-blue-300/40 to-purple-300/40 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-gradient-to-tr from-green-300/40 to-cyan-300/40 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-300/30 to-pink-300/30 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full blur-2xl animate-pulse" style={{animationDelay: '3s'}}></div>
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-gradient-to-bl from-indigo-200/30 to-blue-200/30 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
         </div>
 
         {/* Header Principal */}
         <div className="max-w-7xl mx-auto mb-8 relative z-10">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-100/50 p-6 hover:shadow-2xl transition-all duration-500">
-            <div className="flex items-center justify-between">
+          <div className="bg-gradient-to-r from-white/95 via-blue-50/95 to-purple-50/95 backdrop-blur-sm rounded-2xl shadow-xl border border-purple-200/50 p-6 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+            {/* Gradiente decorativo no header */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 via-pink-500 to-orange-500"></div>
+            <div className="flex items-center justify-between relative z-10">
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent">
                   Ecossistema Digital Flow
                 </h1>
-                <p className="text-gray-600 mt-1">Bem-vindo de volta, {userData.name}</p>
-                <div className="mt-2 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-gray-500">Sistema sincronizado</span>
+                <p className="text-gray-700 mt-2 font-medium">Bem-vindo de volta, {userData.name}</p>
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-green-500 rounded-full animate-pulse shadow-lg"></div>
+                  <span className="text-sm text-gray-600 font-medium">Sistema sincronizado</span>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Badge className="bg-green-100 text-green-700 px-3 py-1 animate-bounce">
+                <Badge className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 px-4 py-2 animate-bounce shadow-md">
                   <Zap className="w-4 h-4 mr-1" />
                   Todos os sistemas ativos
                 </Badge>
@@ -155,23 +159,38 @@ export default function DashboardUnificado() {
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickStats.map((stat, index) => (
-              <Card key={index} className="group border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-xl hover:bg-white/90 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 relative overflow-hidden">
-                {/* Gradiente sutil de fundo */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-blue-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Card key={index} className="group border-0 shadow-lg bg-white/85 backdrop-blur-sm hover:shadow-xl hover:bg-white/95 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 relative overflow-hidden">
+                {/* Gradientes coloridos de fundo baseados no app */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                  stat.app === 'flow' ? 'bg-gradient-to-br from-green-100/60 to-emerald-100/60' :
+                  stat.app === 'eduvie' ? 'bg-gradient-to-br from-blue-100/60 to-cyan-100/60' :
+                  stat.app === 'purpose' ? 'bg-gradient-to-br from-purple-100/60 to-violet-100/60' :
+                  'bg-gradient-to-br from-pink-100/60 to-rose-100/60'
+                }`}></div>
                 <CardContent className="p-6 relative z-10">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 mb-1 group-hover:text-gray-700 transition-colors">{stat.title}</p>
+                      <p className="text-sm text-gray-600 mb-1 group-hover:text-gray-700 transition-colors font-medium">{stat.title}</p>
                       <p className="text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors">{stat.value}</p>
-                      <p className="text-sm text-green-600 font-medium group-hover:text-green-700 transition-colors">{stat.trend}</p>
+                      <p className={`text-sm font-semibold transition-colors ${
+                        stat.app === 'flow' ? 'text-green-600 group-hover:text-green-700' :
+                        stat.app === 'eduvie' ? 'text-blue-600 group-hover:text-blue-700' :
+                        stat.app === 'purpose' ? 'text-purple-600 group-hover:text-purple-700' :
+                        'text-pink-600 group-hover:text-pink-700'
+                      }`}>{stat.trend}</p>
                     </div>
-                    <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md group-hover:shadow-lg`}>
-                      <stat.icon className="w-6 h-6" />
+                    <div className={`w-14 h-14 rounded-xl ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg group-hover:shadow-xl`}>
+                      <stat.icon className="w-7 h-7" />
                     </div>
                   </div>
                 </CardContent>
-                {/* Barra de progresso sutil no rodapé */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 group-hover:from-blue-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-300"></div>
+                {/* Barra de progresso colorida no rodapé */}
+                <div className={`absolute bottom-0 left-0 w-full h-2 transition-all duration-300 ${
+                  stat.app === 'flow' ? 'bg-gradient-to-r from-green-400/30 via-emerald-400/30 to-green-500/30 group-hover:from-green-500/60 group-hover:via-emerald-500/60 group-hover:to-green-600/60' :
+                  stat.app === 'eduvie' ? 'bg-gradient-to-r from-blue-400/30 via-cyan-400/30 to-blue-500/30 group-hover:from-blue-500/60 group-hover:via-cyan-500/60 group-hover:to-blue-600/60' :
+                  stat.app === 'purpose' ? 'bg-gradient-to-r from-purple-400/30 via-violet-400/30 to-purple-500/30 group-hover:from-purple-500/60 group-hover:via-violet-500/60 group-hover:to-purple-600/60' :
+                  'bg-gradient-to-r from-pink-400/30 via-rose-400/30 to-pink-500/30 group-hover:from-pink-500/60 group-hover:via-rose-500/60 group-hover:to-pink-600/60'
+                }`}></div>
               </Card>
             ))}
           </div>
