@@ -1806,7 +1806,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Área de estudo:", studyArea || 'geral');
       
       // Detecta se é análise de vídeo do YouTube
+      console.log("🔍 Verificando se é URL do YouTube...");
       const youtubeMatch = text.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/);
+      console.log("YouTube match result:", youtubeMatch);
       let analysis;
       
       if (youtubeMatch) {
