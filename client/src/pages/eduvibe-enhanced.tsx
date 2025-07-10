@@ -164,26 +164,32 @@ export default function EduVibeEnhanced() {
       </Button>
     </div>
   );
-  // FORÇA ANTI-CACHE AGRESSIVO para Mobile - MANTÉM HISTÓRICO
+  // FORÇA PÁGINA EDUVIBE SEMPRE
   useEffect(() => {
     // Salva histórico antes de limpar
     const savedFiles = localStorage.getItem('eduvibe-files-history');
     
-    // Limpa outros caches problemáticos
-    localStorage.removeItem('eduvibe-cache');
-    localStorage.removeItem('eduvibe-version-old');
+    // Limpa TODO cache problemático que força dashboard financeiro
+    localStorage.clear();
     sessionStorage.clear();
     
-    // Restaura histórico
+    // Restaura APENAS histórico 
     if (savedFiles) {
       localStorage.setItem('eduvibe-files-history', savedFiles);
     }
     
-    // Define versão forçada
-    localStorage.setItem('eduvibe-version', 'enhanced-mobile-fix-v2');
-    localStorage.setItem('force-enhanced', 'true');
+    // FORÇA EDUVIBE COMO PADRÃO
+    localStorage.setItem('default-app', 'eduvibe');
+    localStorage.setItem('eduvibe-version', 'enhanced-final');
     
-    console.log('EduVibe Enhanced - MOBILE FIX V2 carregado!');
+    // Se não está na URL correta, força redirecionamento
+    if (!window.location.pathname.includes('eduvibe-enhanced')) {
+      console.log('FORÇANDO EDUVIBE - URL incorreta detectada');
+      window.location.replace('/eduvibe-enhanced?forced=true');
+      return;
+    }
+    
+    console.log('EduVibe Enhanced - VERSÃO FINAL carregada!');
   }, []);
 
   const [currentStep, setCurrentStep] = useState(0);

@@ -62,7 +62,7 @@ import Investments from "@/pages/investments";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
+      <Route path="/" component={EduVibeEnhanced} />
       <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKidsStandalone} />
@@ -77,6 +77,7 @@ function Router() {
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />
+      <Route path="/flow-dashboard" component={Dashboard} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/investor-demo" component={InvestorDemo} />
       <Route path="/mobile-test" component={MobileTest} />
