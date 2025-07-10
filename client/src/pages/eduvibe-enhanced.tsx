@@ -216,39 +216,66 @@ export default function EduVibeEnhanced() {
     }
   }, []);
 
-  const samplePath: LearningPath = {
-    id: 1,
-    title: "Fundamentos de Educação Financeira",
-    description: "Uma jornada completa para organizar sua vida financeira",
-    progress: 25,
-    difficulty: 'Iniciante',
-    estimatedTime: "2 semanas",
-    modules: [
-      {
-        id: 1,
-        title: "Entendendo o Dinheiro",
-        type: 'video',
-        completed: true,
-        content: textDatabase[1],
-        videoUrl: videoDatabase[1]
+  // Função para gerar trilha baseada no objetivo escolhido
+  const generateLearningPath = (goal: string): LearningPath => {
+    const pathsDatabase = {
+      'yoga': {
+        title: "Fundamentos do Yoga",
+        description: "Uma jornada completa para dominar as bases do yoga",
+        modules: [
+          { id: 1, title: "Respiração e Postura Básica", type: 'video' as const, content: "# Respiração no Yoga\n\nA respiração é fundamental no yoga..." },
+          { id: 2, title: "Saudação ao Sol", type: 'text' as const, content: "# Saudação ao Sol\n\nSequência básica de movimentos..." },
+          { id: 3, title: "Meditação e Relaxamento", type: 'video' as const, content: "# Meditação\n\nTécnicas de meditação para iniciantes..." }
+        ]
       },
-      {
-        id: 2,
-        title: "Criando seu Primeiro Orçamento",
-        type: 'text',
-        completed: false,
-        content: textDatabase[2]
+      'programacao': {
+        title: "Programação Web Moderna",
+        description: "Do básico ao avançado em desenvolvimento web",
+        modules: [
+          { id: 1, title: "HTML e CSS Fundamentais", type: 'video' as const, content: "# HTML Básico\n\nEstruturas básicas de HTML..." },
+          { id: 2, title: "JavaScript Essencial", type: 'text' as const, content: "# JavaScript\n\nLógica de programação com JavaScript..." },
+          { id: 3, title: "React e Projetos Práticos", type: 'video' as const, content: "# React\n\nCriando aplicações modernas..." }
+        ]
       },
-      {
-        id: 3,
-        title: "Investimentos Básicos",
-        type: 'video',
-        completed: false,
-        content: textDatabase[3],
-        videoUrl: videoDatabase[3]
+      'culinaria': {
+        title: "Arte Culinária Brasileira",
+        description: "Domine os sabores da cozinha brasileira",
+        modules: [
+          { id: 1, title: "Técnicas Básicas de Cozinha", type: 'video' as const, content: "# Técnicas Culinárias\n\nFundamentos da culinária..." },
+          { id: 2, title: "Pratos Tradicionais Brasileiros", type: 'text' as const, content: "# Culinária Brasileira\n\nReceitas tradicionais..." },
+          { id: 3, title: "Técnicas Avançadas", type: 'video' as const, content: "# Técnicas Avançadas\n\nAperfeiçoando suas habilidades..." }
+        ]
       }
-    ]
+    };
+
+    // Se não encontrar o objetivo específico, usa educação financeira como padrão
+    const selectedPath = pathsDatabase[goal.toLowerCase()] || {
+      title: "Fundamentos de Educação Financeira",
+      description: "Uma jornada completa para organizar sua vida financeira",
+      modules: [
+        { id: 1, title: "Entendendo o Dinheiro", type: 'video' as const, content: textDatabase[1] },
+        { id: 2, title: "Criando seu Primeiro Orçamento", type: 'text' as const, content: textDatabase[2] },
+        { id: 3, title: "Investimentos Básicos", type: 'video' as const, content: textDatabase[3] }
+      ]
+    };
+
+    return {
+      id: 1,
+      title: selectedPath.title,
+      description: selectedPath.description,
+      progress: 25,
+      difficulty: 'Iniciante',
+      estimatedTime: "2 semanas",
+      modules: selectedPath.modules.map(module => ({
+        ...module,
+        completed: module.id === 1,
+        videoUrl: module.type === 'video' ? videoDatabase[module.id] : undefined
+      }))
+    };
   };
+
+  // Gera a trilha baseada no objetivo do usuário
+  const samplePath = generateLearningPath(learningGoal);
 
   const showVideo = (moduleId: number) => {
     const videoUrl = videoDatabase[moduleId];

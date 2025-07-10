@@ -23,10 +23,7 @@ export default function AITextAnalyzer({ className = "" }: AITextAnalyzerProps) 
 
   const analyzeMutation = useMutation({
     mutationFn: async (text: string) => {
-      const response = await apiRequest("/api/ai/analyze-text", {
-        method: "POST",
-        body: { text }
-      });
+      const response = await apiRequest("POST", "/api/ai/analyze-text", { text });
       return response;
     },
     onSuccess: (data) => {
