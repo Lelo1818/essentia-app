@@ -41,9 +41,18 @@ export default function EduVibeSimple() {
     localStorage.setItem('eduvibe-files-history', JSON.stringify(uploadedFiles));
   }, [uploadedFiles]);
 
-  // FORÇA LIMPEZA INICIAL
+  // FORÇA LIMPEZA INICIAL E REMOVE FAIXA AZUL
   useEffect(() => {
     console.log('EduVibe Simple - CARREGADO DIRETO NA CENTRAL');
+    
+    // Remove faixa azul de deploy
+    const deployBanner = document.querySelector('[class*="deploy"], [class*="preview"], [class*="temporary"]');
+    if (deployBanner) {
+      (deployBanner as HTMLElement).style.display = 'none';
+    }
+    
+    // Força foco no conteúdo principal
+    document.body.style.background = 'linear-gradient(135deg, #f8faff 0%, #e8f2ff 100%)';
   }, []);
 
   // Função para processar YouTube
@@ -253,6 +262,29 @@ export default function EduVibeSimple() {
           <h1 className="text-4xl font-bold text-gray-800 mb-2">🎓 EduVibe</h1>
           <p className="text-lg text-gray-600">Central de Downloads e Análise IA</p>
           <p className="text-sm text-gray-500">Onde aprender não é tarefa, é experiência</p>
+          <div className="flex justify-center gap-4 mt-4">
+            <Button 
+              onClick={() => window.location.href = "/dashboard-unificado"}
+              variant="outline"
+              className="text-blue-600 border-blue-300 hover:bg-blue-50"
+            >
+              🏠 Dashboard Principal
+            </Button>
+            <Button 
+              onClick={() => window.location.href = "/flow"}
+              variant="outline"
+              className="text-green-600 border-green-300 hover:bg-green-50"
+            >
+              💰 Flow Financeiro
+            </Button>
+            <Button 
+              onClick={() => window.location.href = "/purpose"}
+              variant="outline"
+              className="text-purple-600 border-purple-300 hover:bg-purple-50"
+            >
+              🌟 Essentia
+            </Button>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
