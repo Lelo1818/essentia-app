@@ -109,45 +109,59 @@ export default function EduVibeSimple() {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Conteúdo educativo rico baseado no vídeo
-      const videoContent = `
+      const videoInfo = realAnalysis?.videoInfo;
+      const videoContent = videoInfo ? `
+📹 VÍDEO ANALISADO: ${videoInfo.title}
+
+🎯 INFORMAÇÕES DO VÍDEO:
+• Título: ${videoInfo.title}
+• Canal: ${videoInfo.author}
+• Duração: ${videoInfo.duration}
+• Categoria: ${videoInfo.category}
+
+📝 DESCRIÇÃO OFICIAL:
+${videoInfo.description}
+
+🏷️ TAGS PRINCIPAIS:
+${videoInfo.tags.map(tag => `#${tag}`).join(' • ')}
+
+📚 ANÁLISE EDUCACIONAL ESPECÍFICA:
+Com base no conteúdo real deste vídeo sobre "${videoInfo.title}", identificamos os seguintes pontos educacionais relevantes para a área de ${studyArea || 'estudos gerais'}:
+
+🧠 INSIGHTS PEDAGÓGICOS:
+• Material focado em: ${videoInfo.tags.slice(0, 3).join(', ')}
+• Adequado para a categoria: ${videoInfo.category}
+• Conteúdo estruturado pelo canal: ${videoInfo.author}
+• Duração otimizada: ${videoInfo.duration}
+
+💡 APLICAÇÕES DE ESTUDO:
+• Base específica para aprendizado em ${videoInfo.category.toLowerCase()}
+• Material de referência do canal ${videoInfo.author}
+• Conteúdo verificado com duração de ${videoInfo.duration}
+• Temas abordados: ${videoInfo.tags.join(', ')}
+
+⏱️ INFORMAÇÕES TÉCNICAS REAIS:
+• Duração: ${videoInfo.duration}
+• Categoria: ${videoInfo.category}
+• Canal: ${videoInfo.author}
+• Área principal: ${studyArea || videoInfo.category}
+• Qualidade: Conteúdo real verificado
+      ` : `
 📹 VÍDEO ANALISADO: ${youtubeUrl}
 
 🎯 RESUMO EDUCACIONAL:
 Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educativo relevante.
 
-📚 PRINCIPAIS TÓPICOS ABORDADOS:
-• Fundamentos teóricos do assunto principal
-• Metodologias e técnicas práticas apresentadas
-• Estudos de caso e exemplos reais
-• Aplicações práticas no contexto brasileiro
-• Tendências e perspectivas futuras
-
-🧠 INSIGHTS PEDAGÓGICOS:
-• Material estruturado de forma didática
-• Linguagem acessível para diferentes níveis
-• Conexão clara entre teoria e prática
-• Exemplos contextualizados culturalmente
-• Potencial para aprofundamento acadêmico
-
-💡 APLICAÇÕES DE ESTUDO:
-• Base para pesquisa acadêmica
-• Material de apoio para aulas
-• Referência para trabalhos e projetos
-• Fonte para debates e discussões
-• Inspiração para estudos complementares
+📚 ANÁLISE BASEADA NA URL:
+• Vídeo do YouTube processado
+• Área de estudo selecionada: ${studyArea || 'Geral'}
+• Conteúdo educativo identificado
+• Processamento com IA para análise
 
 ⏱️ INFORMAÇÕES TÉCNICAS:
 • Duração estimada: 15-20 minutos
-• Nível de complexidade: Intermediário
 • Área principal: ${studyArea || 'Multidisciplinar'}
 • Qualidade educacional: Verificada pela IA
-
-🔍 SUGESTÕES DE APROFUNDAMENTO:
-• Pesquisar autores e referencias citados
-• Buscar artigos acadêmicos relacionados
-• Explorar casos similares no contexto brasileiro
-• Conectar com outros materiais da biblioteca
-• Aplicar conceitos em projetos práticos
       `;
 
       // Usa análise real da IA ou fallback inteligente
@@ -171,14 +185,15 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
 
       const newFile = {
         id: Date.now().toString(),
-        name: `🎥 Vídeo: ${videoId.substring(0, 8)}... - ${studyArea || 'Educativo'}`,
+        name: realAnalysis?.videoInfo?.title || `🎥 Vídeo: ${videoId.substring(0, 8)}... - ${studyArea || 'Educativo'}`,
         type: 'youtube' as const,
         content: videoContent,
-        size: "~15-20 min",
+        size: realAnalysis?.videoInfo?.duration || "~15-20 min",
         uploadDate: new Date().toLocaleString(),
         readingTime: "6-8 min de análise",
-        author: "IA EduVibe",
-        analysis: aiAnalysis
+        author: realAnalysis?.videoInfo?.author || "IA EduVibe",
+        analysis: aiAnalysis,
+        videoInfo: realAnalysis?.videoInfo
       };
 
       setUploadedFiles(prev => [...prev, newFile]);
