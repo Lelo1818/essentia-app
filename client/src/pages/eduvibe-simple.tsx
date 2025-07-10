@@ -1065,9 +1065,13 @@ ${file.analysis.practiceExercises ? file.analysis.practiceExercises.map((exercis
                       {currentQuiz.options.map((option: any) => (
                         <Button
                           key={option.id}
-                          onClick={() => handleQuizAnswer(option.id)}
+                          onClick={() => {
+                            console.log("🖱️ CLIQUE DETECTADO no botão:", option.id, option.text);
+                            handleQuizAnswer(option.id);
+                          }}
                           variant="outline"
-                          className={`w-full p-4 h-auto text-left justify-start transition-all duration-200 ${
+                          disabled={false}
+                          className={`w-full p-4 h-auto text-left justify-start transition-all duration-200 cursor-pointer ${
                             option.color === 'green' 
                               ? 'hover:bg-green-50 hover:border-green-300 hover:text-green-700'
                               : option.color === 'yellow'
