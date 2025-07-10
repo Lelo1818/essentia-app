@@ -24,63 +24,29 @@ export interface AITextAnalysis {
 
 export async function analyzeTextWithAI(inputText: string, studyArea?: string, context?: string): Promise<AITextAnalysis> {
   try {
-    // DETECÇÃO ESPECÍFICA DE YOUTUBE - DINÂMICA
-    const isYouTubeAnalysis = inputText.includes('youtube.com') || inputText.includes('youtu.be');
+    // DETECÇÃO INTELIGENTE DE TIPOS DE CONTEÚDO
+    const linkTypes = detectLinkTypes(inputText);
     
     let prompt;
     
-    if (isYouTubeAnalysis) {
-      console.log("🎯 DETECTADO YOUTUBE NA FUNÇÃO AI - ANALISANDO URL ESPECÍFICA");
-      
-      // Extrair ID do vídeo da URL
+    if (linkTypes.youtube) {
+      console.log("🎯 DETECTADO YOUTUBE - ANÁLISE METODOLÓGICA");
       const youtubeId = extractYouTubeId(inputText);
-      console.log("📺 YouTube ID extraído:", youtubeId);
+      console.log("📺 YouTube ID:", youtubeId);
       
-      // Análise educativa real da IA para YouTube
-      prompt = `
-Analise esta URL do YouTube para fins educativos:
-
-URL: ${inputText}
-ID DO VÍDEO: ${youtubeId}
-ÁREA DE ESTUDO: ${studyArea || 'geral'}
-
-CONTEXTO IMPORTANTE:
-- Este sistema não tem acesso direto ao conteúdo do vídeo
-- Forneça uma análise educativa honesta sobre essa limitação
-- Combine transparência técnica com orientações úteis de aprendizado
-- Foque em metodologias de estudo aplicáveis a qualquer vídeo educativo
-
-INSTRUÇÕES:
-1. **RESUMO**: Explique a limitação técnica de forma educativa, mas também forneça orientações sobre como estudar vídeos educativos eficazmente (máximo 200 palavras)
-
-2. **SUGESTÕES DE ESTUDO**: 5 técnicas específicas para maximizar o aprendizado com vídeos educativos, incluindo como usar este sistema para análise real do conteúdo
-
-3. **EXERCÍCIOS PRÁTICOS**: 5 atividades práticas que podem ser aplicadas a qualquer vídeo educativo
-
-Importante: Seja transparente sobre limitações, mas útil para o aprendizado.
-
-Responda em JSON com as chaves: summary, studySuggestions, practiceExercises
-`;
+      prompt = generateYouTubePrompt(inputText, youtubeId, studyArea);
+    } else if (linkTypes.news || linkTypes.article) {
+      console.log("📰 DETECTADO ARTIGO/NOTÍCIA - ANÁLISE EDUCATIVA");
+      prompt = generateArticlePrompt(inputText, studyArea);
+    } else if (linkTypes.wikipedia) {
+      console.log("📚 DETECTADO WIKIPEDIA - ANÁLISE ACADÊMICA");
+      prompt = generateWikipediaPrompt(inputText, studyArea);
+    } else if (linkTypes.generic) {
+      console.log("🔗 DETECTADO LINK GENÉRICO - ORIENTAÇÕES");
+      prompt = generateGenericLinkPrompt(inputText, studyArea);
     } else {
-      const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
-      prompt = `
-Analise o seguinte texto em português e gere uma análise específica para a área de ${studyArea || 'estudo geral'}:
-
-${areaSpecific}
-
-1. **RESUMO PRÁTICO**: Um resumo conciso e útil dos pontos principais (máximo 200 palavras)
-2. **SUGESTÕES DE ESTUDO**: 3-5 sugestões específicas de como estudar melhor este conteúdo na área de ${studyArea || 'estudo geral'}
-3. **EXERCÍCIOS PRÁTICOS**: 3-5 exercícios ou práticas para fixar o aprendizado específicos da área
-
-${context ? `Contexto adicional: ${context}` : ''}
-
-Formate a resposta em JSON válido com as chaves: summary, studySuggestions, practiceExercises
-
-Texto para análise:
-"${inputText}"
-
-Responda APENAS com o JSON, sem texto adicional.
-`;
+      console.log("📝 TEXTO NORMAL - ANÁLISE COMPLETA");
+      prompt = generateTextPrompt(inputText, studyArea, context);
     }
 
 function getAreaSpecificInstructions(area: string): string {
@@ -145,11 +111,129 @@ function getAreaSpecificInstructions(area: string): string {
   }
 }
 
-// Função auxiliar para extrair ID do YouTube
+// FUNÇÕES DE DETECÇÃO E ANÁLISE INTELIGENTE
+
+function detectLinkTypes(text: string) {
+  const hasUrl = /https?:\/\/[^\s]+/.test(text);
+  
+  return {
+    youtube: text.includes('youtube.com') || text.includes('youtu.be'),
+    wikipedia: text.includes('wikipedia.org') || text.includes('wiki'),
+    news: text.includes('folha') || text.includes('estadao') || text.includes('globo') || text.includes('g1.globo') || text.includes('uol') || text.includes('bbc') || text.includes('cnn'),
+    article: hasUrl && (text.includes('medium.com') || text.includes('blog') || text.includes('artigo')),
+    generic: hasUrl && !text.includes('youtube') && !text.includes('wikipedia'),
+    isLink: hasUrl
+  };
+}
+
 function extractYouTubeId(url: string): string | null {
   const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
   const match = url.match(regex);
   return match ? match[1] : null;
+}
+
+function generateYouTubePrompt(url: string, videoId: string, studyArea: string) {
+  return `
+ANÁLISE EDUCATIVA DE VÍDEO YOUTUBE
+
+URL: ${url}
+ID: ${videoId}
+ÁREA: ${studyArea || 'geral'}
+
+LIMITAÇÃO TÉCNICA RECONHECIDA:
+Este sistema não acessa o conteúdo específico do YouTube, mas pode fornecer metodologias valiosas de aprendizado.
+
+INSTRUÇÕES:
+1. **RESUMO**: Explique honestamente a limitação e forneça metodologias eficazes para estudo de vídeos educativos na área de ${studyArea || 'estudos gerais'}
+
+2. **SUGESTÕES DE ESTUDO**: 5 técnicas específicas para maximizar aprendizado com vídeos, incluindo uso deste sistema
+
+3. **EXERCÍCIOS PRÁTICOS**: 5 atividades aplicáveis a qualquer conteúdo educativo em vídeo
+
+Responda em JSON: {summary, studySuggestions, practiceExercises}
+`;
+}
+
+function generateArticlePrompt(url: string, studyArea: string) {
+  return `
+ANÁLISE DE ARTIGO/NOTÍCIA
+
+URL: ${url}
+ÁREA: ${studyArea || 'geral'}
+
+CONTEXTO: Este sistema detectou um link de artigo/notícia mas não pode acessar o conteúdo diretamente.
+
+INSTRUÇÕES:
+1. **RESUMO**: Explique a limitação e forneça orientações sobre análise crítica de artigos na área de ${studyArea || 'estudos gerais'}
+
+2. **SUGESTÕES DE ESTUDO**: 5 técnicas para análise eficaz de artigos e notícias
+
+3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios de pensamento crítico aplicáveis a artigos
+
+Responda em JSON: {summary, studySuggestions, practiceExercises}
+`;
+}
+
+function generateWikipediaPrompt(url: string, studyArea: string) {
+  return `
+ANÁLISE DE CONTEÚDO WIKIPEDIA
+
+URL: ${url}
+ÁREA: ${studyArea || 'geral'}
+
+CONTEXTO: Detectado link da Wikipedia - fonte acadêmica reconhecida.
+
+INSTRUÇÕES:
+1. **RESUMO**: Forneça metodologias para uso eficaz da Wikipedia como fonte de estudo na área de ${studyArea || 'estudos gerais'}
+
+2. **SUGESTÕES DE ESTUDO**: 5 técnicas para pesquisa acadêmica eficaz usando Wikipedia
+
+3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios para verificação e aprofundamento de informações
+
+Responda em JSON: {summary, studySuggestions, practiceExercises}
+`;
+}
+
+function generateGenericLinkPrompt(url: string, studyArea: string) {
+  return `
+ANÁLISE DE LINK EDUCATIVO
+
+URL: ${url}
+ÁREA: ${studyArea || 'geral'}
+
+CONTEXTO: Link genérico detectado - orientações metodológicas aplicáveis.
+
+INSTRUÇÕES:
+1. **RESUMO**: Metodologias para análise eficaz de conteúdo online na área de ${studyArea || 'estudos gerais'}
+
+2. **SUGESTÕES DE ESTUDO**: 5 técnicas para avaliação e estudo de fontes online
+
+3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios para verificação de credibilidade e extração de conhecimento
+
+Responda em JSON: {summary, studySuggestions, practiceExercises}
+`;
+}
+
+function generateTextPrompt(text: string, studyArea: string, context: string) {
+  const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
+  return `
+Analise o seguinte texto em português e gere uma análise específica para a área de ${studyArea || 'estudo geral'}:
+
+${areaSpecific}
+
+1. **RESUMO PRÁTICO**: Um resumo conciso e útil dos pontos principais (máximo 200 palavras)
+2. **SUGESTÕES DE ESTUDO**: 3-5 sugestões específicas de como estudar melhor este conteúdo na área de ${studyArea || 'estudo geral'}
+3. **EXERCÍCIOS PRÁTICOS**: 3-5 exercícios ou práticas para fixar o aprendizado específicos da área
+
+${context ? `Contexto adicional: ${context}` : ''}
+
+Formate a resposta em JSON válido com as chaves: summary, studySuggestions, practiceExercises
+
+Texto para análise:
+"${text}"
+
+Responda APENAS com o JSON, sem texto adicional.
+`;
 }
 
 // Função honesta sobre limitações do sistema

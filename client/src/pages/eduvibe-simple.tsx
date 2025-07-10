@@ -513,41 +513,56 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Seção de Upload */}
+          {/* Seção de Upload - REORGANIZADA */}
           <div className="space-y-6">
-            {/* YouTube */}
-            <Card className="bg-gradient-to-br from-red-50 to-orange-50 shadow-xl border-2 border-red-200">
+            {/* 1. Análise de Texto - PRIMEIRO LUGAR */}
+            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 shadow-xl border-2 border-blue-200">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Video className="w-6 h-6 mr-2 text-red-600" />
-                  📹 Download YouTube
+                  <Brain className="w-6 h-6 mr-2 text-blue-600" />
+                  🧠 Análise IA de Texto
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  Baixe vídeos educativos e analise com IA
+                  Cole textos, artigos ou URLs para análise inteligente
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <Input
-                    placeholder="Cole o link do YouTube aqui... (ex: https://youtube.com/watch?v=...)"
-                    value={youtubeUrl}
-                    onChange={(e) => setYoutubeUrl(e.target.value)}
-                    className="border-red-200 focus:border-red-400"
+                  {studyArea && (
+                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border-2 border-blue-200">
+                      <p className="text-sm text-blue-800 flex items-center">
+                        <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+                        📚 Área: <span className="font-semibold capitalize ml-1">{studyArea}</span>
+                      </p>
+                    </div>
+                  )}
+                  <Textarea
+                    placeholder="Cole qualquer texto, artigo, notícia ou conteúdo educativo aqui para análise com IA..."
+                    value={textInput}
+                    onChange={(e) => setTextInput(e.target.value)}
+                    rows={4}
+                    disabled={false}
+                    className="border-blue-200 focus:border-blue-400"
                   />
                   <Button 
-                    onClick={processYouTubeVideo}
-                    disabled={isProcessing || !youtubeUrl}
-                    className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-400 disabled:to-gray-500"
+                    onClick={processText}
+                    disabled={isProcessing || !textInput.trim()}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-400 disabled:to-gray-500"
                   >
                     {isProcessing ? (
                       <>
-                        <span className="animate-spin mr-2">⏳</span>
-                        Processando...
+                        <span className="animate-spin mr-2">🔄</span>
+                        Analisando com IA...
+                      </>
+                    ) : !textInput.trim() ? (
+                      <>
+                        <Edit className="w-4 h-4 mr-2" />
+                        Digite um texto ou URL
                       </>
                     ) : (
                       <>
-                        <Video className="w-4 h-4 mr-2" />
-                        Baixar e Analisar
+                        <Brain className="w-4 h-4 mr-2" />
+                        Analisar com IA
                       </>
                     )}
                   </Button>
@@ -555,7 +570,7 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
               </CardContent>
             </Card>
 
-            {/* PDF Upload */}
+            {/* 2. PDF Upload - SEGUNDO LUGAR */}
             <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 shadow-xl border-2 border-orange-200">
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -587,54 +602,44 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
               </CardContent>
             </Card>
 
-            {/* Análise de Texto */}
-            <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 shadow-xl border-2 border-purple-200">
+            {/* 3. YouTube/Links - ÚLTIMO LUGAR */}
+            <Card className="bg-gradient-to-br from-gray-50 to-red-50 shadow-xl border-2 border-gray-300">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Brain className="w-6 h-6 mr-2 text-purple-600" />
-                  🧠 Análise IA de Texto
+                  <Link className="w-6 h-6 mr-2 text-gray-600" />
+                  🔗 Análise de Links (Limitado)
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  Cole textos e receba resumos, sugestões e exercícios
+                  YouTube e outros links - análise metodológica apenas
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {studyArea && (
-                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border-2 border-blue-200">
-                      <p className="text-sm text-blue-800 flex items-center">
-                        <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
-                        📚 Área: <span className="font-semibold capitalize ml-1">{studyArea}</span>
-                      </p>
-                    </div>
-                  )}
-                  <Textarea
-                    placeholder="Cole qualquer texto, URL do YouTube ou conteúdo para análise com IA..."
-                    value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
-                    rows={4}
-                    disabled={false}
-                    className="border-purple-200 focus:border-purple-400"
+                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                    <p className="text-xs text-yellow-800">
+                      ⚠️ Links como YouTube só geram orientações de estudo genéricas. Para análise específica, copie o conteúdo no campo de texto acima.
+                    </p>
+                  </div>
+                  <Input
+                    placeholder="Cole links do YouTube, artigos ou sites educativos..."
+                    value={youtubeUrl}
+                    onChange={(e) => setYoutubeUrl(e.target.value)}
+                    className="border-gray-300 focus:border-gray-400"
                   />
                   <Button 
-                    onClick={processText}
-                    disabled={isProcessing || !textInput.trim()}
-                    className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-gray-400 disabled:to-gray-500"
+                    onClick={processYouTubeVideo}
+                    disabled={isProcessing || !youtubeUrl}
+                    className="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 disabled:from-gray-400 disabled:to-gray-500"
                   >
                     {isProcessing ? (
                       <>
-                        <span className="animate-spin mr-2">🔄</span>
-                        Analisando com IA...
-                      </>
-                    ) : !textInput.trim() ? (
-                      <>
-                        <Edit className="w-4 h-4 mr-2" />
-                        Digite um texto ou URL
+                        <span className="animate-spin mr-2">⏳</span>
+                        Processando...
                       </>
                     ) : (
                       <>
-                        <Brain className="w-4 h-4 mr-2" />
-                        Analisar com IA
+                        <Link className="w-4 h-4 mr-2" />
+                        Gerar Orientações
                       </>
                     )}
                   </Button>
