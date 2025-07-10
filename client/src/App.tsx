@@ -64,7 +64,7 @@ import Investments from "@/pages/investments";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={EduVibeSimple} />
+      <Route path="/" component={DashboardUnificado} />
       <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKidsStandalone} />
@@ -76,6 +76,8 @@ function Router() {
       <Route path="/eduvie-standalone" component={EduVieStandalone} />
       <Route path="/eduvibe-functional" component={EduVibeFunctional} />
       <Route path="/eduvibe-enhanced" component={EduVibeEnhanced} />
+      <Route path="/eduvibe-direct" component={EduVibeDirect} />
+      <Route path="/eduvibe" component={EduVibeSimple} />
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />
