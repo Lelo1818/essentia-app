@@ -1471,24 +1471,19 @@ ${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).
     );
   }
 
+  // FORÇA SEMPRE CARREGAR TELA 6 (Central Downloads) se nenhuma condição específica for atendida
+  console.log("🚀 FORÇANDO CARREGAMENTO DA TELA 6 - STEP:", currentStep);
+  setCurrentStep(6);
+  
   return (
     <div>
       <FloatingDownloadButton />
-      {/* Tela padrão se nenhuma condição foi atendida */}
+      {/* Redirecionamento automático para Central Downloads */}
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">EduVibe Enhanced</h1>
-          <p className="text-gray-600 mb-6">Sistema carregando...</p>
-          <Button 
-            onClick={() => {
-              setCurrentStep(0);
-              setUserName("");
-              setCurrentModuleId(null);
-            }}
-            className="bg-blue-600 hover:bg-blue-700"
-          >
-            Reiniciar Sistema
-          </Button>
+          <p className="text-gray-600 mb-6">Carregando Central de Downloads...</p>
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
       </div>
     </div>
