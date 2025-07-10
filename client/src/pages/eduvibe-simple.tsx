@@ -268,11 +268,14 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
       const characters = textInput.length;
       const readingTime = Math.ceil(words / 200);
       
+      // Salva o texto original antes de limpar
+      const originalText = textInput;
+      
       const newFile = {
         id: Date.now().toString(),
-        name: `Texto: ${textInput.substring(0, 40)}${textInput.length > 40 ? '...' : ''}`,
+        name: `Texto: ${originalText.substring(0, 40)}${originalText.length > 40 ? '...' : ''}`,
         type: 'text' as const,
-        content: textInput,
+        content: originalText,
         size: `${words} palavras, ${characters} chars`,
         uploadDate: new Date().toLocaleString(),
         readingTime: `~${readingTime} min de leitura`,
@@ -289,26 +292,56 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
       });
 
       // Inicia quiz após análise - SEMPRE
+      console.log("🔥 FORÇANDO QUIZ - result.success:", result.success, "result.analysis:", !!result.analysis);
+      
       if (result.success && result.analysis) {
-        console.log("🎯 Iniciando quiz para TEXTO com análise:", result.analysis);
+        console.log("🎯 Iniciando quiz para TEXTO com análise IA:", result.analysis);
         startQuizAfterAnalysis(result.analysis, newFile.name);
       } else {
         // Fallback quiz mesmo sem análise IA
         console.log("🎯 Iniciando quiz FALLBACK para TEXTO");
         const fallbackAnalysis = {
-          summary: `Texto analisado: "${textInput.substring(0, 100)}..."`,
+          summary: `Texto analisado: "${originalText.substring(0, 100)}..."`,
           studySuggestions: ["Revisar o conteúdo", "Fazer anotações"],
           practiceExercises: ["Resumir em suas palavras", "Criar perguntas sobre o texto"]
         };
         startQuizAfterAnalysis(fallbackAnalysis, newFile.name);
       }
     } catch (error) {
+      console.log("💥 ERRO CAPTURADO:", error);
+      
+      // Garante que o quiz seja disparado mesmo com erro
+      const originalText = textInput;
+      
+      const newFile = {
+        id: Date.now().toString(),
+        name: `Texto: ${originalText.substring(0, 40)}${originalText.length > 40 ? '...' : ''}`,
+        type: 'text' as const,
+        content: originalText,
+        size: `${originalText.trim().split(/\s+/).length} palavras, ${originalText.length} chars`,
+        uploadDate: new Date().toLocaleString(),
+        readingTime: `~${Math.ceil(originalText.trim().split(/\s+/).length / 200)} min de leitura`,
+        analysis: null
+      };
+
+      setUploadedFiles(prev => [...prev, newFile]);
+      setTextInput("");
       setIsProcessing(false);
+      
       toast({
         title: "Erro na análise",
         description: "Análise básica aplicada",
         variant: "destructive"
       });
+      
+      // FORÇA QUIZ MESMO COM ERRO
+      console.log("🎯 QUIZ FORÇADO NO CATCH");
+      const fallbackAnalysis = {
+        summary: `Texto analisado com erro: "${originalText.substring(0, 100)}..."`,
+        studySuggestions: ["Revisar o conteúdo", "Fazer anotações"],
+        practiceExercises: ["Resumir em suas palavras", "Criar perguntas sobre o texto"]
+      };
+      startQuizAfterAnalysis(fallbackAnalysis, newFile.name);
     }
   };
 
@@ -442,11 +475,18 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
 
   // Função para iniciar quiz após análise
   const startQuizAfterAnalysis = (analysis: any, fileName: string) => {
+    console.log("🎬 startQuizAfterAnalysis CHAMADA com:", { analysis, fileName });
+    
     setTimeout(() => {
       const quiz = generateQuiz(analysis, fileName);
+      console.log("🎲 Quiz gerado:", quiz);
+      
       if (quiz) {
+        console.log("✅ Setando quiz e mostrando");
         setCurrentQuiz(quiz);
         setShowQuiz(true);
+      } else {
+        console.log("❌ Quiz não gerado");
       }
     }, 1500); // Aparece 1.5s após a análise
   };
