@@ -36,35 +36,26 @@ export async function analyzeTextWithAI(inputText: string, studyArea?: string, c
       const youtubeId = extractYouTubeId(inputText);
       console.log("📺 YouTube ID extraído:", youtubeId);
       
-      // Obter informações específicas do vídeo
-      const videoInfo = inferVideoContent(youtubeId);
+      // Retornar análise honesta sobre limitações
+      const limitationNote = getYouTubeAnalysisNote(youtubeId);
       
-      prompt = `
-Analise este vídeo ESPECÍFICO do YouTube:
-
-URL: ${inputText}
-ID DO VÍDEO: ${youtubeId}
-TÍTULO: ${videoInfo.title}
-DESCRIÇÃO: ${videoInfo.description}
-CATEGORIA: ${videoInfo.category}
-
-INSTRUÇÕES ESPECÍFICAS:
-- Baseie sua análise no título e descrição fornecidos acima
-- Este é um vídeo real de ${videoInfo.category}
-- Forneça análise específica para o conteúdo de "${videoInfo.title}"
-- Se for sobre matemática, foque nos conceitos matemáticos específicos
-- Se for sobre ciências, foque nos conceitos científicos específicos
-
-1. **RESUMO ESPECÍFICO**: Análise detalhada do conteúdo específico deste vídeo sobre "${videoInfo.title}" (máximo 250 palavras)
-
-2. **SUGESTÕES DE ESTUDO**: 5 sugestões específicas para estudar o tema "${videoInfo.title}" na área de ${videoInfo.category}
-
-3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios práticos específicos relacionados ao conteúdo de "${videoInfo.title}"
-
-Importante: Baseie-se no título e descrição fornecidos para criar uma análise específica e útil.
-
-Responda em JSON com as chaves: summary, studySuggestions, practiceExercises
-`;
+      return {
+        summary: `LIMITAÇÃO DO SISTEMA: Não posso analisar especificamente o vídeo ${youtubeId} pois não tenho acesso ao conteúdo real do YouTube. Para análise precisa, copie a descrição ou transcrição do vídeo e cole no campo de texto para análise manual.`,
+        studySuggestions: [
+          "Assista ao vídeo completo com atenção focada nos conceitos principais",
+          "Pause frequentemente para fazer anotações sobre pontos importantes",
+          "Copie a descrição do vídeo e analise com a IA usando o campo de texto",
+          "Pesquise sobre o canal para entender o contexto e credibilidade",
+          "Procure vídeos relacionados do mesmo autor para aprofundar o tema"
+        ],
+        practiceExercises: [
+          "Faça um resumo de 3 parágrafos sobre o conteúdo assistido",
+          "Identifique 5 conceitos-chave e defina cada um com suas palavras",
+          "Crie 3 perguntas que você faria ao apresentador sobre o tema",
+          "Encontre uma aplicação prática do conteúdo na sua área de interesse",
+          "Compartilhe o aprendizado explicando para outra pessoa"
+        ]
+      };
     } else {
       const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
       prompt = `
@@ -156,23 +147,21 @@ function extractYouTubeId(url: string): string | null {
   return match ? match[1] : null;
 }
 
-// Função para inferir conteúdo baseado em IDs conhecidos 
-function inferVideoContent(videoId: string): { title: string; description: string; category: string } {
-  // Base de dados de vídeos conhecidos
-  const knownVideos: Record<string, { title: string; description: string; category: string }> = {
-    'IxOcjcK7YWE': {
-      title: 'Função Exponencial - Aula Completa de Matemática',
-      description: 'Aula detalhada sobre funções exponenciais, incluindo definição f(x) = a^x, propriedades, comportamento gráfico, crescimento e decaimento exponencial, aplicações em juros compostos, crescimento populacional e problemas práticos.',
-      category: 'Matemática'
-    },
-    // Adicionar mais vídeos conforme necessário
-  };
+// Função honesta sobre limitações do sistema
+function getYouTubeAnalysisNote(videoId: string): string {
+  return `
+LIMITAÇÃO TÉCNICA: Este sistema não possui acesso à API do YouTube para extrair o conteúdo real do vídeo.
 
-  return knownVideos[videoId] || {
-    title: `Conteúdo Educativo - ID: ${videoId}`,
-    description: 'Vídeo educativo do YouTube para análise de aprendizado',
-    category: 'Educação Geral'
-  };
+ID do vídeo: ${videoId}
+URL: https://www.youtube.com/watch?v=${videoId}
+
+Para uma análise específica e precisa deste vídeo, você precisa:
+1. Assistir ao vídeo manualmente
+2. Copiar o texto da descrição ou transcrição
+3. Colar esse texto no campo de análise de texto
+
+Assim a IA pode analisar o conteúdo real ao invés de gerar análises genéricas.
+  `;
 }
 
 export async function generateStudyPlan(topic: string, difficulty: string = "intermediário"): Promise<string[]> {
