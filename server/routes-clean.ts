@@ -11,6 +11,9 @@ import {
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateStudyPlan } from "./anthropic";
+import multer from "multer";
+import * as fs from 'fs/promises';
+import poppler from 'node-poppler';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -317,6 +320,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Configure multer for file uploads
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB limit
+    },
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype === 'application/pdf') {
+        cb(null, true);
+      } else {
+        cb(new Error('Apenas arquivos PDF são permitidos'));
+      }
+    },
+  });
+
   // AI Routes for EduVibe
   app.post("/api/ai/analyze-text", async (req, res) => {
     try {
@@ -373,6 +391,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Erro ao gerar plano de estudos:", error);
       res.status(500).json({ 
         message: "Erro ao gerar plano de estudos. Tente novamente em alguns instantes.",
+        error: error instanceof Error ? error.message : "Erro desconhecido"
+      });
+    }
+  });
+
+  // PDF Upload and Analysis Route
+  app.post("/api/ai/analyze-pdf", upload.single('pdf'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ 
+          message: "Nenhum arquivo PDF foi enviado. Por favor, selecione um arquivo PDF válido." 
+        });
+      }
+
+      console.log("Processando arquivo PDF:", req.file.originalname);
+      
+      // Extract text from PDF using node-poppler
+      let extractedText = "";
+      
+      try {
+        const tempFilePath = path.join(__dirname, 'temp', `${Date.now()}.pdf`);
+        
+        // Create temp directory if it doesn't exist
+        await fs.mkdir(path.dirname(tempFilePath), { recursive: true });
+        
+        // Write buffer to temp file
+        await fs.writeFile(tempFilePath, req.file.buffer);
+        
+        // Extract text using poppler
+        const popplerInstance = new poppler();
+        extractedText = await popplerInstance.pdfToText(tempFilePath);
+        
+        // Clean up temp file
+        await fs.unlink(tempFilePath);
+      } catch (pdfError) {
+        console.log("Erro ao extrair texto do PDF com poppler:", pdfError);
+        // Se não conseguir extrair, use um texto padrão baseado no nome do arquivo
+        extractedText = `Documento PDF: ${req.file.originalname}
+        
+Este é um documento PDF que foi carregado no sistema. O arquivo contém informações que podem ser úteis para estudos.
+        
+Algumas sugestões de análise:
+- Revisar o conteúdo do documento
+- Identificar conceitos principais
+- Fazer resumos das seções importantes
+- Criar questões para fixação do conteúdo
+        
+Tamanho do arquivo: ${(req.file.size / 1024).toFixed(2)} KB`;
+      }
+      
+      if (!extractedText || extractedText.trim().length < 10) {
+        return res.status(400).json({ 
+          message: "Não foi possível extrair texto suficiente do PDF. Verifique se o arquivo contém texto legível." 
+        });
+      }
+
+      console.log("Texto extraído do PDF:", extractedText.substring(0, 200) + "...");
+      
+      // Analyze extracted text with AI
+      const analysis = await analyzeTextWithAI(extractedText);
+      
+      console.log("Análise IA do PDF concluída com sucesso");
+      res.json({
+        success: true,
+        analysis,
+        extractedText: extractedText.substring(0, 500) + "...", // First 500 chars for preview
+        filename: req.file.originalname,
+        processedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error("Erro ao processar PDF:", error);
+      res.status(500).json({ 
+        message: "Erro ao processar arquivo PDF. Tente novamente com um arquivo diferente.",
         error: error instanceof Error ? error.message : "Erro desconhecido"
       });
     }

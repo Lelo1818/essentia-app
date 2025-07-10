@@ -400,6 +400,7 @@ export default function EduVibeEnhanced() {
 
   // Função para processar upload de PDF
   const processPDFUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("📄 INICIANDO PROCESSAMENTO PDF");
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -412,71 +413,65 @@ export default function EduVibeEnhanced() {
       return;
     }
 
+    console.log("📁 Arquivo selecionado:", file.name, file.size);
     setIsProcessing(true);
     
     try {
-      // Processamento real do PDF
-      const reader = new FileReader();
+      // Cria FormData para envio do arquivo
+      const formData = new FormData();
+      formData.append('pdf', file);
       
-      reader.onload = async () => {
-        try {
-          // Converte para base64 para armazenamento
-          const base64 = reader.result as string;
-          
-          // Extrai informações reais do PDF
-          const pdfInfo = {
-            name: file.name,
-            size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
-            lastModified: new Date(file.lastModified).toLocaleDateString(),
-            pages: "Estimado: " + Math.ceil(file.size / 50000) + " páginas" // Estimativa baseada no tamanho
-          };
-          
-          const newFile = {
-            id: Date.now().toString(),
-            name: file.name,
-            type: 'pdf' as const,
-            content: base64, // Armazena o PDF real em base64
-            size: pdfInfo.size,
-            uploadDate: new Date().toLocaleString(),
-            pages: pdfInfo.pages,
-            lastModified: pdfInfo.lastModified
-          };
-          
-          setUploadedFiles(prev => [...prev, newFile]);
-          setIsProcessing(false);
-          
-          toast({
-            title: "PDF processado!",
-            description: `${file.name} (${pdfInfo.size}) adicionado à biblioteca`,
-          });
-        } catch (error) {
-          setIsProcessing(false);
-          toast({
-            title: "Erro no processamento",
-            description: "Falha ao processar o PDF",
-            variant: "destructive"
-          });
-        }
-      };
+      console.log("📤 Enviando PDF para análise com IA...");
       
-      reader.onerror = () => {
-        setIsProcessing(false);
+      // Envia para nossa API de análise de PDF
+      const response = await fetch('/api/ai/analyze-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      console.log("📡 Response status:", response.status);
+      
+      if (!response.ok) {
+        throw new Error(`Erro na análise: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      console.log("📊 Resultado da análise:", result);
+      
+      if (result.success) {
+        // Cria arquivo com análise da IA
+        const newFile = {
+          id: Date.now().toString(),
+          name: file.name,
+          type: 'pdf' as const,
+          content: result.extractedText,
+          size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+          uploadDate: new Date().toLocaleString(),
+          analysis: result.analysis // Adiciona análise da IA
+        };
+        
+        setUploadedFiles(prev => [...prev, newFile]);
+        
         toast({
-          title: "Erro na leitura",
-          description: "Não foi possível ler o arquivo",
-          variant: "destructive"
+          title: "PDF analisado com IA!",
+          description: `${file.name} processado e analisado com sucesso`,
         });
-      };
-      
-      reader.readAsDataURL(file);
+        
+        console.log("✅ PDF processado e analisado com sucesso");
+      } else {
+        throw new Error(result.message || 'Erro na análise');
+      }
       
     } catch (error) {
-      setIsProcessing(false);
+      console.error("❌ Erro no processamento PDF:", error);
       toast({
-        title: "Erro no upload",
-        description: "Tente novamente",
+        title: "Erro no processamento",
+        description: error instanceof Error ? error.message : "Falha ao processar o PDF",
         variant: "destructive"
       });
+    } finally {
+      setIsProcessing(false);
+      console.log("🏁 Processamento PDF finalizado");
     }
   };
 
@@ -1287,23 +1282,30 @@ export default function EduVibeEnhanced() {
                                 <Play className="w-4 h-4" />
                               </Button>
                             )}
+                            
+                            {file.type === 'pdf' && file.analysis && (
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => {
+                                  setCurrentText(JSON.stringify(file.analysis, null, 2));
+                                  setShowingText(true);
+                                }}
+                                className="bg-purple-50 hover:bg-purple-100 text-purple-700"
+                                title="Ver análise IA"
+                              >
+                                <Brain className="w-4 h-4" />
+                              </Button>
+                            )}
+                            
                             <Button 
                               variant="outline" 
                               size="sm"
                               onClick={() => {
                                 if (file.type === 'pdf') {
-                                  // Abre PDF em nova aba
-                                  const newWindow = window.open();
-                                  if (newWindow) {
-                                    newWindow.document.write(`
-                                      <html>
-                                        <head><title>${file.name}</title></head>
-                                        <body style="margin:0;background:#222;">
-                                          <iframe src="${file.content}" width="100%" height="100%" style="border:none;"></iframe>
-                                        </body>
-                                      </html>
-                                    `);
-                                  }
+                                  // Mostra o texto extraído
+                                  setCurrentText(file.content);
+                                  setShowingText(true);
                                 } else {
                                   setCurrentText(file.content);
                                   setShowingText(true);
