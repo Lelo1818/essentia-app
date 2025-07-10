@@ -1267,6 +1267,11 @@ export default function EduVibeEnhanced() {
                               {file.author && <p className="text-xs text-blue-600">Por: {file.author}</p>}
                               {file.readingTime && <p className="text-xs text-purple-600">{file.readingTime}</p>}
                               {file.pages && <p className="text-xs text-orange-600">{file.pages}</p>}
+                              {file.type === 'pdf' && file.analysis && (
+                                <p className="text-xs text-purple-700 font-medium bg-purple-50 px-2 py-1 rounded mt-1 inline-block">
+                                  🧠 Análise IA disponível
+                                </p>
+                              )}
                             </div>
                           </div>
                           <div className="flex gap-2">
@@ -1288,7 +1293,24 @@ export default function EduVibeEnhanced() {
                                 variant="outline" 
                                 size="sm"
                                 onClick={() => {
-                                  setCurrentText(JSON.stringify(file.analysis, null, 2));
+                                  // Formata a análise de forma mais legível
+                                  const formattedAnalysis = `
+📚 ANÁLISE INTELIGENTE - ${file.name}
+═══════════════════════════════════════════════
+
+📌 RESUMO PRÁTICO:
+${file.analysis.summary}
+
+📘 SUGESTÕES DE ESTUDO:
+${file.analysis.studySuggestions.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n')}
+
+💡 EXERCÍCIOS PRÁTICOS:
+${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n')}
+
+═══════════════════════════════════════════════
+⚡ Análise gerada por IA em ${new Date().toLocaleString()}
+                                  `;
+                                  setCurrentText(formattedAnalysis);
                                   setShowingText(true);
                                 }}
                                 className="bg-purple-50 hover:bg-purple-100 text-purple-700"
