@@ -1050,7 +1050,10 @@ ${file.analysis.practiceExercises ? file.analysis.practiceExercises.map((exercis
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 animate-in fade-in duration-300">
               <div className="p-6">
-                {!quizResult.show ? (
+                {(() => {
+                  console.log("🚨 DECISÃO RENDERIZAÇÃO - quizResult.show:", quizResult.show, "quizResult:", quizResult);
+                  return !quizResult.show;
+                })() ? (
                   <>
                     {/* QUIZ NORMAL */}
                     <div className="text-center mb-6">
