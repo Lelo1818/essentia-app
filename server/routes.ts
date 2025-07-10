@@ -9,6 +9,7 @@ import {
   insertGoalSchema, insertAchievementSchema
 } from "@shared/schema";
 import { z } from "zod";
+import { analyzeTextWithAI, generateStudyPlan } from "./anthropic";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Servir arquivo HTML estático para EduVie
@@ -1742,6 +1743,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error triggering goal achievement:", error);
       res.status(500).json({ message: "Erro ao processar conquista de meta" });
+    }
+  });
+
+  // AI Text Analysis Routes
+  app.post("/api/ai/analyze-text", async (req, res) => {
+    try {
+      const { text } = req.body;
+      
+      if (!text || typeof text !== 'string' || text.trim().length < 10) {
+        return res.status(400).json({ 
+          message: "Texto inválido. Por favor, forneça um texto com pelo menos 10 caracteres." 
+        });
+      }
+
+      console.log("Analisando texto com IA:", text.substring(0, 100) + "...");
+      
+      const analysis = await analyzeTextWithAI(text);
+      
+      console.log("Análise IA concluída com sucesso");
+      res.json({
+        success: true,
+        analysis,
+        processedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error("Erro na análise de texto com IA:", error);
+      res.status(500).json({ 
+        message: "Erro ao processar texto com IA. Tente novamente em alguns instantes.",
+        error: error instanceof Error ? error.message : "Erro desconhecido"
+      });
+    }
+  });
+
+  app.post("/api/ai/study-plan", async (req, res) => {
+    try {
+      const { topic, difficulty = "intermediário" } = req.body;
+      
+      if (!topic || typeof topic !== 'string' || topic.trim().length < 3) {
+        return res.status(400).json({ 
+          message: "Tópico inválido. Por favor, forneça um tópico válido." 
+        });
+      }
+
+      console.log("Gerando plano de estudos para:", topic);
+      
+      const studyPlan = await generateStudyPlan(topic, difficulty);
+      
+      console.log("Plano de estudos gerado com sucesso");
+      res.json({
+        success: true,
+        studyPlan,
+        topic,
+        difficulty,
+        generatedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error("Erro ao gerar plano de estudos:", error);
+      res.status(500).json({ 
+        message: "Erro ao gerar plano de estudos. Tente novamente em alguns instantes.",
+        error: error instanceof Error ? error.message : "Erro desconhecido"
+      });
     }
   });
 

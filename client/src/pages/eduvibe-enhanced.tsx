@@ -29,8 +29,10 @@ import {
   Bookmark,
   Sparkles,
   BarChart3,
-  PlayCircle
+  PlayCircle,
+  Zap
 } from "lucide-react";
+import AITextAnalyzer from "@/components/AITextAnalyzer";
 
 interface Module {
   id: number;
@@ -671,7 +673,7 @@ export default function EduVibeEnhanced() {
                 Começar Jornada
               </Button>
               
-              <div className="border-t pt-4">
+              <div className="border-t pt-4 space-y-2">
                 <p className="text-xs text-gray-500 mb-2">Teste direto a funcionalidade:</p>
                 <Button 
                   onClick={() => {
@@ -684,6 +686,18 @@ export default function EduVibeEnhanced() {
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Testar Central Downloads
+                </Button>
+                <Button 
+                  onClick={() => {
+                    console.log("🖱️ ACESSO DIRETO À IA");
+                    setUserName("Teste IA");
+                    setCurrentModuleId("ai");
+                    setCurrentStep(6);
+                  }}
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                >
+                  <Zap className="w-4 h-4 mr-2" />
+                  Testar IA Real
                 </Button>
               </div>
             </div>
@@ -1093,9 +1107,23 @@ export default function EduVibeEnhanced() {
           </div>
 
           {/* Área principal de conteúdo */}
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Coluna 1: Janelas de Input */}
-            <div className="space-y-6">
+          <div className="space-y-8">
+            {/* IA Text Analyzer - Destaque Principal */}
+            <div className="bg-gradient-to-r from-purple-500 to-blue-600 p-6 rounded-xl text-white">
+              <div className="flex items-center gap-3 mb-4">
+                <Zap className="w-8 h-8" />
+                <div>
+                  <h2 className="text-2xl font-bold">Análise Inteligente de Texto</h2>
+                  <p className="text-purple-100">IA real conectada - Teste com qualquer texto</p>
+                </div>
+              </div>
+            </div>
+            
+            <AITextAnalyzer />
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Coluna 1: Janelas de Input */}
+              <div className="space-y-6">
               <Card className="bg-white shadow-xl">
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -1172,43 +1200,16 @@ export default function EduVibeEnhanced() {
                     </div>
                   </div>
 
-                  {/* Input de Texto */}
+                  {/* Análise de Texto com IA */}
                   <div className="p-4 border-2 border-dashed border-purple-300 rounded-lg hover:border-purple-500 transition-colors">
                     <div className="flex items-center gap-3 mb-3">
-                      <Edit className="w-8 h-8 text-purple-600" />
+                      <Zap className="w-8 h-8 text-purple-600" />
                       <div>
-                        <h3 className="font-bold text-gray-800">Texto Personalizado</h3>
-                        <p className="text-sm text-gray-600">Digite ou cole conteúdo</p>
+                        <h3 className="font-bold text-gray-800">Análise Inteligente</h3>
+                        <p className="text-sm text-gray-600">IA real para estudos</p>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <textarea 
-                        placeholder="Cole seu texto aqui ou digite conteúdo personalizado..."
-                        className="w-full h-32 p-3 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={textInput}
-                        onChange={(e) => setTextInput(e.target.value)}
-                      />
-                      <Button 
-                        onClick={() => {
-                          console.log("🖱️ CLIQUE NO BOTÃO TEXTO");
-                          processTextInput();
-                        }}
-                        disabled={isProcessing}
-                        className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50"
-                      >
-                        {isProcessing ? (
-                          <div className="flex items-center">
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            Analisando...
-                          </div>
-                        ) : (
-                          <>
-                            <Brain className="w-4 h-4 mr-2" />
-                            Processar IA
-                          </>
-                        )}
-                      </Button>
-                    </div>
+                    <AITextAnalyzer className="border-0 p-0" />
                   </div>
                 </CardContent>
               </Card>
@@ -1350,6 +1351,7 @@ export default function EduVibeEnhanced() {
                 </CardContent>
               </Card>
             </div>
+          </div>
           </div>
         </div>
       </div>
