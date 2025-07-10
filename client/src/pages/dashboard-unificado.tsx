@@ -117,19 +117,30 @@ export default function DashboardUnificado() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6 relative overflow-hidden">
+        {/* Elementos decorativos sutis de fundo */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-purple-100/30 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-gradient-to-tr from-green-100/30 to-blue-100/30 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-100/20 to-pink-100/20 rounded-full blur-2xl"></div>
+        </div>
+
         {/* Header Principal */}
-        <div className="max-w-7xl mx-auto mb-8">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+        <div className="max-w-7xl mx-auto mb-8 relative z-10">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-100/50 p-6 hover:shadow-2xl transition-all duration-500">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
                   Ecossistema Digital Flow
                 </h1>
                 <p className="text-gray-600 mt-1">Bem-vindo de volta, {userData.name}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-gray-500">Sistema sincronizado</span>
+                </div>
               </div>
               <div className="flex items-center gap-3">
-                <Badge className="bg-green-100 text-green-700 px-3 py-1">
+                <Badge className="bg-green-100 text-green-700 px-3 py-1 animate-bounce">
                   <Zap className="w-4 h-4 mr-1" />
                   Todos os sistemas ativos
                 </Badge>
@@ -138,25 +149,29 @@ export default function DashboardUnificado() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-8 relative z-10">
           {/* Profile Section - Temporarily disabled */}
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickStats.map((stat, index) => (
-              <Card key={index} className="border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
-                <CardContent className="p-6">
+              <Card key={index} className="group border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-xl hover:bg-white/90 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 relative overflow-hidden">
+                {/* Gradiente sutil de fundo */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-blue-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <CardContent className="p-6 relative z-10">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">{stat.title}</p>
-                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                      <p className="text-sm text-green-600 font-medium">{stat.trend}</p>
+                      <p className="text-sm text-gray-600 mb-1 group-hover:text-gray-700 transition-colors">{stat.title}</p>
+                      <p className="text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors">{stat.value}</p>
+                      <p className="text-sm text-green-600 font-medium group-hover:text-green-700 transition-colors">{stat.trend}</p>
                     </div>
-                    <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center`}>
+                    <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md group-hover:shadow-lg`}>
                       <stat.icon className="w-6 h-6" />
                     </div>
                   </div>
                 </CardContent>
+                {/* Barra de progresso sutil no rodapé */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 group-hover:from-blue-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-300"></div>
               </Card>
             ))}
           </div>
@@ -199,31 +214,36 @@ export default function DashboardUnificado() {
           </div>
 
           {/* Recent Activity */}
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+            {/* Gradiente decorativo sutil */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <BarChart3 className="w-5 h-5 mr-2 text-indigo-600" />
                 Atividade Recente
+                <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                  <div key={index} className="group flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50/30 rounded-lg hover:from-blue-50 hover:to-purple-50/30 transition-all duration-300 transform hover:scale-102 hover:shadow-md relative overflow-hidden">
+                    {/* Indicador de tempo sutil */}
+                    <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-indigo-400 to-purple-400 opacity-30 group-hover:opacity-60 transition-opacity"></div>
+                    <div className="flex items-center gap-3 relative z-10">
+                      <div className="w-10 h-10 bg-indigo-100 group-hover:bg-indigo-200 rounded-full flex items-center justify-center transition-colors shadow-sm group-hover:shadow-md group-hover:scale-110 transition-transform">
                         <Star className="w-5 h-5 text-indigo-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">{activity.action}</p>
-                        <p className="text-sm text-gray-500">{activity.app} • {activity.time}</p>
+                        <p className="font-medium text-gray-900 group-hover:text-gray-800 transition-colors">{activity.action}</p>
+                        <p className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors">{activity.app} • {activity.time}</p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      {activity.amount && <span className="text-green-600 font-semibold">{activity.amount}</span>}
-                      {activity.points && <span className="text-blue-600 font-semibold">{activity.points}</span>}
-                      {activity.progress && <span className="text-purple-600 font-semibold">{activity.progress}</span>}
-                      {activity.achievement && <span className="text-pink-600 font-semibold">{activity.achievement}</span>}
+                    <div className="text-right relative z-10">
+                      {activity.amount && <span className="text-green-600 font-semibold bg-green-50 px-2 py-1 rounded-md">{activity.amount}</span>}
+                      {activity.points && <span className="text-blue-600 font-semibold bg-blue-50 px-2 py-1 rounded-md">{activity.points}</span>}
+                      {activity.progress && <span className="text-purple-600 font-semibold bg-purple-50 px-2 py-1 rounded-md">{activity.progress}</span>}
+                      {activity.achievement && <span className="text-pink-600 font-semibold bg-pink-50 px-2 py-1 rounded-md">{activity.achievement}</span>}
                     </div>
                   </div>
                 ))}
@@ -232,47 +252,65 @@ export default function DashboardUnificado() {
           </Card>
 
           {/* Quick Actions */}
-          <Card className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0 shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-white">Ações Rápidas</CardTitle>
+          <Card className="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+            {/* Elementos decorativos */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12"></div>
+            <CardHeader className="relative z-10">
+              <CardTitle className="text-white flex items-center">
+                <Zap className="w-5 h-5 mr-2 animate-pulse" />
+                Ações Rápidas
+              </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="relative z-10">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Button 
                   variant="secondary" 
-                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  className="group h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   onClick={() => window.location.href = '/flow'}
                 >
-                  <DollarSign className="w-6 h-6" />
-                  <span className="text-sm">Nova Receita</span>
+                  <DollarSign className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">Nova Receita</span>
                 </Button>
                 <Button 
                   variant="secondary" 
-                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  className="group h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   onClick={() => window.location.href = '/eduvibe'}
                 >
-                  <BookOpen className="w-6 h-6" />
-                  <span className="text-sm">Continuar Curso</span>
+                  <BookOpen className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">Continuar Curso</span>
                 </Button>
                 <Button 
                   variant="secondary" 
-                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  className="group h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   onClick={() => window.location.href = '/purpose'}
                 >
-                  <Heart className="w-6 h-6" />
-                  <span className="text-sm">Ritual Diário</span>
+                  <Heart className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">Ritual Diário</span>
                 </Button>
                 <Button 
                   variant="secondary" 
-                  className="h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0"
+                  className="group h-auto p-4 flex-col space-y-2 bg-white/20 hover:bg-white/30 text-white border-0 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   onClick={() => window.location.href = '/flow-kids'}
                 >
-                  <Users className="w-6 h-6" />
-                  <span className="text-sm">Ver Progresso Kids</span>
+                  <Users className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">Ver Progresso Kids</span>
                 </Button>
               </div>
             </CardContent>
           </Card>
+
+          {/* Rodapé com informações do sistema - sutil */}
+          <div className="text-center py-6">
+            <div className="inline-flex items-center gap-2 text-gray-500 text-xs">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span>Todos os sistemas operacionais</span>
+              <span>•</span>
+              <span>Última sincronização: agora</span>
+              <span>•</span>
+              <span className="text-indigo-600 font-medium">Flow Ecosystem v2.0</span>
+            </div>
+          </div>
         </div>
       </div>
   );
