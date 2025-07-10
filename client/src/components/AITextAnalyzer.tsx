@@ -27,6 +27,9 @@ export default function AITextAnalyzer({ className = "" }: AITextAnalyzerProps) 
       return response;
     },
     onSuccess: (data) => {
+      console.log("📊 RESPOSTA RECEBIDA DA IA:", data);
+      console.log("🔍 ANALYSIS OBJECT:", data.analysis);
+      console.log("📝 SUMMARY:", data.analysis?.summary);
       setAnalysis(data.analysis);
     },
     onError: (error) => {

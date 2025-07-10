@@ -125,6 +125,7 @@ function getAreaSpecificInstructions(area: string): string {
     
     try {
       const analysis = JSON.parse(jsonString);
+      console.log("✅ ANÁLISE PARSEADA COM SUCESSO:", analysis);
       return {
         summary: analysis.summary || "Análise não disponível",
         studySuggestions: Array.isArray(analysis.studySuggestions) ? analysis.studySuggestions : [],
