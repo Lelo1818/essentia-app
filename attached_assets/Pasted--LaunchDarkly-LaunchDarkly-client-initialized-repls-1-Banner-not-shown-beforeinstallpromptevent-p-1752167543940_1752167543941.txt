@@ -1,0 +1,235 @@
+[LaunchDarkly] LaunchDarkly client initialized
+/repls:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+111Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.Understand this error
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'ambient-light-sensor'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'battery'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'execution-while-not-rendered'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'execution-while-out-of-viewport'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'layout-animations'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'legacy-image-formats'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'navigation-override'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'oversized-images'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'publickey-credentials'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'speaker-selection'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'unoptimized-images'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'unsized-media'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Unrecognized feature: 'pointer-lock'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Allow attribute will take precedence over 'allowfullscreen'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+framework-6cba3a63b1b6f3a4.js:1 Allow attribute will take precedence over 'allowpaymentrequest'.
+_ @ framework-6cba3a63b1b6f3a4.js:1Understand this warning
+_app-267dfd4c30de00ad.js:25 WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-267dfd4c30de00ad.js:25Understand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+_app-267dfd4c30de00ad.js:25 WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-267dfd4c30de00ad.js:25Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+_app-267dfd4c30de00ad.js:25 WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-267dfd4c30de00ad.js:25Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+_app-267dfd4c30de00ad.js:25 WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-267dfd4c30de00ad.js:25Understand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+_app-267dfd4c30de00ad.js:25 WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-267dfd4c30de00ad.js:25Understand this error
+_app-267dfd4c30de00ad.js:25 WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-267dfd4c30de00ad.js:25Understand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_INTERNET_DISCONNECTEDUnderstand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_NETWORK_CHANGEDUnderstand this error
+/graphql:1 
+            
+            
+           Failed to load resource: net::ERR_ADDRESS_UNREACHABLEUnderstand this error
+/data/repls/419a61c3-e864-45d3-b12f-7c82749a509b/get_connection_metadata:1 
+            
+            
+           Failed to load resource: net::ERR_ADDRESS_UNREACHABLEUnderstand this error
+/data/repls/419a61c3-e864-45d3-b12f-7c82749a509b/get_connection_metadata:1 
+            
+            
+           Failed to load resource: net::ERR_NAME_NOT_RESOLVEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/diagnostic/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/diagnostic/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/diagnostic/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/diagnostic/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: the server responded with a status of 503 ()Understand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+FinancialFlow:1 Access to XMLHttpRequest at 'https://events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+events.launchdarkly.com/events/bulk/62b35a865152ab14c5942820:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+5stallwart.build.js:1 stallwart: failed ping 1
+FinancialFlow:1 Access to fetch at 'https://logs.browser-intake-us5-datadoghq.com/api/v2/logs?ddsource=browser&ddtags=sdk_version%3A4.46.0%2Capi%3Afetch%2Cenv%3Aproduction%2Cservice%3Awebsite%2Cversion%3A8121bf21&dd-api-key=pub31a5047a3a4692afb84a423db984dc57&dd-evp-origin-version=4.46.0&dd-evp-origin=browser&dd-request-id=8ba56003-7961-4ae1-9037-43e09c773445' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+logs.browser-intake-us5-datadoghq.com/api/v2/logs?ddsource=browser&ddtags=sdk_version%3A4.46.0%2Capi%3Afetch%2Cenv%3Aproduction%2Cservice%3Awebsite%2Cversion%3A8121bf21&dd-api-key=pub31a5047a3a4692afb84a423db984dc57&dd-evp-origin-version=4.46.0&dd-evp-origin=browser&dd-request-id=8ba56003-7961-4ae1-9037-43e09c773445:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+stallwart.build.js:1 stallwart: failed ping 1
+stallwart.build.js:1 stallwart: failed ping 2
+workspace_iframe.html:32 Unrecognized feature: 'ambient-light-sensor'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'ambient-light-sensor'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'ambient-light-sensor'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'battery'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'battery'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'battery'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-not-rendered'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-not-rendered'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-not-rendered'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'layout-animations'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'layout-animations'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'layout-animations'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'legacy-image-formats'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'legacy-image-formats'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'legacy-image-formats'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'navigation-override'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'navigation-override'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'navigation-override'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'oversized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'oversized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'oversized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+Console.js:61 Loading Ecossistema Digital...
+ Loading Ecossistema Digital...
+ Loading Ecossistema Digital...
+FinancialFlow:1 Access to fetch at 'https://logs.browser-intake-us5-datadoghq.com/api/v2/logs?ddsource=browser&ddtags=sdk_version%3A4.46.0%2Capi%3Afetch%2Cenv%3Aproduction%2Cservice%3Awebsite%2Cversion%3A8121bf21&dd-api-key=pub31a5047a3a4692afb84a423db984dc57&dd-evp-origin-version=4.46.0&dd-evp-origin=browser&dd-request-id=1354e200-845d-4d6e-85a9-2918888565fa' from origin 'https://replit.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+logs.browser-intake-us5-datadoghq.com/api/v2/logs?ddsource=browser&ddtags=sdk_version%3A4.46.0%2Capi%3Afetch%2Cenv%3Aproduction%2Cservice%3Awebsite%2Cversion%3A8121bf21&dd-api-key=pub31a5047a3a4692afb84a423db984dc57&dd-evp-origin-version=4.46.0&dd-evp-origin=browser&dd-request-id=1354e200-845d-4d6e-85a9-2918888565fa:1 
+            
+            
+           Failed to load resource: net::ERR_FAILEDUnderstand this error
+Console.js:61 Loading Ecossistema Digital...
+Console.js:61 EduVibe Simple - CARREGADO DIRETO NA CENTRAL
+ [vite] server connection lost. Polling for restart...
+ Loading Ecossistema Digital...
+Console.js:61 🎯 ANALYSIS REAL: Object
+ [vite] server connection lost. Polling for restart...
+Console.js:61 Loading Ecossistema Digital...
+Console.js:61 🎯 ANALYSIS REAL: Object
+stallwart.build.js:1 stallwart: failed ping 1

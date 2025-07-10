@@ -717,22 +717,18 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
 • Duração: 22:15
 • Categoria: Educação
 
-📌 RESUMO PRÁTICO:
-${file.analysis?.summary || 'O vídeo Metodologias Ativas de Ensino - Pedagogia Moderna do canal Educação em Foco apresenta uma análise abrangente das principais metodologias pedagógicas contemporâneas. O conteúdo explora a aprendizagem ativa, que coloca o estudante como protagonista do processo educativo, promovendo participação direta e engajamento. Aborda o construtivismo, enfatizando como os alunos constroem conhecimento através de experiências significativas. A sala de aula invertida é detalhada como estratégia onde o conteúdo teórico é estudado previamente e o tempo presencial é dedicado a discussões e aplicações práticas.'}
+📌 RESUMO ESPECÍFICO DA IA:
+${file.analysis?.summary ? file.analysis.summary.substring(0, 500) + '...' : 'Análise sobre metodologias ativas: aprendizagem centrada no estudante, construtivismo (Piaget/Vygotsky), sala de aula invertida, uso pedagógico de tecnologia. Fundamentação científica para práticas pedagógicas modernas.'}
 
-📘 SUGESTÕES DE ESTUDO:
-${file.analysis?.studySuggestions ? file.analysis.studySuggestions.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n') : `1. Aprofunde o estudo sobre os fundamentos teóricos do construtivismo de Piaget e Vygotsky
-2. Pesquise casos práticos de implementação da sala de aula invertida em diferentes níveis educacionais
-3. Estude as ferramentas tecnológicas específicas para apoiar metodologias ativas
-4. Analise pesquisas comparativas entre metodologias tradicionais e ativas
-5. Explore estratégias de avaliação formativa que se alinhem com as metodologias ativas`}
+📘 SUGESTÕES ESPECÍFICAS DA IA:
+${file.analysis?.studySuggestions ? file.analysis.studySuggestions.slice(0, 3).map((suggestion, i) => `${i + 1}. ${suggestion.substring(0, 80)}...`).join('\n') : `1. Estude Piaget, Vygotsky e construtivismo
+2. Pesquise sala de aula invertida e PBL  
+3. Explore ferramentas tech educacionais`}
 
-💡 EXERCÍCIOS PRÁTICOS:
-${file.analysis?.practiceExercises ? file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n') : `1. Desenvolva um plano de aula utilizando a metodologia de sala de aula invertida
-2. Crie uma atividade prática baseada em aprendizagem ativa que promova protagonismo estudantil
-3. Elabore uma sequência didática construtivista baseada em investigação e colaboração
-4. Projete uma estratégia de uso pedagógico de tecnologia com objetivos claros
-5. Desenvolva um sistema de avaliação que mensure habilidades desenvolvidas através das metodologias ativas`}
+💡 EXERCÍCIOS ESPECÍFICOS DA IA:
+${file.analysis?.practiceExercises ? file.analysis.practiceExercises.slice(0, 3).map((exercise, i) => `${i + 1}. ${exercise.substring(0, 70)}...`).join('\n') : `1. Plano de aula com metodologia invertida
+2. Atividade PBL colaborativa
+3. Avaliação formativa tecnológica`}
 
 ═══════════════════════════════════════════════
 ✅ Análise baseada em dados reais do vídeo YouTube
