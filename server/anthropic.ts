@@ -24,40 +24,39 @@ export interface AITextAnalysis {
 
 export async function analyzeTextWithAI(inputText: string, studyArea?: string, context?: string): Promise<AITextAnalysis> {
   try {
-    // DETECÇÃO ESPECÍFICA DE YOUTUBE - FORÇADA AQUI
-    const isYouTubeAnalysis = inputText.includes('youtube.com') || inputText.includes('youtu.be') || inputText.includes('IxOcjcK7YWE') || inputText.includes('Metodologias Ativas');
+    // DETECÇÃO ESPECÍFICA DE YOUTUBE - DINÂMICA
+    const isYouTubeAnalysis = inputText.includes('youtube.com') || inputText.includes('youtu.be');
     
     let prompt;
     
     if (isYouTubeAnalysis) {
-      console.log("🎯 DETECTADO YOUTUBE NA FUNÇÃO AI - USANDO PROMPT ESPECÍFICO");
+      console.log("🎯 DETECTADO YOUTUBE NA FUNÇÃO AI - ANALISANDO URL ESPECÍFICA");
+      
+      // Extrair ID do vídeo da URL
+      const youtubeId = extractYouTubeId(inputText);
+      console.log("📺 YouTube ID extraído:", youtubeId);
+      
       prompt = `
-Analise este vídeo ESPECÍFICO do YouTube sobre Metodologias Ativas de Ensino na área de ${studyArea || 'educação'}:
+Analise este vídeo ESPECÍFICO do YouTube na área de ${studyArea || 'educação geral'}:
 
-DADOS REAIS DO VÍDEO CONFIRMADOS:
-🎬 Título: "Metodologias Ativas de Ensino - Pedagogia Moderna"
-📝 Descrição: "Análise completa das principais metodologias de ensino contemporâneas: aprendizagem ativa, construtivismo, sala de aula invertida e uso pedagógico de tecnologia. Conteúdo baseado em pesquisas educacionais atuais."
-⏱️ Duração: 22:15 minutos
-📺 Canal: Educação em Foco
-📂 Categoria: Educação
-🏷️ Tags: pedagogia, metodologia, ensino, educação
+URL FORNECIDA: ${inputText}
 
 INSTRUÇÕES OBRIGATÓRIAS:
-- Este é um vídeo REAL sobre pedagogia moderna
-- Foque especificamente em metodologias ativas de ensino
-- Mencione conceitos como: aprendizagem ativa, construtivismo, sala de aula invertida
-- Base a análise no título e descrição fornecidos
-- Gere sugestões específicas para estudo de pedagogia
+- Analise especificamente o conteúdo do vídeo desta URL
+- NÃO use informações genéricas ou de outros vídeos
+- Se for vídeo educativo, foque no tema específico apresentado
+- Se for sobre biologia, matemática, física, etc., analise esse conteúdo específico
+- Gere análise baseada no que seria realmente encontrado neste vídeo
 
-1. **RESUMO PRÁTICO**: Resumo focado nas metodologias ativas apresentadas no vídeo (máximo 200 palavras)
-2. **SUGESTÕES DE ESTUDO**: 5 sugestões específicas para aprofundar o estudo de metodologias ativas de ensino
-3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios práticos relacionados às metodologias pedagógicas do vídeo
+IMPORTANTE: Este é um vídeo REAL do YouTube. Analise o conteúdo específico que seria encontrado nesta URL, não um vídeo genérico.
+
+1. **RESUMO ESPECÍFICO**: Resumo do conteúdo específico deste vídeo (máximo 250 palavras)
+2. **SUGESTÕES DE ESTUDO**: 5 sugestões específicas baseadas no tema deste vídeo
+3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios práticos relacionados ao conteúdo específico
 
 ${context ? `Contexto adicional: ${context}` : ''}
 
 Formate a resposta em JSON válido com as chaves: summary, studySuggestions, practiceExercises
-
-IMPORTANTE: Base sua análise especificamente no vídeo "Metodologias Ativas de Ensino - Pedagogia Moderna" do canal "Educação em Foco".
 
 Responda APENAS com o JSON, sem texto adicional.
 `;
@@ -143,6 +142,13 @@ function getAreaSpecificInstructions(area: string): string {
     console.error("Erro na análise com IA:", error);
     throw new Error("Falha ao processar o texto com IA. Verifique sua conexão e tente novamente.");
   }
+}
+
+// Função auxiliar para extrair ID do YouTube
+function extractYouTubeId(url: string): string | null {
+  const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
 }
 
 export async function generateStudyPlan(topic: string, difficulty: string = "intermediário"): Promise<string[]> {
