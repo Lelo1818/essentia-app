@@ -35,6 +35,10 @@ export default function EduVibeSimple() {
   const [showingText, setShowingText] = useState(false);
   const [currentText, setCurrentText] = useState("");
   const [studyArea, setStudyArea] = useState<string>("");
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [currentQuiz, setCurrentQuiz] = useState<any>(null);
+  const [quizScore, setQuizScore] = useState(0);
+  const [totalQuizzes, setTotalQuizzes] = useState(0);
   const { toast } = useToast();
 
   // Salva automaticamente no localStorage
@@ -204,6 +208,11 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         title: realAnalysis ? "🎉 Vídeo analisado com IA!" : "📹 Vídeo processado!",
         description: realAnalysis ? "Análise completa da IA disponível" : "Conteúdo educativo extraído e disponível",
       });
+
+      // Inicia quiz após análise
+      if (realAnalysis || aiAnalysis) {
+        startQuizAfterAnalysis(realAnalysis || aiAnalysis, newFile.name);
+      }
     } catch (error) {
       setIsProcessing(false);
       toast({
@@ -278,6 +287,11 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         title: "Texto analisado!",
         description: `Análise com IA ${result.success ? 'concluída' : 'básica'}`,
       });
+
+      // Inicia quiz após análise
+      if (result.success && result.analysis) {
+        startQuizAfterAnalysis(result.analysis, newFile.name);
+      }
     } catch (error) {
       setIsProcessing(false);
       toast({
@@ -321,6 +335,11 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         title: "PDF processado!",
         description: `Análise ${result.success ? 'com IA' : 'básica'} concluída`,
       });
+
+      // Inicia quiz após análise
+      if (result.success && result.analysis) {
+        startQuizAfterAnalysis(result.analysis, newFile.name);
+      }
     } catch (error) {
       setIsProcessing(false);
       toast({
@@ -329,6 +348,97 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         variant: "destructive"
       });
     }
+  };
+
+  // SISTEMA DE QUIZ INTERATIVO - NOVO
+  const generateQuiz = (analysis: any, fileName: string) => {
+    if (!analysis || !analysis.summary) return null;
+    
+    const quizzes = [
+      {
+        type: 'feeling',
+        question: "Como você se sente sobre este conteúdo?",
+        options: [
+          { id: 'entendi', text: '😊 Entendi bem!', color: 'green' },
+          { id: 'parcial', text: '🤔 Entendi parcialmente', color: 'yellow' },
+          { id: 'dificil', text: '😵 Achei difícil', color: 'red' }
+        ]
+      },
+      {
+        type: 'confidence',
+        question: "Qual seu nível de confiança para aplicar isso?",
+        options: [
+          { id: 'alto', text: '💪 Confiante', color: 'green' },
+          { id: 'medio', text: '🤷 Mais ou menos', color: 'yellow' },
+          { id: 'baixo', text: '🆘 Preciso revisar', color: 'red' }
+        ]
+      },
+      {
+        type: 'interest',
+        question: "Vamos ver como você está indo?",
+        options: [
+          { id: 'muito', text: '🚀 Quero mais!', color: 'blue' },
+          { id: 'normal', text: '👍 Foi útil', color: 'green' },
+          { id: 'pouco', text: '😐 Precisa melhorar', color: 'yellow' }
+        ]
+      }
+    ];
+    
+    const randomQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+    return {
+      ...randomQuiz,
+      fileName,
+      analysis
+    };
+  };
+
+  const handleQuizAnswer = (answerId: string) => {
+    const responses = {
+      // Sentimentos
+      'entendi': "🎉 Ótimo! Você está no caminho certo!",
+      'parcial': "📚 Que tal revisar os pontos principais?",
+      'dificil': "💡 Vamos com calma! Todo aprendizado tem seu tempo.",
+      
+      // Confiança
+      'alto': "🌟 Excelente! Confie no seu potencial!",
+      'medio': "🔄 A prática leva à perfeição!",
+      'baixo': "📖 Revisar é parte do processo de aprender!",
+      
+      // Interesse
+      'muito': "🚀 Esse é o espírito! Continue explorando!",
+      'normal': "👏 Parabéns por estar aprendendo!",
+      'pouco': "🔧 Vamos ajustar para seu estilo de aprendizado!"
+    };
+
+    const colors = {
+      'entendi': 'green', 'alto': 'green', 'muito': 'blue',
+      'parcial': 'yellow', 'medio': 'yellow', 'normal': 'green', 'pouco': 'yellow',
+      'dificil': 'red', 'baixo': 'red'
+    };
+
+    setTotalQuizzes(prev => prev + 1);
+    if (['entendi', 'alto', 'muito', 'normal'].includes(answerId)) {
+      setQuizScore(prev => prev + 1);
+    }
+
+    toast({
+      title: responses[answerId] || "Obrigado pelo feedback!",
+      description: `Quiz ${totalQuizzes + 1} concluído!`,
+    });
+
+    setShowQuiz(false);
+    setCurrentQuiz(null);
+  };
+
+  // Função para iniciar quiz após análise
+  const startQuizAfterAnalysis = (analysis: any, fileName: string) => {
+    setTimeout(() => {
+      const quiz = generateQuiz(analysis, fileName);
+      if (quiz) {
+        setCurrentQuiz(quiz);
+        setShowQuiz(true);
+      }
+    }, 1500); // Aparece 1.5s após a análise
   };
 
   // Função para remover arquivo
@@ -782,7 +892,7 @@ ${file.analysis.practiceExercises ? file.analysis.practiceExercises.map((exercis
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
                   <div className="bg-red-50 p-3 rounded-lg">
                     <div className="text-2xl font-bold text-red-600">
                       {uploadedFiles.filter(f => f.type === 'youtube').length}
@@ -801,11 +911,101 @@ ${file.analysis.practiceExercises ? file.analysis.practiceExercises.map((exercis
                     </div>
                     <div className="text-xs text-purple-700">Textos</div>
                   </div>
+                  <div className="bg-blue-50 p-3 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {totalQuizzes}
+                    </div>
+                    <div className="text-xs text-blue-700">Quizzes</div>
+                  </div>
+                  <div className="bg-green-50 p-3 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">
+                      {totalQuizzes > 0 ? Math.round((quizScore / totalQuizzes) * 100) : 0}%
+                    </div>
+                    <div className="text-xs text-green-700">Acertos</div>
+                  </div>
                 </div>
+                
+                {totalQuizzes > 0 && (
+                  <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-700">Progresso de Aprendizado:</span>
+                      <span className="font-semibold text-purple-700">
+                        {quizScore}/{totalQuizzes} respostas positivas
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                      <div 
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${totalQuizzes > 0 ? (quizScore / totalQuizzes) * 100 : 0}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
         </div>
+
+        {/* MODAL DE QUIZ INTERATIVO */}
+        {showQuiz && currentQuiz && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 animate-in fade-in duration-300">
+              <div className="p-6">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">🎯</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {currentQuiz.question}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Sobre: {currentQuiz.fileName.substring(0, 50)}...
+                  </p>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  {currentQuiz.options.map((option: any) => (
+                    <Button
+                      key={option.id}
+                      onClick={() => handleQuizAnswer(option.id)}
+                      variant="outline"
+                      className={`w-full p-4 h-auto text-left justify-start transition-all duration-200 ${
+                        option.color === 'green' 
+                          ? 'hover:bg-green-50 hover:border-green-300 hover:text-green-700'
+                          : option.color === 'yellow'
+                          ? 'hover:bg-yellow-50 hover:border-yellow-300 hover:text-yellow-700'
+                          : option.color === 'red'
+                          ? 'hover:bg-red-50 hover:border-red-300 hover:text-red-700'
+                          : 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+                      }`}
+                    >
+                      <span className="text-left leading-relaxed">
+                        {option.text}
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+
+                <div className="flex justify-between items-center text-xs text-gray-500">
+                  <span>Progresso de aprendizado</span>
+                  <span>Quiz {totalQuizzes + 1}</span>
+                </div>
+
+                <Button
+                  onClick={() => {
+                    setShowQuiz(false);
+                    setCurrentQuiz(null);
+                  }}
+                  variant="ghost"
+                  size="sm"
+                  className="w-full mt-4 text-gray-600 hover:text-gray-800"
+                >
+                  Pular por agora
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
