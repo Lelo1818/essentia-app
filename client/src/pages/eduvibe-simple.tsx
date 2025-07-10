@@ -35,14 +35,7 @@ export default function EduVibeSimple() {
   const [showingText, setShowingText] = useState(false);
   const [currentText, setCurrentText] = useState("");
   const [studyArea, setStudyArea] = useState<string>("");
-  const [showQuiz, setShowQuiz] = useState(false);
-  const [currentQuiz, setCurrentQuiz] = useState<any>(null);
-  const [quizScore, setQuizScore] = useState(0);
-  const [totalQuizzes, setTotalQuizzes] = useState(0);
-  const [quizResult, setQuizResult] = useState({ message: '', color: '', show: false });
-  
-  // Debug: Mostra o estado atual do quizResult
-  console.log("🔍 ESTADO ATUAL QUIZ RESULT:", quizResult);
+  const [totalAnalysis, setTotalAnalysis] = useState(0);
   const { toast } = useToast();
 
   // Salva automaticamente no localStorage
@@ -213,10 +206,8 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         description: realAnalysis ? "Análise completa da IA disponível" : "Conteúdo educativo extraído e disponível",
       });
 
-      // Inicia quiz após análise
-      if (realAnalysis || aiAnalysis) {
-        startQuizAfterAnalysis(realAnalysis || aiAnalysis, newFile.name);
-      }
+      // Incrementa contador de análises
+      setTotalAnalysis(prev => prev + 1);
     } catch (error) {
       setIsProcessing(false);
       toast({
@@ -295,22 +286,8 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         description: `Análise com IA ${result.success ? 'concluída' : 'básica'}`,
       });
 
-      // Inicia quiz após análise - SEMPRE
-      console.log("🔥 FORÇANDO QUIZ - result.success:", result.success, "result.analysis:", !!result.analysis);
-      
-      if (result.success && result.analysis) {
-        console.log("🎯 Iniciando quiz para TEXTO com análise IA:", result.analysis);
-        startQuizAfterAnalysis(result.analysis, newFile.name);
-      } else {
-        // Fallback quiz mesmo sem análise IA
-        console.log("🎯 Iniciando quiz FALLBACK para TEXTO");
-        const fallbackAnalysis = {
-          summary: `Texto analisado: "${originalText.substring(0, 100)}..."`,
-          studySuggestions: ["Revisar o conteúdo", "Fazer anotações"],
-          practiceExercises: ["Resumir em suas palavras", "Criar perguntas sobre o texto"]
-        };
-        startQuizAfterAnalysis(fallbackAnalysis, newFile.name);
-      }
+      // Incrementa contador de análises
+      setTotalAnalysis(prev => prev + 1);
     } catch (error) {
       console.log("💥 ERRO CAPTURADO:", error);
       
@@ -338,14 +315,8 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         variant: "destructive"
       });
       
-      // FORÇA QUIZ MESMO COM ERRO
-      console.log("🎯 QUIZ FORÇADO NO CATCH");
-      const fallbackAnalysis = {
-        summary: `Texto analisado com erro: "${originalText.substring(0, 100)}..."`,
-        studySuggestions: ["Revisar o conteúdo", "Fazer anotações"],
-        practiceExercises: ["Resumir em suas palavras", "Criar perguntas sobre o texto"]
-      };
-      startQuizAfterAnalysis(fallbackAnalysis, newFile.name);
+      // Incrementa contador de análises
+      setTotalAnalysis(prev => prev + 1);
     }
   };
 
