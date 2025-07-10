@@ -40,6 +40,9 @@ export default function EduVibeSimple() {
   const [quizScore, setQuizScore] = useState(0);
   const [totalQuizzes, setTotalQuizzes] = useState(0);
   const [quizResult, setQuizResult] = useState({ message: '', color: '', show: false });
+  
+  // Debug: Mostra o estado atual do quizResult
+  console.log("🔍 ESTADO ATUAL QUIZ RESULT:", quizResult);
   const { toast } = useToast();
 
   // Salva automaticamente no localStorage
@@ -504,7 +507,7 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
       setShowQuiz(false);
       setCurrentQuiz(null);
       setQuizResult({ message: '', color: '', show: false });
-    }, 3000); // Mostra resultado por 3 segundos
+    }, 8000); // Mostra resultado por 8 segundos
 
     toast({
       title: feedbackMessage,
