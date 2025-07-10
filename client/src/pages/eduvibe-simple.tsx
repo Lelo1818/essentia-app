@@ -452,6 +452,7 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
   };
 
   const handleQuizAnswer = (answerId: string) => {
+    console.log("🔥 FUNÇÃO handleQuizAnswer CHAMADA com:", answerId);
     const responses = {
       // Sentimentos
       'entendi': "🎉 Ótimo! Você está no caminho certo!",
