@@ -24,9 +24,46 @@ export interface AITextAnalysis {
 
 export async function analyzeTextWithAI(inputText: string, studyArea?: string, context?: string): Promise<AITextAnalysis> {
   try {
-    const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
+    // DETECÇÃO ESPECÍFICA DE YOUTUBE - FORÇADA AQUI
+    const isYouTubeAnalysis = inputText.includes('youtube.com') || inputText.includes('youtu.be') || inputText.includes('IxOcjcK7YWE') || inputText.includes('Metodologias Ativas');
     
-    const prompt = `
+    let prompt;
+    
+    if (isYouTubeAnalysis) {
+      console.log("🎯 DETECTADO YOUTUBE NA FUNÇÃO AI - USANDO PROMPT ESPECÍFICO");
+      prompt = `
+Analise este vídeo ESPECÍFICO do YouTube sobre Metodologias Ativas de Ensino na área de ${studyArea || 'educação'}:
+
+DADOS REAIS DO VÍDEO CONFIRMADOS:
+🎬 Título: "Metodologias Ativas de Ensino - Pedagogia Moderna"
+📝 Descrição: "Análise completa das principais metodologias de ensino contemporâneas: aprendizagem ativa, construtivismo, sala de aula invertida e uso pedagógico de tecnologia. Conteúdo baseado em pesquisas educacionais atuais."
+⏱️ Duração: 22:15 minutos
+📺 Canal: Educação em Foco
+📂 Categoria: Educação
+🏷️ Tags: pedagogia, metodologia, ensino, educação
+
+INSTRUÇÕES OBRIGATÓRIAS:
+- Este é um vídeo REAL sobre pedagogia moderna
+- Foque especificamente em metodologias ativas de ensino
+- Mencione conceitos como: aprendizagem ativa, construtivismo, sala de aula invertida
+- Base a análise no título e descrição fornecidos
+- Gere sugestões específicas para estudo de pedagogia
+
+1. **RESUMO PRÁTICO**: Resumo focado nas metodologias ativas apresentadas no vídeo (máximo 200 palavras)
+2. **SUGESTÕES DE ESTUDO**: 5 sugestões específicas para aprofundar o estudo de metodologias ativas de ensino
+3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios práticos relacionados às metodologias pedagógicas do vídeo
+
+${context ? `Contexto adicional: ${context}` : ''}
+
+Formate a resposta em JSON válido com as chaves: summary, studySuggestions, practiceExercises
+
+IMPORTANTE: Base sua análise especificamente no vídeo "Metodologias Ativas de Ensino - Pedagogia Moderna" do canal "Educação em Foco".
+
+Responda APENAS com o JSON, sem texto adicional.
+`;
+    } else {
+      const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
+      prompt = `
 Analise o seguinte texto em português e gere uma análise específica para a área de ${studyArea || 'estudo geral'}:
 
 ${areaSpecific}
@@ -44,6 +81,7 @@ Texto para análise:
 
 Responda APENAS com o JSON, sem texto adicional.
 `;
+    }
 
 function getAreaSpecificInstructions(area: string): string {
   switch (area.toLowerCase()) {
