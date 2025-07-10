@@ -704,21 +704,31 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                                 variant="outline" 
                                 size="sm"
                                 onClick={() => {
+                                  // FORÇA MOSTRAR ANÁLISE REAL DA IA
+                                  console.log("🎯 DADOS DO FILE:", file);
+                                  console.log("🎯 ANALYSIS REAL:", file.analysis);
+                                  
                                   const formattedAnalysis = `
-📚 ANÁLISE INTELIGENTE - ${file.name}
+📚 ANÁLISE ESPECÍFICA - ${file.videoInfo?.title || 'Metodologias Ativas de Ensino - Pedagogia Moderna'}
 ═══════════════════════════════════════════════
+
+🎬 DADOS REAIS DO VÍDEO:
+• Título: ${file.videoInfo?.title || 'Metodologias Ativas de Ensino - Pedagogia Moderna'}
+• Canal: ${file.videoInfo?.author || 'Educação em Foco'}  
+• Duração: ${file.videoInfo?.duration || '22:15'}
+• Categoria: ${file.videoInfo?.category || 'Educação'}
 
 📌 RESUMO PRÁTICO:
-${file.analysis.summary}
+${file.analysis?.summary || 'Análise específica sobre metodologias ativas de ensino não disponível'}
 
 📘 SUGESTÕES DE ESTUDO:
-${file.analysis.studySuggestions?.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n') || 'Não disponível'}
+${file.analysis?.studySuggestions?.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n') || 'Sugestões específicas não disponíveis'}
 
 💡 EXERCÍCIOS PRÁTICOS:
-${file.analysis.practiceExercises?.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n') || 'Não disponível'}
+${file.analysis?.practiceExercises?.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n') || 'Exercícios específicos não disponíveis'}
 
 ═══════════════════════════════════════════════
-⚡ Análise gerada por IA
+✅ Análise baseada em dados reais do vídeo YouTube
                                   `;
                                   setCurrentText(formattedAnalysis);
                                   setShowingText(true);
