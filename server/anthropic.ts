@@ -49,31 +49,12 @@ export async function analyzeTextWithAI(inputText: string, studyArea?: string, c
       prompt = generateTextPrompt(inputText, studyArea, context);
     }
 
-function getAreaSpecificInstructions(area: string): string {
-  switch (area.toLowerCase()) {
-    case 'educacao':
-      return "Foque em metodologias pedagógicas, teorias de aprendizagem e práticas educativas. Sugira técnicas de ensino e avaliação.";
-    case 'economia':
-      return "Analise conceitos econômicos, indicadores financeiros e impactos socioeconômicos. Sugira análises de mercado e estudos de caso.";
-    case 'tecnologia':
-      return "Explore inovações tecnológicas, desenvolvimento de software, tendências digitais e impactos da tecnologia na sociedade.";
-    case 'saude':
-      return "Aborde conceitos médicos, práticas de saúde pública, bem-estar e prevenção. Sugira aplicações práticas na área da saúde.";
-    case 'negocios':
-      return "Analise estratégias empresariais, gestão, empreendedorismo e desenvolvimento de negócios. Foque em casos práticos e aplicações.";
-    case 'outros':
-      return "Aplique uma abordagem interdisciplinar, conectando conceitos de diferentes áreas do conhecimento.";
-    default:
-      return "Forneça uma análise abrangente e prática do conteúdo.";
-  }
-}
-
     const message = await anthropic.messages.create({
-      max_tokens: 2000,
-      messages: [{ role: 'user', content: prompt }],
-      // "claude-sonnet-4-20250514"
-      model: DEFAULT_MODEL_STR,
-    });
+    max_tokens: 2000,
+    messages: [{ role: 'user', content: prompt }],
+    // "claude-sonnet-4-20250514"
+    model: DEFAULT_MODEL_STR,
+  });
 
     let responseText = message.content[0].text;
     
@@ -108,6 +89,25 @@ function getAreaSpecificInstructions(area: string): string {
   } catch (error) {
     console.error("Erro na análise com IA:", error);
     throw new Error("Falha ao processar o texto com IA. Verifique sua conexão e tente novamente.");
+  }
+}
+
+function getAreaSpecificInstructions(area: string): string {
+  switch (area.toLowerCase()) {
+    case 'educacao':
+      return "Foque em metodologias pedagógicas, teorias de aprendizagem e práticas educativas. Sugira técnicas de ensino e avaliação.";
+    case 'economia':
+      return "Analise conceitos econômicos, indicadores financeiros e impactos socioeconômicos. Sugira análises de mercado e estudos de caso.";
+    case 'tecnologia':
+      return "Explore inovações tecnológicas, desenvolvimento de software, tendências digitais e impactos da tecnologia na sociedade.";
+    case 'saude':
+      return "Aborde conceitos médicos, práticas de saúde pública, bem-estar e prevenção. Sugira aplicações práticas na área da saúde.";
+    case 'negocios':
+      return "Analise estratégias empresariais, gestão, empreendedorismo e desenvolvimento de negócios. Foque em casos práticos e aplicações.";
+    case 'outros':
+      return "Aplique uma abordagem interdisciplinar, conectando conceitos de diferentes áreas do conhecimento.";
+    default:
+      return "Forneça uma análise abrangente e prática do conteúdo.";
   }
 }
 
