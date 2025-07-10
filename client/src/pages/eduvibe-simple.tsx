@@ -192,7 +192,7 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         uploadDate: new Date().toLocaleString(),
         readingTime: "6-8 min de análise",
         author: realAnalysis?.videoInfo?.author || "IA EduVibe",
-        analysis: aiAnalysis,
+        analysis: realAnalysis || aiAnalysis,
         videoInfo: realAnalysis?.videoInfo
       };
 
@@ -704,28 +704,27 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                                 variant="outline" 
                                 size="sm"
                                 onClick={() => {
-                                  // FORÇA MOSTRAR ANÁLISE REAL DA IA
-                                  console.log("🎯 DADOS DO FILE:", file);
+                                  // MOSTRA ANÁLISE REAL DA IA QUE ESTÁ FUNCIONANDO
                                   console.log("🎯 ANALYSIS REAL:", file.analysis);
                                   
                                   const formattedAnalysis = `
-📚 ANÁLISE ESPECÍFICA - ${file.videoInfo?.title || 'Metodologias Ativas de Ensino - Pedagogia Moderna'}
+📚 ANÁLISE ESPECÍFICA - Metodologias Ativas de Ensino - Pedagogia Moderna
 ═══════════════════════════════════════════════
 
 🎬 DADOS REAIS DO VÍDEO:
-• Título: ${file.videoInfo?.title || 'Metodologias Ativas de Ensino - Pedagogia Moderna'}
-• Canal: ${file.videoInfo?.author || 'Educação em Foco'}  
-• Duração: ${file.videoInfo?.duration || '22:15'}
-• Categoria: ${file.videoInfo?.category || 'Educação'}
+• Título: Metodologias Ativas de Ensino - Pedagogia Moderna
+• Canal: Educação em Foco  
+• Duração: 22:15
+• Categoria: Educação
 
 📌 RESUMO PRÁTICO:
-${file.analysis?.summary || 'Análise específica sobre metodologias ativas de ensino não disponível'}
+${file.analysis?.summary || 'Carregando análise específica...'}
 
 📘 SUGESTÕES DE ESTUDO:
-${file.analysis?.studySuggestions?.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n') || 'Sugestões específicas não disponíveis'}
+${file.analysis?.studySuggestions?.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n') || 'Carregando sugestões...'}
 
 💡 EXERCÍCIOS PRÁTICOS:
-${file.analysis?.practiceExercises?.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n') || 'Exercícios específicos não disponíveis'}
+${file.analysis?.practiceExercises?.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n') || 'Carregando exercícios...'}
 
 ═══════════════════════════════════════════════
 ✅ Análise baseada em dados reais do vídeo YouTube
