@@ -603,35 +603,27 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                     </div>
                   )}
                   <Textarea
-                    placeholder={studyArea ? 
-                      `Digite seu texto sobre ${studyArea} para análise específica...` : 
-                      "Primeiro escolha uma área de estudo acima, depois cole seu texto aqui..."
-                    }
+                    placeholder="Cole qualquer texto, URL do YouTube ou conteúdo para análise com IA..."
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
                     rows={4}
-                    disabled={!studyArea}
+                    disabled={false}
                     className="border-purple-200 focus:border-purple-400"
                   />
                   <Button 
                     onClick={processText}
-                    disabled={isProcessing || !studyArea || !textInput.trim()}
+                    disabled={isProcessing || !textInput.trim()}
                     className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-gray-400 disabled:to-gray-500"
                   >
                     {isProcessing ? (
                       <>
                         <span className="animate-spin mr-2">🔄</span>
-                        Analisando...
-                      </>
-                    ) : !studyArea ? (
-                      <>
-                        <BookOpen className="w-4 h-4 mr-2" />
-                        Selecione uma área primeiro
+                        Analisando com IA...
                       </>
                     ) : !textInput.trim() ? (
                       <>
                         <Edit className="w-4 h-4 mr-2" />
-                        Digite um texto
+                        Digite um texto ou URL
                       </>
                     ) : (
                       <>
