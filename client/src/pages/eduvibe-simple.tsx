@@ -288,9 +288,19 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         description: `Análise com IA ${result.success ? 'concluída' : 'básica'}`,
       });
 
-      // Inicia quiz após análise
+      // Inicia quiz após análise - SEMPRE
       if (result.success && result.analysis) {
+        console.log("🎯 Iniciando quiz para TEXTO com análise:", result.analysis);
         startQuizAfterAnalysis(result.analysis, newFile.name);
+      } else {
+        // Fallback quiz mesmo sem análise IA
+        console.log("🎯 Iniciando quiz FALLBACK para TEXTO");
+        const fallbackAnalysis = {
+          summary: `Texto analisado: "${textInput.substring(0, 100)}..."`,
+          studySuggestions: ["Revisar o conteúdo", "Fazer anotações"],
+          practiceExercises: ["Resumir em suas palavras", "Criar perguntas sobre o texto"]
+        };
+        startQuizAfterAnalysis(fallbackAnalysis, newFile.name);
       }
     } catch (error) {
       setIsProcessing(false);
