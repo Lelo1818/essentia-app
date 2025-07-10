@@ -36,29 +36,33 @@ export async function analyzeTextWithAI(inputText: string, studyArea?: string, c
       const youtubeId = extractYouTubeId(inputText);
       console.log("📺 YouTube ID extraído:", youtubeId);
       
+      // Para YouTube, instruir a IA a analisar baseado no ID específico
       prompt = `
-Analise este vídeo ESPECÍFICO do YouTube na área de ${studyArea || 'educação geral'}:
+Você precisa analisar este vídeo ESPECÍFICO do YouTube:
 
-URL FORNECIDA: ${inputText}
+URL: ${inputText}
+ID DO VÍDEO: ${youtubeId}
 
-INSTRUÇÕES OBRIGATÓRIAS:
-- Analise especificamente o conteúdo do vídeo desta URL
-- NÃO use informações genéricas ou de outros vídeos
-- Se for vídeo educativo, foque no tema específico apresentado
-- Se for sobre biologia, matemática, física, etc., analise esse conteúdo específico
-- Gere análise baseada no que seria realmente encontrado neste vídeo
+INSTRUÇÕES CRÍTICAS:
+- Este é um vídeo REAL no YouTube com ID específico: ${youtubeId}
+- NÃO analise vídeos genéricos sobre matemática ou pedagogia
+- Baseie sua análise no conteúdo que seria realmente encontrado neste ID específico
+- Se não souber o conteúdo exato, admita isso e forneça uma análise baseada no ID
 
-IMPORTANTE: Este é um vídeo REAL do YouTube. Analise o conteúdo específico que seria encontrado nesta URL, não um vídeo genérico.
+Se você reconhecer este ID específico ou puder inferir o conteúdo real, forneça:
 
-1. **RESUMO ESPECÍFICO**: Resumo do conteúdo específico deste vídeo (máximo 250 palavras)
-2. **SUGESTÕES DE ESTUDO**: 5 sugestões específicas baseadas no tema deste vídeo
-3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios práticos relacionados ao conteúdo específico
+1. **RESUMO ESPECÍFICO**: Conteúdo real deste vídeo (máximo 250 palavras)
+2. **SUGESTÕES DE ESTUDO**: 5 sugestões baseadas no tema real
+3. **EXERCÍCIOS PRÁTICOS**: 5 exercícios relacionados ao conteúdo específico
 
-${context ? `Contexto adicional: ${context}` : ''}
+Se não reconhecer o ID específico, responda:
+{
+  "summary": "Vídeo do YouTube com ID ${youtubeId}. Não posso fornecer análise específica sem acesso ao conteúdo real do vídeo.",
+  "studySuggestions": ["Assistir ao vídeo completo", "Fazer anotações durante a visualização", "Pesquisar sobre o canal que publicou", "Verificar comentários para insights adicionais", "Buscar vídeos relacionados do mesmo autor"],
+  "practiceExercises": ["Resumir o vídeo em suas próprias palavras", "Identificar 3 pontos principais", "Criar perguntas sobre o conteúdo", "Discutir o tema com outras pessoas", "Aplicar os conceitos em exemplos práticos"]
+}
 
-Formate a resposta em JSON válido com as chaves: summary, studySuggestions, practiceExercises
-
-Responda APENAS com o JSON, sem texto adicional.
+Responda APENAS com JSON válido.
 `;
     } else {
       const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";

@@ -338,22 +338,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // AI Routes for EduVibe
   app.post("/api/ai/analyze-text", async (req, res) => {
     try {
-      const { text } = req.body;
+      const { text, studyArea, context } = req.body;
       
-      if (!text || typeof text !== 'string' || text.trim().length < 10) {
+      if (!text || typeof text !== 'string' || text.trim().length < 3) {
         return res.status(400).json({ 
-          message: "Texto inválido. Por favor, forneça um texto com pelo menos 10 caracteres." 
+          message: "Texto inválido. Por favor, forneça um texto com pelo menos 3 caracteres." 
         });
       }
 
       console.log("Analisando texto com IA:", text.substring(0, 100) + "...");
+      console.log("Área de estudo:", studyArea);
+      console.log("Contexto:", context);
       
-      const analysis = await analyzeTextWithAI(text);
+      const analysis = await analyzeTextWithAI(text, studyArea, context);
       
       console.log("Análise IA concluída com sucesso");
       res.json({
         success: true,
         analysis,
+        studyArea: studyArea || 'geral',
         processedAt: new Date().toISOString()
       });
     } catch (error) {

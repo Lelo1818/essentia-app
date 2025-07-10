@@ -232,21 +232,27 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
       let result = { success: false, analysis: null };
       
       try {
+        console.log("🧠 Enviando texto para análise IA:", textInput.substring(0, 100));
         const response = await fetch('/api/ai/analyze-text', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             text: textInput,
             studyArea: studyArea || 'geral',
-            context: `Área de estudo: ${studyArea || 'geral'}. Forneça análise específica para esta área.`
+            context: `Analisar texto/conteúdo para área de ${studyArea || 'estudos gerais'}.`
           })
         });
 
+        console.log("📡 Response status:", response.status);
+        
         if (response.ok) {
           result = await response.json();
+          console.log("🎯 ANALYSIS REAL:", result.analysis);
+        } else {
+          console.log("❌ Erro na resposta:", response.status);
         }
       } catch (error) {
-        console.log("Erro na API, usando análise básica");
+        console.log("❌ Erro na API:", error);
       }
       
       const words = textInput.trim().split(/\s+/).length;
