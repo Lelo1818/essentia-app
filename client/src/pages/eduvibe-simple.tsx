@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Download, FileText, Video, Brain, X, BarChart3, Upload, Link, Edit, BookOpen, TrendingUp, Eye } from "lucide-react";
+import { Download, FileText, Video, Brain, X, BarChart3, Upload, Link, Edit, BookOpen, TrendingUp, Eye, AlertTriangle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function EduVibeSimple() {
@@ -61,7 +61,7 @@ export default function EduVibeSimple() {
   }, []);
 
   // Função para processar YouTube
-  const processYouTubeVideo = async () => {
+  const processYouTube = async () => {
     if (!youtubeUrl) {
       toast({
         title: "URL necessária",
@@ -680,15 +680,15 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
               </CardContent>
             </Card>
 
-            {/* 2. PDF Upload - SEGUNDO LUGAR */}
-            <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 shadow-xl border-2 border-orange-200">
+            {/* 2. PDF Upload - SEGUNDA PRIORIDADE */}
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 shadow-xl border-2 border-orange-300">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <FileText className="w-6 h-6 mr-2 text-orange-600" />
-                  📄 Upload PDF
+                  📄 Análise PDF - SEGUNDA PRIORIDADE
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  Envie documentos PDF para análise inteligente
+                  <span className="font-semibold text-orange-700">Segunda opção recomendada:</span> Upload de documentos PDF para análise completa com IA
                 </p>
               </CardHeader>
               <CardContent>
@@ -704,31 +704,38 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                   />
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="text-center">
-                      <Upload className="w-8 h-8 mx-auto mb-2 text-orange-400" />
-                      <p className="text-sm text-gray-600">Clique para selecionar PDF</p>
+                      <Upload className="w-8 h-8 mx-auto mb-2 text-orange-500" />
+                      <p className="text-sm text-orange-700 font-medium">Clique para selecionar PDF</p>
+                      <p className="text-xs text-orange-600">Análise automática com IA real</p>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* 3. YouTube/Links - ÚLTIMO LUGAR */}
-            <Card className="bg-gradient-to-br from-gray-50 to-red-50 shadow-xl border-2 border-gray-300">
+            {/* 3. YouTube/Links - TERCEIRA PRIORIDADE - LIMITADO */}
+            <Card className="bg-gradient-to-br from-gray-50 to-gray-100 shadow-xl border-2 border-gray-400">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Link className="w-6 h-6 mr-2 text-gray-600" />
-                  🔗 Análise de Links (Limitado)
+                  <Video className="w-6 h-6 mr-2 text-gray-600" />
+                  🎬 YouTube/Links - TERCEIRA PRIORIDADE
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  YouTube e outros links - análise metodológica apenas
+                  <span className="font-semibold text-gray-700">Última opção:</span> Processamento básico de vídeos e links
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
-                    <p className="text-xs text-yellow-800">
-                      ⚠️ Links como YouTube só geram orientações de estudo genéricas. Para análise específica, copie o conteúdo no campo de texto acima.
-                    </p>
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-xs text-red-800">
+                        <p className="font-medium mb-1">⚠️ LIMITAÇÕES IMPORTANTES</p>
+                        <p>• YouTube: Muitos vídeos protegidos por direitos autorais</p>
+                        <p>• Links externos: Sucesso não garantido</p>
+                        <p>• <strong>RECOMENDAÇÃO:</strong> Use Texto ou PDF para melhor experiência</p>
+                      </div>
+                    </div>
                   </div>
                   <Input
                     placeholder="Cole links do YouTube, artigos ou sites educativos..."
@@ -737,19 +744,19 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
                     className="border-gray-300 focus:border-gray-400"
                   />
                   <Button 
-                    onClick={processYouTubeVideo}
+                    onClick={processYouTube}
                     disabled={isProcessing || !youtubeUrl}
                     className="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 disabled:from-gray-400 disabled:to-gray-500"
                   >
                     {isProcessing ? (
                       <>
                         <span className="animate-spin mr-2">⏳</span>
-                        Processando...
+                        Tentando processar...
                       </>
                     ) : (
                       <>
-                        <Link className="w-4 h-4 mr-2" />
-                        Gerar Orientações
+                        <Video className="w-4 h-4 mr-2" />
+                        Tentar Processar
                       </>
                     )}
                   </Button>
