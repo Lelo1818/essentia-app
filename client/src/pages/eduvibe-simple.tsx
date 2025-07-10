@@ -483,14 +483,23 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
 
     // MOSTRA RESULTADO DO QUIZ IMEDIATAMENTE
     const feedbackMessage = responses[answerId] || "Obrigado pelo feedback!";
+    console.log("🎯 SETANDO QUIZ RESULT:", {
+      message: feedbackMessage,
+      color: colors[answerId] || 'blue',
+      show: true
+    });
+    
     setQuizResult({
       message: feedbackMessage,
       color: colors[answerId] || 'blue',
       show: true
     });
 
+    console.log("⏰ Iniciando timeout para fechar quiz em 3 segundos");
+    
     // Esconde o quiz após mostrar resultado
     setTimeout(() => {
+      console.log("⏰ TIMEOUT EXECUTADO - fechando quiz");
       setShowQuiz(false);
       setCurrentQuiz(null);
       setQuizResult({ message: '', color: '', show: false });
@@ -498,7 +507,7 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
 
     toast({
       title: feedbackMessage,
-      description: `Quiz ${totalQuizzes + 1} concluído!`,
+      description: `Quiz ${totalQuizzes} concluído!`,
     });
   };
 
