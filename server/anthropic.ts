@@ -46,10 +46,22 @@ Responda APENAS com o JSON, sem texto adicional.
       model: DEFAULT_MODEL_STR,
     });
 
-    const responseText = message.content[0].text;
+    let responseText = message.content[0].text;
+    
+    // Extract JSON from response text - try multiple approaches
+    let jsonString = responseText;
+    
+    // Method 1: Remove markdown code blocks
+    jsonString = jsonString.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    
+    // Method 2: Extract JSON between curly braces
+    const jsonMatch = jsonString.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      jsonString = jsonMatch[0];
+    }
     
     try {
-      const analysis = JSON.parse(responseText);
+      const analysis = JSON.parse(jsonString);
       return {
         summary: analysis.summary || "Análise não disponível",
         studySuggestions: Array.isArray(analysis.studySuggestions) ? analysis.studySuggestions : [],
