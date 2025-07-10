@@ -1811,35 +1811,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (youtubeMatch) {
         const videoId = youtubeMatch[1];
-        console.log("Detectado vídeo do YouTube:", videoId);
+        console.log("=== DETECTADO VÍDEO DO YOUTUBE ===");
+        console.log("Video ID:", videoId);
+        console.log("URL completa:", text);
         
         const videoInfo = await getYouTubeVideoInfo(videoId);
+        console.log("=== INFORMAÇÕES DO VÍDEO RETORNADAS ===");
+        console.log("VideoInfo:", JSON.stringify(videoInfo, null, 2));
         
         if (videoInfo) {
-          console.log("Informações do vídeo encontradas:", videoInfo.title);
+          console.log("✅ VÍDEO ENCONTRADO:", videoInfo.title);
           
           // Cria prompt específico com informações REAIS do vídeo
-          const videoAnalysisPrompt = `Analise este vídeo específico do YouTube na área de ${studyArea || 'educação'}:
+          const videoAnalysisPrompt = `ANÁLISE ESPECÍFICA DE VÍDEO DO YOUTUBE - ÁREA: ${studyArea || 'educação'}
 
-INFORMAÇÕES REAIS DO VÍDEO:
-- Título: "${videoInfo.title}"
-- Descrição: "${videoInfo.description}"
-- Duração: ${videoInfo.duration}
-- Canal: ${videoInfo.author}
-- Categoria: ${videoInfo.category}
-- Tags: ${videoInfo.tags.join(', ')}
+DADOS REAIS CONFIRMADOS DO VÍDEO:
+🎬 Título: "${videoInfo.title}"
+📝 Descrição: "${videoInfo.description}"
+⏱️ Duração: ${videoInfo.duration}
+📺 Canal: ${videoInfo.author}
+📂 Categoria: ${videoInfo.category}
+🏷️ Tags: ${videoInfo.tags.join(', ')}
 
-IMPORTANTE: Baseie sua análise especificamente neste conteúdo real. Não invente informações.
-Forneça insights educacionais baseados no título, descrição e categoria do vídeo.`;
+INSTRUÇÕES CRÍTICAS:
+- Use SOMENTE essas informações reais do vídeo
+- Analise especificamente o conteúdo baseado no título e descrição
+- Foque na área de estudo: ${studyArea || 'educação'}
+- Gere sugestões específicas para este vídeo exato
+- NÃO invente informações que não estão aqui`;
 
-          analysis = await analyzeTextWithAI(videoAnalysisPrompt, studyArea || 'geral', `Análise específica do vídeo: ${videoInfo.title}`);
+          console.log("📝 PROMPT ENVIADO PARA IA:");
+          console.log(videoAnalysisPrompt.substring(0, 200) + "...");
+
+          analysis = await analyzeTextWithAI(videoAnalysisPrompt, studyArea || 'geral', `Análise específica: ${videoInfo.title}`);
           
           // Adiciona informações do vídeo na análise
           analysis.videoInfo = videoInfo;
+          console.log("✅ ANÁLISE CONCLUÍDA COM VIDEOINFO");
         } else {
+          console.log("❌ VÍDEO NÃO ENCONTRADO - usando análise genérica");
           analysis = await analyzeTextWithAI(text, studyArea || 'geral', context);
         }
       } else {
+        console.log("❌ URL NÃO É DO YOUTUBE - análise de texto normal");
         analysis = await analyzeTextWithAI(text, studyArea || 'geral', context);
       }
       
