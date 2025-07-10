@@ -379,9 +379,19 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
         description: `Análise ${result.success ? 'com IA' : 'básica'} concluída`,
       });
 
-      // Inicia quiz após análise
+      // Inicia quiz após análise - SEMPRE, mesmo sem IA
       if (result.success && result.analysis) {
+        console.log("🎯 Iniciando quiz para PDF com análise IA:", result.analysis);
         startQuizAfterAnalysis(result.analysis, newFile.name);
+      } else {
+        // Fallback quiz mesmo sem análise IA
+        console.log("🎯 Iniciando quiz FALLBACK para PDF");
+        const fallbackAnalysis = {
+          summary: `Documento PDF analisado: "${file.name}"`,
+          studySuggestions: ["Revisar o documento", "Fazer anotações importantes"],
+          practiceExercises: ["Resumir o conteúdo", "Criar perguntas sobre o PDF"]
+        };
+        startQuizAfterAnalysis(fallbackAnalysis, newFile.name);
       }
     } catch (error) {
       setIsProcessing(false);
@@ -395,7 +405,12 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
 
   // SISTEMA DE QUIZ INTERATIVO - NOVO
   const generateQuiz = (analysis: any, fileName: string) => {
-    if (!analysis || !analysis.summary) return null;
+    console.log("🎲 generateQuiz CHAMADA:", { analysis, fileName, hasSummary: !!(analysis && analysis.summary) });
+    
+    if (!analysis || !analysis.summary) {
+      console.log("❌ generateQuiz - análise inválida ou sem summary");
+      return null;
+    }
     
     const quizzes = [
       {
@@ -735,10 +750,10 @@ Este vídeo foi processado pela IA EduVibe e identificado como conteúdo educati
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <FileText className="w-6 h-6 mr-2 text-orange-600" />
-                  📄 Análise PDF - SEGUNDA PRIORIDADE
+                  📄 Análise IA de PDF
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  <span className="font-semibold text-orange-700">Segunda opção recomendada:</span> Upload de documentos PDF para análise completa com IA
+                  Upload de documentos PDF para análise completa com IA
                 </p>
               </CardHeader>
               <CardContent>
