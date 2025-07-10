@@ -1749,7 +1749,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // AI Text Analysis Routes
   app.post("/api/ai/analyze-text", async (req, res) => {
     try {
-      const { text } = req.body;
+      const { text, studyArea, context } = req.body;
       
       if (!text || typeof text !== 'string' || text.trim().length < 10) {
         return res.status(400).json({ 
@@ -1758,13 +1758,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       console.log("Analisando texto com IA:", text.substring(0, 100) + "...");
+      console.log("Área de estudo:", studyArea || 'geral');
       
-      const analysis = await analyzeTextWithAI(text);
+      const analysis = await analyzeTextWithAI(text, studyArea, context);
       
       console.log("Análise IA concluída com sucesso");
       res.json({
         success: true,
         analysis,
+        studyArea: studyArea || 'geral',
         processedAt: new Date().toISOString()
       });
     } catch (error) {

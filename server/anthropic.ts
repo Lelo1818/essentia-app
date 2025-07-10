@@ -22,14 +22,20 @@ export interface AITextAnalysis {
   practiceExercises: string[];
 }
 
-export async function analyzeTextWithAI(inputText: string): Promise<AITextAnalysis> {
+export async function analyzeTextWithAI(inputText: string, studyArea?: string, context?: string): Promise<AITextAnalysis> {
   try {
+    const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
+    
     const prompt = `
-Analise o seguinte texto em português e gere:
+Analise o seguinte texto em português e gere uma análise específica para a área de ${studyArea || 'estudo geral'}:
+
+${areaSpecific}
 
 1. **RESUMO PRÁTICO**: Um resumo conciso e útil dos pontos principais (máximo 200 palavras)
-2. **SUGESTÕES DE ESTUDO**: 3-5 sugestões específicas de como estudar melhor este conteúdo
-3. **EXERCÍCIOS PRÁTICOS**: 3-5 exercícios ou práticas para fixar o aprendizado
+2. **SUGESTÕES DE ESTUDO**: 3-5 sugestões específicas de como estudar melhor este conteúdo na área de ${studyArea || 'estudo geral'}
+3. **EXERCÍCIOS PRÁTICOS**: 3-5 exercícios ou práticas para fixar o aprendizado específicos da área
+
+${context ? `Contexto adicional: ${context}` : ''}
 
 Formate a resposta em JSON válido com as chaves: summary, studySuggestions, practiceExercises
 
@@ -38,6 +44,19 @@ Texto para análise:
 
 Responda APENAS com o JSON, sem texto adicional.
 `;
+
+function getAreaSpecificInstructions(area: string): string {
+  switch (area.toLowerCase()) {
+    case 'educacao':
+      return "Foque em metodologias pedagógicas, teorias de aprendizagem e práticas educativas. Sugira técnicas de ensino e avaliação.";
+    case 'economia':
+      return "Analise conceitos econômicos, indicadores financeiros e impactos socioeconômicos. Sugira análises de mercado e estudos de caso.";
+    case 'outros':
+      return "Aplique uma abordagem interdisciplinar, conectando conceitos de diferentes áreas do conhecimento.";
+    default:
+      return "Forneça uma análise abrangente e prática do conteúdo.";
+  }
+}
 
     const message = await anthropic.messages.create({
       max_tokens: 2000,

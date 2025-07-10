@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Download, FileText, Video, Brain, X, BarChart3, Upload, Link, Edit } from "lucide-react";
+import { Download, FileText, Video, Brain, X, BarChart3, Upload, Link, Edit, BookOpen, TrendingUp, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function EduVibeSimple() {
@@ -34,6 +34,7 @@ export default function EduVibeSimple() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showingText, setShowingText] = useState(false);
   const [currentText, setCurrentText] = useState("");
+  const [studyArea, setStudyArea] = useState<string>("");
   const { toast } = useToast();
 
   // Salva automaticamente no localStorage
@@ -148,7 +149,11 @@ export default function EduVibeSimple() {
         const response = await fetch('/api/ai/analyze-text', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: textInput })
+          body: JSON.stringify({ 
+            text: textInput,
+            studyArea: studyArea || 'geral',
+            context: `Área de estudo: ${studyArea || 'geral'}. Forneça análise específica para esta área.`
+          })
         });
 
         if (response.ok) {
@@ -293,6 +298,57 @@ export default function EduVibeSimple() {
           </div>
         </div>
 
+        {/* Seleção de Área de Estudo */}
+        <div className="mb-8">
+          <Card className="border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50">
+            <CardHeader>
+              <CardTitle className="flex items-center text-purple-800 mb-4">
+                <BookOpen className="w-5 h-5 mr-2" />
+                Escolha sua Área de Estudo
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <Button
+                  onClick={() => setStudyArea('educacao')}
+                  variant={studyArea === 'educacao' ? 'default' : 'outline'}
+                  className={`h-20 flex-col space-y-2 ${studyArea === 'educacao' ? 'bg-blue-600 text-white' : 'hover:bg-blue-50'}`}
+                >
+                  <BookOpen className="w-8 h-8" />
+                  <span>Educação</span>
+                </Button>
+                <Button
+                  onClick={() => setStudyArea('economia')}
+                  variant={studyArea === 'economia' ? 'default' : 'outline'}
+                  className={`h-20 flex-col space-y-2 ${studyArea === 'economia' ? 'bg-green-600 text-white' : 'hover:bg-green-50'}`}
+                >
+                  <TrendingUp className="w-8 h-8" />
+                  <span>Economia</span>
+                </Button>
+                <Button
+                  onClick={() => setStudyArea('outros')}
+                  variant={studyArea === 'outros' ? 'default' : 'outline'}
+                  className={`h-20 flex-col space-y-2 ${studyArea === 'outros' ? 'bg-purple-600 text-white' : 'hover:bg-purple-50'}`}
+                >
+                  <Brain className="w-8 h-8" />
+                  <span>Outros</span>
+                </Button>
+              </div>
+              
+              {studyArea && (
+                <div className="bg-white p-4 rounded-lg border border-gray-200">
+                  <p className="text-sm text-gray-600 mb-2">
+                    Área selecionada: <span className="font-semibold text-gray-800 capitalize">{studyArea}</span>
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Agora digite seu assunto de estudo abaixo para análise personalizada
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Seção de Upload */}
           <div className="space-y-6">
@@ -353,18 +409,32 @@ export default function EduVibeSimple() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
+                  {studyArea && (
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                      <p className="text-sm text-blue-800">
+                        📚 Área: <span className="font-semibold capitalize">{studyArea}</span>
+                      </p>
+                    </div>
+                  )}
                   <Textarea
-                    placeholder="Cole seu texto aqui para análise com IA..."
+                    placeholder={studyArea ? 
+                      `Digite seu texto sobre ${studyArea} para análise específica...` : 
+                      "Primeiro escolha uma área de estudo acima, depois cole seu texto aqui..."
+                    }
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
                     rows={4}
+                    disabled={!studyArea}
                   />
                   <Button 
                     onClick={processText}
-                    disabled={isProcessing}
-                    className="w-full bg-purple-600 hover:bg-purple-700"
+                    disabled={isProcessing || !studyArea || !textInput.trim()}
+                    className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400"
                   >
-                    {isProcessing ? "Analisando..." : "Analisar com IA"}
+                    {isProcessing ? "Analisando..." : 
+                     !studyArea ? "Selecione uma área primeiro" :
+                     !textInput.trim() ? "Digite um texto" :
+                     "Analisar com IA"}
                   </Button>
                 </div>
               </CardContent>
