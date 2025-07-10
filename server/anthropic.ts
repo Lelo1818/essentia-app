@@ -36,26 +36,31 @@ export async function analyzeTextWithAI(inputText: string, studyArea?: string, c
       const youtubeId = extractYouTubeId(inputText);
       console.log("📺 YouTube ID extraído:", youtubeId);
       
-      // Retornar análise honesta sobre limitações
-      const limitationNote = getYouTubeAnalysisNote(youtubeId);
-      
-      return {
-        summary: `LIMITAÇÃO DO SISTEMA: Não posso analisar especificamente o vídeo ${youtubeId} pois não tenho acesso ao conteúdo real do YouTube. Para análise precisa, copie a descrição ou transcrição do vídeo e cole no campo de texto para análise manual.`,
-        studySuggestions: [
-          "Assista ao vídeo completo com atenção focada nos conceitos principais",
-          "Pause frequentemente para fazer anotações sobre pontos importantes",
-          "Copie a descrição do vídeo e analise com a IA usando o campo de texto",
-          "Pesquise sobre o canal para entender o contexto e credibilidade",
-          "Procure vídeos relacionados do mesmo autor para aprofundar o tema"
-        ],
-        practiceExercises: [
-          "Faça um resumo de 3 parágrafos sobre o conteúdo assistido",
-          "Identifique 5 conceitos-chave e defina cada um com suas palavras",
-          "Crie 3 perguntas que você faria ao apresentador sobre o tema",
-          "Encontre uma aplicação prática do conteúdo na sua área de interesse",
-          "Compartilhe o aprendizado explicando para outra pessoa"
-        ]
-      };
+      // Análise educativa real da IA para YouTube
+      prompt = `
+Analise esta URL do YouTube para fins educativos:
+
+URL: ${inputText}
+ID DO VÍDEO: ${youtubeId}
+ÁREA DE ESTUDO: ${studyArea || 'geral'}
+
+CONTEXTO IMPORTANTE:
+- Este sistema não tem acesso direto ao conteúdo do vídeo
+- Forneça uma análise educativa honesta sobre essa limitação
+- Combine transparência técnica com orientações úteis de aprendizado
+- Foque em metodologias de estudo aplicáveis a qualquer vídeo educativo
+
+INSTRUÇÕES:
+1. **RESUMO**: Explique a limitação técnica de forma educativa, mas também forneça orientações sobre como estudar vídeos educativos eficazmente (máximo 200 palavras)
+
+2. **SUGESTÕES DE ESTUDO**: 5 técnicas específicas para maximizar o aprendizado com vídeos educativos, incluindo como usar este sistema para análise real do conteúdo
+
+3. **EXERCÍCIOS PRÁTICOS**: 5 atividades práticas que podem ser aplicadas a qualquer vídeo educativo
+
+Importante: Seja transparente sobre limitações, mas útil para o aprendizado.
+
+Responda em JSON com as chaves: summary, studySuggestions, practiceExercises
+`;
     } else {
       const areaSpecific = studyArea ? getAreaSpecificInstructions(studyArea) : "";
       prompt = `
