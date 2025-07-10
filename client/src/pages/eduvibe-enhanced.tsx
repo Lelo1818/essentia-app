@@ -146,6 +146,8 @@ Investir é fundamental para fazer seu dinheiro crescer ao longo do tempo. Neste
 };
 
 export default function EduVibeEnhanced() {
+  // FORÇA SEMPRE COMEÇAR NO PASSO 6 (Central Downloads)
+  const [currentStep, setCurrentStep] = useState(6);
   // Botão flutuante para Central Downloads
   const FloatingDownloadButton = () => (
     <div className="fixed bottom-6 right-6 z-50">
@@ -192,11 +194,11 @@ export default function EduVibeEnhanced() {
     console.log('EduVibe Enhanced - VERSÃO FINAL carregada!');
   }, []);
 
-  const [currentStep, setCurrentStep] = useState(0);
+
   const [selectedPath, setSelectedPath] = useState<LearningPath | null>(null);
   const [userName, setUserName] = useState("");
   const [selectedTheme, setSelectedTheme] = useState("");
-  const [learningGoal, setLearningGoal] = useState("");
+  const [learningGoal, setLearningGoal] = useState("tecnologia"); // FORÇA TECH COMO PADRÃO
   const [studyTime, setStudyTime] = useState("");
   const [currentModuleId, setCurrentModuleId] = useState<number | null>(null);
   const [showingVideo, setShowingVideo] = useState(false);
@@ -241,28 +243,28 @@ export default function EduVibeEnhanced() {
     if (existingMeta) existingMeta.remove();
   }, []);
 
-  // Função para gerar trilha baseada no objetivo escolhido
+  // Função para gerar trilha baseada no objetivo escolhido - SEM CONTEÚDO FINANCEIRO
   const generateLearningPath = (goal: string): LearningPath => {
     const pathsDatabase = {
-      'yoga': {
-        title: "Fundamentos do Yoga",
-        description: "Uma jornada completa para dominar as bases do yoga",
+      'tecnologia': {
+        title: "Desenvolvimento de Software",
+        description: "Aprenda programação do básico ao avançado",
         modules: [
-          { id: 1, title: "Respiração e Postura Básica", type: 'video' as const, content: "# Respiração no Yoga\n\nA respiração é fundamental no yoga..." },
-          { id: 2, title: "Saudação ao Sol", type: 'text' as const, content: "# Saudação ao Sol\n\nSequência básica de movimentos..." },
-          { id: 3, title: "Meditação e Relaxamento", type: 'video' as const, content: "# Meditação\n\nTécnicas de meditação para iniciantes..." }
+          { id: 1, title: "Fundamentos de Programação", type: 'video' as const, content: "# Programação Básica\n\nConceitos fundamentais..." },
+          { id: 2, title: "Desenvolvimento Web", type: 'text' as const, content: "# Web Development\n\nHTML, CSS e JavaScript..." },
+          { id: 3, title: "Projetos Práticos", type: 'video' as const, content: "# Projetos\n\nConstruindo aplicações reais..." }
         ]
       },
-      'programacao': {
-        title: "Programação Web Moderna",
-        description: "Do básico ao avançado em desenvolvimento web",
+      'design': {
+        title: "Design Digital Moderno",
+        description: "Criação de interfaces e experiências digitais",
         modules: [
-          { id: 1, title: "HTML e CSS Fundamentais", type: 'video' as const, content: "# HTML Básico\n\nEstruturas básicas de HTML..." },
-          { id: 2, title: "JavaScript Essencial", type: 'text' as const, content: "# JavaScript\n\nLógica de programação com JavaScript..." },
-          { id: 3, title: "React e Projetos Práticos", type: 'video' as const, content: "# React\n\nCriando aplicações modernas..." }
+          { id: 1, title: "Princípios de Design", type: 'video' as const, content: "# Design Fundamentals\n\nConceitos básicos de design..." },
+          { id: 2, title: "Ferramentas Digitais", type: 'text' as const, content: "# Digital Tools\n\nFigma, Adobe e outras ferramentas..." },
+          { id: 3, title: "Portfolio Digital", type: 'video' as const, content: "# Portfolio\n\nCriando seu portfólio profissional..." }
         ]
       },
-      'culinaria': {
+      'marketing': {
         title: "Arte Culinária Brasileira",
         description: "Domine os sabores da cozinha brasileira",
         modules: [
@@ -273,14 +275,14 @@ export default function EduVibeEnhanced() {
       }
     };
 
-    // Se não encontrar o objetivo específico, usa educação financeira como padrão
+    // Se não encontrar objetivo, usa aprendizado digital como padrão
     const selectedPath = pathsDatabase[goal.toLowerCase()] || {
-      title: "Fundamentos de Educação Financeira",
-      description: "Uma jornada completa para organizar sua vida financeira",
+      title: "Fundamentos de Aprendizado Digital",
+      description: "Domine técnicas modernas de estudo e produtividade",
       modules: [
-        { id: 1, title: "Entendendo o Dinheiro", type: 'video' as const, content: textDatabase[1] },
-        { id: 2, title: "Criando seu Primeiro Orçamento", type: 'text' as const, content: textDatabase[2] },
-        { id: 3, title: "Investimentos Básicos", type: 'video' as const, content: textDatabase[3] }
+        { id: 1, title: "Técnicas de Estudo Eficazes", type: 'video' as const, content: "# Estudo Eficaz\n\nMétodos comprovados..." },
+        { id: 2, title: "Organização Digital", type: 'text' as const, content: "# Organização\n\nSistemas de produtividade..." },
+        { id: 3, title: "Ferramentas de Produtividade", type: 'video' as const, content: "# Ferramentas\n\nApps e sistemas..." }
       ]
     };
 
@@ -288,12 +290,12 @@ export default function EduVibeEnhanced() {
       id: 1,
       title: selectedPath.title,
       description: selectedPath.description,
-      progress: 25,
+      progress: 0,
       difficulty: 'Iniciante',
-      estimatedTime: "2 semanas",
+      estimatedTime: "1 semana",
       modules: selectedPath.modules.map(module => ({
         ...module,
-        completed: module.id === 1,
+        completed: false, // Sempre inicia zerado
         videoUrl: module.type === 'video' ? videoDatabase[module.id] : undefined
       }))
     };

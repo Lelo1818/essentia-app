@@ -50,6 +50,7 @@ import EduVieClean from "@/pages/eduvie-clean";
 import EduVieStandalone from "@/pages/eduvie-standalone";
 import EduVibeFunctional from "@/pages/eduvibe-functional";
 import EduVibeEnhanced from "@/pages/eduvibe-enhanced";
+import EduVibeDirect from "@/pages/eduvibe-direct";
 import FlowStandalone from "@/pages/flow-standalone";
 import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
@@ -62,7 +63,7 @@ import Investments from "@/pages/investments";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={EduVibeEnhanced} />
+      <Route path="/" component={EduVibeDirect} />
       <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKidsStandalone} />
