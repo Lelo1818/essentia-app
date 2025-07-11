@@ -291,7 +291,7 @@ export default function FlowWorking() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-full overflow-hidden">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-8 max-w-7xl mx-auto">
         
         {/* Mobile-First Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -366,7 +366,7 @@ export default function FlowWorking() {
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="mt-0">
             {/* Estatísticas principais */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 <CardContent className="p-3 sm:p-6">
                   <div className="flex items-center justify-between">
@@ -437,7 +437,7 @@ export default function FlowWorking() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
               <Button 
                 onClick={() => setShowIncomeModal(true)}
                 className="h-16 flex flex-col gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200"
@@ -639,7 +639,7 @@ function QuickIncomeModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
         <CardHeader>
           <CardTitle className="text-green-600 flex items-center justify-between">
             Nova Receita
@@ -856,7 +856,7 @@ function QuickExpenseModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
         <CardHeader>
           <CardTitle className="text-red-600 flex items-center justify-between">
             Novo Gasto
