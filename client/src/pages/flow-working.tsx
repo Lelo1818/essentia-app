@@ -368,68 +368,68 @@ export default function FlowWorking() {
             {/* Estatísticas principais */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-3 sm:p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <p className="text-xs sm:text-sm font-medium text-slate-600 mb-1">Receitas</p>
-                      <p className="text-lg sm:text-3xl font-bold text-green-600">
+                      <p className="text-base sm:text-2xl lg:text-3xl font-bold text-green-600 truncate">
                         {formatCurrency(data.totalIncome)}
                       </p>
                       <p className="text-xs text-green-500 mt-1">+12.5%</p>
                     </div>
-                    <div className="p-2 sm:p-4 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl">
-                      <TrendingUp className="w-4 h-4 sm:w-8 sm:h-8 text-white" />
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex-shrink-0 ml-3">
+                      <TrendingUp className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-3 sm:p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <p className="text-xs sm:text-sm font-medium text-slate-600 mb-1">Gastos</p>
-                      <p className="text-lg sm:text-3xl font-bold text-red-600">
+                      <p className="text-base sm:text-2xl lg:text-3xl font-bold text-red-600 truncate">
                         {formatCurrency(data.totalExpenses)}
                       </p>
                       <p className="text-xs text-red-500 mt-1">-8.2%</p>
                     </div>
-                    <div className="p-2 sm:p-4 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl">
-                      <TrendingDown className="w-4 h-4 sm:w-8 sm:h-8 text-white" />
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex-shrink-0 ml-3">
+                      <TrendingDown className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-3 sm:p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <p className="text-xs sm:text-sm font-medium text-slate-600 mb-1">Saldo</p>
-                      <p className="text-lg sm:text-3xl font-bold text-blue-600">
+                      <p className="text-base sm:text-2xl lg:text-3xl font-bold text-blue-600 truncate">
                         {formatCurrency(data.balance)}
                       </p>
                       <p className="text-xs text-blue-500 mt-1">+23.1%</p>
                     </div>
-                    <div className="p-2 sm:p-4 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl">
-                      <DollarSign className="w-4 h-4 sm:w-8 sm:h-8 text-white" />
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex-shrink-0 ml-3">
+                      <DollarSign className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-3 sm:p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <p className="text-xs sm:text-sm font-medium text-slate-600 mb-1">Investimentos</p>
-                      <p className="text-lg sm:text-3xl font-bold text-purple-600">
+                      <p className="text-base sm:text-2xl lg:text-3xl font-bold text-purple-600 truncate">
                         {formatCurrency(data.investments)}
                       </p>
                       <p className="text-xs text-purple-500 mt-1">+15.3%</p>
                     </div>
-                    <div className="p-2 sm:p-4 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl">
-                      <Target className="w-4 h-4 sm:w-8 sm:h-8 text-white" />
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex-shrink-0 ml-3">
+                      <Target className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
                     </div>
                   </div>
                 </CardContent>
