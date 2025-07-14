@@ -37,7 +37,7 @@ import FluxoCaixa from "@/pages/fluxo-caixa";
 import SimularCenarios from "@/pages/simular-cenarios";
 import RenegociarDividas from "@/pages/renegociar-dividas";
 import FlowKids from "@/pages/flow-kids";
-import DashboardUnificado from "@/pages/dashboard-unificado";
+import DashboardSimple from "@/pages/dashboard-simple";
 import FlowKidsStandalone from "@/pages/flow-kids-standalone";
 import KidsApp from "./App-kids";
 import EcosystemApp from "./App-ecosystem";
@@ -65,11 +65,11 @@ import Investments from "@/pages/investments";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={DashboardUnificado} />
+      <Route path="/" component={DashboardSimple} />
       <Route path="/flow" component={FlowWorking} />
       <Route path="/kids" component={KidsApp} />
       <Route path="/flow-kids" component={FlowKidsStandalone} />
-      <Route path="/dashboard-unificado" component={DashboardUnificado} />
+      <Route path="/dashboard-unificado" component={DashboardSimple} />
       <Route path="/kids-standalone" component={FlowKidsStandalone} />
       <Route path="/conta-familia" component={ContaFamilia} />
       <Route path="/edu" component={EduApp} />
