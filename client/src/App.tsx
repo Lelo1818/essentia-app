@@ -60,6 +60,7 @@ import SimpleApp from "./App-simple";
 import SuperSimple from "./pages/super-simple";
 import EcosystemSelector from "@/pages/ecosystem-selector";
 import Investments from "@/pages/investments";
+import EduFocused from "@/pages/edu-focused";
 
 
 function Router() {
@@ -118,6 +119,7 @@ function Router() {
       <Route path="/relatorio-final" component={RelatorioFinal} />
       <Route path="/profile" component={Profile} />
       <Route path="/investments" component={Investments} />
+      <Route path="/edu-focused" component={EduFocused} />
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>
         <NotFound />
