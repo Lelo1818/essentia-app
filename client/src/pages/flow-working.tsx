@@ -32,7 +32,7 @@ import {
   Upload
 } from "lucide-react";
 import Income from "@/pages/income";
-import Expenses from "@/pages/expenses";
+import ExpensesSimple from "@/pages/expenses-simple";
 import Planning from "@/pages/planning";
 import Goals from "@/pages/goals";
 import Profile from "@/pages/profile";
@@ -500,7 +500,7 @@ export default function FlowWorking() {
 
           {/* Expenses Tab */}
           <TabsContent value="expenses" className="mt-0">
-            <Expenses />
+            <ExpensesSimple />
           </TabsContent>
 
           {/* Goals Tab */}
