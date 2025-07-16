@@ -61,6 +61,7 @@ import SuperSimple from "./pages/super-simple";
 import EcosystemSelector from "@/pages/ecosystem-selector";
 import Investments from "@/pages/investments";
 import EduFocused from "@/pages/edu-focused";
+import EssentiaFocused from "@/pages/essentia-focused";
 
 
 function Router() {
@@ -120,6 +121,7 @@ function Router() {
       <Route path="/profile" component={Profile} />
       <Route path="/investments" component={Investments} />
       <Route path="/edu-focused" component={EduFocused} />
+      <Route path="/essentia-focused" component={EssentiaFocused} />
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>
         <NotFound />
