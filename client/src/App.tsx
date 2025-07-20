@@ -61,6 +61,7 @@ import SuperSimple from "./pages/super-simple";
 import EcosystemSelector from "@/pages/ecosystem-selector";
 import Investments from "@/pages/investments";
 import EduFocused from "@/pages/edu-focused";
+import Portais from "@/pages/portais";
 
 
 
@@ -121,6 +122,7 @@ function Router() {
       <Route path="/profile" component={Profile} />
       <Route path="/investments" component={Investments} />
       <Route path="/edu-focused" component={EduFocused} />
+      <Route path="/portais" component={Portais} />
 
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>

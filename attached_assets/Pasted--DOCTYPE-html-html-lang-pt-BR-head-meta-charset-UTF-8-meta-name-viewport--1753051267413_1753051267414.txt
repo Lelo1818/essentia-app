@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essentia: Portal do Silêncio</title>
+    <!-- Carrega o Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter para todo o corpo do documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Cor de fundo suave */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Garante que ocupe a altura total da viewport */
+            margin: 0;
+            padding: 20px; /* Adiciona um pouco de padding para telas menores */
+            box-sizing: border-box;
+        }
+
+        /* Estilo para o contêiner principal do portal */
+        .portal-container {
+            background-color: #ffffff;
+            border-radius: 20px; /* Cantos arredondados */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            padding: 40px;
+            max-width: 600px; /* Largura máxima para desktops */
+            width: 100%; /* Ocupa a largura total disponível */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Espaçamento entre os elementos */
+        }
+
+        /* Estilo para o título do portal */
+        .portal-title {
+            font-size: 2.5rem; /* Tamanho grande para o título */
+            font-weight: 700; /* Negrito */
+            color: #2c3e50; /* Cor escura para o texto */
+        }
+
+        /* Estilo para a descrição */
+        .portal-description {
+            font-size: 1.1rem;
+            color: #556270;
+            line-height: 1.6;
+        }
+
+        /* Estilo para o botão */
+        .action-button {
+            background-color: #4CAF50; /* Verde vibrante */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px; /* Cantos arredondados */
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); /* Sombra para o botão */
+        }
+
+        .action-button:hover {
+            background-color: #45a049; /* Escurece no hover */
+            transform: translateY(-2px); /* Efeito de elevação */
+        }
+
+        .action-button:active {
+            transform: translateY(0); /* Retorna ao clicar */
+        }
+
+        /* Estilo para a mensagem de feedback */
+        .feedback-message {
+            font-size: 1.2rem;
+            color: #34495e;
+            font-weight: 500;
+            min-height: 30px; /* Garante espaço para a mensagem */
+        }
+
+        /* Estilo para o contador de respiração */
+        .breathing-counter {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #3498db; /* Azul para o contador */
+            margin-top: 15px;
+            min-height: 60px; /* Garante espaço para o contador */
+        }
+
+        /* Animação de pulsação para o contador */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pulsing {
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* Media Queries para responsividade */
+        @media (max-width: 768px) {
+            .portal-title {
+                font-size: 2rem;
+            }
+            .portal-description {
+                font-size: 1rem;
+            }
+            .action-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            .breathing-counter {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portal-container {
+                padding: 25px;
+            }
+            .portal-title {
+                font-size: 1.8rem;
+            }
+            .portal-description {
+                font-size: 0.95rem;
+            }
+            .action-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .breathing-counter {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <h1 class="portal-title">Portal do Silêncio</h1>
+        <p class="portal-description">
+            Encontre paz, respostas e renovação na quietude interior. Este portal convida você a desacelerar e a se reconectar com a sua essência através da respiração consciente.
+        </p>
+
+        <button id="startButton" class="action-button">Iniciar Prática de Silêncio</button>
+        <p id="feedbackMessage" class="feedback-message"></p>
+        <div id="breathingCounter" class="breathing-counter"></div>
+
+        <button id="stopButton" class="action-button bg-red-500 hover:bg-red-600 hidden">Parar Prática</button>
+    </div>
+
+    <script>
+        // Seleciona os elementos do DOM
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const breathingCounter = document.getElementById('breathingCounter');
+
+        let breathingInterval; // Variável para armazenar o intervalo da respiração
+        let count = 0; // Contador para a respiração
+        let isBreathing = false; // Flag para controlar se a prática está ativa
+
+        // Função para iniciar a prática de respiração
+        function startBreathingPractice() {
+            if (isBreathing) return; // Evita iniciar múltiplas vezes
+
+            isBreathing = true;
+            startButton.classList.add('hidden'); // Esconde o botão de iniciar
+            stopButton.classList.remove('hidden'); // Mostra o botão de parar
+            breathingCounter.classList.add('pulsing'); // Adiciona animação de pulsação
+
+            let phase = 'Inspire'; // Fase inicial
+            let duration = 4; // Duração de cada fase
+            count = duration; // Inicia o contador com a duração
+
+            feedbackMessage.textContent = `${phase}...`;
+            breathingCounter.textContent = count;
+
+            // Define o intervalo para a contagem da respiração
+            breathingInterval = setInterval(() => {
+                count--;
+                breathingCounter.textContent = count;
+
+                if (count === 0) {
+                    // Alterna entre as fases de respiração
+                    if (phase === 'Inspire') {
+                        phase = 'Segure';
+                        duration = 2;
+                    } else if (phase === 'Segure') {
+                        phase = 'Expire';
+                        duration = 6;
+                    } else if (phase === 'Expire') {
+                        phase = 'Segure'; // Curta pausa antes de inspirar novamente
+                        duration = 2;
+                    } else if (phase === 'Segure') { // Após a pausa, volta a inspirar
+                        phase = 'Inspire';
+                        duration = 4;
+                    }
+                    count = duration;
+                    feedbackMessage.textContent = `${phase}...`;
+                    breathingCounter.textContent = count;
+                }
+            }, 1000); // Atualiza a cada segundo
+        }
+
+        // Função para parar a prática de respiração
+        function stopBreathingPractice() {
+            clearInterval(breathingInterval); // Limpa o intervalo
+            isBreathing = false;
+            startButton.classList.remove('hidden'); // Mostra o botão de iniciar
+            stopButton.classList.add('hidden'); // Esconde o botão de parar
+            feedbackMessage.textContent = "Prática finalizada. Sinta a quietude.";
+            breathingCounter.textContent = ""; // Limpa o contador
+            breathingCounter.classList.remove('pulsing'); // Remove animação
+        }
+
+        // Adiciona os event listeners aos botões
+        startButton.addEventListener('click', startBreathingPractice);
+        stopButton.addEventListener('click', stopBreathingPractice);
+
+        // Mensagem inicial ao carregar a página
+        window.onload = () => {
+            feedbackMessage.textContent = "Clique para iniciar sua jornada de quietude.";
+        };
+    </script>
+</body>
+</html>
