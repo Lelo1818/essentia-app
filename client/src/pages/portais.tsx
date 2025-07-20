@@ -25,6 +25,10 @@ export default function Portais() {
   const [isActivated, setIsActivated] = useState(false);
   const [pulseEffect, setPulseEffect] = useState(false);
 
+  // Estados do questionário (movido para fora das condicionais)
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [tempAnswers, setTempAnswers] = useState<string[]>([]);
+
   // Dados dos portais
   const portals = [
     {
@@ -205,22 +209,21 @@ export default function Portais() {
     );
   }
 
+  // Função do questionário (movida para fora das condicionais)
+  const handleAnswer = (answer: string) => {
+    const newAnswers = [...tempAnswers, answer];
+    setTempAnswers(newAnswers);
+    
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setUserAnswers(newAnswers);
+      handleQuestionnaireComplete();
+    }
+  };
+
   // Tela do questionário
   if (currentScreen === 'questionnaire') {
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [tempAnswers, setTempAnswers] = useState<string[]>([]);
-
-    const handleAnswer = (answer: string) => {
-      const newAnswers = [...tempAnswers, answer];
-      setTempAnswers(newAnswers);
-      
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-      } else {
-        setUserAnswers(newAnswers);
-        handleQuestionnaireComplete();
-      }
-    };
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-6">
