@@ -1,0 +1,90 @@
+ Briefing Repl.it — MVP Navegável Essentia
+🎯 Objetivo Principal:
+Construir um protótipo 100% funcional navegável no Replit que simule a experiência básica do Essentia — não é versão final, é versão para apresentação, validação e alinhamento.
+
+✅ Fluxo Básico que o Replit Deve Entregar:
+1. Tela Inicial — Boas-Vindas:
+✅ Vídeo ou imagem de fundo (placeholder simples já serve);
+
+✅ Botão “Começar Minha Jornada”;
+
+✅ Botão “Explorar Trilhas Temáticas” (link para uma tela secundária fixa);
+
+✅ Logo Essentia + slogan simples: “Desvende sua essência um símbolo de cada vez”.
+
+2. Questionário Inicial:
+✅ 3 perguntas simples (exemplo):
+
+Como você está se sentindo hoje? [Feliz, Ansioso, Cansado…]
+
+Prefere foco em ação, calma ou reflexão? [Ação, Calma, Reflexão]
+
+Você busca clareza, coragem ou presença? [Clareza, Coragem, Presença]
+
+✅ Com base nas respostas, direcionar para uma IA (Sofia, Marcos, Luna ou Léo).
+
+3. Jornada Principal:
+✅ Após o questionário, o usuário entra numa tela de “Jornada Essentia” com:
+
+✅ Avatar central (imagem estática no MVP, muda de cor após primeiro portal);
+
+✅ Barra de progresso visual (simples);
+
+✅ Primeiro portal desbloqueado (Portal da Clareza).
+
+4. Portais Navegáveis:
+✅ No MVP, apenas 3 portais ativados:
+
+Portal da Clareza;
+
+Portal da Presença;
+
+Portal da Coragem.
+
+✅ Ao clicar no portal:
+
+✅ Tela com frase simbólica;
+
+✅ Áudio simples (placeholder);
+
+✅ Mini-prática (checklist ou botão interativo);
+
+✅ Botão “Concluir Portal” → muda avatar ou barra de progresso.
+
+5. Diário Essentia:
+✅ Tela com espaço de escrita simples;
+
+✅ Pílulas de texto no topo da tela (exemplo):
+
+Sofia: “Respire. Seu próximo passo pode ser mais leve.”
+
+✅ Salvamento básico do texto no navegador local (não precisa backend);
+
+✅ Exibição de “dias consecutivos de escrita” no topo.
+
+6. Botão Socorro Simbólico:
+✅ Botão fixo em todas as telas;
+
+✅ Ao clicar → tela sobrepõe um áudio calmante (pode ser som ambiente) e frase de apoio da Sofia.
+
+7. Galeria Básica (ou Linha do Tempo):
+✅ Página simples mostrando:
+
+✅ Portais já concluídos (listagem com check ✅);
+
+✅ Avatar com alteração de cor básica conforme evolução;
+
+✅ Texto “Você concluiu X portais, já explorou sua essência Y dias consecutivos”.
+
+🎁 Entrega Final:
+✅ Tudo rodando em Repl.it navegável;
+
+✅ Sem backend, tudo front-end navegável;
+
+✅ Placeholder de áudio, imagens, textos já posicionados;
+
+✅ Visual simples, mas com clareza de flow (nada de site vazio ou “caixa branca”).
+
+📣 Resumo direto pro dev:
+
+“Eu quero o esqueleto funcional do Essentia, clicável, navegável e mostrando a jornada visual de maneira simples. Não é design final, é fluxo de experiência. O objetivo é sentir o efeito vivo do app em poucos minutos, navegando entre boas-vindas → jornada → portais → diário → progresso.”
