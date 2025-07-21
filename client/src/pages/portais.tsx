@@ -4,11 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Flame, Shield, Mountain, ArrowRight, Zap, Target, Eye, Heart, Play, BookOpen, User, Home, Sparkles, LifeBuoy, Calendar } from "lucide-react";
+import { Flame, Shield, Mountain, ArrowRight, Zap, Target, Eye, Heart, Play, BookOpen, User, Home, Sparkles, LifeBuoy, Calendar, Moon, Sun, Compass, Flower } from "lucide-react";
 
 export default function Portais() {
   // Estados da aplicação
-  const [currentScreen, setCurrentScreen] = useState('welcome'); // welcome, questionnaire, journey, portal, diary, gallery, help
+  const [currentScreen, setCurrentScreen] = useState('welcome'); // welcome, questionnaire, journey, portal, diary, gallery, help, ai-diary, ai-focus, ai-night, ai-morning
   const [selectedPortal, setSelectedPortal] = useState<any>(null);
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
   const [assignedAI, setAssignedAI] = useState<any>(null);
@@ -17,6 +17,7 @@ export default function Portais() {
   const [currentJournalText, setCurrentJournalText] = useState('');
   const [avatarState, setAvatarState] = useState('inicial');
   const [consecutiveDays, setConsecutiveDays] = useState(1);
+  const [showAIFeedback, setShowAIFeedback] = useState(false);
 
   // Estados do portal da coragem (mantido)
   const [step, setStep] = useState('initial');
@@ -120,6 +121,9 @@ export default function Portais() {
       setJournalEntries([...journalEntries, newEntry]);
       setCurrentJournalText('');
       setConsecutiveDays(consecutiveDays + 1);
+      // Trigger AI feedback após salvar
+      setShowAIFeedback(true);
+      setTimeout(() => setCurrentScreen('ai-diary'), 1000);
     }
   };
 
@@ -161,6 +165,36 @@ export default function Portais() {
         >
           <LifeBuoy className="w-5 h-5 mb-1" />
           <span className="text-xs">Socorro</span>
+        </Button>
+      </div>
+      
+      {/* Botões de Demo das IAs */}
+      <div className="flex justify-around max-w-md mx-auto mt-2 pt-2 border-t border-gray-100">
+        <Button
+          variant="ghost"
+          onClick={() => setCurrentScreen('ai-focus')}
+          className="flex flex-col items-center p-1 text-xs"
+        >
+          <Compass className="w-4 h-4 mb-1 text-blue-600" />
+          <span>Marcos</span>
+        </Button>
+        
+        <Button
+          variant="ghost"
+          onClick={() => setCurrentScreen('ai-night')}
+          className="flex flex-col items-center p-1 text-xs"
+        >
+          <Moon className="w-4 h-4 mb-1 text-purple-600" />
+          <span>Luna</span>
+        </Button>
+        
+        <Button
+          variant="ghost"
+          onClick={() => setCurrentScreen('ai-morning')}
+          className="flex flex-col items-center p-1 text-xs"
+        >
+          <Sun className="w-4 h-4 mb-1 text-yellow-600" />
+          <span>Léo</span>
         </Button>
       </div>
     </div>
@@ -924,6 +958,254 @@ export default function Portais() {
                 
                 <p className="text-sm text-slate-500">
                   Se precisar de ajuda profissional, procure sempre um especialista.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // 1. TELA: Diário com Feedback da Sofia
+  if (currentScreen === 'ai-diary') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 p-6">
+        <div className="max-w-2xl mx-auto">
+          <Card className="shadow-2xl border-0 backdrop-blur-sm bg-white/95">
+            <CardHeader className="text-center pb-8">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center">
+                <Heart className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-3xl font-bold text-slate-900 mb-4">
+                Sofia Responde
+              </CardTitle>
+              <div className="p-6 bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Flower className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-lg text-purple-800 italic leading-relaxed">
+                      "Li suas palavras com carinho. Que tal soltar um pouco disso agora? Um pequeno ritual de pausa pode fazer diferença."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              <div className="grid gap-4">
+                <Button
+                  onClick={() => {
+                    setCurrentScreen('portal');
+                    setSelectedPortal(portals.find(p => p.id === 'presenca'));
+                  }}
+                  size="lg"
+                  className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 text-lg font-semibold rounded-xl hover:scale-105 transition-all"
+                >
+                  🌸 Iniciar Ritual de Pausa
+                </Button>
+                
+                <Button
+                  onClick={() => setCurrentScreen('diary')}
+                  variant="outline"
+                  size="lg"
+                  className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-purple-300 hover:bg-purple-50"
+                >
+                  ✍️ Continuar Escrevendo
+                </Button>
+              </div>
+
+              <div className="p-4 bg-gradient-to-r from-yellow-50 to-pink-50 rounded-xl">
+                <p className="text-sm text-purple-700 text-center">
+                  💡 Sofia percebeu que você expressou algumas tensões. Ela sugere um momento de autocuidado.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. TELA: Jornada do Dia com Marcos
+  if (currentScreen === 'ai-focus') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-cyan-50 p-6">
+        <div className="max-w-2xl mx-auto">
+          <Card className="shadow-2xl border-0 backdrop-blur-sm bg-white/95">
+            <CardHeader className="text-center pb-8">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                <Target className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-3xl font-bold text-slate-900 mb-4">
+                Marcos Foca
+              </CardTitle>
+              <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Compass className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-lg text-blue-800 italic leading-relaxed">
+                      "Notei energia dispersa. Que tal focar em uma única coisa que importa agora?"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              <div className="grid gap-4">
+                <Button
+                  onClick={() => {
+                    setCurrentScreen('portal');
+                    setSelectedPortal(portals.find(p => p.id === 'clareza'));
+                  }}
+                  size="lg"
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 text-lg font-semibold rounded-xl hover:scale-105 transition-all"
+                >
+                  🎯 Quero ajuda para definir foco
+                </Button>
+                
+                <Button
+                  onClick={() => setCurrentScreen('journey')}
+                  variant="outline"
+                  size="lg"
+                  className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-blue-300 hover:bg-blue-50"
+                >
+                  💪 Vou tentar sozinho
+                </Button>
+              </div>
+
+              <div className="p-4 bg-gradient-to-r from-yellow-50 to-blue-50 rounded-xl">
+                <p className="text-sm text-blue-700 text-center">
+                  🧭 Marcos detectou dispersão nas suas atividades recentes. Ele quer te ajudar a encontrar direção.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. TELA: Reflexão Noturna com Luna
+  if (currentScreen === 'ai-night') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 p-6">
+        <div className="max-w-2xl mx-auto">
+          <Card className="shadow-2xl border-0 backdrop-blur-sm bg-slate-900/90 text-white">
+            <CardHeader className="text-center pb-8">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+                <Moon className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-3xl font-bold text-white mb-4">
+                Luna Reflete
+              </CardTitle>
+              <div className="p-6 bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-2xl border border-purple-500/30">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Moon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-lg text-purple-200 italic leading-relaxed">
+                      "Seu silêncio interno tem respostas. Respire fundo antes de dormir."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              <div className="grid gap-4">
+                <Button
+                  onClick={() => {
+                    setCurrentScreen('portal');
+                    setSelectedPortal(portals.find(p => p.id === 'presenca'));
+                  }}
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-8 py-4 text-lg font-semibold rounded-xl hover:scale-105 transition-all border border-purple-400"
+                >
+                  🧘‍♀️ Iniciar Meditação Guiada
+                </Button>
+                
+                <Button
+                  onClick={() => setCurrentScreen('diary')}
+                  variant="outline"
+                  size="lg"
+                  className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-purple-400 text-purple-200 hover:bg-purple-900/30"
+                >
+                  📝 Refletir no Diário
+                </Button>
+              </div>
+
+              <div className="p-4 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 rounded-xl border border-purple-500/20">
+                <p className="text-sm text-purple-300 text-center">
+                  🌙 Luna percebe que é hora de aquietar a mente. A noite é propícia para insights profundos.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // 4. TELA: Motivação Matinal com Léo
+  if (currentScreen === 'ai-morning') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50 p-6">
+        <div className="max-w-2xl mx-auto">
+          <Card className="shadow-2xl border-0 backdrop-blur-sm bg-white/95">
+            <CardHeader className="text-center pb-8">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center">
+                <Sun className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-3xl font-bold text-slate-900 mb-4">
+                Léo Energiza
+              </CardTitle>
+              <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-lg text-orange-800 italic leading-relaxed">
+                      "Hora de ação. Qual o seu passo realista hoje?"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              <div className="grid gap-4">
+                <Button
+                  onClick={() => setCurrentScreen('diary')}
+                  size="lg"
+                  className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl hover:scale-105 transition-all"
+                >
+                  📝 Anotar meu passo
+                </Button>
+                
+                <Button
+                  onClick={() => {
+                    setCurrentScreen('portal');
+                    setSelectedPortal(portals.find(p => p.id === 'coragem'));
+                  }}
+                  variant="outline"
+                  size="lg"
+                  className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-orange-300 hover:bg-orange-50"
+                >
+                  ⚡ Sugerir desafio rápido
+                </Button>
+              </div>
+
+              <div className="p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl">
+                <p className="text-sm text-orange-700 text-center">
+                  ☀️ Léo sente sua energia matinal! Ele quer canalizar essa motivação em ação concreta.
                 </p>
               </div>
             </CardContent>
