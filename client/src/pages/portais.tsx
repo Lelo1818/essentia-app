@@ -506,15 +506,26 @@ export default function Portais() {
                 </div>
               </div>
 
-              <Button
-                onClick={() => setStep('reflection')}
-                size="lg"
-                className="bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 text-white px-12 py-6 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 hover:scale-105"
-              >
-                <Eye className="w-6 h-6 mr-3" />
-                Despertar Minha Coragem
-                <ArrowRight className="w-6 h-6 ml-3" />
-              </Button>
+              <div className="space-y-4">
+                <Button
+                  onClick={() => setStep('reflection')}
+                  size="lg"
+                  className="bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 text-white px-12 py-6 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 hover:scale-105"
+                >
+                  <Eye className="w-6 h-6 mr-3" />
+                  Despertar Minha Coragem
+                  <ArrowRight className="w-6 h-6 ml-3" />
+                </Button>
+                
+                <Button
+                  onClick={() => setCurrentScreen('journey')}
+                  variant="outline"
+                  size="lg"
+                  className="px-8 py-3 rounded-xl border-2 border-gray-300 hover:bg-gray-50"
+                >
+                  ← Voltar à Jornada
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
