@@ -228,6 +228,7 @@ export default function Portais() {
                 </Button>
                 
                 <Button
+                  onClick={() => setCurrentScreen('journey')}
                   variant="outline"
                   size="lg"
                   className="px-8 py-4 text-lg font-semibold rounded-xl w-full"
