@@ -316,6 +316,17 @@ export default function DashboardUnificado() {
                   <span className="text-sm font-medium">Ver Progresso Kids</span>
                 </Button>
               </div>
+              
+              <div className="mt-4">
+                <Button 
+                  variant="secondary" 
+                  className="group w-full h-auto p-4 bg-white/20 hover:bg-white/30 text-white border-0 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  onClick={() => window.location.href = '/essentia-oficial-demo'}
+                >
+                  <Compass className="w-6 h-6 mr-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">Ver Demo Oficial Essentia</span>
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
