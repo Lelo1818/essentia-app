@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essentia – Demo Avançado</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    h1, h2 { font-weight: 600; text-align: center; }
+    .container { padding: 20px; text-align: center; }
+    .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin: 15px auto;
+        max-width: 500px;
+    }
+    button {
+        background-color: #5cdb95;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    button:hover { opacity: 0.9; }
+    .hidden { display: none; }
+    textarea {
+        width: 90%;
+        height: 90px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+    ul { text-align: left; max-width: 500px; margin: auto; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<div id="inicio" class="container">
+    <h1>Essentia</h1>
+    <p>A bússola para despertar seu propósito interior e reencontrar equilíbrio. Mais que um aplicativo, uma jornada de transformação pessoal.</p>
+    <button onclick="mostrar('onboarding')">Começar minha jornada</button>
+</div>
+
+<div id="onboarding" class="container hidden">
+    <h2>Seu Ponto de Partida</h2>
+    <p>Como você se sente hoje?</p>
+    <select>
+        <option>Calmo</option>
+        <option>Cansado</option>
+        <option>Ansioso</option>
+        <option>Motivado</option>
+        <option>Triste</option>
+    </select><br><br>
+    <p>O que mais busca agora?</p>
+    <select>
+        <option>Clareza</option>
+        <option>Equilíbrio</option>
+        <option>Energia</option>
+        <option>Propósito</option>
+    </select><br><br>
+    <button onclick="mostrar('dashboard')">Ver meus Medidores</button>
+</div>
+
+<div id="dashboard" class="container hidden">
+    <h2>Sua Tríade Essentia</h2>
+    <div class="card" style="border-left:8px solid #4da6ff">
+        <h3>🧭 Consciência</h3>
+        <p>410 – Clareza em expansão.<br>Você está vendo sua vida com mais nitidez.</p>
+    </div>
+    <div class="card" style="border-left:8px solid #ffd633">
+        <h3>🔋 Energia</h3>
+        <p>320 – Oscilando, mas presente.<br>Seu corpo pede pausas conscientes.</p>
+    </div>
+    <div class="card" style="border-left:8px solid #33cc66">
+        <h3>🔮 Coerência</h3>
+        <p>68% – Emoção e intenção ainda precisam se alinhar.</p>
+    </div>
+    <button onclick="mostrar('portais')">Explorar Portais</button>
+</div>
+
+<div id="portais" class="container hidden">
+    <h2>Portais da Jornada</h2>
+    <p>Estes são alguns dos portais disponíveis (total de 46):</p>
+    <ul>
+        <li>Portal da Clareza</li>
+        <li>Portal da Presença</li>
+        <li>Portal da Escuta</li>
+        <li>Portal do Perdão</li>
+        <li>Portal da Resiliência</li>
+        <li>Portal da Intuição</li>
+        <li>Portal do Legado</li>
+        <li>... (e muitos outros até 46)</li>
+    </ul>
+    <button onclick="mostrar('portalClareza')">Portal da Clareza</button>
+</div>
+
+<div id="portalClareza" class="container hidden">
+    <h2>Portal da Clareza</h2>
+    <p>
+        Propósito: Dissipar a confusão mental e restaurar o foco.<br><br>
+        Prática: Inspire profundamente. Ao expirar, imagine uma névoa se dissipando e uma luz clara surgindo.
+    </p>
+    <textarea placeholder="Qual é a única coisa que você precisa clarear agora?"></textarea><br><br>
+    <button onclick="mostrar('diario')">Salvar Reflexão</button>
+</div>
+
+<div id="diario" class="container hidden">
+    <h2>Diário Pessoal</h2>
+    <textarea placeholder="Escreva aqui seu pensamento..."></textarea><br><br>
+    <button onclick="respostaIA()">Enviar</button>
+    <p id="resposta"></p>
+    <button onclick="mostrar('dashboard')">Voltar ao Dashboard</button>
+</div>
+
+<div id="sos" class="container hidden">
+    <h2>SOS Essentia</h2>
+    <p>Respire. Você está seguro. Vamos juntos encontrar calma.</p>
+    <button onclick="mostrar('portalClareza')">Portal da Calma</button>
+</div>
+
+<script>
+    function mostrar(id) {
+        document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+    }
+    function respostaIA() {
+        document.getElementById('resposta').innerText = "Sofia diz: 'Entendo o que você sente. Vamos clarear isso juntos.'";
+    }
+</script>
+
+</body>
+</html>
