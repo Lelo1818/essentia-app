@@ -63,6 +63,7 @@ import Investments from "@/pages/investments";
 import EduFocused from "@/pages/edu-focused";
 import Portais from "@/pages/portais";
 import EssentiaDemo from "@/pages/essentia-demo";
+import EssentiaMVPPrototipo from "@/pages/essentia-mvp-prototipo";
 
 
 
@@ -125,6 +126,7 @@ function Router() {
       <Route path="/edu-focused" component={EduFocused} />
       <Route path="/portais" component={Portais} />
       <Route path="/essentia-demo" component={EssentiaDemo} />
+      <Route path="/essentia-mvp-prototipo" component={EssentiaMVPPrototipo} />
 
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>

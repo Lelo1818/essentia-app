@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essentia - Protótipo MVP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+        .container { padding: 20px; }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 400px;
+        }
+        button {
+            background-color: #5cdb95;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover { opacity: 0.9; }
+        .hidden { display: none; }
+        textarea { width: 90%; height: 80px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div id="tela1" class="container">
+        <h1>Bem-vindo(a) ao Essentia</h1>
+        <p>Um convite para voltar ao seu centro.</p>
+        <button onclick="mostrar('tela2')">Começar minha jornada</button>
+    </div>
+
+    <div id="tela2" class="container hidden">
+        <h2>Mini-Onboarding</h2>
+        <p>Como você se sente hoje?</p>
+        <select id="emocao">
+            <option>Calmo</option>
+            <option>Cansado</option>
+            <option>Ansioso</option>
+            <option>Feliz</option>
+            <option>Triste</option>
+        </select><br><br>
+        <p>Qual sua principal intenção agora?</p>
+        <select id="intencao">
+            <option>Foco</option>
+            <option>Clareza</option>
+            <option>Energia</option>
+            <option>Calma</option>
+            <option>Propósito</option>
+        </select><br><br>
+        <p>Escolha uma frase:</p>
+        <select id="frase">
+            <option>Quero viver com leveza</option>
+            <option>Preciso organizar minha mente</option>
+            <option>Busco energia e clareza</option>
+        </select><br><br>
+        <button onclick="mostrar('dashboard')">Ver meus Medidores</button>
+    </div>
+
+    <div id="dashboard" class="container hidden">
+        <h2>Sua Tríade de Medidores</h2>
+        <div class="card" style="border-left: 8px solid #4da6ff;">
+            <h3>🧭 Consciência</h3>
+            <p>410 – Clareza em expansão</p>
+        </div>
+        <div class="card" style="border-left: 8px solid #ffd633;">
+            <h3>🔋 Energia</h3>
+            <p>320 – Oscilando, mas presente</p>
+        </div>
+        <div class="card" style="border-left: 8px solid #33cc66;">
+            <h3>🔮 Coerência</h3>
+            <p>68% – Emoção ainda não acompanhou a intenção</p>
+        </div>
+        <button onclick="mostrar('portal')">Quero Harmonizar</button>
+    </div>
+
+    <div id="portal" class="container hidden">
+        <h2>Portal da Clareza</h2>
+        <p>Respire. Inspire a luz, expire a névoa. Visualize a clareza.</p>
+        <textarea placeholder="Qual é a única coisa que você precisa clarear agora?"></textarea><br><br>
+        <button onclick="mostrar('diario')">Salvar Reflexão</button>
+    </div>
+
+    <div id="diario" class="container hidden">
+        <h2>Diário Pessoal</h2>
+        <textarea placeholder="Escreva aqui seu pensamento..."></textarea><br><br>
+        <button onclick="feedbackIA()">Enviar</button>
+        <p id="respostaIA"></p>
+    </div>
+
+    <div id="sos" class="container hidden">
+        <h2>SOS Simbólico</h2>
+        <p>Respire. Você está seguro.</p>
+        <button onclick="mostrar('portal')">Ir para Portal da Calma</button>
+    </div>
+
+    <script>
+        function mostrar(id) {
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function feedbackIA() {
+            document.getElementById('respostaIA').innerText = "Sofia diz: 'Entendo o que você sente. Vamos clarear isso juntos.'";
+        }
+    </script>
+</body>
+</html>
