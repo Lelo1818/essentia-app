@@ -525,11 +525,11 @@ export default function EssentiaOficialDemo() {
                 <div className="mt-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
                   <h4 className="font-semibold text-purple-800 mb-2">Acesso ao Sistema Completo:</h4>
                   <div className="flex space-x-4">
-                    <Button onClick={() => window.location.href = '/purpose'} className="bg-purple-600 hover:bg-purple-700">
+                    <Button onClick={() => window.open('/purpose', '_blank')} className="bg-purple-600 hover:bg-purple-700">
                       <Compass className="w-4 h-4 mr-2" />
                       Essentia Principal
                     </Button>
-                    <Button onClick={() => window.location.href = '/portais'} variant="outline" className="border-purple-300 text-purple-700">
+                    <Button onClick={() => window.open('/portais', '_blank')} variant="outline" className="border-purple-300 text-purple-700">
                       <Shield className="w-4 h-4 mr-2" />
                       Portais Interativos
                     </Button>
@@ -547,6 +547,18 @@ export default function EssentiaOficialDemo() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      {/* Back Button */}
+      <div className="fixed top-4 left-4 z-50">
+        <Button 
+          onClick={() => window.location.href = '/dashboard-unificado'}
+          variant="outline" 
+          className="bg-white/95 backdrop-blur-sm shadow-lg hover:shadow-xl"
+        >
+          <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+          Voltar ao Dashboard
+        </Button>
+      </div>
+
       {/* Control Panel */}
       <div className="fixed top-4 right-4 z-50">
         <Card className="shadow-lg border-0 backdrop-blur-sm bg-white/95 w-80">
