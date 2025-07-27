@@ -65,6 +65,7 @@ import Portais from "@/pages/portais";
 import EssentiaDemo from "@/pages/essentia-demo";
 import EssentiaDemoAvancado from "@/pages/essentia-demo-avancado";
 import EssentiaOficialDemo from "@/pages/essentia-oficial-demo";
+import EssentiaPro from "@/pages/essentia-pro";
 
 
 
@@ -129,6 +130,7 @@ function Router() {
       <Route path="/essentia-demo" component={EssentiaDemo} />
       <Route path="/essentia-demo-avancado" component={EssentiaDemoAvancado} />
       <Route path="/essentia-oficial-demo" component={EssentiaOficialDemo} />
+      <Route path="/essentia-pro" component={EssentiaPro} />
 
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>
