@@ -71,7 +71,7 @@ const personalities = {
 export async function getAICoachResponse(
   personalityId: string,
   userMessage: string,
-  context?: string
+  context?: any
 ): Promise<AICoachResponse> {
   try {
     const personality = personalities[personalityId as keyof typeof personalities];
@@ -79,10 +79,13 @@ export async function getAICoachResponse(
       throw new Error('Personalidade não encontrada');
     }
 
+    const contextString = context ? JSON.stringify(context) : '';
     const systemPrompt = `${personality.prompt}
     
     Contexto adicional: O usuário está em uma jornada de autoconhecimento no app Essentia.
-    ${context ? `Contexto específico: ${context}` : ''}`;
+    ${contextString ? `Dados do usuário: ${contextString}` : ''}
+    
+    Responda de forma calorosa e personalizada, sempre em português brasileiro.`;
 
     const response = await anthropic.messages.create({
       model: DEFAULT_MODEL_STR,
@@ -98,14 +101,10 @@ export async function getAICoachResponse(
 
     const aiMessage = response.content[0].type === 'text' ? response.content[0].text : '';
     
-    // Extrair insight e ação da resposta se possível
-    const lines = aiMessage.split('\n').filter(line => line.trim());
-    const message = lines[0] || aiMessage;
-    
     return {
-      message: aiMessage,
-      insight: lines.find(line => line.toLowerCase().includes('insight'))?.replace(/insight:?/i, '').trim(),
-      action: lines.find(line => line.toLowerCase().includes('ação') || line.toLowerCase().includes('próximo'))?.replace(/ação:?|próximo:?/i, '').trim()
+      message: aiMessage || "Olá! Como posso te ajudar hoje?",
+      insight: undefined,
+      action: undefined
     };
 
   } catch (error) {
