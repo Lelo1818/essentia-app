@@ -38,39 +38,31 @@ export const AIPersonalitiesPro = ({ personalities }: AIPersonalitiesProProps) =
     }]);
   };
 
-  // Simulated AI integration for demo
+  // Real AI integration with Anthropic
   const aiChatMutation = useMutation({
     mutationFn: async ({ personalityId, message }: { personalityId: string; message: string }) => {
-      // Simulate AI response delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      const responses = {
-        'sofia': [
-          'Entendo que você está passando por um momento desafiador. Lembre-se de que cada dificuldade é uma oportunidade de crescimento. Como posso apoiá-lo hoje?',
-          'Sinto sua energia e percebo que você tem uma força interior incrível. Que tal explorarmos juntos maneiras de nutrir essa força?',
-          'Cada pessoa tem seu próprio ritmo de crescimento. Seja gentil consigo mesmo nesta jornada de autoconhecimento.'
-        ],
-        'marcos': [
-          'Excelente! Vamos transformar essa reflexão em ação concreta. Qual é o primeiro passo que você pode dar hoje mesmo?',
-          'Foco e disciplina são chaves para o sucesso. Que tal definirmos metas específicas e mensuráveis para os próximos 30 dias?',
-          'A jornada de crescimento requer ação consistente. Como podemos estruturar um plano prático para seus objetivos?'
-        ],
-        'luna': [
-          'Que bela oportunidade para uma reflexão profunda. Respire fundo e conecte-se com sua sabedoria interior. O que seu coração está tentando lhe dizer?',
-          'A tranquilidade da noite nos convida à introspecção. Que insights surgem quando você para e escuta seu eu interior?',
-          'Cada momento de quietude é um presente para a alma. Como você se sente ao criar esse espaço de paz interior?'
-        ],
-        'leo': [
-          'Que energia fantástica! Posso sentir sua motivação pulsando. Vamos canalizar essa força em conquistas reais hoje!',
-          'Bom dia, campeão! Sua determinação está vibrante. Que tal começarmos o dia com uma vitória rápida?',
-          'Que momento perfeito para acelerar seu crescimento! Como podemos transformar essa energia em resultados extraordinários?'
-        ]
-      };
-      
-      const personalityResponses = responses[personalityId as keyof typeof responses] || responses['sofia'];
-      const randomResponse = personalityResponses[Math.floor(Math.random() * personalityResponses.length)];
-      
-      return { response: randomResponse };
+      const response = await fetch('/api/ai-coach/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          personalityId,
+          message,
+          context: {
+            clarity: 75,
+            daysActive: 12,
+            currentStage: 'clareza'
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return { response: data.message };
     }
   });
 
