@@ -1,0 +1,97 @@
+Essentia: Fluxograma Detalhado da Experiência do Usuário (MVP e Visão de Expansão)
+Este fluxograma detalha a jornada do usuário no Essentia, desde o primeiro contato até as interações mais profundas, incorporando a "Roda da Vida Reflexiva e Dinâmica" e a "Teoria dos Setênios".
+________________________________________
+I. Onboarding e Primeiros Passos (Acolhimento e Calibração Inicial)
+1.	Boas-Vindas e Apresentação Essentia
+o	USUÁRIO: Abre o App pela primeira vez.
+o	ESSENTIA: Tela de Boas-Vindas (animação leve, música de fundo).
+o	ESSENTIA: Mensagem introdutória (voz IA Sofia/Luna) sobre propósito do Essentia.
+2.	Jornada Guiada da Roda da Vida Reflexiva e Dinâmica
+o	ESSENTIA (IA Sofia/Léo): "Vamos começar entendendo o seu momento atual através da Roda da Vida. Esta não é uma simples avaliação, mas uma jornada de reflexão."
+o	IA: Apresenta a primeira área (ex: Relacionamentos).
+o	IA: Faz perguntas reflexivas e prompts para o Diário (ex: "Em seus relacionamentos, o que te nutre hoje? Onde há um desejo de conexão mais profunda?").
+o	USUÁRIO: Digita suas reflexões no Diário.
+o	IA: Analisa as respostas textuais, sugere uma nota (1-10) para a área.
+o	USUÁRIO: Ajusta a nota (opcional).
+o	LOOP: Repete para todas as áreas da Roda da Vida (Carreira, Saúde, Crescimento Pessoal, Finanças, Lazer, Ambiente, Contribuição Social).
+o	ESSENTIA: Gera a representação visual da Roda da Vida do usuário.
+3.	Primeira Calibração da Tríade de Medidores
+o	ESSENTIA: Apresenta visualmente os 3 Medidores (Consciência, Energia, Coerência).
+o	IA (Marcos/Luna): "Com base nas suas reflexões na Roda da Vida e nas suas respostas, aqui está a sua leitura inicial da Tríade, a sua bússola interna."
+o	ESSENTIA: Mostra o valor inicial dos medidores (inferidos).
+o	IA: Explica brevemente o que cada medidor representa.
+4.	Primeira Interação e Direcionamento Personalizado
+o	IA (mais alinhada ao perfil inferido): Envia uma mensagem personalizada de boas-vindas.
+o	IA: Sugere um Portal Essentia inicial ou uma prática de abertura com base nos "gaps" da Roda da Vida e na leitura da Tríade (ex: se "Clareza" é baixa, sugere "Portal da Clareza").
+o	USUÁRIO: Opta por explorar a sugestão ou navegar livremente.
+________________________________________
+II. Jornada Principal e Interação Diária (MVP Core)
+1.	Dashboard Principal
+o	ESSENTIA: Exibe Roda da Vida (visual estático com opção de clique para detalhes/reavaliação).
+o	ESSENTIA: Exibe a Tríade de Medidores (valores atualizados, visual dinâmico).
+o	ESSENTIA: Acesso rápido ao Diário, Botão Socorro, e Portais/Trilhas sugeridas.
+o	ESSENTIA: Avatar simbólico do usuário (reage sutilmente ao estado da Tríade).
+2.	Acesso ao Diário Pessoal Inteligente
+o	USUÁRIO: Toca no ícone do Diário.
+o	DIÁRIO: Abre tela de escrita livre.
+o	DIÁRIO: Exibe prompts de escrita (baseados em IAs, progresso na Jornada, insights da Roda da Vida ou Setênios se ativado).
+o	USUÁRIO: Escreve.
+o	IA (Sofia/Marcos): Oferece feedback textual básico, reativo a palavras-chave (ex: "Percebo uma emoção de...", "Que bom que você está...").
+o	USUÁRIO: Salva entrada; pode categorizar com #hashtags.
+3.	Interação com IAs (Pílulas Diárias)
+o	ESSENTIA: Notificações diárias ou pílulas de texto no dashboard.
+o	IA (aleatória ou direcionada): Mensagens concisas, insights, provocações para reflexão ou sugestões.
+o	USUÁRIO: Pode interagir com a mensagem (ex: "curtir", "salvar", "responder" (leva ao Diário)).
+4.	Exploração de Portais Essentia e Trilhas
+o	USUÁRIO: Seleciona um Portal ou uma Trilha (Jornada Principal ou Paralela) pelo dashboard ou menu de Portais.
+o	PORTAL: Carrega experiência (áudio, vídeo, texto, prática).
+o	IA (contextual): Guia a experiência dentro do Portal.
+o	USUÁRIO: Realiza a prática.
+o	ESSENTIA: Registra conclusão.
+5.	Utilização do Botão Socorro Simbólico
+o	USUÁRIO: Toca no ícone discreto do Botão Socorro (canto da tela).
+o	BOTÃO SOCORRO: Expande suavemente.
+o	USUÁRIO: Escolhe opção (Áudio de Ancoragem, Frase de Apoio, Conexão Rápida para Portal de Calma).
+o	ESSENTIA: Ativa a funcionalidade escolhida.
+6.	Galeria Pessoal e Linha do Tempo
+o	USUÁRIO: Acessa sua Galeria/Linha do Tempo.
+o	ESSENTIA: Exibe dias de escrita no diário, trilhas exploradas, marcos de conclusão.
+________________________________________
+III. Visão de Expansão e Aprofundamento (Futuro)
+1.	Reavaliação Dinâmica da Roda da Vida
+o	ESSENTIA: Notifica o usuário para reavaliar a Roda da Vida periodicamente (ex: a cada 30, 60, 90 dias ou após concluir uma Trilha).
+o	USUÁRIO: Repete a Jornada Guiada da Roda da Vida (passo II.2).
+o	ESSENTIA: Exibe comparativo visual da Roda da Vida (antes vs. depois) e a evolução dos "gaps".
+2.	Aprofundamento na Teoria dos Setênios
+o	ESSENTIA: Apresenta o convite para explorar os Setênios (com base na idade do usuário).
+o	USUÁRIO: Confirma idade e interesse.
+o	IA (Luna/Sofia): Explica o setênio atual do usuário, seus desafios e oportunidades.
+o	IA: Sugere Trilhas de Setênio ou Portais específicos alinhados àquela fase da vida.
+o	DIÁRIO: Prompts de reflexão específicos sobre o setênio.
+o	JORNADA VISUAL DA ALMA: Exibe o progresso através dos setênios (visão macro).
+3.	Interação Avançada com IAs
+o	IA: Respostas mais contextualizadas e personalizadas no Diário (análise de sentimentos e padrões).
+o	IA: Sugestões proativas de conteúdo/práticas baseadas em padrões de uso, humor e evolução da Roda da Vida/Setênios.
+o	IA: Pode inferir estados de Tríade com maior precisão (uso de biofeedback, se ativado).
+4.	Conexão Humana e Suporte Profissional
+o	USUÁRIO: Navega para seção de "Comunidade" ou "Profissionais".
+o	ESSENTIA: Apresenta especialistas (Xamã, Vanessa, Nelson) com conteúdo exclusivo (vídeos, lives, workshops).
+o	USUÁRIO: Participa de lives, acessa workshops.
+o	ESSENTIA: Exibe diretório de terapeutas/psicólogos.
+o	USUÁRIO: Agenda sessões via app.
+5.	Integração com Wearables e Biofeedback
+o	USUÁRIO: Conecta dispositivos (Apple Watch, Oura, etc.).
+o	ESSENTIA: Importa dados (HRV, sono, estresse).
+o	ESSENTIA: Medidores da Tríade são calibrados com dados fisiológicos em tempo real.
+o	IA: Oferece insights baseados em dados de biofeedback (ex: "Seu HRV indica estresse, recomendo uma prática de respiração").
+6.	Comunidade e Gamificação Avançada
+o	USUÁRIO: Acessa grupos de interesse.
+o	USUÁRIO: Opta por compartilhar progresso simbólico (nível Essentia, evolução da Roda da Vida).
+o	USUÁRIO: Participa de desafios coletivos.
+o	ESSENTIA: Avatares evoluem com base no "Nível de Essência" (total ou por pilar).
+7.	Jornada Visual da Alma (Refinada)
+o	USUÁRIO: Acessa sua jornada visual.
+o	ESSENTIA: Apresenta um mapa visual dinâmico de sua evolução, incluindo marcos da Roda da Vida, trilhas completas e o progresso através dos Setênios.
+________________________________________
+Este fluxograma serve como um mapa visual para o desenvolvimento do Essentia, garantindo que todas as funcionalidades e a visão de profundidade estejam interligadas em uma experiência coesa e transformadora.
+
