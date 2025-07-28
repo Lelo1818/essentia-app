@@ -1906,18 +1906,22 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
   // Rota para chat com IA Coach
   app.post('/api/ai-coach/chat', async (req, res) => {
     try {
+      console.log('AI Coach Request:', req.body);
       const { personalityId, message, context } = req.body;
       
       if (!personalityId || !message) {
+        console.log('Missing required fields:', { personalityId, message });
         return res.status(400).json({ error: 'PersonalityId e message são obrigatórios' });
       }
       
+      console.log('Calling getAICoachResponse...');
       const response = await getAICoachResponse(personalityId, message, context);
+      console.log('AI Coach Response:', response);
       res.json(response);
       
     } catch (error) {
       console.error('Erro no AI Coach:', error);
-      res.status(500).json({ error: 'Erro interno do servidor' });
+      res.status(500).json({ error: 'Erro interno do servidor', details: error instanceof Error ? error.message : 'Erro desconhecido' });
     }
   });
   

@@ -62,7 +62,8 @@ export const AIPersonalitiesPro = ({ personalities }: AIPersonalitiesProProps) =
       }
 
       const data = await response.json();
-      return { response: data.message };
+      console.log('AI Response data:', data);
+      return { response: data.message || data.error || 'Resposta vazia da IA' };
     }
   });
 
