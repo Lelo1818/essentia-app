@@ -4,41 +4,61 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { Lock, Unlock, CheckCircle, ArrowRight } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Lock, Unlock, CheckCircle, ArrowRight, Sparkles, Clock } from 'lucide-react';
 import { Portal } from '../../types/essentia';
 
 interface PortalCardProProps {
   portal: Portal;
-  onComplete: () => void;
+  onComplete: (portalId: string, reflection: string) => void;
+  onProgress?: (portalId: string, progress: number) => void;
 }
 
-export const PortalCardPro = ({ portal, onComplete }: PortalCardProProps) => {
+export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(portal.completed || false);
   const [reflection, setReflection] = useState('');
   const [isReflecting, setIsReflecting] = useState(false);
+  const [practiceProgress, setPracticeProgress] = useState(0);
+  const [isPlayingPractice, setIsPlayingPractice] = useState(false);
 
   const Icon = portal.icon;
 
   const handleEnterPortal = () => {
     if (!portal.unlocked) return;
     setIsOpen(true);
+    onProgress?.(portal.id, 10);
   };
 
-  const handleCompletePractice = () => {
-    setIsReflecting(true);
+  const handleStartPractice = () => {
+    setIsPlayingPractice(true);
+    onProgress?.(portal.id, 30);
+    
+    // Simular progresso da prática
+    const interval = setInterval(() => {
+      setPracticeProgress(prev => {
+        const newProgress = prev + 10;
+        if (newProgress >= 100) {
+          clearInterval(interval);
+          setIsPlayingPractice(false);
+          setIsReflecting(true);
+          onProgress?.(portal.id, 70);
+        }
+        return newProgress;
+      });
+    }, 800);
   };
 
   const handleSubmitReflection = () => {
     if (reflection.trim().length > 0) {
       setIsCompleted(true);
       setIsReflecting(false);
-      onComplete();
+      onComplete(portal.id, reflection);
+      onProgress?.(portal.id, 100);
+      
       setTimeout(() => {
         setIsOpen(false);
-        setIsCompleted(false);
-        setReflection('');
-      }, 2000);
+      }, 2500);
     }
   };
 
@@ -112,19 +132,41 @@ export const PortalCardPro = ({ portal, onComplete }: PortalCardProProps) => {
               <p className="text-gray-700 italic text-center">"{portal.phrase}"</p>
             </div>
 
-            {!isReflecting && !isCompleted && (
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-3">Prática Guiada</h4>
-                <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                  <p className="text-gray-700">{portal.practice}</p>
+            {/* Etapa 1: Início da Prática */}
+            {!isPlayingPractice && !isReflecting && !isCompleted && (
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-800 text-lg">Prática Guiada</h4>
+                <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl">
+                  <p className="text-gray-700 leading-relaxed">{portal.practice}</p>
                 </div>
                 <Button 
-                  onClick={handleCompletePractice}
-                  className={`w-full bg-gradient-to-r ${portal.color} text-white`}
+                  onClick={handleStartPractice}
+                  className={`w-full bg-gradient-to-r ${portal.color} text-white py-3 text-lg`}
                 >
-                  Realizar Prática
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Iniciar Prática
                 </Button>
+              </div>
+            )}
+
+            {/* Etapa 2: Prática em Andamento */}
+            {isPlayingPractice && (
+              <div className="space-y-6">
+                <h4 className="font-semibold text-gray-800 text-lg text-center">
+                  Praticando...
+                </h4>
+                
+                <div className="text-center space-y-4">
+                  <div className={`w-20 h-20 mx-auto bg-gradient-to-r ${portal.color} rounded-full flex items-center justify-center animate-pulse`}>
+                    <Icon className="w-10 h-10 text-white" />
+                  </div>
+                  
+                  <Progress value={practiceProgress} className="w-full h-3" />
+                  
+                  <p className="text-gray-600">
+                    Concentre-se na prática... {Math.round(practiceProgress)}%
+                  </p>
+                </div>
               </div>
             )}
 

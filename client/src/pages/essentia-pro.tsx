@@ -41,9 +41,36 @@ export default function EssentiaPro() {
     console.log('Stage clicked:', stageId);
   };
 
-  const handlePortalComplete = () => {
-    updateClarity(user.clarity + 5);
-    completeDaily();
+  const [completedPortals, setCompletedPortals] = useState<string[]>([]);
+  const [unlockedPortals, setUnlockedPortals] = useState<string[]>(['clareza', 'presenca', 'coragem']);
+  const [userXP, setUserXP] = useState(280);
+
+  const handlePortalComplete = (portalId: string, reflection: string) => {
+    if (!completedPortals.includes(portalId)) {
+      setCompletedPortals(prev => [...prev, portalId]);
+      
+      // Adicionar recompensas
+      const rewards = {
+        'clareza': { clarityIncrease: 10, xp: 100 },
+        'presenca': { clarityIncrease: 8, xp: 90 },
+        'coragem': { clarityIncrease: 12, xp: 120 },
+        'sabedoria': { clarityIncrease: 15, xp: 150 },
+        'intuicao': { clarityIncrease: 8, xp: 130 },
+        'proposito': { clarityIncrease: 20, xp: 200 }
+      };
+      
+      const reward = rewards[portalId as keyof typeof rewards];
+      if (reward) {
+        updateClarity(Math.min(100, user.clarity + reward.clarityIncrease));
+        setUserXP(prev => prev + reward.xp);
+      }
+      
+      completeDaily();
+    }
+  };
+
+  const handlePortalProgress = (portalId: string, progress: number) => {
+    console.log(`Portal ${portalId}: ${progress}% completo`);
   };
 
   return (
@@ -153,19 +180,54 @@ export default function EssentiaPro() {
             </div>
           </TabsContent>
 
-          <TabsContent value="portals" className="mt-0">
-            <div>
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">Portais da Jornada</h2>
-                <p className="text-gray-600">
-                  Experiências imersivas para diferentes aspectos do crescimento pessoal
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {portals.map((portal) => (
-                  <PortalCardPro key={portal.id} portal={portal} onComplete={handlePortalComplete} />
-                ))}
-              </div>
+          <TabsContent value="portals" className="mt-0 space-y-6">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Portais da Jornada</h2>
+              <p className="text-gray-600">
+                Experiências imersivas para diferentes aspectos do crescimento pessoal
+              </p>
+            </div>
+
+            {/* Status dos Portais */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-blue-600">{completedPortals.length}/{portals.length}</div>
+                  <div className="text-sm text-gray-600">Portais Concluídos</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-green-600">{userXP}</div>
+                  <div className="text-sm text-gray-600">Pontos de Experiência</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-purple-600">{unlockedPortals.length}</div>
+                  <div className="text-sm text-gray-600">Portais Disponíveis</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Grid de Portais */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {portals.map((portal) => {
+                const portalWithStatus = {
+                  ...portal,
+                  unlocked: unlockedPortals.includes(portal.id),
+                  completed: completedPortals.includes(portal.id)
+                };
+                
+                return (
+                  <PortalCardPro 
+                    key={portal.id} 
+                    portal={portalWithStatus} 
+                    onComplete={handlePortalComplete}
+                    onProgress={handlePortalProgress}
+                  />
+                );
+              })}
             </div>
           </TabsContent>
 

@@ -23,6 +23,7 @@ export interface Portal {
   phrase: string;
   practice: string;
   unlocked: boolean;
+  completed?: boolean;
 }
 
 export interface AIPersonality {

@@ -115,6 +115,24 @@ export const portals: Portal[] = [
     phrase: 'A sabedoria não está no conhecimento, mas na experiência vivida',
     practice: 'Reflita sobre uma lição aprendida recentemente. Como ela mudou sua perspectiva?',
     unlocked: false
+  },
+  {
+    id: 'intuicao',
+    name: 'Portal da Intuição',
+    icon: TreePine,
+    color: 'from-purple-500 to-violet-600',
+    phrase: 'Sua intuição é uma bússola interna que sempre aponta para sua verdade',
+    practice: 'Coloque uma mão no coração e outra no abdômen. Respire profundamente e faça uma pergunta importante para sua vida.',
+    unlocked: false
+  },
+  {
+    id: 'proposito',
+    name: 'Portal do Propósito',
+    icon: Mountain,
+    color: 'from-indigo-500 to-purple-600',
+    phrase: 'Seu propósito é a ponte entre quem você é e quem você pode se tornar',
+    practice: 'Imagine-se daqui a 10 anos, vivendo sua vida ideal. O que você está fazendo? Que legado está construindo?',
+    unlocked: false
   }
 ];
 
@@ -211,11 +229,32 @@ export const dailyPractices = [
   }
 ];
 
+export const portalRewards = {
+  'clareza': { clarityIncrease: 10, xp: 100, badge: 'Visionário' },
+  'presenca': { clarityIncrease: 8, xp: 90, badge: 'Consciente' },
+  'coragem': { clarityIncrease: 12, xp: 120, badge: 'Corajoso' },
+  'sabedoria': { clarityIncrease: 15, xp: 150, badge: 'Sábio' },
+  'intuicao': { clarityIncrease: 8, xp: 130, badge: 'Intuitivo' },
+  'proposito': { clarityIncrease: 20, xp: 200, badge: 'Direcionado' }
+};
+
+export const unlockRequirements = {
+  'sabedoria': { requiredClarity: 50, requiredPortals: ['clareza', 'presenca'] },
+  'intuicao': { requiredClarity: 60, requiredPortals: ['clareza', 'presenca', 'coragem'] },
+  'proposito': { requiredClarity: 80, requiredPortals: ['sabedoria', 'intuicao'] }
+};
+
 export const achievements = [
   { id: 1, name: 'Primeiro Despertar', description: 'Iniciou a jornada de autoconhecimento', unlocked: true },
   { id: 2, name: 'Respiração Consciente', description: 'Completou 10 sessões de respiração guiada', unlocked: true },
   { id: 3, name: 'Portal Desbloqueado', description: 'Acessou seu primeiro portal de transformação', unlocked: true },
   { id: 4, name: 'Clareza Crescente', description: 'Atingiu 50% de clareza de propósito', unlocked: true },
-  { id: 5, name: 'Persistência', description: 'Manteve prática diária por 30 dias', unlocked: false },
-  { id: 6, name: 'Mestria Interior', description: 'Completou todos os estágios da jornada', unlocked: false }
+  { id: 5, name: 'Visionário', description: 'Completou o Portal da Clareza', unlocked: false },
+  { id: 6, name: 'Consciente', description: 'Completou o Portal da Presença', unlocked: false },
+  { id: 7, name: 'Corajoso', description: 'Completou o Portal da Coragem', unlocked: false },
+  { id: 8, name: 'Sábio', description: 'Completou o Portal da Sabedoria', unlocked: false },
+  { id: 9, name: 'Intuitivo', description: 'Completou o Portal da Intuição', unlocked: false },
+  { id: 10, name: 'Direcionado', description: 'Completou o Portal do Propósito', unlocked: false },
+  { id: 11, name: 'Persistência', description: 'Manteve prática diária por 30 dias', unlocked: false },
+  { id: 12, name: 'Mestria Interior', description: 'Completou todos os portais da jornada', unlocked: false }
 ];
