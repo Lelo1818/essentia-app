@@ -70,6 +70,7 @@ import EssentiaPremium from "@/pages/essentia-premium";
 import EssentiaFinal from "@/pages/essentia-final";
 import EssentiaPurposeStyle from "@/pages/essentia-purpose-style";
 import EssentiaPurposeOriginal from "@/pages/essentia-purpose-original";
+import EssentiaCleanDemo from "@/pages/essentia-clean-demo";
 
 
 
@@ -137,6 +138,7 @@ function Router() {
       <Route path="/essentia-pro" component={EssentiaPro} />
       <Route path="/essentia-purpose-style" component={EssentiaPurposeStyle} />
       <Route path="/essentia-purpose-original" component={EssentiaPurposeOriginal} />
+      <Route path="/essentia-clean-demo" component={EssentiaCleanDemo} />
       <Route path="/essentia-premium" component={EssentiaPremium} />
       <Route path="/essentia-final" component={EssentiaFinal} />
 
