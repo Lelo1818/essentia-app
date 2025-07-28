@@ -155,6 +155,10 @@ export const PurposeJourneyPro = ({ user, onStageClick }: PurposeJourneyProProps
                   'bg-gray-400 hover:bg-gray-500'
                 }`}
                 disabled={!stage.completed && !stage.current}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onStageClick(stage.id);
+                }}
               >
                 {stage.completed ? 'Revisar' : stage.current ? 'Continuar' : 'Bloqueado'}
               </Button>
@@ -175,11 +179,20 @@ export const PurposeJourneyPro = ({ user, onStageClick }: PurposeJourneyProProps
               através das práticas de reflexão e autoconhecimento.
             </p>
             <div className="flex justify-center space-x-4">
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+              <Button 
+                size="sm" 
+                className="bg-blue-600 hover:bg-blue-700"
+                onClick={() => onStageClick(3)}
+              >
                 <PlayCircle className="w-4 h-4 mr-2" />
                 Práticas de Hoje
               </Button>
-              <Button size="sm" variant="outline" className="border-blue-600 text-blue-600">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="border-blue-600 text-blue-600"
+                onClick={() => onStageClick(3)}
+              >
                 Ver Insights da IA
               </Button>
             </div>
