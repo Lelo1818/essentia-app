@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Compass, User, Heart, Sparkles, Eye, Sun } from 'lucide-react';
+import { ArrowLeft, Compass, User, Heart, Sparkles, Eye, Sun, BookOpen } from 'lucide-react';
 
 // Components
 import { Avatar3DPro } from '../components/essentia-pro/Avatar3DPro';
@@ -12,6 +12,7 @@ import { PurposeJourneyPro } from '../components/essentia-pro/PurposeJourneyPro'
 import { PortalCardPro } from '../components/essentia-pro/PortalCardPro';
 import { AIPersonalitiesPro } from '../components/essentia-pro/AIPersonalitiesPro';
 import { DailyRitualsPro } from '../components/essentia-pro/DailyRitualsPro';
+import { JournalingPro } from '../components/essentia-pro/JournalingPro';
 
 // Data and hooks
 import { useEssentiaPro } from '../hooks/useEssentiaPro';
@@ -37,8 +38,28 @@ export default function EssentiaPro() {
   const [activeTab, setActiveTab] = useState('journey');
 
   const handleStageClick = (stageId: number) => {
-    // Future: Navigate to stage details
     console.log('Stage clicked:', stageId);
+    // Navigate to appropriate sections based on stage
+    switch(stageId) {
+      case 1:
+      case 2:
+        setActiveTab('journal');
+        break;
+      case 3:
+        setActiveTab('portals');
+        break;
+      case 4:
+        setActiveTab('ai');
+        break;
+      case 5:
+        setActiveTab('rituals');
+        break;
+      case 6:
+        setActiveTab('avatar');
+        break;
+      default:
+        setActiveTab('journey');
+    }
   };
 
   const [completedPortals, setCompletedPortals] = useState<string[]>([]);
@@ -117,7 +138,7 @@ export default function EssentiaPro() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Navigation */}
           <div className="mb-8">
-            <TabsList className="grid w-full grid-cols-6 h-14 bg-white/60 backdrop-blur-sm">
+            <TabsList className="grid w-full grid-cols-7 h-14 bg-white/60 backdrop-blur-sm">
               <TabsTrigger value="journey" className="flex items-center space-x-2">
                 <Compass className="w-4 h-4" />
                 <span className="hidden md:inline">Jornada</span>
@@ -141,6 +162,10 @@ export default function EssentiaPro() {
               <TabsTrigger value="rituals" className="flex items-center space-x-2">
                 <Sun className="w-4 h-4" />
                 <span className="hidden md:inline">Rituais</span>
+              </TabsTrigger>
+              <TabsTrigger value="journal" className="flex items-center space-x-2">
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden md:inline">Diário</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -240,6 +265,17 @@ export default function EssentiaPro() {
           <TabsContent value="rituals" className="mt-0">
             <div className="max-w-4xl mx-auto">
               <DailyRitualsPro onComplete={completeDaily} />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="journal" className="mt-0">
+            <div className="max-w-4xl mx-auto">
+              <JournalingPro 
+                onComplete={() => {
+                  completeDaily();
+                  updateClarity(Math.min(100, user.clarity + 5));
+                }}
+              />
             </div>
           </TabsContent>
         </Tabs>
