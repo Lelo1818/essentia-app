@@ -1,10 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { User } from 'lucide-react';
-import { environments } from '../../data/essentia-pro-data';
+import { Palette, RotateCcw, Sparkles, Eye } from 'lucide-react';
 
 interface Avatar3DProProps {
   clarity: number;
@@ -14,9 +12,32 @@ interface Avatar3DProProps {
   onEnvironmentChange: (env: number) => void;
 }
 
+const environments = [
+  { name: 'Oceano', emoji: '🌊', color: '#3B82F6', gradient: 'from-blue-400 to-cyan-500' },
+  { name: 'Floresta', emoji: '🌲', color: '#10B981', gradient: 'from-green-400 to-emerald-500' },
+  { name: 'Montanha', emoji: '⛰️', color: '#8B5CF6', gradient: 'from-purple-400 to-violet-500' },
+  { name: 'Cosmos', emoji: '✨', color: '#F59E0B', gradient: 'from-amber-400 to-orange-500' },
+  { name: 'Cristal', emoji: '💎', color: '#EC4899', gradient: 'from-pink-400 to-rose-500' }
+];
+
 export const Avatar3DPro = ({ clarity, environment, rotation, auraIntensity, onEnvironmentChange }: Avatar3DProProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
+  const [particles, setParticles] = useState<Array<{x: number, y: number, vx: number, vy: number, opacity: number}>>([]);
 
+  // Initialize particles
+  useEffect(() => {
+    const newParticles = Array.from({ length: 50 }, () => ({
+      x: Math.random() * 400,
+      y: Math.random() * 400,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      opacity: Math.random() * 0.8 + 0.2
+    }));
+    setParticles(newParticles);
+  }, []);
+
+  // Canvas animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -25,168 +46,173 @@ export const Avatar3DPro = ({ clarity, environment, rotation, auraIntensity, onE
     if (!ctx) return;
 
     const animate = () => {
-      // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+      
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
-      const baseRadius = 80;
-      const radius = baseRadius + (clarity * 0.8);
+      const currentEnv = environments[environment];
 
-      // Environment background
-      const env = environments[environment];
-      const backgroundGradient = ctx.createRadialGradient(
-        centerX, centerY, 0,
-        centerX, centerY, canvas.width / 2
-      );
-      backgroundGradient.addColorStop(0, env.color + '30');
-      backgroundGradient.addColorStop(0.7, env.color + '15');
-      backgroundGradient.addColorStop(1, env.color + '05');
-      ctx.fillStyle = backgroundGradient;
+      // Background gradient
+      const bgGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 200);
+      bgGradient.addColorStop(0, `${currentEnv.color}20`);
+      bgGradient.addColorStop(1, `${currentEnv.color}05`);
+      ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Outer aura (breathing effect)
-      const auraRadius = radius + 30 + (auraIntensity * 20);
-      const auraGradient = ctx.createRadialGradient(
-        centerX, centerY, radius,
-        centerX, centerY, auraRadius
-      );
-      auraGradient.addColorStop(0, `rgba(255, 255, 255, ${auraIntensity * 0.6})`);
-      auraGradient.addColorStop(0.5, `rgba(255, 255, 255, ${auraIntensity * 0.3})`);
-      auraGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      ctx.fillStyle = auraGradient;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, auraRadius, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Inner energy field
-      const energyGradient = ctx.createRadialGradient(
-        centerX, centerY, radius * 0.3,
-        centerX, centerY, radius
-      );
-      energyGradient.addColorStop(0, env.color + 'FF');
-      energyGradient.addColorStop(0.7, env.color + 'AA');
-      energyGradient.addColorStop(1, env.color + '44');
-      ctx.fillStyle = energyGradient;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Core avatar
-      const coreGradient = ctx.createRadialGradient(
-        centerX - radius * 0.3, centerY - radius * 0.3, 0,
-        centerX, centerY, radius * 0.8
-      );
-      coreGradient.addColorStop(0, '#FFFFFF');
-      coreGradient.addColorStop(0.5, '#F8FAFC');
-      coreGradient.addColorStop(1, '#E2E8F0');
-      ctx.fillStyle = coreGradient;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius * 0.7, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Floating particles
-      const time = Date.now() / 1000;
-      for (let i = 0; i < 8; i++) {
-        const angle = (time + i * Math.PI / 4) % (Math.PI * 2);
-        const particleRadius = radius + 40;
-        const x = centerX + Math.cos(angle) * particleRadius;
-        const y = centerY + Math.sin(angle) * particleRadius;
-        
-        ctx.fillStyle = `rgba(255, 255, 255, ${0.6 + Math.sin(time * 2 + i) * 0.4})`;
+      // Draw particles
+      particles.forEach((particle, index) => {
+        ctx.save();
+        ctx.globalAlpha = particle.opacity * auraIntensity;
+        ctx.fillStyle = currentEnv.color;
         ctx.beginPath();
-        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Update particle position
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        // Bounce off edges
+        if (particle.x <= 0 || particle.x >= canvas.width) particle.vx *= -1;
+        if (particle.y <= 0 || particle.y >= canvas.height) particle.vy *= -1;
+
+        // Keep particles in bounds
+        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
+        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
+      });
+
+      // Draw main avatar circle
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate((rotation * Math.PI) / 180);
+
+      // Aura rings
+      for (let i = 3; i >= 1; i--) {
+        const auraGradient = ctx.createRadialGradient(0, 0, 50 + i * 20, 0, 0, 70 + i * 20);
+        auraGradient.addColorStop(0, `${currentEnv.color}00`);
+        auraGradient.addColorStop(1, `${currentEnv.color}${Math.floor(auraIntensity * 40).toString(16).padStart(2, '0')}`);
+        
+        ctx.fillStyle = auraGradient;
+        ctx.beginPath();
+        ctx.arc(0, 0, 70 + i * 20, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      requestAnimationFrame(animate);
+      // Main avatar body
+      const avatarGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 50);
+      avatarGradient.addColorStop(0, currentEnv.color);
+      avatarGradient.addColorStop(1, `${currentEnv.color}CC`);
+      
+      ctx.fillStyle = avatarGradient;
+      ctx.beginPath();
+      ctx.arc(0, 0, 50, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Clarity indicator (inner circle)
+      const claritySize = (clarity / 100) * 40;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(0, 0, claritySize, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Avatar face/symbol
+      ctx.fillStyle = currentEnv.color;
+      ctx.font = '24px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(currentEnv.emoji, 0, 0);
+
+      ctx.restore();
+
+      animationRef.current = requestAnimationFrame(animate);
     };
 
     animate();
-  }, [clarity, environment, rotation, auraIntensity]);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [environment, rotation, auraIntensity, clarity, particles]);
 
   return (
-    <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Avatar 3D Evolutivo</span>
-          <Badge className="bg-green-600 text-white animate-pulse">
-            Live Canvas
-          </Badge>
-        </CardTitle>
-        <p className="text-sm text-gray-600">Seu reflexo interior em tempo real</p>
-      </CardHeader>
-      <CardContent>
-        <div className="text-center mb-6">
-          <div className="relative mx-auto w-80 h-80 rounded-xl overflow-hidden shadow-2xl">
+    <div className="space-y-6">
+      {/* Avatar Display */}
+      <Card className="overflow-hidden">
+        <CardHeader>
+          <CardTitle className="text-center flex items-center justify-center">
+            <Sparkles className="w-6 h-6 mr-2 text-purple-600" />
+            Avatar 3D Interativo
+          </CardTitle>
+          <div className="text-center">
+            <Badge className="bg-purple-600 text-white">
+              Clareza: {clarity}% • Ambiente: {environments[environment].name}
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="relative">
             <canvas
               ref={canvasRef}
-              width={320}
-              height={320}
-              className="w-full h-full"
+              width={400}
+              height={400}
+              className="w-full max-w-md mx-auto border rounded-xl bg-gradient-to-br from-gray-50 to-gray-100"
+              style={{ aspectRatio: '1/1' }}
             />
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <User className="w-16 h-16 text-white/80 animate-pulse" />
+            
+            {/* Overlay info */}
+            <div className="absolute top-4 left-4 space-y-2">
+              <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
+                <Eye className="w-4 h-4 inline mr-2" />
+                Aura: {Math.round(auraIntensity * 100)}%
+              </div>
+              <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
+                <RotateCcw className="w-4 h-4 inline mr-2" />
+                Rotação: {Math.round(rotation)}°
+              </div>
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Environment Controls */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Palette className="w-5 h-5 mr-2" />
+            Ambientes Disponíveis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            {environments.map((env, index) => (
+              <Button
+                key={index}
+                onClick={() => onEnvironmentChange(index)}
+                variant={environment === index ? "default" : "outline"}
+                className={`flex flex-col items-center p-4 h-auto ${
+                  environment === index 
+                    ? `bg-gradient-to-r ${env.gradient} text-white border-0` 
+                    : `border-2 hover:bg-gradient-to-r hover:${env.gradient} hover:text-white`
+                }`}
+              >
+                <span className="text-2xl mb-2">{env.emoji}</span>
+                <span className="text-sm font-medium">{env.name}</span>
+              </Button>
+            ))}
           </div>
           
-          <div className="mt-4 space-y-2">
-            <p className="text-gray-700 font-medium">
-              {environments[environment].name} • Clareza: {clarity}%
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-semibold mb-2">Ambiente Atual: {environments[environment].name}</h4>
+            <p className="text-sm text-gray-600">
+              Cada ambiente oferece uma energia única para sua jornada. O avatar responde ao seu nível de clareza 
+              e se adapta ao ambiente escolhido com partículas e aura personalizadas.
             </p>
-            <div className="text-sm text-gray-500">
-              "Sua energia atual reflete {clarity < 30 ? 'potencial adormecido' : 
-                clarity < 60 ? 'despertar em progresso' : 
-                clarity < 80 ? 'clareza emergente' : 'propósito radiante'}"
-            </div>
           </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
-              Ambientes Evolutivos
-            </label>
-            <div className="grid grid-cols-5 gap-2">
-              {environments.map((env, index) => (
-                <Button
-                  key={index}
-                  size="sm"
-                  variant={index === environment ? "default" : "outline"}
-                  className="flex flex-col py-3 h-auto"
-                  onClick={() => onEnvironmentChange(index)}
-                >
-                  <span className="text-lg mb-1">{env.emoji}</span>
-                  <span className="text-xs">{env.name}</span>
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Nível de Clareza</span>
-              <span className="font-semibold">{clarity}%</span>
-            </div>
-            <Progress value={clarity} className="h-3" />
-          </div>
-
-          <div className="grid grid-cols-3 gap-4 text-center text-xs">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <div className="font-semibold text-blue-600">Aura</div>
-              <div className="text-blue-500">Ativa</div>
-            </div>
-            <div className="p-2 bg-green-50 rounded-lg">
-              <div className="font-semibold text-green-600">Energia</div>
-              <div className="text-green-500">{Math.round(auraIntensity * 100)}%</div>
-            </div>
-            <div className="p-2 bg-purple-50 rounded-lg">
-              <div className="font-semibold text-purple-600">Partículas</div>
-              <div className="text-purple-500">8</div>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

@@ -10,6 +10,7 @@ import {
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateStudyPlan } from "./anthropic";
+import { getAICoachResponse, generatePersonalizedInsight } from "./ai-coach";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Servir arquivo HTML estático para EduVie
@@ -1897,6 +1898,40 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
         message: "Erro ao gerar plano de estudos. Tente novamente em alguns instantes.",
         error: error instanceof Error ? error.message : "Erro desconhecido"
       });
+    }
+  });
+
+  // ===== AI COACH ROUTES =====
+  
+  // Rota para chat com IA Coach
+  app.post('/api/ai-coach/chat', async (req, res) => {
+    try {
+      const { personalityId, message, context } = req.body;
+      
+      if (!personalityId || !message) {
+        return res.status(400).json({ error: 'PersonalityId e message são obrigatórios' });
+      }
+      
+      const response = await getAICoachResponse(personalityId, message, context);
+      res.json(response);
+      
+    } catch (error) {
+      console.error('Erro no AI Coach:', error);
+      res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+  });
+  
+  // Rota para insight personalizado
+  app.post('/api/ai-coach/insight', async (req, res) => {
+    try {
+      const { clarity, daysActive, currentStage } = req.body;
+      
+      const insight = await generatePersonalizedInsight(clarity, daysActive, currentStage);
+      res.json({ insight });
+      
+    } catch (error) {
+      console.error('Erro ao gerar insight:', error);
+      res.status(500).json({ error: 'Erro interno do servidor' });
     }
   });
 

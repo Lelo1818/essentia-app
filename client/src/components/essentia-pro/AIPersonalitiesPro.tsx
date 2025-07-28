@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { User, Send, Sparkles, MessageCircle } from 'lucide-react';
+import { User, Send, Sparkles, MessageCircle, Loader2 } from 'lucide-react';
 import { AIPersonality } from '../../types/essentia';
+import { useMutation } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 
 interface AIPersonalitiesProProps {
   personalities: AIPersonality[];
@@ -36,7 +38,17 @@ export const AIPersonalitiesPro = ({ personalities }: AIPersonalitiesProProps) =
     }]);
   };
 
-  const sendMessage = () => {
+  // Real AI integration
+  const aiChatMutation = useMutation({
+    mutationFn: async ({ personalityId, message }: { personalityId: string; message: string }) => {
+      return apiRequest('/api/ai-coach/chat', {
+        method: 'POST',
+        body: { personalityId, message, context: 'Essentia Pro coaching session' }
+      });
+    }
+  });
+
+  const sendMessage = async () => {
     if (!currentMessage.trim() || !selectedAI) return;
 
     // Add user message
@@ -48,47 +60,40 @@ export const AIPersonalitiesPro = ({ personalities }: AIPersonalitiesProProps) =
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const messageToSend = currentMessage;
     setCurrentMessage('');
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponses = {
-        sofia: [
-          "Compreendo sua situação. Lembre-se de que cada desafio é uma oportunidade de crescimento. Como posso apoiá-lo melhor?",
-          "Sua vulnerabilidade é uma força, não uma fraqueza. O que você está sentindo agora é válido e importante.",
-          "Às vezes precisamos parar e simplesmente respirar. Que tal fazermos isso juntos por um momento?"
-        ],
-        marcos: [
-          "Excelente reflexão! Agora vamos transformar isso em ação. Qual seria o primeiro passo prático que você pode dar hoje?",
-          "Foco é fundamental. Vamos quebrar esse objetivo em tarefas menores e executáveis. Por onde começamos?",
-          "Você tem o poder de criar mudanças reais. Que ação específica você pode tomar nas próximas 24 horas?"
-        ],
-        luna: [
-          "Que bela oportunidade para reflexão profunda. O que essa experiência está tentando te ensinar?",
-          "A sabedoria emerge no silêncio. Permita-se sentir o que precisa ser sentido, sem julgamentos.",
-          "Cada fim de dia é uma chance de integrar as lições aprendidas. O que você descobriu sobre si hoje?"
-        ],
-        leo: [
-          "Que energia incrível! Vamos canalizar essa motivação em conquistas concretas. Qual é seu maior sonho?",
-          "Você está radiante hoje! Essa energia positiva é contagiante. Como podemos multiplicá-la?",
-          "O mundo precisa da sua luz! Que tal usar essa energia para inspirar alguém hoje?"
-        ]
-      };
-
-      const responses = aiResponses[selectedAI.id as keyof typeof aiResponses] || aiResponses.sofia;
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    try {
+      // Call real AI
+      const response = await aiChatMutation.mutateAsync({
+        personalityId: selectedAI.id,
+        message: messageToSend
+      });
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        content: randomResponse,
+        content: response.message,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Erro no chat da IA:', error);
+      
+      // Fallback response
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: 'ai',
+        content: `Desculpe, tive um problema técnico. Como ${selectedAI.name}, estou aqui para te apoiar. Pode tentar novamente?`,
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, aiMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const getTimeString = (date: Date) => {
@@ -212,11 +217,15 @@ export const AIPersonalitiesPro = ({ personalities }: AIPersonalitiesProProps) =
               />
               <Button 
                 onClick={sendMessage}
-                disabled={!currentMessage.trim() || isTyping}
+                disabled={!currentMessage.trim() || isTyping || aiChatMutation.isPending}
                 size="sm"
                 className={selectedAI ? `bg-gradient-to-r ${selectedAI.color}` : 'bg-blue-600'}
               >
-                <Send className="w-4 h-4" />
+                {aiChatMutation.isPending ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
               </Button>
             </div>
           </div>
