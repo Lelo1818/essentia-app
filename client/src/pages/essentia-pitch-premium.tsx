@@ -863,14 +863,16 @@ const slides = [
               <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
                 <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
                   <img 
-                    src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6pot2fwP5P6U6iigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/2Q=="
+                    src="./attached_assets/image_1753917701795.png"
                     alt="Marcelo Lelo Rymer"
                     className="w-full h-full object-cover rounded-full"
                     onError={(e) => {
+                      // Fallback para ícone se a imagem não carregar
                       e.currentTarget.style.display = 'none';
                       const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
                       if (nextElement) {
                         nextElement.style.display = 'flex';
+                        nextElement.classList.remove('hidden');
                       }
                     }}
                   />
@@ -878,69 +880,69 @@ const slides = [
                 </div>
               </div>
             </div>
-            <h3 className="text-3xl font-bold text-gray-800 mt-6">Marcelo "Lelo" Rymer</h3>
-            <p className="text-xl text-gray-700">Fundador & Visionário da Essentia</p>
+            <h3 className="text-3xl font-bold text-white mt-6">Marcelo "Lelo" Rymer</h3>
+            <p className="text-xl text-gray-200">Fundador & Visionário da Essentia</p>
           </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-2xl font-bold text-gray-800 mb-6">Especialista em bem-estar digital e comportamento humano</h4>
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-2xl font-bold text-white mb-6">Especialista em bem-estar digital e comportamento humano</h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-green-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-800"><strong>20+ anos de experiência</strong> como empresário em tecnologia, educação e mercado financeiro</p>
+                <CheckCircle className="text-green-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200"><strong>20+ anos de experiência</strong> como empresário em tecnologia, educação e mercado financeiro</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-blue-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-800"><strong>Trajetória pessoal de autoconhecimento</strong> que deu origem à Essentia</p>
+                <CheckCircle className="text-blue-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200"><strong>Trajetória pessoal de autoconhecimento</strong> que deu origem à Essentia</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-purple-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-800"><strong>Capacidade comprovada</strong> de construir negócios do zero e liderar equipes multidisciplinares</p>
+                <CheckCircle className="text-purple-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200"><strong>Capacidade comprovada</strong> de construir negócios do zero e liderar equipes multidisciplinares</p>
               </div>
             </div>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-              <Users className="text-blue-600 mr-3" size={24} />
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-xl font-bold text-white mb-6 flex items-center">
+              <Users className="text-blue-400 mr-3" size={24} />
               Rede Estratégica
             </h4>
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span>Psicólogos clínicos</span>
+                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                <span className="text-gray-200">Psicólogos clínicos</span>
               </li>
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>Neurocientistas</span>
+                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                <span className="text-gray-200">Neurocientistas</span>
               </li>
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                <span>Especialistas em IA e gamificação</span>
+                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                <span className="text-gray-200">Especialistas em IA e gamificação</span>
               </li>
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <span>Designers UX/UI</span>
+                <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                <span className="text-gray-200">Designers UX/UI</span>
               </li>
             </ul>
           </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-              <Building className="text-green-600 mr-3" size={24} />
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-xl font-bold text-white mb-6 flex items-center">
+              <Building className="text-green-400 mr-3" size={24} />
               Parcerias Acadêmicas
             </h4>
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span>USP - Validação científica</span>
+                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                <span className="text-gray-200">USP - Validação científica</span>
               </li>
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>Hospital Albert Einstein</span>
+                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                <span className="text-gray-200">Hospital Albert Einstein</span>
               </li>
               <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                <span>Centros de pesquisa</span>
+                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                <span className="text-gray-200">Centros de pesquisa</span>
               </li>
             </ul>
           </div>
