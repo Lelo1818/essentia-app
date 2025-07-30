@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Brain, Trophy, Heart, Smartphone, TrendingUp, Users, Building, Shield, Target, Rocket, DollarSign, Globe, Award, Zap } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Brain, Trophy, Heart, Smartphone, TrendingUp, Users, Building, Shield, Target, Rocket, DollarSign, Globe, Award, Zap, BarChart3, CheckCircle, Star, ArrowUp } from 'lucide-react';
 
 const slides = [
   {
@@ -18,21 +18,6 @@ const slides = [
             <div className="text-lg text-gray-600">Transformando o Bem-Estar Digital no Brasil</div>
           </div>
         </div>
-        {/* Elementos gráficos sutis - redes neurais */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="w-full h-full relative">
-            {[...Array(12)].map((_, i) => (
-              <div key={i} className="absolute animate-float" style={{
-                left: `${Math.random() * 80 + 10}%`,
-                top: `${Math.random() * 60 + 20}%`,
-                animationDelay: `${i * 0.5}s`
-              }}>
-                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                <div className="w-16 h-px bg-gradient-to-r from-blue-400 to-transparent absolute top-1 left-2"></div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     ),
     bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
@@ -43,7 +28,6 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Gráfico Principal - Pizza */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Brasileiros com Ansiedade/Estresse</h3>
             <div className="relative w-64 h-64 mx-auto">
@@ -58,8 +42,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* Gráfico Secundário - Retenção */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Taxa de Abandono Apps</h3>
             <div className="space-y-4">
@@ -80,23 +62,6 @@ const slides = [
             </div>
           </div>
         </div>
-
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-          <div className="flex items-center justify-center space-x-8">
-            <div className="flex items-center space-x-3">
-              <Brain className="text-red-500" size={24} />
-              <span className="text-lg text-gray-700">Falta de personalização cultural</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <Users className="text-orange-500" size={24} />
-              <span className="text-lg text-gray-700">Apps genéricos falham</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <TrendingUp className="text-red-600" size={24} />
-              <span className="text-lg text-gray-700">71% impacto na produtividade</span>
-            </div>
-          </div>
-        </div>
       </div>
     ),
     bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
@@ -107,7 +72,6 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Gráfico de Crescimento */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Mercado Brasil - Bem-Estar Digital</h3>
             <div className="space-y-6">
@@ -116,7 +80,7 @@ const slides = [
                 <div className="text-4xl font-bold text-blue-600">US$ 543,5M</div>
               </div>
               <div className="relative h-16 bg-gray-200 rounded-full overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-green-500 to-green-600 rounded-full transform scale-x-[0.42] origin-left animate-grow"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-green-500 to-green-600 rounded-full transform scale-x-[0.42] origin-left"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <TrendingUp className="text-white" size={32} />
                 </div>
@@ -128,8 +92,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* Mapa Brasil + Dados Mobile */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Base de Usuários Mobile</h3>
             <div className="text-center space-y-8">
@@ -167,7 +129,6 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Mockup do App */}
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-400/30 via-blue-400/30 to-green-400/30 rounded-3xl blur-2xl animate-pulse"></div>
             <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-[3rem] p-4 shadow-2xl">
@@ -202,8 +163,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* Elementos Flutuantes */}
           <div className="space-y-6">
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
               <div className="flex items-center space-x-4 mb-4">
@@ -216,7 +175,6 @@ const slides = [
                 </div>
               </div>
             </div>
-
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="p-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl">
@@ -228,7 +186,6 @@ const slides = [
                 </div>
               </div>
             </div>
-
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="p-3 bg-gradient-to-r from-green-500 to-yellow-500 rounded-xl">
@@ -252,7 +209,6 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* IA Preditiva */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl group hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
             <div className="text-center space-y-6">
               <div className="relative">
@@ -275,8 +231,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* Gamificação */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl group hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
             <div className="text-center space-y-6">
               <div className="relative">
@@ -299,8 +253,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* Abordagem Holística */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl group hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
             <div className="text-center space-y-6">
               <div className="relative">
@@ -334,11 +286,8 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto">
         <div className="relative">
-          {/* Timeline com conectores */}
           <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-blue-400 via-green-400 to-yellow-400 transform -translate-y-1/2 z-0"></div>
-          
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-            {/* Etapa 1 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -358,8 +307,6 @@ const slides = [
                 </div>
               </div>
             </div>
-
-            {/* Etapa 2 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -379,8 +326,6 @@ const slides = [
                 </div>
               </div>
             </div>
-
-            {/* Etapa 3 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -400,8 +345,6 @@ const slides = [
                 </div>
               </div>
             </div>
-
-            {/* Etapa 4 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -429,7 +372,6 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* B2C */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-300">
             <div className="text-center space-y-6">
               <div className="relative">
@@ -451,8 +393,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* B2B */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-300">
             <div className="text-center space-y-6">
               <div className="relative">
@@ -474,8 +414,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* B2B2C */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-300">
             <div className="text-center space-y-6">
               <div className="relative">
@@ -498,17 +436,6 @@ const slides = [
             </div>
           </div>
         </div>
-
-        {/* Conectores visuais */}
-        <div className="mt-8 flex justify-center">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center space-x-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     ),
     bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
@@ -518,12 +445,9 @@ const slides = [
     title: "Canais de Aquisição: Escalando com Eficiência",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Timeline horizontal dos canais */}
         <div className="relative">
           <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 via-green-400 via-yellow-400 to-purple-400 rounded-full transform -translate-y-1/2 z-0"></div>
-          
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative z-10">
-            {/* Influenciadores */}
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
               <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <Users className="text-white" size={24} />
@@ -534,8 +458,6 @@ const slides = [
                 <div className="text-gray-600">CPI LatAm</div>
               </div>
             </div>
-
-            {/* B2B Corporativo */}
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <Building className="text-white" size={24} />
@@ -546,8 +468,6 @@ const slides = [
                 <div className="text-gray-600">Baixo CAC</div>
               </div>
             </div>
-
-            {/* Parcerias B2B2C */}
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
               <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <Shield className="text-white" size={24} />
@@ -558,8 +478,6 @@ const slides = [
                 <div className="text-gray-600">Escala</div>
               </div>
             </div>
-
-            {/* Orgânico */}
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
               <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <Target className="text-white" size={24} />
@@ -570,8 +488,6 @@ const slides = [
                 <div className="text-gray-600">ASO/SEO</div>
               </div>
             </div>
-
-            {/* Mídia Paga */}
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <Zap className="text-white" size={24} />
@@ -584,8 +500,6 @@ const slides = [
             </div>
           </div>
         </div>
-
-        {/* Resumo dos benefícios */}
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
           <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">Vantagem Competitiva nos Canais</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -612,12 +526,9 @@ const slides = [
     title: "Roadmap de Crescimento e Tração (24 Meses)",
     content: (
       <div className="max-w-7xl mx-auto">
-        {/* Timeline principal */}
         <div className="relative">
           <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 via-green-400 via-yellow-400 to-purple-400 rounded-full transform -translate-y-1/2 z-0"></div>
-          
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
-            {/* Q1-Q2 2025 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -640,8 +551,6 @@ const slides = [
                 <div className="text-sm text-gray-600">Lançamento MVP</div>
               </div>
             </div>
-
-            {/* Q3-Q4 2025 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -664,8 +573,6 @@ const slides = [
                 <div className="text-sm text-gray-600">Otimização monetização</div>
               </div>
             </div>
-
-            {/* 2026 */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -688,8 +595,6 @@ const slides = [
                 <div className="text-sm text-gray-600">Escala Brasil</div>
               </div>
             </div>
-
-            {/* 2027+ */}
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
               <div className="text-center space-y-4">
                 <div className="relative">
@@ -724,7 +629,6 @@ const slides = [
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Modelo Freemium B2C */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Modelo Freemium B2C</h3>
             <div className="space-y-4">
@@ -748,8 +652,6 @@ const slides = [
               </div>
             </div>
           </div>
-
-          {/* Modelo B2B */}
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Planos Corporativos B2B</h3>
             <div className="space-y-4">
@@ -776,8 +678,6 @@ const slides = [
             </div>
           </div>
         </div>
-
-        {/* Projeção de receita */}
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
           <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Projeção de Receita Diversificada</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -798,20 +698,439 @@ const slides = [
       </div>
     ),
     bg: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
+  },
+  {
+    id: 11,
+    title: "Nossos KPIs para a Série A: Crescimento Sustentável",
+    content: (
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl">
+                  <BarChart3 className="text-white mx-auto" size={32} />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">LTV:CAC</h3>
+              <div className="text-3xl font-bold text-green-600">&gt; 3:1</div>
+              <div className="text-sm text-gray-600">Economia unitária saudável</div>
+            </div>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl">
+                  <TrendingUp className="text-white mx-auto" size={32} />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">Retenção</h3>
+              <div className="space-y-2">
+                <div className="text-sm"><span className="font-bold text-blue-600">30%</span> - Dia 30</div>
+                <div className="text-sm"><span className="font-bold text-blue-600">15%</span> - Dia 90</div>
+                <div className="text-sm"><span className="font-bold text-blue-600">60%</span> - Anual</div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl">
+                  <DollarSign className="text-white mx-auto" size={32} />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">ARR</h3>
+              <div className="text-2xl font-bold text-purple-600">&gt; US$ 1M</div>
+              <div className="text-sm text-gray-600">Receita recorrente anual</div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-orange-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl">
+                  <Target className="text-white mx-auto" size={32} />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">CAC Payback Period</h3>
+              <div className="text-3xl font-bold text-orange-600">&lt; 12 meses</div>
+              <div className="text-sm text-gray-600">Retorno rápido do investimento</div>
+            </div>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-4 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-2xl">
+                  <Star className="text-white mx-auto" size={32} />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">Net Promoter Score</h3>
+              <div className="text-3xl font-bold text-yellow-600">&gt; 60</div>
+              <div className="text-sm text-gray-600">Alta satisfação do usuário</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+    bg: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
+  },
+  {
+    id: 12,
+    title: "Cenário Competitivo: Nossa Vantagem Inovadora",
+    content: (
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Comparativo Competitivo</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left p-4 font-bold text-gray-800">Características</th>
+                  <th className="text-center p-4 font-bold text-green-600 bg-green-50 rounded-t-lg">Essentia</th>
+                  <th className="text-center p-4 font-bold text-gray-600">Calm</th>
+                  <th className="text-center p-4 font-bold text-gray-600">Headspace</th>
+                  <th className="text-center p-4 font-bold text-gray-600">Outros</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b">
+                  <td className="p-4 font-medium">IA Adaptativa/Personalidade</td>
+                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                  <td className="text-center p-4 text-gray-400">Básica</td>
+                  <td className="text-center p-4 text-gray-400">Básica</td>
+                  <td className="text-center p-4 text-gray-400">Limitada</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="p-4 font-medium">Gamificação</td>
+                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                  <td className="text-center p-4 text-gray-400">Limitada</td>
+                  <td className="text-center p-4 text-gray-400">Média</td>
+                  <td className="text-center p-4 text-gray-400">Básica</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="p-4 font-medium">Abordagem Holística</td>
+                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                  <td className="text-center p-4 text-gray-400">Parcial</td>
+                  <td className="text-center p-4 text-gray-400">Parcial</td>
+                  <td className="text-center p-4 text-gray-400">Não</td>
+                </tr>
+                <tr className="border-b">
+                  <td className="p-4 font-medium">Conteúdo Cultural</td>
+                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                  <td className="text-center p-4 text-gray-400">Global</td>
+                  <td className="text-center p-4 text-gray-400">Global</td>
+                  <td className="text-center p-4 text-gray-400">Global</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-medium">Foco Geográfico</td>
+                  <td className="text-center p-4 bg-green-50 font-bold text-green-600">Brasil & LatAm</td>
+                  <td className="text-center p-4 text-gray-400">Global</td>
+                  <td className="text-center p-4 text-gray-400">Global</td>
+                  <td className="text-center p-4 text-gray-400">Variado</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+          <p className="text-gray-700 leading-relaxed">
+            Enquanto líderes globais como Calm e Headspace oferecem soluções valiosas, a Essentia se diferencia por uma 
+            <strong className="text-blue-600"> personalização de IA mais profunda</strong>, 
+            <strong className="text-green-600"> gamificação integrada</strong> e uma 
+            <strong className="text-purple-600"> abordagem holística e culturalmente adaptada</strong> ao público latino-americano. 
+            Nossa IA com personalidade e avatares em evolução criam uma conexão única, e a validação científica será um pilar para nossa credibilidade.
+          </p>
+        </div>
+      </div>
+    ),
+    bg: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+  },
+  {
+    id: 13,
+    title: "Marcelo \"Lelo\" Rymer - Fundador & Visionário",
+    content: (
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="text-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-green-400/30 rounded-full blur-2xl"></div>
+              <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
+                <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                  <Users className="text-gray-500" size={80} />
+                </div>
+              </div>
+            </div>
+            <h3 className="text-3xl font-bold text-white mt-6">Marcelo "Lelo" Rymer</h3>
+            <p className="text-xl text-white/90">Fundador & Visionário da Essentia</p>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-2xl font-bold text-gray-800 mb-6">Especialista em bem-estar digital e comportamento humano</h4>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-green-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700"><strong>20+ anos de experiência</strong> como empresário em tecnologia, educação e mercado financeiro</p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-blue-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700"><strong>Trajetória pessoal de autoconhecimento</strong> que deu origem à Essentia</p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-purple-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700"><strong>Capacidade comprovada</strong> de construir negócios do zero e liderar equipes multidisciplinares</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+              <Users className="text-blue-600 mr-3" size={24} />
+              Rede Estratégica
+            </h4>
+            <ul className="space-y-3">
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>Psicólogos clínicos</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>Neurocientistas</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span>Especialistas em IA e gamificação</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <span>Designers UX/UI</span>
+              </li>
+            </ul>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+              <Building className="text-green-600 mr-3" size={24} />
+              Parcerias Acadêmicas
+            </h4>
+            <ul className="space-y-3">
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>USP - Validação científica</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>Hospital Albert Einstein</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span>Centros de pesquisa</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    ),
+    bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+  },
+  {
+    id: 14,
+    title: "Projeções Financeiras: Crescimento Exponencial",
+    content: (
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Receita Anual Potencial (2027)</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl">
+                  <BarChart3 className="text-white mx-auto" size={48} />
+                </div>
+              </div>
+              <h4 className="text-xl font-bold text-gray-800">Cenário Conservador</h4>
+              <div className="text-4xl font-bold text-blue-600">US$ 25M</div>
+              <div className="text-sm text-gray-600">Base sólida e realista</div>
+            </div>
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-6 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl">
+                  <TrendingUp className="text-white mx-auto" size={48} />
+                </div>
+              </div>
+              <h4 className="text-xl font-bold text-gray-800">Cenário Moderado</h4>
+              <div className="text-4xl font-bold text-green-600">US$ 77M</div>
+              <div className="text-sm text-gray-600">Crescimento equilibrado</div>
+            </div>
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative p-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl">
+                  <Rocket className="text-white mx-auto" size={48} />
+                </div>
+              </div>
+              <h4 className="text-xl font-bold text-gray-800">Cenário Agressivo</h4>
+              <div className="text-4xl font-bold text-purple-600">US$ 154M</div>
+              <div className="text-sm text-gray-600">Alto potencial</div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-xl font-bold text-gray-800 mb-6 text-center">Participação de Mercado 2030</h4>
+            <div className="text-center space-y-4">
+              <div className="text-lg text-gray-600">SAM Brasil: US$ 1,28 bilhão</div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-blue-600 font-medium">Conservador</span>
+                  <span className="text-2xl font-bold text-blue-600">1,0%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-green-600 font-medium">Moderado</span>
+                  <span className="text-2xl font-bold text-green-600">3,0%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-purple-600 font-medium">Agressivo</span>
+                  <span className="text-2xl font-bold text-purple-600">6,0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h4 className="text-xl font-bold text-gray-800 mb-6 text-center">Valuation Projetada 2027</h4>
+            <div className="text-center space-y-6">
+              <div className="space-y-2">
+                <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  R$ 400M - 960M
+                </div>
+                <div className="text-gray-600">Revenue Multiple (Health Tech): 8-12x</div>
+              </div>
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4">
+                <div className="text-sm text-gray-700">
+                  <ArrowUp className="text-green-600 inline mr-2" size={16} />
+                  <strong>Crescimento sustentável</strong> baseado em métricas sólidas de engajamento e retenção
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+    bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+  },
+  {
+    id: 15,
+    title: "Essentia: Transformando Vidas, Construindo Valor",
+    content: (
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="text-center space-y-6">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="relative text-6xl mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-black">
+              ESSENTIA
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-white/90">Construindo um movimento para democratizar o bem-estar holístico e a saúde mental no Brasil</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Nossa Missão</h3>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-green-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700">Tecnologia de ponta e abordagem humana</p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-blue-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700">Mercado em ascensão, diferenciais comprovados</p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-purple-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700">Liderança de excelência e visão clara</p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle className="text-orange-600 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-700">Prontos para capturar fatia significativa do mercado bilionário</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Contato</h3>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-gray-700">contato@essentia.app</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span className="text-gray-700">LinkedIn: /company/essentia-wellness</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <span className="text-gray-700">www.essentia.app</span>
+              </div>
+            </div>
+            
+            <div className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2">Próximos Passos</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center space-x-2">
+                  <CheckCircle className="text-green-600" size={16} />
+                  <span>Demo personalizada</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <CheckCircle className="text-blue-600" size={16} />
+                  <span>Due diligence técnica</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <CheckCircle className="text-purple-600" size={16} />
+                  <span>Reunião com equipe</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
+          <h3 className="text-3xl font-bold text-white mb-4">
+            Junte-se a nós para transformar milhões de vidas e gerar impacto financeiro e social duradouro
+          </h3>
+          <div className="text-xl text-white/90 font-semibold">
+            R$ 8M Rodada Seed • 18 meses Break-even • 500K+ Usuários meta
+          </div>
+        </div>
+      </div>
+    ),
+    bg: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
   }
 ];
 
 export default function EssentiaPitchPremium() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const nextSlide = () => {
+    setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(prev => Math.max(prev - 1, 0));
+  };
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault();
-        setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1));
+        nextSlide();
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        setCurrentSlide(prev => Math.max(prev - 1, 0));
+        prevSlide();
       }
     };
 
@@ -826,35 +1145,21 @@ export default function EssentiaPitchPremium() {
       className="min-h-screen flex flex-col justify-center items-center text-white p-4 relative overflow-hidden"
       style={{ background: slide.bg }}
     >
-      {/* Elementos de fundo animados */}
-      <div className="absolute inset-0 opacity-10">
-        {[...Array(20)].map((_, i) => (
-          <div key={i} className="absolute animate-float" style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${i * 0.3}s`,
-            animationDuration: `${3 + Math.random() * 4}s`
-          }}>
-            <div className="w-1 h-1 bg-white rounded-full opacity-60"></div>
-          </div>
-        ))}
-      </div>
-
       {/* Navigation */}
-      <div className="absolute top-6 right-6 bg-black/30 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-medium">
+      <div className="absolute top-6 right-6 bg-black/30 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-medium z-20">
         {currentSlide + 1} / {slides.length}
       </div>
 
-      <div className="absolute top-6 left-6 flex gap-3">
+      <div className="absolute top-6 left-6 flex gap-3 z-20">
         <button
-          onClick={() => setCurrentSlide(prev => Math.max(prev - 1, 0))}
+          onClick={prevSlide}
           disabled={currentSlide === 0}
           className="bg-black/30 hover:bg-black/50 disabled:opacity-50 disabled:cursor-not-allowed p-3 rounded-xl backdrop-blur-sm transition-all duration-200"
         >
           <ChevronLeft size={24} />
         </button>
         <button
-          onClick={() => setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1))}
+          onClick={nextSlide}
           disabled={currentSlide === slides.length - 1}
           className="bg-black/30 hover:bg-black/50 disabled:opacity-50 disabled:cursor-not-allowed p-3 rounded-xl backdrop-blur-sm transition-all duration-200"
         >
@@ -876,29 +1181,11 @@ export default function EssentiaPitchPremium() {
       </div>
 
       {/* Navigation Instructions */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-20">
         <p className="text-sm opacity-80 bg-black/20 backdrop-blur-sm rounded-lg px-4 py-2">
           Use as setas do teclado ou os botões para navegar • Espaço para próximo slide
         </p>
       </div>
-
-      {/* Custom Animations */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        @keyframes grow {
-          from { transform: scaleX(0); }
-          to { transform: scaleX(1); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animate-grow {
-          animation: grow 2s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 }
