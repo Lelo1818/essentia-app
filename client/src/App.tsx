@@ -75,6 +75,7 @@ import EssentiaFinalClean from "@/pages/essentia-final-clean";
 import EssentiaFluxo from "@/pages/essentia-fluxo";
 import EssentiaPitch from "@/pages/essentia-pitch";
 import PitchDeckStandalone from "@/pages/pitch-deck-standalone";
+import EssentiaPitchPremium from "@/pages/essentia-pitch-premium";
 
 
 
@@ -147,6 +148,7 @@ function Router() {
       <Route path="/essentia-fluxo" component={EssentiaFluxo} />
       <Route path="/essentia-pitch" component={EssentiaPitch} />
       <Route path="/pitch-deck-standalone" component={PitchDeckStandalone} />
+      <Route path="/essentia-pitch-premium" component={EssentiaPitchPremium} />
       <Route path="/essentia-premium" component={EssentiaPremium} />
       <Route path="/essentia-final" component={EssentiaFinal} />
 

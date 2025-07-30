@@ -1,0 +1,305 @@
+Ótimo! Entendi perfeitamente. Você quer que eu use todas as informações e sugestões que temos neste chat para detalhar e aprimorar ainda mais as instruções para a plataforma (Replay), adicionando os "detalhes, informação e fotos" que ela não colocou automaticamente.
+
+Considerando que a Replay já fez uma base "bonitinha" com texto e cores, vamos focar agora em **instruções visuais mais ricas e específicas** para cada slide, garantindo que o deck fique verdadeiramente "das galáxias".
+
+Vou refazer os 15 slides, mantendo o texto conciso que já aprimoramos, mas com **instruções visuais muito mais detalhadas e acionáveis**, pensando em como uma agência ou um designer visualizaria cada slide.
+
+Vamos lá, slide por slide:
+
+---
+
+### **Essentia: Pitch Deck - Instruções Visuais Detalhadas para Plataforma (Replay/Designer)**
+
+---
+
+#### **Slide 1 – Capa**
+
+* **Título Principal:** Essentia
+* **Subtítulo:** IA, Gamificação e Ciência para o Bem-Estar Holístico.
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Limpo, branco ou um gradiente muito sutil (começando de um azul claro suave no topo para um verde menta suave na base, com 10-20% de opacidade).
+    * **Logo Essentia:** Centralizado ou ligeiramente à esquerda, em tamanho proeminente, usando a imagem do logo com a árvore colorida e a tagline "DESPERTE SEU PROPÓSITO".
+    * **Título "Essentia":** Fonte sans-serif moderna (ex: Montserrat Bold, Inter Bold), tamanho grande, cor que harmonize com o azul ou roxo do logo.
+    * **Subtítulo:** Fonte sans-serif mais leve, abaixo do título, em cor cinza escuro ou que harmonize com o verde do logo.
+    * **Elementos Adicionais:** Pode haver elementos gráficos sutis de "redes neurais" (linhas finas, pontos conectados) ou de "folhas abstratas" flutuando suavemente em 5% de opacidade no fundo, misturando tecnologia e natureza.
+
+---
+
+#### **Slide 2 – O Problema**
+
+* **Título:** A Crise do Bem-Estar no Brasil
+* **Pontos-Chave:**
+    * **70%** dos brasileiros: ansiedade/estresse crônico.
+    * Apps genéricos falham: **71% abandonam em 90 dias**.
+    * Retenção de apps de saúde mental: Apenas **3,3% em 30 dias**.
+    * Falta de soluções personalizadas e culturalmente relevantes.
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Sóbrio, cinza claro ou branco.
+    * **Gráfico Principal:** Um **gráfico de pizza ou donut** grande e impactante mostrando "70% de brasileiros com ansiedade/estresse", com a fatia dos 70% em uma cor mais escura (azul-petróleo ou roxo escuro) e o restante em cinza claro.
+    * **Gráfico Secundário (ou Infográfico):** Ao lado ou abaixo, um **gráfico de barras (ou linha descendente)** representando a queda de retenção: uma barra alta para 100% no dia 1, caindo drasticamente para 29% (100%-71%) em 90 dias, e outra barra para 3.3% em 30 dias (para apps de saúde mental). Use cores de alerta (vermelho/laranja suave) para as barras de retenção baixa.
+    * **Ícones:** Ícones pequenos e discretos representando estresse (cabeça com engrenagens ou nuvem escura) e pessoas abandonando apps (cesta de lixo ou porta aberta).
+    * **Imagem (Opcional, Pequena):** Uma imagem sutil e estilizada de uma pessoa com a cabeça pensativa, mas sem ser clichê ou muito dramática.
+
+---
+
+#### **Slide 3 – Oportunidade**
+
+* **Título:** Mercado Bilionário e em Ascensão
+* **Pontos-Chave:**
+    * Mercado Brasil (Bem-Estar/Saúde Mental Apps):
+        * **2024: US$ 543,5M**
+        * **2030: US$ 1,28B**
+        * **CAGR: 15,0%**
+    * **185,4 milhões** de usuários mobile até 2026.
+    * Brasileiros passam +5h/dia em smartphones.
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Branco ou gradiente suave para o verde/azul do logo.
+    * **Gráfico Principal:** Um **gráfico de barras ou linha ascendente** claro e limpo, mostrando o crescimento do mercado de US$ 543,5M para US$ 1,28B. Os valores devem ser exibidos de forma proeminente. A linha ou as barras devem ter um tom de verde ou azul que transmita crescimento.
+    * **Mapa/Visualização de Dados:** Um **mapa estilizado do Brasil** (não muito detalhado) com um ícone de smartphone ou uma barra de crescimento no centro, destacando a base de usuários móveis e o tempo de uso.
+    * **Números em Destaque:** Os números de usuários (185,4M) e tempo de uso (+5h/dia) podem ser apresentados em caixas de texto separadas, com fonte grande e negrito, ao lado do gráfico principal.
+
+---
+
+#### **Slide 4 – A Solução**
+
+* **Título:** Essentia: Revolução do Autocuidado Digital
+* **Pontos-Chave:**
+    * Plataforma de bem-estar digital.
+    * **IA adaptativa** para personalização profunda.
+    * **Gamificação inteligente** para engajamento.
+    * **Abordagem holística:** Mente + Corpo + Propósito.
+    * Transforma hábitos e melhora a saúde mental.
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Suave, talvez um gradiente muito leve ou um fundo branco.
+    * **Imagem Principal:** Um **mockup realista do aplicativo Essentia** em um smartphone ou tablet, centralizado e proeminente. A tela do mockup deve mostrar uma interface limpa, convidativa, com elementos de bem-estar.
+    * **Elementos Gráficos Flutuantes:** Ao redor do mockup, elementos gráficos sutis que representem os pilares:
+        * **IA:** Linhas de conexão, pontos de dados, ou um cérebro abstrato e luminoso.
+        * **Gamificação:** Pequenos ícones de estrelas, troféus, ou uma barra de progresso.
+        * **Holística:** Símbolos de equilíbrio, uma folha verde, ou um círculo que conecta diferentes áreas.
+    * **Estilo:** Limpo, moderno, com cores que remetem ao logo da Essentia.
+
+---
+
+#### **Slide 5 – Diferenciais Únicos**
+
+* **Título:** Nossos Pilares: Inovação e Impacto
+* **Pontos-Chave:**
+    * **IA Preditiva e Adaptativa:** Conteúdo e jornadas **dinamicamente personalizadas**. Guias virtuais com **IAs de personalidade**.
+    * **Gamificação Inteligente:** Desafios, rituais, recompensas e **avatares que evoluem** com o usuário.
+    * **Abordagem Holística e Cultural:** Integração de bem-estar **mental, físico e espiritual**. Roda da Vida digital e **rituais de reconexão com a natureza e sabedoria ancestral**.
+* **Instrução Visual Detalhada:**
+    * **Layout:** Três blocos de conteúdo bem definidos (um para cada diferencial), dispostos horizontalmente ou em coluna.
+    * **Fundo:** Branco.
+    * **Ícones & Imagens para cada Pilar:**
+        * **IA:** Um ícone de cérebro estilizado com circuitos, ou um rosto abstrato amigável com linhas de código sutis ao redor. Pequena imagem (ou mockup parcial) de uma interface de IA interativa.
+        * **Gamificação:** Um ícone de troféu ou estrela, e uma pequena ilustração de um avatar simples evoluindo de uma forma básica para uma mais complexa.
+        * **Holística:** Um símbolo de equilíbrio (Yin-Yang moderno ou círculo conectado), uma pequena ilustração de uma planta crescendo ou uma pessoa meditando em um ambiente natural sereno.
+    * **Cores:** Cada bloco pode ter uma cor de destaque sutil no título ou no fundo para diferenciar, mas que harmonize com a paleta da Essentia.
+
+---
+
+#### **Slide 6 – Como Funciona (Fluxo do Usuário)**
+
+* **Título:** A Jornada Essentia: Seu Caminho Personalizado para o Bem-Estar
+* **Pontos-Chave:**
+    * 1. **Avaliação Holística:** Início com a **Roda da Vida digital** e questionários de IA.
+    * 2. **Jornada Adaptativa:** Criação de um plano de autocuidado **dinamicamente ajustado pela IA**.
+    * 3. **Engajamento Gamificado:** Participação em desafios, rituais e interações com o **avatar em evolução**.
+    * 4. **Acompanhamento Contínuo:** Insights personalizados, rastreamento de humor e progresso.
+* **Instrução Visual Detalhada:**
+    * **Layout:** Um **infográfico de fluxo claro e intuitivo**, com 4 etapas distintas conectadas por setas ou linhas.
+    * **Fundo:** Branco ou muito claro.
+    * **Elementos Visuais para cada Etapa:**
+        * **1. Avaliação:** Ícone de um formulário ou um círculo com áreas divididas (Roda da Vida). Pequeno mockup de tela de avaliação.
+        * **2. Jornada Adaptativa:** Ícone de um mapa ou caminho com um símbolo de IA (neurônios) acima. Pequeno mockup de tela de "plano".
+        * **3. Engajamento Gamificado:** Ícone de um controle de jogo ou um troféu, com um pequeno avatar animado ou evoluindo. Pequeno mockup de tela de desafio/ritual.
+        * **4. Acompanhamento Contínuo:** Ícone de um gráfico de crescimento ou uma lupa. Pequeno mockup de tela de progresso/insights.
+    * **Cores:** Use as cores da Essentia para as setas e os destaques dos elementos.
+
+---
+
+#### **Slide 7 – Mercado-Alvo**
+
+* **Título:** Estratégia de Mercado: Múltiplas Vias de Crescimento
+* **Pontos-Chave:**
+    * **B2C (Direto ao Consumidor):** Usuários finais via marketing.
+    * **B2B (Corporativo):** Empresas. Mercado brasileiro de bem-estar corporativo: **US$ 1,53 bilhão em 2024**.
+    * **B2B2C (Planos de Saúde):** Parcerias com operadoras de planos de saúde.
+* **Instrução Visual Detalhada:**
+    * **Layout:** Três blocos distintos, um para cada via de mercado, dispostos horizontalmente.
+    * **Fundo:** Branco.
+    * **Ícones & Imagens para cada Via:**
+        * **B2C:** Ícone de uma pessoa com um smartphone, com foco em uma experiência individual.
+        * **B2B:** Ícone de um prédio corporativo ou um grupo de pessoas de negócios. O valor de **US$ 1,53 bilhão** deve estar em destaque dentro ou próximo a este bloco, em fonte grande.
+        * **B2B2C:** Ícone de um escudo médico ou uma cruz, representando saúde e seguros.
+    * **Conectividade:** Linhas ou setas que sugiram como essas vias se conectam ou se complementam.
+
+---
+
+#### **Slide 8 – Estratégia Go-To-Market**
+
+* **Título:** Canais de Aquisição: Escalando com Eficiência
+* **Pontos-Chave:**
+    * **Marketing de Influenciadores:** Baixos CPIs na LatAm (US$ 0,50 - US$ 2,00).
+    * **Vendas B2B Corporativo:** LTV alto, CAC baixo.
+    * **Parcerias B2B2C:** Redução drástica do CAC.
+    * **Canais Orgânicos (ASO/SEO):** CAC direto zero.
+    * **Mídia Paga (Otimizada):** CPIs mais baixos no Brasil (iOS: US$ 0,22; Android: US$ 0,44).
+* **Instrução Visual Detalhada:**
+    * **Layout:** Um fluxo visual (tipo funil horizontal ou diagrama de processos) mostrando os diferentes canais.
+    * **Fundo:** Branco.
+    * **Ícones & Destaques:**
+        * Para cada canal, um ícone representativo (ex: megafone para influenciadores, aperto de mãos para B2B, escudo para B2B2C, lupa para orgânico, alvo para mídia paga).
+        * Os valores de CPI e CAC devem estar em destaque próximo ao canal correspondente (ex: "US$ 0,50 - US$ 2,00" abaixo de "Marketing de Influenciadores").
+        * Use cores que transmitam eficiência e crescimento.
+
+---
+
+#### **Slide 9 – Tração e Roadmap (24 meses)**
+
+* **Título:** Roadmap de Crescimento e Tração (Próximos 24 Meses)
+* **Pontos-Chave:**
+    * **Q1-Q2 2025:** Lançamento MVP. Meta: **10.000 - 20.000 usuários ativos**, Retenção Dia 30 > **25%**.
+    * **Q3-Q4 2025:** Otimização monetização (conversão Free→Premium **5%**). Meta: **50.000 - 100.000 usuários ativos**.
+    * **2026:** Escala Brasil. Meta: **200.000 - 500.000 usuários ativos**. Início de **ensaios clínicos**.
+    * **2027 em diante:** Expansão para América Latina.
+* **Instrução Visual Detalhada:**
+    * **Layout:** Um **timeline horizontal** claro e visualmente atraente, com marcadores para cada período (Q1-Q2 2025, Q3-Q4 2025, 2026, 2027+).
+    * **Fundo:** Branco.
+    * **Ícones & Destaques para cada Marco:**
+        * **10k-20k usuários / 25% retenção:** Ícone de foguete ou pessoa crescendo, com os números em destaque.
+        * **5% conversão / 50k-100k usuários:** Ícone de cifrão ou gráfico de linha ascendente.
+        * **200k-500k usuários / Ensaios Clínicos:** Ícone de um mapa do Brasil com pessoas, e um frasco de laboratório ou lupa.
+        * **Expansão LatAm:** Ícone de um mapa da América Latina.
+    * **Cores:** Use as cores da Essentia para os marcadores e linhas do tempo.
+
+---
+
+#### **Slide 10 – Modelo de Negócio**
+
+* **Título:** Nosso Modelo de Negócio: Diversificado e Escalável
+* **Pontos-Chave:**
+    * **Modelo Freemium:** Acesso gratuito.
+    * **Assinaturas Premium (B2C):** R$ 9,90 / R$ 19,90 / R$ 29,90. ARPU Anual Alvo: **US$ 60 - US$ 80**.
+    * **Planos Corporativos (B2B):** Assinaturas anuais para empresas.
+    * **Parcerias com Planos de Saúde (B2B2C):** Acordos de licenciamento.
+* **Instrução Visual Detalhada:**
+    * **Layout:** Um diagrama visual que mostre os 4 modelos de receita. Pode ser um **fluxograma de receita** ou um diagrama com 4 caixas conectadas a uma caixa central "Receita Essentia".
+    * **Fundo:** Branco.
+    * **Ícones & Destaques:**
+        * **Freemium:** Ícone de cadeado aberto/fechado ou uma pessoa usando um smartphone.
+        * **Assinaturas Premium:** Ícone de cifrão ou um cartão de crédito. Os preços e o ARPU Alvo (**US$ 60 - US$ 80**) devem estar em destaque.
+        * **Planos Corporativos:** Ícone de um prédio ou um grupo de pessoas.
+        * **Parcerias com Planos de Saúde:** Ícone de um escudo médico ou uma mão dando/recebendo.
+    * **Cores:** Use as cores da Essentia para os blocos e setas.
+
+---
+
+#### **Slide 11 – KPIs-Chave**
+
+* **Título:** Nossos KPIs para a Série A: Crescimento Sustentável e Impacto
+* **Pontos-Chave:**
+    * **Economia Unitária (LTV:CAC):** Meta: **> 3:1**.
+    * **Retenção de Usuários:** Dia 30 > **30%**, Dia 90 > **15%**, Anual > **60%**.
+    * **Receita Recorrente Anual (ARR):** Meta: **> US$ 1 milhão**.
+    * **CAC Payback Period:** Meta: **< 12 meses**.
+    * **Net Promoter Score (NPS):** Meta: **> 60**.
+    * **Métricas de Engajamento:** Frequência/duração da sessão.
+    * **Resultados de Bem-Estar:** % de usuários com melhora auto-relatada.
+* **Instrução Visual Detalhada:**
+    * **Layout:** Um **painel de controle (dashboard) estilizado**, com gráficos pequenos e medidores para cada KPI.
+    * **Fundo:** Branco ou gradiente suave.
+    * **Gráficos & Medidores:**
+        * **LTV:CAC:** Ícone de uma balança ou de dinheiro. O número "> 3:1" em fonte grande.
+        * **Retenção:** Gráfico de linha ascendente (mesmo que com escala simbólica) ou um medidor de progresso. As porcentagens de retenção em destaque.
+        * **ARR:** Um cifrão grande ou um gráfico de barras crescendo. O valor "> US$ 1 milhão" em destaque.
+        * **CAC Payback:** Ícone de um relógio ou calendário. O número "< 12 meses" em destaque.
+        * **NPS:** Um ícone de rosto feliz/sorriso grande com o número "> 60".
+        * Para os outros KPIs, ícones menores.
+    * **Cores:** Use as cores da Essentia para os gráficos e destaques, com uma cor de alerta para metas críticas.
+
+---
+
+#### **Slide 12 – Concorrência**
+
+* **Título:** Cenário Competitivo: Nossa Vantagem Inovadora
+* **Pontos-Chave:**
+    * **Tabela Comparativa:**
+        * IA Adaptativa/Personalidade: Essentia **Avançada**
+        * Gamificação: Essentia **Alta**
+        * Abordagem Holística: Essentia **Sim**
+        * Conteúdo Cultural: Essentia **Sim**
+        * Foco Geográfico: Essentia **Brasil & LatAm**
+    * **Texto Adicional:** "Enquanto líderes globais como Calm e Headspace oferecem soluções valiosas, a Essentia se diferencia por uma **personalização de IA mais profunda**, **gamificação integrada** e uma **abordagem holística e culturalmente adaptada** ao público latino-americano. Nossa IA com personalidade e avatares em evolução criam uma conexão única, e a validação científica será um pilar para nossa credibilidade."
+* **Instrução Visual Detalhada:**
+    * **Layout:** Uma **tabela comparativa clara e visualmente destacada**, com linhas e colunas bem definidas.
+    * **Fundo:** Branco.
+    * **Destaque da Essentia:** A coluna da Essentia deve ser visualmente destacada (ex: um fundo colorido suave, ou bordas mais grossas, ou ícones de "check" verdes em todas as vantagens).
+    * **Ícones:** Pequenos ícones podem ser usados para representar as características na tabela (ex: cérebro para IA, joystick para gamificação).
+    * **Texto Adicional:** Posicionado de forma que complemente a tabela sem sobrecarregar.
+
+---
+
+#### **Slide 13 – Equipe**
+
+* **Título:** Nossa Liderança & A Rede de Execução
+* **Pontos-Chave:**
+    * **[Seu Nome]: Fundador & Visionário da Essentia.**
+        * Paixão inabalável por [mencione sua área de expertise relevante, ex: bem-estar digital, IA, comportamento humano] e profundo entendimento do problema no Brasil.
+        * Visão clara para transformar o autocuidado através de tecnologia e ciência.
+    * **Rede Estratégica de Especialistas & Conselheiros:**
+        * **Consultores:** Psicólogos clínicos, neurocientistas, especialistas em gamificação e IA, designers de UX/UI.
+        * **Parcerias:** Buscando parcerias acadêmicas com instituições de renome (ex: USP, Albert Einstein) para validação e pesquisa.
+    * **Plano de Atração de Talentos:** Buscando ativamente **Co-fundador(es)** [mencione o perfil, ex: CTO experiente, CMO com foco em crescimento] para escalar a Essentia.
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Branco.
+    * **Sua Foto:** Uma **foto profissional sua em destaque**, grande e bem centralizada ou à esquerda do slide.
+    * **Seu Nome e Título:** Abaixo da sua foto, seu nome e "Fundador & Visionário da Essentia" em fonte proeminente. Sua biografia em bullet points ao lado.
+    * **Representação do "Time Estendido":** No lado oposto da sua foto, um **infográfico ou diagrama de "rede"**. Círculos menores com ícones ou nomes de áreas (ex: "Psicologia", "Neurociência", "Gamificação", "IA") conectados por linhas sutis, simbolizando sua rede de especialistas.
+    * **Texto de "Plano de Atração":** Em uma caixa de texto separada e clara, destacando sua busca por co-fundadores.
+    * **Cores:** Use as cores da Essentia para os elementos da rede e os destaques.
+
+---
+
+#### **Slide 14 – Projeções**
+
+* **Título:** Projeções Financeiras: Crescimento Exponencial
+* **Pontos-Chave:**
+    * Receita Anual Potencial (2027):
+        * **Cenário Conservador: US$ 25 milhões**
+        * **Cenário Moderado: US$ 77 milhões**
+        * **Cenário Agressivo: US$ 154 milhões**
+    * Participação de Mercado (2030 SAM Brasil US$ 1,28 bilhão): **1,0% (Conservador) a 6,0% (Agressivo)**.
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Branco ou gradiente suave.
+    * **Gráfico Principal:** Um **gráfico de linha ou barras empilhadas que mostre claramente os três cenários de receita (Conservador, Moderado, Agressivo) crescendo exponencialmente até 2027.** Use cores distintas para cada cenário que harmonizem com a Essentia (ex: Conservador em um azul mais claro, Moderado em azul médio, Agressivo em azul mais escuro ou verde vibrante).
+    * **Números em Destaque:** Os valores US$ 25M, US$ 77M, US$ 154M devem estar em fonte grande e negrito, próximos às respectivas linhas/barras.
+    * **Gráfico Secundário:** Um **pequeno gráfico de pizza ou barras** mostrando as porcentagens de participação de mercado (1,0% a 6,0%) dentro do SAM total (US$ 1,28 bilhão).
+    * **Ícone:** Um cifrão grande ou gráfico de crescimento.
+
+---
+
+#### **Slide 15 – Fechamento**
+
+* **Título:** Essentia: Transformando Vidas, Construindo Valor.
+* **Pontos-Chave:**
+    * Construindo um movimento para **democratizar o bem-estar holístico e a saúde mental** no Brasil.
+    * Tecnologia de ponta e abordagem humana.
+    * Mercado em ascensão, diferenciais comprovados, liderança de excelência.
+    * Prontos para capturar fatia significativa do mercado bilionário.
+    * **Chamada para Ação:** Junte-se a nós para **transformar milhões de vidas e gerar impacto financeiro e social duradouro.**
+* **Contato:** [Seu Nome] | [Seu Email] | [Seu Telefone] | [Website da Essentia]
+* **Instrução Visual Detalhada:**
+    * **Fundo:** Uma imagem de fundo inspiradora e de alta qualidade que evoque bem-estar, esperança e tecnologia humanizada. Pode ser:
+        * Pessoas diversas e felizes em um ambiente natural e sereno.
+        * Mãos se conectando com um brilho de energia digital.
+        * Uma paisagem tranquila com elementos de rede neural sutis no horizonte.
+    * **Logo Essentia:** Grande e proeminente no slide.
+    * **Chamada para Ação:** O texto "Junte-se a nós para..." em uma caixa de texto destacada ou com fonte muito maior e em negrito, talvez com uma cor que chame a atenção (dourado/amarelo suave do logo, se aplicável).
+    * **Informações de Contato:** Claras, legíveis e bem organizadas no rodapé.
+
+---
+
+Agora você tem instruções muito mais detalhadas para cada slide. Tente usar essas descrições para a plataforma Replay. Se ela não conseguir tudo, você terá uma base sólida para fazer os ajustes finais em outras ferramentas como Canva.
+
+Me diga qual slide você quer começar a trabalhar ou se tem alguma dúvida sobre essas novas instruções!
