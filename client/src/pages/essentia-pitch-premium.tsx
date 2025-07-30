@@ -785,51 +785,51 @@ const slides = [
     title: "Cenário Competitivo: Nossa Vantagem Inovadora",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Comparativo Competitivo</h3>
+        <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-center text-white mb-8">Comparativo Competitivo</h3>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b">
-                  <th className="text-left p-4 font-bold text-gray-800">Características</th>
-                  <th className="text-center p-4 font-bold text-green-600 bg-green-50 rounded-t-lg">Essentia</th>
-                  <th className="text-center p-4 font-bold text-gray-600">Calm</th>
-                  <th className="text-center p-4 font-bold text-gray-600">Headspace</th>
-                  <th className="text-center p-4 font-bold text-gray-600">Outros</th>
+                <tr className="border-b border-gray-600">
+                  <th className="text-left p-4 font-bold text-gray-200">Características</th>
+                  <th className="text-center p-4 font-bold text-green-400 bg-green-900/30 rounded-t-lg">Essentia</th>
+                  <th className="text-center p-4 font-bold text-gray-300">Calm</th>
+                  <th className="text-center p-4 font-bold text-gray-300">Headspace</th>
+                  <th className="text-center p-4 font-bold text-gray-300">Outros</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b">
-                  <td className="p-4 font-medium">IA Adaptativa/Personalidade</td>
-                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                <tr className="border-b border-gray-600">
+                  <td className="p-4 font-medium text-gray-200">IA Adaptativa/Personalidade</td>
+                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
                   <td className="text-center p-4 text-gray-400">Básica</td>
                   <td className="text-center p-4 text-gray-400">Básica</td>
                   <td className="text-center p-4 text-gray-400">Limitada</td>
                 </tr>
-                <tr className="border-b">
-                  <td className="p-4 font-medium">Gamificação</td>
-                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                <tr className="border-b border-gray-600">
+                  <td className="p-4 font-medium text-gray-200">Gamificação</td>
+                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
                   <td className="text-center p-4 text-gray-400">Limitada</td>
                   <td className="text-center p-4 text-gray-400">Média</td>
                   <td className="text-center p-4 text-gray-400">Básica</td>
                 </tr>
-                <tr className="border-b">
-                  <td className="p-4 font-medium">Abordagem Holística</td>
-                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                <tr className="border-b border-gray-600">
+                  <td className="p-4 font-medium text-gray-200">Abordagem Holística</td>
+                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
                   <td className="text-center p-4 text-gray-400">Parcial</td>
                   <td className="text-center p-4 text-gray-400">Parcial</td>
                   <td className="text-center p-4 text-gray-400">Não</td>
                 </tr>
-                <tr className="border-b">
-                  <td className="p-4 font-medium">Conteúdo Cultural</td>
-                  <td className="text-center p-4 bg-green-50"><CheckCircle className="text-green-600 mx-auto" size={20} /></td>
+                <tr className="border-b border-gray-600">
+                  <td className="p-4 font-medium text-gray-200">Conteúdo Cultural</td>
+                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
                   <td className="text-center p-4 text-gray-400">Global</td>
                   <td className="text-center p-4 text-gray-400">Global</td>
                   <td className="text-center p-4 text-gray-400">Global</td>
                 </tr>
                 <tr>
-                  <td className="p-4 font-medium">Foco Geográfico</td>
-                  <td className="text-center p-4 bg-green-50 font-bold text-green-600">Brasil & LatAm</td>
+                  <td className="p-4 font-medium text-gray-200">Foco Geográfico</td>
+                  <td className="text-center p-4 bg-green-900/30 font-bold text-green-400">Brasil & LatAm</td>
                   <td className="text-center p-4 text-gray-400">Global</td>
                   <td className="text-center p-4 text-gray-400">Global</td>
                   <td className="text-center p-4 text-gray-400">Variado</td>
@@ -863,7 +863,7 @@ const slides = [
               <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
                 <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
                   <img 
-                    src="/attached_assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg" 
+                    src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6pot2fwP5P6U6iigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/2Q=="
                     alt="Marcelo Lelo Rymer"
                     className="w-full h-full object-cover rounded-full"
                     onError={(e) => {
@@ -1051,70 +1051,70 @@ const slides = [
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-green-600 rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-white mb-6">Nossa Missão</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-green-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200">Tecnologia de ponta e abordagem humana</p>
+                <CheckCircle className="text-green-200 mt-1 flex-shrink-0" size={20} />
+                <p className="text-white">Tecnologia de ponta e abordagem humana</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-blue-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200">Mercado em ascensão, diferenciais comprovados</p>
+                <CheckCircle className="text-blue-200 mt-1 flex-shrink-0" size={20} />
+                <p className="text-white">Mercado em ascensão, diferenciais comprovados</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-purple-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200">Liderança de excelência e visão clara</p>
+                <CheckCircle className="text-purple-200 mt-1 flex-shrink-0" size={20} />
+                <p className="text-white">Liderança de excelência e visão clara</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-orange-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200">Prontos para capturar fatia significativa do mercado bilionário</p>
+                <CheckCircle className="text-yellow-200 mt-1 flex-shrink-0" size={20} />
+                <p className="text-white">Prontos para capturar fatia significativa do mercado bilionário</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <div className="bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-3xl p-8 shadow-2xl">
             <h3 className="text-2xl font-bold text-white mb-6">Contato</h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-                <span className="text-gray-200">contato@essentia.app</span>
+                <div className="w-3 h-3 bg-blue-200 rounded-full"></div>
+                <span className="text-white">contato@essentia.app</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                <span className="text-gray-200">LinkedIn: /company/essentia-wellness</span>
+                <div className="w-3 h-3 bg-green-200 rounded-full"></div>
+                <span className="text-white">LinkedIn: /company/essentia-wellness</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
-                <span className="text-gray-200">www.essentia.app</span>
+                <div className="w-3 h-3 bg-purple-200 rounded-full"></div>
+                <span className="text-white">www.essentia.app</span>
               </div>
             </div>
             
-            <div className="mt-8 p-4 bg-gray-700/50 rounded-xl">
+            <div className="mt-8 p-4 bg-white/20 backdrop-blur-sm rounded-xl">
               <h4 className="font-bold text-white mb-2">Próximos Passos</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-400" size={16} />
-                  <span className="text-gray-200">Demo personalizada</span>
+                  <CheckCircle className="text-green-200" size={16} />
+                  <span className="text-white">Demo personalizada</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <CheckCircle className="text-blue-400" size={16} />
-                  <span className="text-gray-200">Due diligence técnica</span>
+                  <CheckCircle className="text-blue-200" size={16} />
+                  <span className="text-white">Due diligence técnica</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <CheckCircle className="text-purple-400" size={16} />
-                  <span className="text-gray-200">Reunião com equipe</span>
+                  <CheckCircle className="text-purple-200" size={16} />
+                  <span className="text-white">Reunião com equipe</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
         
-        <div className="bg-gray-800/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
+        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-8 shadow-2xl text-center">
           <h3 className="text-3xl font-bold text-white mb-4">
             Junte-se a nós para transformar milhões de vidas e gerar impacto financeiro e social duradouro
           </h3>
-          <div className="text-xl text-gray-200 font-semibold">
+          <div className="text-xl text-white font-semibold">
             R$ 8M Rodada Seed • 18 meses Break-even • 500K+ Usuários meta
           </div>
         </div>
