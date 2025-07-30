@@ -687,16 +687,16 @@ export default function EssentiaPitch() {
                   />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-3xl font-bold mb-3 text-blue-800">Lélio: Fundador &amp; Visionário da Essentia</h3>
+                  <h3 className="text-3xl font-bold mb-3 text-blue-800">Marcelo "Lelo" Rymer – Fundador &amp; Visionário da Essentia</h3>
                   <div className="space-y-3 text-gray-700">
-                    <p className="text-lg">
-                      <span className="font-semibold">Paixão inabalável</span> por bem-estar digital e profundo entendimento do problema no Brasil.
+                    <p className="text-base">
+                      <span className="font-semibold">Especialista em bem-estar digital e comportamento humano</span>, com mais de 20 anos de experiência como empresário em diferentes setores (tecnologia, educação e mercado financeiro).
                     </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">Visão clara</span> para transformar o autocuidado através de tecnologia e ciência.
+                    <p className="text-base">
+                      <span className="font-semibold">Trajetória pessoal de autoconhecimento e terapia</span> que deu origem à Essentia, trazendo uma visão clara de como unir tecnologia, ciência e propósito para transformar vidas.
                     </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">Expertise em</span> comportamento humano, IA aplicada ao wellness e gamificação.
+                    <p className="text-base">
+                      <span className="font-semibold">Capacidade comprovada</span> de construir negócios do zero, liderar equipes multidisciplinares e criar produtos digitais centrados no usuário.
                     </p>
                   </div>
                 </div>
@@ -754,24 +754,29 @@ export default function EssentiaPitch() {
             <CardContent className="p-6">
               <h3 className="text-2xl font-bold mb-6 text-purple-800 flex items-center">
                 <Brain className="w-8 h-8 mr-3" />
-                Rede Estratégica de Especialistas
+                Rede Estratégica de Especialistas e Conselheiros
               </h3>
+              <p className="text-gray-700 mb-4">Consultores multidisciplinares especializados em cada área crítica:</p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-purple-50 rounded-lg">
                   <Brain className="w-10 h-10 text-purple-600 mx-auto mb-2" />
                   <p className="font-semibold text-sm">Psicólogos Clínicos</p>
+                  <p className="text-xs text-gray-600">Validação terapêutica</p>
                 </div>
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
                   <Zap className="w-10 h-10 text-blue-600 mx-auto mb-2" />
                   <p className="font-semibold text-sm">Neurocientistas</p>
+                  <p className="text-xs text-gray-600">Base científica</p>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">
                   <Trophy className="w-10 h-10 text-green-600 mx-auto mb-2" />
-                  <p className="font-semibold text-sm">Gamificação &amp; IA</p>
+                  <p className="font-semibold text-sm">Especialistas IA &amp; Gamificação</p>
+                  <p className="text-xs text-gray-600">Algoritmos proprietários</p>
                 </div>
                 <div className="text-center p-4 bg-orange-50 rounded-lg">
                   <Target className="w-10 h-10 text-orange-600 mx-auto mb-2" />
                   <p className="font-semibold text-sm">Designers UX/UI</p>
+                  <p className="text-xs text-gray-600">Experiência centrada no usuário</p>
                 </div>
               </div>
             </CardContent>
@@ -781,16 +786,17 @@ export default function EssentiaPitch() {
             <CardContent className="p-6">
               <h3 className="text-2xl font-bold mb-6 text-blue-800 flex items-center">
                 <Shield className="w-8 h-8 mr-3" />
-                Parcerias Acadêmicas
+                Parcerias Acadêmicas em Andamento
               </h3>
-              <div className="space-y-4">
+              <p className="text-gray-700 mb-4">Instituições de renome para validação científica e desenvolvimento de algoritmos proprietários:</p>
+              <div className="space-y-3">
                 <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
                   <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold text-xs">USP</span>
                   </div>
                   <div>
                     <p className="font-semibold">Universidade de São Paulo</p>
-                    <p className="text-sm text-gray-600">Validação científica &amp; pesquisa</p>
+                    <p className="text-sm text-gray-600">Validação científica &amp; pesquisa comportamental</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
@@ -799,7 +805,16 @@ export default function EssentiaPitch() {
                   </div>
                   <div>
                     <p className="font-semibold">Hospital Albert Einstein</p>
-                    <p className="text-sm text-gray-600">Validação clínica &amp; testes</p>
+                    <p className="text-sm text-gray-600">Validação clínica &amp; estudos de eficácia</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
+                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Centros de Pesquisa</p>
+                    <p className="text-sm text-gray-600">Algoritmos proprietários &amp; IA aplicada</p>
                   </div>
                 </div>
               </div>
@@ -814,25 +829,36 @@ export default function EssentiaPitch() {
               <Users className="w-8 h-8 mr-3" />
               Plano de Atração de Talentos
             </h3>
+            <p className="text-center text-gray-700 mb-6">Busca ativa por cofundadores estratégicos:</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="text-center">
                 <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Brain className="w-10 h-10 text-orange-600" />
                 </div>
-                <h4 className="text-xl font-bold mb-2">CTO Experiente</h4>
-                <p className="text-gray-600">Especialista em IA e arquitetura de sistemas escaláveis</p>
+                <h4 className="text-xl font-bold mb-2">CTO</h4>
+                <p className="text-gray-600 mb-2">Com histórico em IA e escalabilidade de produtos digitais</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Experiência em machine learning</li>
+                  <li>• Arquitetura de sistemas escaláveis</li>
+                  <li>• Liderança técnica comprovada</li>
+                </ul>
                 <div className="mt-3 px-4 py-2 bg-orange-50 rounded-lg">
-                  <p className="text-sm font-semibold text-orange-800">Buscando ativamente</p>
+                  <p className="text-sm font-semibold text-orange-800">Busca ativa</p>
                 </div>
               </div>
               <div className="text-center">
                 <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <TrendingUp className="w-10 h-10 text-green-600" />
                 </div>
-                <h4 className="text-xl font-bold mb-2">CMO Growth</h4>
-                <p className="text-gray-600">Especialista em crescimento e aquisição de usuários</p>
+                <h4 className="text-xl font-bold mb-2">CMO</h4>
+                <p className="text-gray-600 mb-2">Especialista em crescimento, aquisição de usuários e marketing digital em larga escala</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Growth hacking e performance</li>
+                  <li>• Estratégias de aquisição B2C/B2B</li>
+                  <li>• Experiência em healthtech</li>
+                </ul>
                 <div className="mt-3 px-4 py-2 bg-green-50 rounded-lg">
-                  <p className="text-sm font-semibold text-green-800">Em processo seletivo</p>
+                  <p className="text-sm font-semibold text-green-800">Busca ativa</p>
                 </div>
               </div>
             </div>
