@@ -838,12 +838,12 @@ const slides = [
             </table>
           </div>
         </div>
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-          <p className="text-gray-700 leading-relaxed">
+        <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+          <p className="text-white leading-relaxed">
             Enquanto líderes globais como Calm e Headspace oferecem soluções valiosas, a Essentia se diferencia por uma 
-            <strong className="text-blue-600"> personalização de IA mais profunda</strong>, 
-            <strong className="text-green-600"> gamificação integrada</strong> e uma 
-            <strong className="text-purple-600"> abordagem holística e culturalmente adaptada</strong> ao público latino-americano. 
+            <strong className="text-blue-400"> personalização de IA mais profunda</strong>, 
+            <strong className="text-green-400"> gamificação integrada</strong> e uma 
+            <strong className="text-purple-400"> abordagem holística e culturalmente adaptada</strong> ao público latino-americano. 
             Nossa IA com personalidade e avatares em evolução criam uma conexão única, e a validação científica será um pilar para nossa credibilidade.
           </p>
         </div>
@@ -862,27 +862,39 @@ const slides = [
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-green-400/30 rounded-full blur-2xl"></div>
               <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
                 <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                  <Users className="text-gray-500" size={80} />
+                  <img 
+                    src="/attached_assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg" 
+                    alt="Marcelo Lelo Rymer"
+                    className="w-full h-full object-cover rounded-full"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                      if (nextElement) {
+                        nextElement.style.display = 'flex';
+                      }
+                    }}
+                  />
+                  <Users className="text-gray-500 hidden" size={80} />
                 </div>
               </div>
             </div>
-            <h3 className="text-3xl font-bold text-white mt-6">Marcelo "Lelo" Rymer</h3>
-            <p className="text-xl text-white/90">Fundador & Visionário da Essentia</p>
+            <h3 className="text-3xl font-bold text-gray-800 mt-6">Marcelo "Lelo" Rymer</h3>
+            <p className="text-xl text-gray-700">Fundador & Visionário da Essentia</p>
           </div>
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             <h4 className="text-2xl font-bold text-gray-800 mb-6">Especialista em bem-estar digital e comportamento humano</h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700"><strong>20+ anos de experiência</strong> como empresário em tecnologia, educação e mercado financeiro</p>
+                <p className="text-gray-800"><strong>20+ anos de experiência</strong> como empresário em tecnologia, educação e mercado financeiro</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-blue-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700"><strong>Trajetória pessoal de autoconhecimento</strong> que deu origem à Essentia</p>
+                <p className="text-gray-800"><strong>Trajetória pessoal de autoconhecimento</strong> que deu origem à Essentia</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-purple-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700"><strong>Capacidade comprovada</strong> de construir negócios do zero e liderar equipes multidisciplinares</p>
+                <p className="text-gray-800"><strong>Capacidade comprovada</strong> de construir negócios do zero e liderar equipes multidisciplinares</p>
               </div>
             </div>
           </div>
@@ -1039,70 +1051,70 @@ const slides = [
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Nossa Missão</h3>
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-white mb-6">Nossa Missão</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-green-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700">Tecnologia de ponta e abordagem humana</p>
+                <CheckCircle className="text-green-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200">Tecnologia de ponta e abordagem humana</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-blue-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700">Mercado em ascensão, diferenciais comprovados</p>
+                <CheckCircle className="text-blue-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200">Mercado em ascensão, diferenciais comprovados</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-purple-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700">Liderança de excelência e visão clara</p>
+                <CheckCircle className="text-purple-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200">Liderança de excelência e visão clara</p>
               </div>
               <div className="flex items-start space-x-3">
-                <CheckCircle className="text-orange-600 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-700">Prontos para capturar fatia significativa do mercado bilionário</p>
+                <CheckCircle className="text-orange-400 mt-1 flex-shrink-0" size={20} />
+                <p className="text-gray-200">Prontos para capturar fatia significativa do mercado bilionário</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Contato</h3>
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-white mb-6">Contato</h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="text-gray-700">contato@essentia.app</span>
+                <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+                <span className="text-gray-200">contato@essentia.app</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="text-gray-700">LinkedIn: /company/essentia-wellness</span>
+                <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                <span className="text-gray-200">LinkedIn: /company/essentia-wellness</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <span className="text-gray-700">www.essentia.app</span>
+                <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
+                <span className="text-gray-200">www.essentia.app</span>
               </div>
             </div>
             
-            <div className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2">Próximos Passos</h4>
+            <div className="mt-8 p-4 bg-gray-700/50 rounded-xl">
+              <h4 className="font-bold text-white mb-2">Próximos Passos</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={16} />
-                  <span>Demo personalizada</span>
+                  <CheckCircle className="text-green-400" size={16} />
+                  <span className="text-gray-200">Demo personalizada</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <CheckCircle className="text-blue-600" size={16} />
-                  <span>Due diligence técnica</span>
+                  <CheckCircle className="text-blue-400" size={16} />
+                  <span className="text-gray-200">Due diligence técnica</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <CheckCircle className="text-purple-600" size={16} />
-                  <span>Reunião com equipe</span>
+                  <CheckCircle className="text-purple-400" size={16} />
+                  <span className="text-gray-200">Reunião com equipe</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
         
-        <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
+        <div className="bg-gray-800/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
           <h3 className="text-3xl font-bold text-white mb-4">
             Junte-se a nós para transformar milhões de vidas e gerar impacto financeiro e social duradouro
           </h3>
-          <div className="text-xl text-white/90 font-semibold">
+          <div className="text-xl text-gray-200 font-semibold">
             R$ 8M Rodada Seed • 18 meses Break-even • 500K+ Usuários meta
           </div>
         </div>
