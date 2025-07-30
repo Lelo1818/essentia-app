@@ -863,16 +863,23 @@ const slides = [
               <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
                 <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
                   <img 
-                    src="./attached_assets/image_1753917701795.png"
+                    src="/attached_assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg"
                     alt="Marcelo Lelo Rymer"
                     className="w-full h-full object-cover rounded-full"
                     onError={(e) => {
-                      // Fallback para ícone se a imagem não carregar
-                      e.currentTarget.style.display = 'none';
-                      const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                      if (nextElement) {
-                        nextElement.style.display = 'flex';
-                        nextElement.classList.remove('hidden');
+                      // Tentar caminhos alternativos
+                      const img = e.currentTarget;
+                      if (img.src.includes('Lelo_rosto')) {
+                        img.src = '/attached_assets/image_1753917701795.png';
+                      } else if (img.src.includes('image_1753917701795')) {
+                        img.src = 'https://via.placeholder.com/200x200/4F46E5/FFFFFF?text=ML';
+                      } else {
+                        img.style.display = 'none';
+                        const nextElement = img.nextElementSibling as HTMLElement;
+                        if (nextElement) {
+                          nextElement.style.display = 'flex';
+                          nextElement.classList.remove('hidden');
+                        }
                       }
                     }}
                   />
