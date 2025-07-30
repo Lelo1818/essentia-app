@@ -1,0 +1,271 @@
+Slide 2 – O Problema
+Título: A Crise do Bem-Estar no Brasil
+
+Pontos-Chave:
+
+70% dos brasileiros: ansiedade/estresse crônico.
+
+Apps genéricos falham: 71% abandonam em 90 dias.
+
+Retenção de apps de saúde mental: Apenas 3,3% em 30 dias.
+
+Falta de soluções personalizadas e culturalmente relevantes.
+
+Instrução Visual para Replay: Gráfico de pizza ou barra destacando "70% ansiedade/estresse". Gráfico de linha mostrando queda acentuada de retenção (71% e 3.3%). Imagem de pessoa com a cabeça entre as mãos (estresse) ou ícones de estresse. Use tons mais sóbrios.
+
+Slide 3 – Oportunidade
+Título: Mercado Bilionário e em Ascensão
+
+Pontos-Chave:
+
+Mercado Brasil (Bem-Estar/Saúde Mental Apps):
+
+2024: US$ 543,5M
+
+2030: US$ 1,28B
+
+CAGR: 15,0%
+
+185,4 milhões de usuários mobile até 2026.
+
+Brasileiros passam +5h/dia em smartphones.
+
+Instrução Visual para Replay: Gráfico de barras ou linha ascendente mostrando o crescimento do mercado de US$ 543,5M para US$ 1,28B. Mapa do Brasil iluminado ou com pontos de crescimento. Ícone de smartphone com gráfico de barras para cima. Use cores vibrantes.
+
+Slide 4 – A Solução
+Título: Essentia: Revolução do Autocuidado Digital
+
+Pontos-Chave:
+
+Plataforma de bem-estar digital.
+
+IA adaptativa para personalização profunda.
+
+Gamificação inteligente para engajamento.
+
+Abordagem holística: Mente + Corpo + Propósito.
+
+Transforma hábitos e melhora a saúde mental.
+
+Instrução Visual para Replay: Mockup realista do aplicativo Essentia em um smartphone. Elementos gráficos flutuantes ao redor do app: redes neurais (IA), estrelas/troféus (gamificação), símbolos de equilíbrio/natureza (holismo). Pode ser uma mão segurando o celular.
+
+Slide 5 – Diferenciais Únicos
+Título: Nossos Pilares: Inovação e Impacto
+
+Pontos-Chave:
+
+IA Preditiva e Adaptativa: Jornadas dinamicamente personalizadas. Guias virtuais com IAs de personalidade.
+
+Gamificação Inteligente: Desafios, rituais, recompensas e avatares que evoluem com o usuário.
+
+Abordagem Holística e Cultural: Mente, físico, espiritual. Autoconhecimento (Roda da Vida). Rituais de reconexão com natureza/ancestralidade brasileira.
+
+Instrução Visual para Replay: Três blocos de texto/ícones. Para IA: ícone de cérebro estilizado com circuitos. Para Gamificação: ícone de avatar evoluindo ou barra de progresso. Para Holística: círculo dividido ou símbolos de mente/corpo/espírito com elementos da flora brasileira. Cores contrastantes para cada bloco.
+
+Slide 6 – Como Funciona (Fluxo do Usuário)
+Título: A Jornada Essentia: Seu Caminho Personalizado
+
+Pontos-Chave:
+
+Avaliação Holística: Roda da Vida digital + IA.
+
+Jornada Adaptativa: Plano de autocuidado ajustado pela IA.
+
+Engajamento Gamificado: Desafios, rituais, avatar em evolução.
+
+Acompanhamento Contínuo: Insights, rastreamento, feedback da IA.
+
+Instrução Visual para Replay: Infográfico de fluxo sequencial (setas claras conectando os passos). Para cada passo, um ícone: (1) Roda da Vida, (2) Caminho com IA, (3) Avatar crescendo, (4) Gráfico de progresso. Simule telas de app para cada etapa.
+
+Slide 7 – Mercado-Alvo
+Título: Estratégia de Mercado: Múltiplas Vias
+
+Pontos-Chave:
+
+B2C: Usuários finais (assinaturas).
+
+B2B: Empresas (programas corporativos). Mercado: US$ 1,53B em 2024.
+
+B2B2C: Planos de saúde (benefício integrado).
+
+Instrução Visual para Replay: Três ícones grandes representando cada segmento: (1) Pessoa com smartphone, (2) Prédio corporativo, (3) Escudo médico. Gráfico de crescimento para o mercado B2B. Layout limpo e direto.
+
+Slide 8 – Estratégia Go-To-Market
+Título: Canais de Aquisição Eficientes
+
+Pontos-Chave:
+
+Influenciadores Digitais: Baixo CPI (US$ 0,50 - US$ 2,00 na LatAm).
+
+Vendas B2B Corporativo: Potencial de LTV alto, CAC baixo.
+
+Parcerias B2B2C: Redução drástica do CAC.
+
+Orgânico (ASO/SEO): CAC zero, LTV elevado.
+
+Mídia Paga Otimizada: CPIs baixos no Brasil (iOS: US$ 0,22; Android: US$ 0,44).
+
+Instrução Visual para Replay: Fluxograma de canais de aquisição. Ícones para cada canal (megafone, aperto de mãos, escudo médico, lupa, alvo). Destaque os valores de CPI/CAC em cada canal.
+
+Slide 9 – Tração e Roadmap (24 meses)
+Título: Roadmap de Crescimento (24 Meses)
+
+Pontos-Chave:
+
+Q1-Q2 2025: MVP, validação com 10k-20k usuários. Retenção Dia 30 > 25%.
+
+Q3-Q4 2025: Otimização monetização (conversão Free→Premium 5%). 50k-100k usuários.
+
+2026: Escala Brasil (200k-500k usuários). Início de ensaios clínicos.
+
+2027+: Expansão LatAm (Argentina, México). Certificações.
+
+Instrução Visual para Replay: Linha do tempo visual com marcos trimestrais/anuais. Ícones para cada marco (foguete, cifrão, gráfico de crescimento, selo de certificação, mapa da América Latina). Use setas para indicar progressão.
+
+Slide 10 – Modelo de Negócio
+Título: Modelo: Diversificado e Escalável
+
+Pontos-Chave:
+
+Freemium: Atração e engajamento.
+
+Assinaturas Premium (B2C): R$ 9,90 / R$ 19,90 / R$ 29,90. ARPU Anual Alvo: US$ 60 - US$ 80.
+
+Planos Corporativos (B2B): Assinaturas anuais para empresas.
+
+Parcerias com Planos de Saúde (B2B2C): Licenciamento/comissionamento.
+
+Instrução Visual para Replay: Diagrama visualizando os 4 modelos de receita (ex: 4 caixas conectadas a uma "receita"). Ícones para cada modelo (cadeado, cifrão, prédio, escudo médico). Destaque os preços e o ARPU.
+
+Slide 11 – KPIs-Chave
+Título: Nossos KPIs para a Série A
+
+Pontos-Chave:
+
+LTV:CAC: Meta > 3:1.
+
+Retenção 30 dias: Meta > 30%.
+
+Retenção 90 dias: Meta > 15%.
+
+Retenção Anual: Meta > 60%.
+
+ARR: Meta > US$ 1 milhão.
+
+CAC Payback: Meta < 12 meses.
+
+NPS: Meta > 60.
+
+Resultados de Bem-Estar: Melhora auto-relatada de sintomas.
+
+Instrução Visual para Replay: Dashboard estilizado com medidores e gráficos simples para cada KPI. Ícones para cada métrica (balança, gráfico de linha ascendente, cifrão, sorriso). Destaque os números das metas em fonte grande.
+
+Slide 12 – Concorrência
+Título: Cenário Competitivo: Nossa Vantagem
+
+Pontos-Chave:
+
+Tabela Comparativa (Foco Essentia):
+
+IA Adaptativa/Personalidade: Essentia Avançada (Calm/Headspace Parcial).
+
+Gamificação: Essentia Alta (Calm/Headspace Baixa).
+
+Holística: Essentia Sim (BetterHelp Não).
+
+Conteúdo Cultural: Essentia Sim (Concorrência Não).
+
+Foco Geográfico: Essentia Brasil & LatAm (Concorrência Global).
+
+Instrução Visual para Replay: Tabela limpa e clara destacando a linha "Essentia" com cores ou ícones de "check" verdes. Ícones pequenos para cada característica. Foco visual na Essentia como superior.
+
+Slide 13 – Equipe
+Título: Nossa Equipe: Visão e Expertise
+
+Pontos-Chave:
+
+Fundador(es): Visão estratégica + experiência comprovada em [Tecnologia/Saúde Digital].
+
+Rede de Especialistas: Psicólogos, Neurocientistas, Desenvolvedores de IA, Designers, Gamificação.
+
+Parcerias Acadêmicas: Com instituições de renome no Brasil.
+
+Instrução Visual para Replay: Foto(s) profissional(is) do(s) fundador(es) em destaque. Ao redor, ícones que representem os especialistas (ex: cérebro, código, paleta de cores, troféu). Pode ser uma imagem de rede conectada.
+
+Slide 14 – Projeções
+Título: Projeções Financeiras: Crescimento Exponencial
+
+Pontos-Chave:
+
+Receita Anual Potencial (2027):
+
+Conservador: US$ 25M
+
+Moderado: US$ 77M
+
+Agressivo: US$ 154M
+
+Participação de Mercado (2030 SAM Brasil US$ 1,28B): 1,0% (Conservador) a 6,0% (Agressivo).
+
+Instrução Visual para Replay: Gráfico de barras ou linhas que mostre as três projeções de receita para 2027, com uma inclinação acentuada. Pode ter um gráfico de pizza ou barras menores mostrando a porcentagem de penetração no SAM. Números grandes e cores vibrantes para cada cenário.
+
+Slide 15 – Fechamento
+Título: Essentia: Transformando Vidas, Construindo Valor.
+
+Pontos-Chave:
+
+Construindo um movimento para democratizar o bem-estar holístico e a saúde mental no Brasil.
+
+Tecnologia de ponta e abordagem humana.
+
+Mercado em ascensão, diferenciais comprovados, equipe de excelência.
+
+Prontos para capturar fatia significativa do mercado bilionário.
+
+Chamada para Ação: Junte-se a nós para transformar milhões de vidas e gerar impacto financeiro e social duradouro.
+
+Contato: [Seu Nome] | [Seu Email] | [Seu Telefone] | [Website da Essentia]
+
+Instrução Visual para Replay: Imagem inspiradora de pessoas diversas em harmonia, ou uma paisagem natural serena com elementos digitais sutis. Logo da Essentia em destaque. Texto do propósito em fonte grande e convidativa. Chamada para ação em bloco separado e convidativo. Informações de contato claras.
+
+Sobre o "Pitiback das Galáxias": É para o Investidor?
+Sim, este material (o conteúdo e as instruções visuais) é a base para o seu pitch deck final, que vai direto para o investidor.
+
+Não é uma "isca" no sentido de ser algo superficial. Ele é construído com base em milhares de pesquisas detalhadas, focado nos dados, métricas e diferenciais que um investidor profissional de Série A busca.
+
+O que ele não é, ainda, é o arquivo PowerPoint/PDF visualmente pronto. Para isso, você vai usar a Replay com esse conteúdo que te dei. A Replay vai te ajudar a transformá-lo em algo visualmente impactante, digno de um "pitch das galáxias".
+
+Em resumo:
+
+Conteúdo: Completíssimo e de alto nível, pensado para investidores.
+
+Formato: Otimizado para você usar em plataformas de IA como a Replay para gerar o visual.
+
+Agora, é com você e a Replay! Me diga como foi e se precisar de mais alguma coisa.
+
+
+
+
+
+
+
+
+
+Análise
+Essa imagem é excelente! O logo da Essentia com a árvore colorida e a tagline "DESPERTE SEU PROPÓSITO" são muito fortes e transmitem exatamente a essência de bem-estar, crescimento e autoconhecimento que queremos para o pitch deck.
+
+Agora, com essa imagem em mãos, podemos refinar ainda mais as instruções visuais para a plataforma Replay, especialmente para o slide de capa e talvez para o de diferenciais/holismo.
+
+Para o Slide 1 (Capa):
+
+Em vez da instrução genérica Fundo gradiente suave (azul para verde). Ilustração abstrata mesclando circuitos neurais (IA) e elementos orgânicos (folhas, água). Silhueta humana serena em pose de meditação ou yoga. Minimalista e elegante., você pode usar:
+
+**Utilize o logo da Essentia fornecido (imagem com a árvore colorida e a tagline "DESPERTE SEU PROPÓSITO") como elemento central.** Fundo branco ou muito claro. O logo deve estar em destaque. O título "Essentia" e a tagline "IA, Gamificação e Ciência para o Bem-Estar Holístico." (do nosso texto) devem complementar o logo visualmente, talvez abaixo ou ao lado dele de forma elegante. Use a paleta de cores do logo (azul, roxo, laranja, verde) como guia para o design geral do slide.
+
+Para outros slides (ex: Diferenciais, Como Funciona, Fechamento):
+
+Você pode pedir para a Replay usar os elementos visuais do logo (as cores, as formas orgânicas da árvore, o círculo) de forma sutil nos fundos ou em pequenos ícones para manter a consistência visual do branding ao longo de todo o pitch deck.
+
+Com esse logo, o "pitiback das galáxias" fica ainda mais completo e profissional!
+
+Que ótimo que você tem essa imagem. Ela é perfeita para o deck!
