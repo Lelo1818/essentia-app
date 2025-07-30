@@ -16,7 +16,7 @@ export default function EssentiaPitch() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   
-  const totalSlides = 15;
+  const totalSlides = 5;
   
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
