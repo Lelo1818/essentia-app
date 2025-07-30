@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Brain, Trophy, Heart, Smartphone, TrendingUp, Users, Building, Shield, Target, Rocket, DollarSign, Globe, Award, Zap, BarChart3, CheckCircle, Star, ArrowUp } from 'lucide-react';
+import { AppLogo } from "@/components/ui/app-logo";
 
 const slides = [
   {
@@ -11,8 +12,11 @@ const slides = [
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse"></div>
           <div className="relative bg-white/90 backdrop-blur-sm rounded-2xl p-12 max-w-4xl mx-auto shadow-2xl border border-white/30">
-            <div className="text-6xl mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-black">
-              ESSENTIA
+            <div className="flex items-center justify-center mb-6 space-x-4">
+              <AppLogo app="purpose" size="xl" />
+              <div className="text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-black">
+                ESSENTIA
+              </div>
             </div>
             <div className="text-xl mb-6 text-gray-700 font-medium">Rodada Seed - R$ 8M</div>
             <div className="text-lg text-gray-600">Transformando o Bem-Estar Digital no Brasil</div>
@@ -1052,8 +1056,11 @@ const slides = [
         <div className="text-center space-y-6">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="relative text-6xl mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-black">
-              ESSENTIA
+            <div className="relative flex items-center justify-center mb-6 space-x-4">
+              <AppLogo app="purpose" size="xl" />
+              <div className="text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-black">
+                ESSENTIA
+              </div>
             </div>
           </div>
           <h2 className="text-2xl font-bold text-white/90">Construindo um movimento para democratizar o bem-estar holístico e a saúde mental no Brasil</h2>
