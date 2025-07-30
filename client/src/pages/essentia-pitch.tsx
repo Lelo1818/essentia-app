@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, ArrowRight, Play, Pause, Brain, Target, Users, Smartphone, TrendingUp, Shield, CheckCircle, Star, Trophy, DollarSign, BarChart3, Heart, Zap } from 'lucide-react';
 import logoPath from '@assets/image_1753836731720.png';
+import founderPhotoPath from '@assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg';
 
 /**
  * ESSENTIA PITCH - SLIDE INTERATIVO
@@ -667,74 +668,176 @@ export default function EssentiaPitch() {
     </div>
   );
 
-  // Slide 12 - Equipe
+  // Slide 12 - Nossa Liderança & A Rede de Execução
   const renderSlide12 = () => (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Equipe de Fundadores</h1>
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Nossa Liderança &amp; A Rede de Execução</h1>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Fundador em Destaque */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="lg:col-span-2">
+            <Card className="border-blue-200 h-full">
+              <CardContent className="p-8 flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <img 
+                    src={founderPhotoPath} 
+                    alt="Lélio - Fundador Essentia" 
+                    className="w-48 h-48 rounded-full object-cover border-4 border-blue-200 shadow-lg"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-3xl font-bold mb-3 text-blue-800">Lélio: Fundador &amp; Visionário da Essentia</h3>
+                  <div className="space-y-3 text-gray-700">
+                    <p className="text-lg">
+                      <span className="font-semibold">Paixão inabalável</span> por bem-estar digital e profundo entendimento do problema no Brasil.
+                    </p>
+                    <p className="text-lg">
+                      <span className="font-semibold">Visão clara</span> para transformar o autocuidado através de tecnologia e ciência.
+                    </p>
+                    <p className="text-lg">
+                      <span className="font-semibold">Expertise em</span> comportamento humano, IA aplicada ao wellness e gamificação.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Crescimento do Time - Gráfico Visual */}
+          <div className="lg:col-span-1">
+            <Card className="border-green-200 h-full">
+              <CardContent className="p-6 text-center h-full flex flex-col justify-center">
+                <h3 className="text-xl font-bold mb-6 text-green-800">Crescimento do Time</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">2025</span>
+                    <div className="flex space-x-1">
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-gray-300" />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">2026</span>
+                    <div className="flex space-x-1">
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">2027</span>
+                    <div className="flex space-x-1">
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                      <Users className="w-6 h-6 text-green-600" />
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                  <TrendingUp className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                  <p className="text-sm font-semibold text-green-800">Escalando o time</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Rede Estratégica de Especialistas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <Card className="border-purple-200">
+            <CardContent className="p-6">
+              <h3 className="text-2xl font-bold mb-6 text-purple-800 flex items-center">
+                <Brain className="w-8 h-8 mr-3" />
+                Rede Estratégica de Especialistas
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-purple-50 rounded-lg">
+                  <Brain className="w-10 h-10 text-purple-600 mx-auto mb-2" />
+                  <p className="font-semibold text-sm">Psicólogos Clínicos</p>
+                </div>
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <Zap className="w-10 h-10 text-blue-600 mx-auto mb-2" />
+                  <p className="font-semibold text-sm">Neurocientistas</p>
+                </div>
+                <div className="text-center p-4 bg-green-50 rounded-lg">
+                  <Trophy className="w-10 h-10 text-green-600 mx-auto mb-2" />
+                  <p className="font-semibold text-sm">Gamificação &amp; IA</p>
+                </div>
+                <div className="text-center p-4 bg-orange-50 rounded-lg">
+                  <Target className="w-10 h-10 text-orange-600 mx-auto mb-2" />
+                  <p className="font-semibold text-sm">Designers UX/UI</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <Card className="border-blue-200">
-            <CardContent className="p-8">
-              <div className="text-center mb-6">
-                <div className="w-32 h-32 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-16 h-16 text-blue-600" />
+            <CardContent className="p-6">
+              <h3 className="text-2xl font-bold mb-6 text-blue-800 flex items-center">
+                <Shield className="w-8 h-8 mr-3" />
+                Parcerias Acadêmicas
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-xs">USP</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Universidade de São Paulo</p>
+                    <p className="text-sm text-gray-600">Validação científica &amp; pesquisa</p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-2">CEO &amp; Co-Founder</h3>
-                <p className="text-gray-600">Visão estratégica e liderança</p>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>• +10 anos experiência em wellness</li>
-                <li>• MBA em Estratégia Digital</li>
-                <li>• Especialização em comportamento</li>
-                <li>• Network extenso no setor saúde</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="border-green-200">
-            <CardContent className="p-8">
-              <div className="text-center mb-6">
-                <div className="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Brain className="w-16 h-16 text-green-600" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2">CTO &amp; Co-Founder</h3>
-                <p className="text-gray-600">Arquitetura técnica e IA</p>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>• +8 anos desenvolvimento de IA</li>
-                <li>• Mestrado em Machine Learning</li>
-                <li>• Ex-Tech Lead em startup unicórnio</li>
-                <li>• Especialista em gamificação</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="mt-12 text-center">
-          <Card className="border-purple-200 max-w-4xl mx-auto">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold mb-6">Advisors Estratégicos</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <Shield className="w-12 h-12 text-purple-600 mx-auto mb-3" />
-                  <p className="font-semibold">Head de Produto</p>
-                  <p className="text-sm text-gray-600">Ex-Headspace Brasil</p>
-                </div>
-                <div>
-                  <Heart className="w-12 h-12 text-red-600 mx-auto mb-3" />
-                  <p className="font-semibold">Psicóloga Clínica</p>
-                  <p className="text-sm text-gray-600">15+ anos terapia digital</p>
-                </div>
-                <div>
-                  <DollarSign className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                  <p className="font-semibold">CFO Estratégico</p>
-                  <p className="text-sm text-gray-600">Ex-iFood, fundraising</p>
+                <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                  <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
+                    <Heart className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Hospital Albert Einstein</p>
+                    <p className="text-sm text-gray-600">Validação clínica &amp; testes</p>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
+
+        {/* Plano de Atração de Talentos */}
+        <Card className="border-orange-200">
+          <CardContent className="p-8">
+            <h3 className="text-2xl font-bold mb-6 text-orange-800 text-center flex items-center justify-center">
+              <Users className="w-8 h-8 mr-3" />
+              Plano de Atração de Talentos
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="text-center">
+                <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Brain className="w-10 h-10 text-orange-600" />
+                </div>
+                <h4 className="text-xl font-bold mb-2">CTO Experiente</h4>
+                <p className="text-gray-600">Especialista em IA e arquitetura de sistemas escaláveis</p>
+                <div className="mt-3 px-4 py-2 bg-orange-50 rounded-lg">
+                  <p className="text-sm font-semibold text-orange-800">Buscando ativamente</p>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <TrendingUp className="w-10 h-10 text-green-600" />
+                </div>
+                <h4 className="text-xl font-bold mb-2">CMO Growth</h4>
+                <p className="text-gray-600">Especialista em crescimento e aquisição de usuários</p>
+                <div className="mt-3 px-4 py-2 bg-green-50 rounded-lg">
+                  <p className="text-sm font-semibold text-green-800">Em processo seletivo</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
