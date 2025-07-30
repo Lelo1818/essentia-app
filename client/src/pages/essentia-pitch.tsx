@@ -16,7 +16,7 @@ export default function EssentiaPitch() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   
-  const totalSlides = 5;
+  const totalSlides = 15;
   
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
@@ -251,6 +251,713 @@ export default function EssentiaPitch() {
     </div>
   );
 
+  // Slide 6 - Como Funciona (Fluxo do Usuário)
+  const renderSlide6 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-cyan-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">A Jornada Essentia: Seu Caminho Personalizado</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <Card className="border-blue-200">
+            <CardContent className="p-6 text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Target className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">1. Avaliação Holística</h3>
+              <p className="text-gray-600">Roda da Vida digital + análise por IA</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-200">
+            <CardContent className="p-6 text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Brain className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">2. Jornada Adaptativa</h3>
+              <p className="text-gray-600">Plano de autocuidado ajustado pela IA</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-yellow-200">
+            <CardContent className="p-6 text-center">
+              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Trophy className="w-8 h-8 text-yellow-600" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">3. Engajamento Gamificado</h3>
+              <p className="text-gray-600">Desafios, rituais, avatar em evolução</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-purple-200">
+            <CardContent className="p-6 text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BarChart3 className="w-8 h-8 text-purple-600" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">4. Acompanhamento Contínuo</h3>
+              <p className="text-gray-600">Insights, rastreamento, feedback da IA</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <div className="flex items-center space-x-4">
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+            <ArrowRight className="w-6 h-6 text-gray-400" />
+            <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+            <ArrowRight className="w-6 h-6 text-gray-400" />
+            <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold">3</div>
+            <ArrowRight className="w-6 h-6 text-gray-400" />
+            <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 7 - Mercado-Alvo
+  const renderSlide7 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Estratégia de Mercado: Múltiplas Vias</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Card className="border-blue-200">
+            <CardContent className="p-8 text-center">
+              <Users className="w-20 h-20 text-blue-600 mx-auto mb-6" />
+              <h3 className="text-2xl font-bold mb-4 text-blue-800">B2C</h3>
+              <p className="text-gray-700 mb-4">Usuários finais</p>
+              <div className="bg-blue-50 rounded-lg p-4">
+                <p className="font-semibold text-blue-800">Modelo de Assinaturas</p>
+                <p className="text-gray-600">R$ 9,90 - R$ 29,90/mês</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-200">
+            <CardContent className="p-8 text-center">
+              <div className="w-20 h-20 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-6">
+                <div className="text-green-600 text-3xl font-bold">B</div>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-green-800">B2B</h3>
+              <p className="text-gray-700 mb-4">Empresas (programas corporativos)</p>
+              <div className="bg-green-50 rounded-lg p-4">
+                <p className="font-semibold text-green-800">Mercado 2024</p>
+                <p className="text-xl font-bold text-green-600">US$ 1,53B</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-purple-200">
+            <CardContent className="p-8 text-center">
+              <Shield className="w-20 h-20 text-purple-600 mx-auto mb-6" />
+              <h3 className="text-2xl font-bold mb-4 text-purple-800">B2B2C</h3>
+              <p className="text-gray-700 mb-4">Planos de saúde</p>
+              <div className="bg-purple-50 rounded-lg p-4">
+                <p className="font-semibold text-purple-800">Benefício Integrado</p>
+                <p className="text-gray-600">Licenciamento</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 8 - Estratégia Go-To-Market
+  const renderSlide8 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Canais de Aquisição Eficientes</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <Users className="w-8 h-8 text-orange-600" />
+                <h3 className="font-bold text-lg">Influenciadores Digitais</h3>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm text-gray-600">CPI na LatAm</p>
+                <p className="text-xl font-bold text-orange-600">US$ 0,50 - US$ 2,00</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
+                  <span className="text-blue-600 font-bold">B2B</span>
+                </div>
+                <h3 className="font-bold text-lg">Vendas B2B Corporativo</h3>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm text-gray-600">LTV alto, CAC baixo</p>
+                <p className="text-green-600 font-semibold">✓ Potencial elevado</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <Shield className="w-8 h-8 text-purple-600" />
+                <h3 className="font-bold text-lg">Parcerias B2B2C</h3>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm text-gray-600">Redução drástica do CAC</p>
+                <p className="text-purple-600 font-semibold">✓ Escala rápida</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 text-green-600">🔍</div>
+                <h3 className="font-bold text-lg">Orgânico (ASO/SEO)</h3>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm text-gray-600">CAC zero, LTV elevado</p>
+                <p className="text-green-600 font-semibold">✓ Sustentável</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="md:col-span-2">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <Target className="w-8 h-8 text-red-600" />
+                <h3 className="font-bold text-lg">Mídia Paga Otimizada</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-600">iOS Brasil</p>
+                  <p className="text-xl font-bold text-red-600">US$ 0,22</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Android Brasil</p>
+                  <p className="text-xl font-bold text-red-600">US$ 0,44</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 9 - Tração e Roadmap
+  const renderSlide9 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Roadmap de Crescimento (24 Meses)</h1>
+        
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-blue-200">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">Q1-Q2</div>
+                  <h3 className="font-bold text-lg">2025</h3>
+                </div>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• MVP, validação com 10k-20k usuários</li>
+                  <li>• Retenção Dia 30 &gt; 25%</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-green-200">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">Q3-Q4</div>
+                  <h3 className="font-bold text-lg">2025</h3>
+                </div>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Otimização monetização (conversão 5%)</li>
+                  <li>• 50k-100k usuários</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-purple-200">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">2026</div>
+                  <h3 className="font-bold text-lg">Escala Brasil</h3>
+                </div>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• 200k-500k usuários</li>
+                  <li>• Início de ensaios clínicos</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-orange-200">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold">2027+</div>
+                  <h3 className="font-bold text-lg">Expansão LatAm</h3>
+                </div>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Argentina, México</li>
+                  <li>• Certificações</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 10 - Modelo de Negócio
+  const renderSlide10 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Modelo: Diversificado e Escalável</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="font-bold text-xl mb-4 flex items-center">
+                <div className="w-8 h-8 bg-blue-100 rounded mr-3 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-blue-600" />
+                </div>
+                Freemium
+              </h3>
+              <p className="text-gray-600 mb-4">Atração e engajamento</p>
+              <div className="bg-blue-50 rounded-lg p-4">
+                <p className="font-semibold">Estratégia de conversão</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="font-bold text-xl mb-4 flex items-center">
+                <DollarSign className="w-8 h-8 text-green-600 mr-3" />
+                Assinaturas Premium (B2C)
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span>Básico</span>
+                  <span className="font-bold text-green-600">R$ 9,90</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Plus</span>
+                  <span className="font-bold text-green-600">R$ 19,90</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Premium</span>
+                  <span className="font-bold text-green-600">R$ 29,90</span>
+                </div>
+                <div className="bg-green-50 rounded-lg p-3 mt-4">
+                  <p className="font-semibold">ARPU Anual Alvo: US$ 60 - US$ 80</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="font-bold text-xl mb-4 flex items-center">
+                <div className="w-8 h-8 bg-purple-100 rounded mr-3 flex items-center justify-center">
+                  <span className="text-purple-600 font-bold text-sm">B2B</span>
+                </div>
+                Planos Corporativos
+              </h3>
+              <p className="text-gray-600 mb-4">Assinaturas anuais para empresas</p>
+              <div className="bg-purple-50 rounded-lg p-4">
+                <p className="font-semibold">LTV alto, CAC baixo</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="font-bold text-xl mb-4 flex items-center">
+                <Shield className="w-8 h-8 text-orange-600 mr-3" />
+                Parcerias com Planos de Saúde
+              </h3>
+              <p className="text-gray-600 mb-4">Licenciamento/comissionamento</p>
+              <div className="bg-orange-50 rounded-lg p-4">
+                <p className="font-semibold">Escala através de parcerias</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 11 - Projeções Financeiras
+  const renderSlide11 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Projeções Financeiras (3 Anos)</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <Card className="border-blue-200">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl font-bold text-blue-600 mb-2">2025</div>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-gray-600">Usuários</p>
+                  <p className="font-bold">50K-100K</p>
+                </div>
+                <div>
+                  <p className="text-gray-600">Receita</p>
+                  <p className="font-bold text-blue-600">R$ 2M-5M</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-200">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl font-bold text-green-600 mb-2">2026</div>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-gray-600">Usuários</p>
+                  <p className="font-bold">300K-500K</p>
+                </div>
+                <div>
+                  <p className="text-gray-600">Receita</p>
+                  <p className="font-bold text-green-600">R$ 15M-25M</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-purple-200">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl font-bold text-purple-600 mb-2">2027</div>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-gray-600">Usuários</p>
+                  <p className="font-bold">1M+</p>
+                </div>
+                <div>
+                  <p className="text-gray-600">Receita</p>
+                  <p className="font-bold text-purple-600">R$ 50M-80M</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8">
+          <h3 className="text-2xl font-bold text-center mb-6">Múltiplos de Mercado</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="text-center">
+              <p className="text-gray-600 mb-2">Revenue Multiple (Health Tech)</p>
+              <p className="text-3xl font-bold text-blue-600">8-12x</p>
+            </div>
+            <div className="text-center">
+              <p className="text-gray-600 mb-2">Valuation Projetada 2027</p>
+              <p className="text-3xl font-bold text-purple-600">R$ 400M-960M</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 12 - Equipe
+  const renderSlide12 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Equipe de Fundadores</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <Card className="border-blue-200">
+            <CardContent className="p-8">
+              <div className="text-center mb-6">
+                <div className="w-32 h-32 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-16 h-16 text-blue-600" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">CEO &amp; Co-Founder</h3>
+                <p className="text-gray-600">Visão estratégica e liderança</p>
+              </div>
+              <ul className="space-y-2 text-gray-700">
+                <li>• +10 anos experiência em wellness</li>
+                <li>• MBA em Estratégia Digital</li>
+                <li>• Especialização em comportamento</li>
+                <li>• Network extenso no setor saúde</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-200">
+            <CardContent className="p-8">
+              <div className="text-center mb-6">
+                <div className="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Brain className="w-16 h-16 text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">CTO &amp; Co-Founder</h3>
+                <p className="text-gray-600">Arquitetura técnica e IA</p>
+              </div>
+              <ul className="space-y-2 text-gray-700">
+                <li>• +8 anos desenvolvimento de IA</li>
+                <li>• Mestrado em Machine Learning</li>
+                <li>• Ex-Tech Lead em startup unicórnio</li>
+                <li>• Especialista em gamificação</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Card className="border-purple-200 max-w-4xl mx-auto">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-bold mb-6">Advisors Estratégicos</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <Shield className="w-12 h-12 text-purple-600 mx-auto mb-3" />
+                  <p className="font-semibold">Head de Produto</p>
+                  <p className="text-sm text-gray-600">Ex-Headspace Brasil</p>
+                </div>
+                <div>
+                  <Heart className="w-12 h-12 text-red-600 mx-auto mb-3" />
+                  <p className="font-semibold">Psicóloga Clínica</p>
+                  <p className="text-sm text-gray-600">15+ anos terapia digital</p>
+                </div>
+                <div>
+                  <DollarSign className="w-12 h-12 text-green-600 mx-auto mb-3" />
+                  <p className="font-semibold">CFO Estratégico</p>
+                  <p className="text-sm text-gray-600">Ex-iFood, fundraising</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 13 - Validação e Tração
+  const renderSlide13 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Validação: Primeiros Resultados</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <Card className="border-green-200">
+            <CardContent className="p-8">
+              <div className="text-center">
+                <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold mb-4">MVP Validado</h3>
+                <div className="space-y-3">
+                  <div className="bg-green-50 rounded-lg p-4">
+                    <p className="text-3xl font-bold text-green-600">1.2K</p>
+                    <p className="text-gray-700">Beta testers ativos</p>
+                  </div>
+                  <div className="bg-green-50 rounded-lg p-4">
+                    <p className="text-3xl font-bold text-green-600">68%</p>
+                    <p className="text-gray-700">Retenção 7 dias</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-blue-200">
+            <CardContent className="p-8">
+              <div className="text-center">
+                <Star className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold mb-4">Feedback dos Usuários</h3>
+                <div className="space-y-3">
+                  <div className="bg-blue-50 rounded-lg p-4">
+                    <p className="text-3xl font-bold text-blue-600">4.7/5</p>
+                    <p className="text-gray-700">Rating médio</p>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-4">
+                    <p className="text-3xl font-bold text-blue-600">89%</p>
+                    <p className="text-gray-700">Recomendam o app</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="border-purple-200">
+          <CardContent className="p-8">
+            <h3 className="text-2xl font-bold text-center mb-8">Depoimentos de Beta Testers</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-purple-50 rounded-lg p-6">
+                <p className="italic mb-4">"Finalmente um app que entende minha rotina brasileira. A IA realmente personaliza as sugestões."</p>
+                <p className="font-semibold text-purple-700">- Maria, 34, São Paulo</p>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-6">
+                <p className="italic mb-4">"A gamificação me mantém engajada. Já são 45 dias consecutivos usando!"</p>
+                <p className="font-semibold text-blue-700">- Carlos, 28, Rio</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-6">
+                <p className="italic mb-4">"A Roda da Vida me ajudou a ver onde preciso melhorar. Interface muito intuitiva."</p>
+                <p className="font-semibold text-green-700">- Ana, 41, Brasília</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+
+  // Slide 14 - Pedido de Investimento
+  const renderSlide14 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-gray-800 text-center mb-12">Rodada Seed: R$ 8M</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <Card className="border-orange-200">
+            <CardContent className="p-8">
+              <h3 className="text-3xl font-bold mb-6 text-orange-800">Uso dos Recursos</h3>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Users className="w-8 h-8 text-blue-600" />
+                    <span>Equipe (40%)</span>
+                  </div>
+                  <span className="font-bold">R$ 3.2M</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Zap className="w-8 h-8 text-yellow-600" />
+                    <span>Marketing (30%)</span>
+                  </div>
+                  <span className="font-bold">R$ 2.4M</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Brain className="w-8 h-8 text-purple-600" />
+                    <span>Produto &amp; IA (20%)</span>
+                  </div>
+                  <span className="font-bold">R$ 1.6M</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Shield className="w-8 h-8 text-green-600" />
+                    <span>Operações (10%)</span>
+                  </div>
+                  <span className="font-bold">R$ 800K</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-200">
+            <CardContent className="p-8">
+              <h3 className="text-3xl font-bold mb-6 text-green-800">Milestones 18 Meses</h3>
+              <div className="space-y-4">
+                <div className="bg-green-50 rounded-lg p-4">
+                  <p className="font-bold text-green-800">Q1-Q2 2025</p>
+                  <p className="text-gray-700">50K usuários ativos, MVP otimizado</p>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <p className="font-bold text-blue-800">Q3-Q4 2025</p>
+                  <p className="text-gray-700">200K usuários, receita R$ 2M</p>
+                </div>
+                <div className="bg-purple-50 rounded-lg p-4">
+                  <p className="font-bold text-purple-800">Q1-Q2 2026</p>
+                  <p className="text-gray-700">500K usuários, break-even</p>
+                </div>
+                <div className="bg-orange-50 rounded-lg p-4">
+                  <p className="font-bold text-orange-800">Preparação Série A</p>
+                  <p className="text-gray-700">Expansão LatAm, R$ 20M rodada</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-12 text-center">
+          <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg p-8">
+            <h3 className="text-3xl font-bold mb-4 text-gray-800">Por que investir agora?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <TrendingUp className="w-12 h-12 text-green-600 mx-auto mb-3" />
+                <p className="font-semibold">Mercado em Crescimento</p>
+                <p className="text-sm text-gray-600">15% CAGR até 2030</p>
+              </div>
+              <div>
+                <Target className="w-12 h-12 text-blue-600 mx-auto mb-3" />
+                <p className="font-semibold">MVP Validado</p>
+                <p className="text-sm text-gray-600">Tração comprovada</p>
+              </div>
+              <div>
+                <Trophy className="w-12 h-12 text-yellow-600 mx-auto mb-3" />
+                <p className="font-semibold">Diferenciação Clara</p>
+                <p className="text-sm text-gray-600">IA + Cultura brasileira</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Slide 15 - Obrigado/Contato
+  const renderSlide15 = () => (
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
+      <div className="text-center space-y-8 max-w-4xl mx-auto px-8">
+        <img src={logoPath} alt="Essentia Logo" className="w-48 h-auto mx-auto mb-8" />
+        
+        <h1 className="text-6xl font-bold text-gray-800 mb-6">Obrigado!</h1>
+        
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Vamos transformar o bem-estar digital juntos?</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-purple-800">Contato</h3>
+              <div className="space-y-2 text-gray-700">
+                <p>📧 contato@essentia.app</p>
+                <p>💼 LinkedIn: /company/essentia-wellness</p>
+                <p>🌐 www.essentia.app</p>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-blue-800">Próximos Passos</h3>
+              <div className="space-y-2 text-gray-700">
+                <p>✓ Demo personalizada</p>
+                <p>✓ Due diligence técnica</p>
+                <p>✓ Reunião com equipe</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex justify-center space-x-4">
+          <Card>
+            <CardContent className="p-4">
+              <p className="text-2xl font-bold text-purple-600">R$ 8M</p>
+              <p className="text-gray-600">Rodada Seed</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <p className="text-2xl font-bold text-blue-600">18 meses</p>
+              <p className="text-gray-600">Break-even</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <p className="text-2xl font-bold text-green-600">500K+</p>
+              <p className="text-gray-600">Usuários meta</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+
   // Função principal de renderização baseada no slide atual
   const renderCurrentSlide = () => {
     switch (currentSlide) {
@@ -259,6 +966,16 @@ export default function EssentiaPitch() {
       case 2: return renderSlide3();
       case 3: return renderSlide4();
       case 4: return renderSlide5();
+      case 5: return renderSlide6();
+      case 6: return renderSlide7();
+      case 7: return renderSlide8();
+      case 8: return renderSlide9();
+      case 9: return renderSlide10();
+      case 10: return renderSlide11();
+      case 11: return renderSlide12();
+      case 12: return renderSlide13();
+      case 13: return renderSlide14();
+      case 14: return renderSlide15();
       default: return renderSlide1();
     }
   };
