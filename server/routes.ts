@@ -1949,6 +1949,11 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
     }
   });
 
+  // Serve pitch deck export HTML
+  app.get('/pitch-deck-export', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'pitch-deck-export.html'));
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
