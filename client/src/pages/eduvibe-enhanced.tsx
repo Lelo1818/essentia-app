@@ -799,12 +799,42 @@ export default function EduVibeEnhanced() {
   // Tela 1: Escolha de Tema
   if (currentStep === 1) {
     const themes = [
-      { id: "financas", title: "💰 Educação Financeira", desc: "Organize sua vida financeira" },
-      { id: "tecnologia", title: "💻 Tecnologia", desc: "Programação e inovação" },
-      { id: "negocios", title: "📈 Negócios", desc: "Empreendedorismo e gestão" },
-      { id: "saude", title: "🏥 Saúde e Bem-estar", desc: "Cuide da sua qualidade de vida" },
-      { id: "idiomas", title: "🌍 Idiomas", desc: "Aprenda novos idiomas" },
-      { id: "criatividade", title: "🎨 Arte e Criatividade", desc: "Desenvolva seu lado criativo" }
+      { 
+        id: "financas", 
+        title: "💰 Educação Financeira", 
+        desc: "Organize sua vida financeira",
+        image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop&auto=format"
+      },
+      { 
+        id: "tecnologia", 
+        title: "💻 Tecnologia", 
+        desc: "Programação e inovação",
+        image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop&auto=format"
+      },
+      { 
+        id: "negocios", 
+        title: "📈 Negócios", 
+        desc: "Empreendedorismo e gestão",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&auto=format"
+      },
+      { 
+        id: "saude", 
+        title: "🏥 Saúde e Bem-estar", 
+        desc: "Cuide da sua qualidade de vida",
+        image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&auto=format"
+      },
+      { 
+        id: "idiomas", 
+        title: "🌍 Idiomas", 
+        desc: "Aprenda novos idiomas",
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop&auto=format"
+      },
+      { 
+        id: "criatividade", 
+        title: "🎨 Arte e Criatividade", 
+        desc: "Desenvolva seu lado criativo",
+        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop&auto=format"
+      }
     ];
 
     return (
@@ -823,7 +853,18 @@ export default function EduVibeEnhanced() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {themes.map((theme) => (
-              <Card key={theme.id} className="cursor-pointer hover:shadow-xl transition-all transform hover:scale-105 bg-white border-2 hover:border-blue-500">
+              <Card key={theme.id} className="cursor-pointer hover:shadow-xl transition-all transform hover:scale-105 bg-white border-2 hover:border-blue-500 overflow-hidden">
+                <div className="relative h-48">
+                  <img 
+                    src={theme.image} 
+                    alt={theme.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <span className="text-4xl">{theme.title.split(' ')[0]}</span>
+                  </div>
+                </div>
                 <CardContent className="p-6 text-center">
                   <h3 className="text-xl font-bold mb-2">{theme.title}</h3>
                   <p className="text-gray-600 mb-4">{theme.desc}</p>

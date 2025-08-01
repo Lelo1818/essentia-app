@@ -123,15 +123,28 @@ Posso criar uma experiência completamente personalizada para você!`,
     setCurrentMessage('');
     setIsThinking(true);
 
-    setTimeout(() => {
-      const response = generatePremiumResponse(currentMessage, messages);
+    // Usar IA real do Anthropic
+    try {
+      const response = await fetch('/api/ai/analyze-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: currentMessage,
+          studyArea: 'premium-chat',
+          context: `Chat premium personalizado. Usuário perguntou: "${currentMessage}". Responda de forma direta e educativa sobre exatamente o que ele perguntou.`
+        }),
+      });
+
+      const data = await response.json();
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response.content,
+        content: data.analysis?.summary || "Desculpe, houve um erro. Pode reformular sua pergunta?",
         timestamp: new Date(),
-        type: response.type,
-        hasImage: response.hasVisual
+        type: 'text'
       };
 
       setMessages(prev => [...prev, assistantMessage]);
@@ -149,7 +162,18 @@ Posso criar uma experiência completamente personalizada para você!`,
           description: newAchievement,
         });
       }
-    }, 2000);
+    } catch (error) {
+      console.error('Erro na IA:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "Desculpe, houve um erro ao processar sua pergunta. Pode tentar novamente?",
+        timestamp: new Date(),
+        type: 'text'
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      setIsThinking(false);
+    }
   };
 
   const generatePremiumResponse = (userInput: string, messageHistory: Message[]) => {
