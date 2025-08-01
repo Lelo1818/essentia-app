@@ -753,7 +753,7 @@ export default function EduVibeEnhanced() {
                   onClick={() => {
                     console.log("🖱️ ACESSO DIRETO AO TESTE");
                     setUserName("Teste");
-                    setCurrentModuleId("1");
+                    setCurrentModuleId(1);
                     setCurrentStep(6);
                   }}
                   className="w-full bg-orange-600 hover:bg-orange-700 text-white"
@@ -765,7 +765,7 @@ export default function EduVibeEnhanced() {
                   onClick={() => {
                     console.log("🖱️ ACESSO DIRETO À IA");
                     setUserName("Teste IA");
-                    setCurrentModuleId("ai");
+                    setCurrentModuleId(null);
                     setCurrentStep(6);
                   }}
                   className="w-full bg-purple-600 hover:bg-purple-700 text-white"
