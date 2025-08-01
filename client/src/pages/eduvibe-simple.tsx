@@ -13,11 +13,13 @@ import {
   BookOpen
 } from "lucide-react";
 import StudyMode from "@/components/StudyMode";
+import PremiumStudyMode from "@/components/PremiumStudyMode";
 
 export default function EduVibeSimple() {
   const [userName, setUserName] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
   const [showStudyMode, setShowStudyMode] = useState(false);
+  const [showPremiumMode, setShowPremiumMode] = useState(false);
   const { toast } = useToast();
 
   const goBack = () => {
@@ -31,6 +33,11 @@ export default function EduVibeSimple() {
   // Se está no Study Mode, mostra o componente
   if (showStudyMode) {
     return <StudyMode onBack={() => setShowStudyMode(false)} />;
+  }
+
+  // Se está no Premium Mode, mostra o componente premium
+  if (showPremiumMode) {
+    return <PremiumStudyMode onBack={() => setShowPremiumMode(false)} />;
   }
 
   // Tela 0: Boas-vindas
@@ -74,16 +81,16 @@ export default function EduVibeSimple() {
                 
                 <Button 
                   onClick={() => {
-                    setShowStudyMode(true);
+                    setShowPremiumMode(true);
                     toast({
-                      title: "🧠 Study Mode Ativado",
-                      description: "Tutor IA integrado carregado com sucesso!",
+                      title: "👑 EduVibe Premium Ativado",
+                      description: "Recursos exclusivos carregados!",
                     });
                   }}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white"
                 >
                   <BrainCircuit className="w-4 h-4 mr-2" />
-                  🧠 Study Mode Integrado
+                  👑 EduVibe Premium
                 </Button>
 
                 <Button 
@@ -126,23 +133,38 @@ export default function EduVibeSimple() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* ChatGPT Study Mode */}
-            <Card className="cursor-pointer hover:shadow-xl transition-all transform hover:scale-105 bg-white border-2 hover:border-orange-500">
+            {/* EduVibe Premium */}
+            <Card className="cursor-pointer hover:shadow-xl transition-all transform hover:scale-105 bg-gradient-to-br from-orange-50 to-red-50 border-2 hover:border-orange-500 relative overflow-hidden">
+              <div className="absolute top-2 right-2">
+                <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                  PREMIUM
+                </div>
+              </div>
               <CardContent className="p-6 text-center">
-                <BrainCircuit className="w-12 h-12 mx-auto mb-4 text-orange-600" />
-                <h3 className="text-xl font-bold mb-2">🧠 Study Mode IA</h3>
-                <p className="text-gray-600 mb-4">Tutor ChatGPT personalizado com questionamento socrático</p>
+                <div className="relative mb-4">
+                  <BrainCircuit className="w-12 h-12 mx-auto text-orange-600" />
+                  <div className="absolute -top-1 -right-1 text-yellow-500">
+                    ✨
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2">👑 EduVibe Premium</h3>
+                <p className="text-gray-600 mb-4">Tutor IA exclusivo com recursos únicos no mundo</p>
+                <div className="text-xs text-gray-500 mb-3 space-y-1">
+                  <div>📸 Análise de imagens • 🎤 Conversas por voz</div>
+                  <div>🧠 Mapas mentais • 🏆 Sistema de conquistas</div>
+                  <div>📊 Relatórios • 💾 Biblioteca pessoal</div>
+                </div>
                 <Button 
                   onClick={() => {
-                    setShowStudyMode(true);
+                    setShowPremiumMode(true);
                     toast({
-                      title: "🧠 Study Mode Ativado",
-                      description: "Tutor IA integrado iniciado!",
+                      title: "👑 EduVibe Premium Ativado",
+                      description: "Recursos exclusivos iniciados!",
                     });
                   }}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
                 >
-                  Iniciar Study Mode
+                  Iniciar Premium
                 </Button>
               </CardContent>
             </Card>
