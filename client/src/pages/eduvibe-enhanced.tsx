@@ -202,7 +202,7 @@ export default function EduVibeEnhanced() {
   const [selectedPath, setSelectedPath] = useState<LearningPath | null>(null);
   const [userName, setUserName] = useState("");
   const [selectedTheme, setSelectedTheme] = useState("");
-  const [learningGoal, setLearningGoal] = useState("tecnologia"); // FORÇA TECH COMO PADRÃO
+  const [learningGoal, setLearningGoal] = useState(""); // Deixa vazio para o usuário escolher
   const [studyTime, setStudyTime] = useState("");
   const [studyTopic, setStudyTopic] = useState('');
   const [studyLevel, setStudyLevel] = useState('Intermediário');
@@ -278,6 +278,15 @@ export default function EduVibeEnhanced() {
           { id: 1, title: "Técnicas Básicas de Cozinha", type: 'video' as const, content: "# Técnicas Culinárias\n\nFundamentos da culinária..." },
           { id: 2, title: "Pratos Tradicionais Brasileiros", type: 'text' as const, content: "# Culinária Brasileira\n\nReceitas tradicionais..." },
           { id: 3, title: "Técnicas Avançadas", type: 'video' as const, content: "# Técnicas Avançadas\n\nAperfeiçoando suas habilidades..." }
+        ]
+      },
+      'saude': {
+        title: "Saúde e Bem-Estar",
+        description: "Cuide da sua saúde física e mental",
+        modules: [
+          { id: 1, title: "Fundamentos da Nutrição", type: 'video' as const, content: "# Nutrição Saudável\n\nConheça os princípios de uma alimentação equilibrada..." },
+          { id: 2, title: "Exercícios e Movimento", type: 'text' as const, content: "# Atividade Física\n\nImportância do movimento para a saúde..." },
+          { id: 3, title: "Saúde Mental e Mindfulness", type: 'video' as const, content: "# Bem-Estar Mental\n\nTécnicas de relaxamento e autoconhecimento..." }
         ]
       }
     };
@@ -739,7 +748,7 @@ export default function EduVibeEnhanced() {
               />
               
               <Button 
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 py-3 text-lg font-semibold"
                 onClick={() => {
                   if (userName.trim()) {
                     setCurrentStep(1);
@@ -751,6 +760,7 @@ export default function EduVibeEnhanced() {
                 }}
                 disabled={!userName.trim()}
               >
+                <Sparkles className="w-5 h-5 mr-2" />
                 Começar Jornada
               </Button>
               
@@ -877,6 +887,7 @@ export default function EduVibeEnhanced() {
                   <Button 
                     onClick={() => {
                       setSelectedTheme(theme.id);
+                      setLearningGoal(theme.id); // CONECTA O TEMA SELECIONADO COM O LEARNING GOAL
                       setCurrentStep(2);
                       toast({
                         title: "Tema selecionado!",
@@ -920,7 +931,7 @@ export default function EduVibeEnhanced() {
                     Qual é seu principal objetivo de aprendizado?
                   </label>
                   <Input
-                    placeholder="Ex: Quero organizar minhas finanças pessoais"
+                    placeholder={`Ex: ${selectedTheme === 'saude' ? 'Quero melhorar minha saúde e bem-estar' : selectedTheme === 'tecnologia' ? 'Quero aprender programação' : 'Quero me desenvolver nesta área'}`}
                     value={learningGoal}
                     onChange={(e) => setLearningGoal(e.target.value)}
                     className="text-lg"
