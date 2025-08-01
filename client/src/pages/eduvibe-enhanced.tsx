@@ -333,7 +333,7 @@ export default function EduVibeEnhanced() {
       }
     };
 
-    const template = topicTemplates[goal.toLowerCase() as keyof typeof topicTemplates] || topicTemplates['saude'];
+    const template = topicTemplates[topic.toLowerCase() as keyof typeof topicTemplates] || topicTemplates['saude'];
     
     for (let day = 1; day <= days; day++) {
       const contentIndex = Math.floor((day - 1) * template.baseContent.length / days);
@@ -1109,7 +1109,7 @@ export default function EduVibeEnhanced() {
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-4"
                   onClick={() => {
                     if (learningGoal.trim() && studyTime && targetDays) {
-                      // Gera trilha diária personalizada
+                      // Gera trilha diária personalizada - corrige parâmetros
                       const days = parseInt(targetDays);
                       const dailyPlan = generateDailyLearningPlan(selectedTheme, days, studyLevel);
                       
