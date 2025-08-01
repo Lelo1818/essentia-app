@@ -36,6 +36,7 @@ import {
   BrainCircuit
 } from "lucide-react";
 import AITextAnalyzer from "@/components/AITextAnalyzer";
+import PremiumStudyMode from "@/components/PremiumStudyMode";
 
 interface Module {
   id: number;
@@ -776,16 +777,16 @@ export default function EduVibeEnhanced() {
                 
                 <Button 
                   onClick={() => {
-                    window.open('https://chatgpt.com/studymode', '_blank');
+                    setCurrentStep(6); // Nova tela para EduVibe Premium
                     toast({
-                      title: "🚀 ChatGPT Study Mode",
-                      description: "Abrindo tutor IA revolucionário - nova aba",
+                      title: "👑 EduVibe Premium",
+                      description: "Iniciando modo premium com IA avançada",
                     });
                   }}
-                  className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white"
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
                 >
-                  <BrainCircuit className="w-4 h-4 mr-2" />
-                  🧠 Study Mode ChatGPT
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  👑 EduVibe Premium
                 </Button>
               </div>
             </div>
@@ -1491,6 +1492,11 @@ ${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).
     );
   }
 
+  // Tela 6: EduVibe Premium
+  if (currentStep === 6) {
+    return <PremiumStudyMode onBack={() => setCurrentStep(0)} />;
+  }
+
   // FALLBACK - Se chegou aqui, força para tela 6
   console.log("🚀 FALLBACK PARA TELA 6 - STEP:", currentStep);
   
@@ -1506,7 +1512,7 @@ ${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).
             onClick={() => setCurrentStep(6)}
             className="bg-blue-600 hover:bg-blue-700"
           >
-            Ir para Central Downloads
+            Ir para EduVibe Premium
           </Button>
         </div>
       </div>
