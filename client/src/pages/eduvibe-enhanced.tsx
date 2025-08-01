@@ -30,7 +30,10 @@ import {
   Sparkles,
   BarChart3,
   PlayCircle,
-  Zap
+  Zap,
+  GraduationCap,
+  MessageSquare,
+  BrainCircuit
 } from "lucide-react";
 import AITextAnalyzer from "@/components/AITextAnalyzer";
 
@@ -200,6 +203,9 @@ export default function EduVibeEnhanced() {
   const [selectedTheme, setSelectedTheme] = useState("");
   const [learningGoal, setLearningGoal] = useState("tecnologia"); // FORÇA TECH COMO PADRÃO
   const [studyTime, setStudyTime] = useState("");
+  const [studyTopic, setStudyTopic] = useState('');
+  const [studyLevel, setStudyLevel] = useState('Intermediário');
+  const [studyGoal, setStudyGoal] = useState('');
   const [currentModuleId, setCurrentModuleId] = useState<number | null>(null);
   const [showingVideo, setShowingVideo] = useState(false);
   const [currentVideo, setCurrentVideo] = useState("");
@@ -766,6 +772,20 @@ export default function EduVibeEnhanced() {
                 >
                   <Zap className="w-4 h-4 mr-2" />
                   Testar IA Real
+                </Button>
+                
+                <Button 
+                  onClick={() => {
+                    window.open('https://chatgpt.com/studymode', '_blank');
+                    toast({
+                      title: "🚀 ChatGPT Study Mode",
+                      description: "Abrindo tutor IA revolucionário - nova aba",
+                    });
+                  }}
+                  className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white"
+                >
+                  <BrainCircuit className="w-4 h-4 mr-2" />
+                  🧠 Study Mode ChatGPT
                 </Button>
               </div>
             </div>
