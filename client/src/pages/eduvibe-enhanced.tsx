@@ -714,14 +714,20 @@ export default function EduVibeEnhanced() {
   // Tela 0: Boas-vindas
   if (currentStep === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 flex items-center justify-center p-6 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(236,72,153,0.3),transparent_50%)]"></div>
+        
         <FloatingDownloadButton />
-        <Card className="max-w-md w-full bg-white/95 backdrop-blur-sm shadow-2xl">
-          <CardContent className="p-8 text-center">
-            <div className="mb-6">
-              <div className="text-6xl mb-4">🎓</div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-2">EduVibe</h1>
-              <p className="text-gray-600">Onde aprender não é tarefa, é experiência</p>
+        <Card className="max-w-md w-full bg-white/95 backdrop-blur-xl shadow-2xl border border-white/20 transform hover:scale-105 transition-all duration-300">
+          <CardContent className="p-10 text-center">
+            <div className="mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform hover:rotate-3 transition-all duration-300">
+                <GraduationCap className="w-10 h-10 text-white" />
+              </div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">EduVibe</h1>
+              <p className="text-gray-600 text-lg">Onde aprender não é tarefa, é experiência</p>
             </div>
             
             <div className="space-y-4">
