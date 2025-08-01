@@ -12,10 +12,12 @@ import {
   Download,
   BookOpen
 } from "lucide-react";
+import StudyMode from "@/components/StudyMode";
 
 export default function EduVibeSimple() {
   const [userName, setUserName] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
+  const [showStudyMode, setShowStudyMode] = useState(false);
   const { toast } = useToast();
 
   const goBack = () => {
@@ -25,6 +27,11 @@ export default function EduVibeSimple() {
   const goHome = () => {
     window.location.href = '/dashboard-unificado';
   };
+
+  // Se está no Study Mode, mostra o componente
+  if (showStudyMode) {
+    return <StudyMode onBack={() => setShowStudyMode(false)} />;
+  }
 
   // Tela 0: Boas-vindas
   if (currentStep === 0) {
@@ -67,16 +74,16 @@ export default function EduVibeSimple() {
                 
                 <Button 
                   onClick={() => {
-                    window.open('https://chatgpt.com/studymode', '_blank');
+                    setShowStudyMode(true);
                     toast({
-                      title: "🚀 ChatGPT Study Mode",
-                      description: "Abrindo tutor IA revolucionário - nova aba",
+                      title: "🧠 Study Mode Ativado",
+                      description: "Tutor IA integrado carregado com sucesso!",
                     });
                   }}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white"
                 >
                   <BrainCircuit className="w-4 h-4 mr-2" />
-                  🧠 Study Mode ChatGPT
+                  🧠 Study Mode Integrado
                 </Button>
 
                 <Button 
@@ -127,15 +134,15 @@ export default function EduVibeSimple() {
                 <p className="text-gray-600 mb-4">Tutor ChatGPT personalizado com questionamento socrático</p>
                 <Button 
                   onClick={() => {
-                    window.open('https://chatgpt.com/studymode', '_blank');
+                    setShowStudyMode(true);
                     toast({
-                      title: "🚀 ChatGPT Study Mode",
-                      description: "Abrindo tutor IA - nova aba",
+                      title: "🧠 Study Mode Ativado",
+                      description: "Tutor IA integrado iniciado!",
                     });
                   }}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
                 >
-                  Abrir Study Mode
+                  Iniciar Study Mode
                 </Button>
               </CardContent>
             </Card>
@@ -229,10 +236,10 @@ export default function EduVibeSimple() {
               <div className="space-y-4">
                 <Button 
                   onClick={() => {
-                    window.open('https://chatgpt.com/studymode', '_blank');
+                    setShowStudyMode(true);
                     toast({
-                      title: "🚀 ChatGPT Study Mode",
-                      description: "Abrindo tutor IA - nova aba",
+                      title: "🧠 Study Mode Ativado",
+                      description: "Tutor IA integrado iniciado!",
                     });
                   }}
                   className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white"
@@ -275,16 +282,16 @@ export default function EduVibeSimple() {
               <div className="grid md:grid-cols-2 gap-4">
                 <Button 
                   onClick={() => {
-                    window.open('https://chatgpt.com/studymode', '_blank');
+                    setShowStudyMode(true);
                     toast({
-                      title: "🚀 ChatGPT Study Mode",
-                      description: "Abrindo tutor IA - nova aba",
+                      title: "🧠 Study Mode Ativado",
+                      description: "Tutor IA integrado iniciado!",
                     });
                   }}
                   className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white"
                 >
                   <BrainCircuit className="w-4 h-4 mr-2" />
-                  Study Mode ChatGPT
+                  Study Mode Integrado
                 </Button>
                 <Button 
                   onClick={goHome}
