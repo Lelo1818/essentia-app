@@ -327,37 +327,38 @@ Antes de eu te "ensinar" qualquer coisa, me conte: onde você já encontrou esse
         };
         setMessages(prev => [...prev, imageMessage]);
         
-        // Simula análise da imagem
-        setTimeout(() => {
+        // Análise real da imagem usando IA
+        analyzeImageWithAI(imageUrl, file.name).then(analysis => {
           const analysisMessage: Message = {
             id: (Date.now() + 1).toString(),
             role: 'assistant',
-            content: `📸 **Análise Premium da Imagem**
+            content: analysis,
+            timestamp: new Date(),
+            type: 'exercise'
+          };
+          setMessages(prev => [...prev, analysisMessage]);
+        }).catch(() => {
+          // Fallback caso a IA não funcione
+          const fallbackMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: `📸 **Análise da Imagem**
 
-🔍 **Detectado:** Material educacional - ${file.name}
+Recebi sua imagem "${file.name}". 
 
-📊 **Análise automática:**
-• Tipo: Exercício/Diagrama educacional
-• Complexidade: Nível intermediário
-• Área: Conteúdo acadêmico
+🎯 **Processo de aprendizado guiado:**
 
-🎯 **Estratégia de aprendizado personalizada:**
-
-Em vez de simplesmente resolver o que está na imagem, vou te guiar através de um processo de descoberta:
-
-1. **O que você vê?** Descreva os elementos principais da imagem
-2. **Que padrões nota?** Há relações, sequências ou estruturas específicas?
-3. **Que perguntas surgem?** O que te intriga ou confunde?
-4. **Como se conecta?** Com que outros conhecimentos você pode relacionar?
-
-💡 **Recurso Premium:** Posso gerar explicações visuais interativas e exercícios similares baseados na sua imagem!
+1. **Descreva o que vê:** Quais são os elementos principais da imagem?
+2. **Identifique padrões:** Há relações, fórmulas, diagramas ou estruturas?
+3. **Formule perguntas:** O que te intriga ou gera dúvidas?
+4. **Conecte conhecimentos:** Como isso se relaciona com o que já sabe?
 
 **Comece descrevendo:** O que mais chama sua atenção na imagem?`,
             timestamp: new Date(),
             type: 'exercise'
           };
-          setMessages(prev => [...prev, analysisMessage]);
-        }, 1500);
+          setMessages(prev => [...prev, fallbackMessage]);
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -412,6 +413,18 @@ Ouvi sua pergunta sobre matemática avançada!
 
   const saveToLibrary = (messageId: string) => {
     setSavedItems(prev => [...prev, messageId]);
+    // Salva no localStorage para persistir
+    const message = messages.find(m => m.id === messageId);
+    if (message) {
+      const savedLibrary = JSON.parse(localStorage.getItem('eduvibe-library') || '[]');
+      savedLibrary.push({
+        id: messageId,
+        content: message.content,
+        timestamp: message.timestamp,
+        topic: currentSession.topic
+      });
+      localStorage.setItem('eduvibe-library', JSON.stringify(savedLibrary));
+    }
     toast({
       title: "💾 Salvo na biblioteca",
       description: "Item adicionado à sua coleção pessoal!",
@@ -423,6 +436,48 @@ Ouvi sua pergunta sobre matemática avançada!
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
+
+  // Função para análise real de imagens
+  const analyzeImageWithAI = async (imageUrl: string, fileName: string): Promise<string> => {
+    try {
+      const response = await fetch('/api/analyze-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          imageUrl, 
+          fileName,
+          context: 'educational analysis' 
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Análise não disponível');
+      }
+
+      const result = await response.json();
+      
+      return `📸 **Análise IA da Imagem - ${fileName}**
+
+${result.analysis}
+
+🎯 **Perguntas reflexivas baseadas na análise:**
+
+${result.questions || '1. O que você observa de mais interessante nesta imagem?\n2. Como isso se conecta com seus conhecimentos anteriores?\n3. Que dúvidas surgem ao observar estes elementos?'}
+
+🧠 **Próximo passo:** Responda às perguntas acima para aprofundarmos seu aprendizado!`;
+
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Carrega biblioteca do localStorage
+  React.useEffect(() => {
+    const savedLibrary = JSON.parse(localStorage.getItem('eduvibe-library') || '[]');
+    setSavedItems(savedLibrary.map((item: any) => item.id));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 p-6">

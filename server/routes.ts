@@ -9,7 +9,7 @@ import {
   insertGoalSchema, insertAchievementSchema
 } from "@shared/schema";
 import { z } from "zod";
-import { analyzeTextWithAI, generateStudyPlan } from "./anthropic";
+import { analyzeTextWithAI, generateStudyPlan, analyzeImageContent } from "./anthropic";
 import { getAICoachResponse, generatePersonalizedInsight } from "./ai-coach";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1952,6 +1952,46 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
   // Serve pitch deck export HTML
   app.get('/pitch-deck-export', (req, res) => {
     res.sendFile(path.join(process.cwd(), 'pitch-deck-export.html'));
+  });
+
+  // EduVibe Premium - Análise de imagens
+  app.post("/api/analyze-image", async (req, res) => {
+    try {
+      const { imageUrl, fileName, context } = req.body;
+      
+      if (!process.env.ANTHROPIC_API_KEY) {
+        return res.status(400).json({ 
+          error: "API key não configurada",
+          fallback: true 
+        });
+      }
+
+      // Remove o prefixo data:image/...;base64, se presente
+      const base64Data = imageUrl.replace(/^data:image\/[a-z]+;base64,/, '');
+      
+      const analysis = await analyzeImageContent(base64Data, fileName, context);
+      
+      res.json({
+        analysis: analysis.content,
+        questions: analysis.questions,
+        suggestions: analysis.suggestions
+      });
+      
+    } catch (error) {
+      console.error('Erro na análise da imagem:', error);
+      res.status(500).json({ 
+        error: "Erro na análise", 
+        fallback: true 
+      });
+    }
+  });
+
+  // EduVibe Premium - Biblioteca pessoal
+  app.get("/api/library", (req, res) => {
+    res.json({
+      items: [],
+      message: "Biblioteca pessoal disponível no localStorage do cliente"
+    });
   });
 
   const httpServer = createServer(app);

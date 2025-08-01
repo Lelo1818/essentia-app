@@ -290,9 +290,64 @@ Exemplo: ["Etapa 1: Ler introdução básica", "Etapa 2: Fazer exercícios prát
     console.error("Erro ao gerar plano de estudos:", error);
     return [
       "1. Identificar pontos principais do tema",
-      "2. Buscar recursos complementares",
+      "2. Buscar recursos complementares", 
       "3. Praticar com exercícios",
       "4. Testar conhecimento adquirido"
     ];
+  }
+}
+
+// Função para análise de imagens
+export async function analyzeImageContent(base64Image: string, fileName: string, context: string) {
+  if (!anthropic) {
+    throw new Error('Anthropic API não configurada');
+  }
+
+  try {
+    const response = await anthropic.messages.create({
+      model: DEFAULT_MODEL_STR,
+      max_tokens: 1000,
+      messages: [{
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: `Você é um tutor educacional especializado. Analise esta imagem "${fileName}" no contexto "${context}".
+
+Forneça:
+1. Uma análise educacional detalhada do conteúdo
+2. 3-5 perguntas reflexivas para estimular o pensamento crítico
+3. Sugestões de como usar esta imagem para aprendizado
+
+Foque no método socrático - não dê respostas diretas, mas guie o aluno através de perguntas que o façam descobrir por conta própria.`
+          },
+          {
+            type: "image",
+            source: {
+              type: "base64",
+              media_type: "image/jpeg",
+              data: base64Image
+            }
+          }
+        ]
+      }]
+    });
+
+    const analysisText = response.content[0].text;
+    
+    // Extrai seções da resposta
+    const sections = analysisText.split('\n\n');
+    const content = sections[0] || analysisText;
+    const questions = sections[1] || '1. O que você observa de mais interessante?\n2. Como isso se conecta com seus conhecimentos?\n3. Que dúvidas surgem ao observar estes elementos?';
+    
+    return {
+      content,
+      questions,
+      suggestions: 'Use esta imagem como ponto de partida para discussões e exercícios práticos.'
+    };
+    
+  } catch (error) {
+    console.error('Erro na análise da imagem:', error);
+    throw error;
   }
 }
