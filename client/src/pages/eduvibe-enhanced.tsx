@@ -1009,6 +1009,25 @@ export default function EduVibeEnhanced() {
             </Button>
           </div>
 
+          {/* Botão Premium no Dashboard Principal */}
+          <Card className="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl mb-6">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">🔥 Upgrade para Premium!</h2>
+                  <p className="text-purple-100">Análise IA de imagens, conquistas reais, biblioteca pessoal e muito mais!</p>
+                </div>
+                <Button 
+                  onClick={() => setCurrentStep(6)}
+                  className="bg-white text-purple-600 hover:bg-purple-50 font-bold px-6 py-3"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Ativar Premium
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Trilha de Aprendizado */}
           <Card className="bg-white shadow-xl mb-8">
             <CardHeader>
@@ -1492,9 +1511,81 @@ ${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).
     );
   }
 
-  // Tela 6: EduVibe Premium
+  // Tela 6: EduVibe Premium integrado
   if (currentStep === 6) {
-    return <PremiumStudyMode onBack={() => setCurrentStep(0)} />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Header Premium */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <Button variant="outline" onClick={() => setCurrentStep(4)} className="flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" />
+                Voltar ao EduVibe
+              </Button>
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  👑 EduVibe Premium
+                </h1>
+                <p className="text-gray-600">Olá {userName}! Recursos exclusivos ativados</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-gray-500">Sessão ativa</div>
+              <div className="text-lg font-bold text-purple-600">
+                5:23
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-4 gap-6">
+            {/* Sidebar com estatísticas */}
+            <div className="lg:col-span-1 space-y-4">
+              <Card className="bg-white shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-lg">📊 Sua Sessão</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <div className="text-sm text-gray-500">Área: {selectedTheme || 'Geral'}</div>
+                    <div className="text-sm text-gray-500">Objetivo: {learningGoal || 'Aprendizado geral'}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Perguntas</div>
+                    <div className="text-2xl font-bold text-blue-600">{currentSession.questionsAnswered}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Score</div>
+                    <div className="text-2xl font-bold text-green-600">{currentSession.comprehensionScore}%</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Conquistas</div>
+                    <div className="text-sm">{currentSession.achievements.slice(-2).join(', ')}</div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-lg">🎯 Premium Features</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <Badge variant="secondary" className="w-full justify-center">📸 Análise de Imagens</Badge>
+                  <Badge variant="secondary" className="w-full justify-center">🎤 Chat por Voz</Badge>
+                  <Badge variant="secondary" className="w-full justify-center">🧠 Mapas Mentais</Badge>
+                  <Badge variant="secondary" className="w-full justify-center">📚 Biblioteca Pessoal</Badge>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Área principal */}
+            <div className="lg:col-span-3">
+              <PremiumStudyMode onBack={() => setCurrentStep(4)} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // FALLBACK - Se chegou aqui, força para tela 6
