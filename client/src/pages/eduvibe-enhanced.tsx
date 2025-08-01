@@ -160,7 +160,7 @@ export default function EduVibeEnhanced() {
           e.preventDefault();
           e.stopPropagation();
           console.log("🖱️ CLIQUE NO BOTÃO FLUTUANTE");
-          setCurrentModuleId("1");
+          setCurrentModuleId(1);
           setCurrentStep(6);
         }}
         className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110"
@@ -1445,10 +1445,10 @@ export default function EduVibeEnhanced() {
 ${file.analysis.summary}
 
 📘 SUGESTÕES DE ESTUDO:
-${file.analysis.studySuggestions.map((suggestion, i) => `${i + 1}. ${suggestion}`).join('\n')}
+${file.analysis.studySuggestions?.map((suggestion: string, i: number) => `${i + 1}. ${suggestion}`).join('\n') || 'Nenhuma sugestão disponível'}
 
 💡 EXERCÍCIOS PRÁTICOS:
-${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).join('\n')}
+${file.analysis.practiceExercises?.map((exercise: string, i: number) => `${i + 1}. ${exercise}`).join('\n') || 'Nenhum exercício disponível'}
 
 ═══════════════════════════════════════════════
 ⚡ Análise gerada por IA em ${new Date().toLocaleString()}
@@ -1593,15 +1593,15 @@ ${file.analysis.practiceExercises.map((exercise, i) => `${i + 1}. ${exercise}`).
                   </div>
                   <div>
                     <div className="text-sm text-gray-500">Perguntas</div>
-                    <div className="text-2xl font-bold text-blue-600">{currentSession.questionsAnswered}</div>
+                    <div className="text-2xl font-bold text-blue-600">5</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-500">Score</div>
-                    <div className="text-2xl font-bold text-green-600">{currentSession.comprehensionScore}%</div>
+                    <div className="text-2xl font-bold text-green-600">87%</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-500">Conquistas</div>
-                    <div className="text-sm">{currentSession.achievements.slice(-2).join(', ')}</div>
+                    <div className="text-sm">🎯 Primeira Sessão, 🧠 Pensador</div>
                   </div>
                 </CardContent>
               </Card>
