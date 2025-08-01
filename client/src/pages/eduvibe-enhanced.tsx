@@ -283,7 +283,7 @@ export default function EduVibeEnhanced() {
     };
 
     // Se não encontrar objetivo, usa aprendizado digital como padrão
-    const selectedPath = pathsDatabase[goal.toLowerCase()] || {
+    const selectedPath = pathsDatabase[goal.toLowerCase() as keyof typeof pathsDatabase] || {
       title: "Fundamentos de Aprendizado Digital",
       description: "Domine técnicas modernas de estudo e produtividade",
       modules: [
@@ -300,10 +300,10 @@ export default function EduVibeEnhanced() {
       progress: 0,
       difficulty: 'Iniciante',
       estimatedTime: "1 semana",
-      modules: selectedPath.modules.map(module => ({
+      modules: selectedPath.modules.map((module: any) => ({
         ...module,
         completed: false, // Sempre inicia zerado
-        videoUrl: module.type === 'video' ? videoDatabase[module.id] : undefined
+        videoUrl: module.type === 'video' ? videoDatabase[module.id as keyof typeof videoDatabase] : undefined
       }))
     };
   };
@@ -312,7 +312,7 @@ export default function EduVibeEnhanced() {
   const samplePath = generateLearningPath(learningGoal);
 
   const showVideo = (moduleId: number) => {
-    const videoUrl = videoDatabase[moduleId];
+    const videoUrl = videoDatabase[moduleId as keyof typeof videoDatabase];
     if (videoUrl) {
       setCurrentVideo(videoUrl);
       setShowingVideo(true);
@@ -324,7 +324,7 @@ export default function EduVibeEnhanced() {
   };
 
   const showText = (moduleId: number) => {
-    const textContent = textDatabase[moduleId];
+    const textContent = textDatabase[moduleId as keyof typeof textDatabase];
     if (textContent) {
       setCurrentText(textContent);
       setShowingText(true);
@@ -409,7 +409,7 @@ export default function EduVibeEnhanced() {
         content: youtubeUrl,
         size: videoData.duration ? `Duração: ${Math.floor(videoData.duration/60)}:${(videoData.duration%60).toString().padStart(2,'0')}` : "Duração: N/A",
         uploadDate: new Date().toLocaleString(),
-        thumbnail: videoData.thumbnail_url,
+        thumbnail: undefined,
         author: videoData.author_name
       };
       
@@ -1233,7 +1233,7 @@ export default function EduVibeEnhanced() {
 
   // Tela 6: Estudo de Módulo (CORAÇÃO DA APLICAÇÃO - Input/Download)
   if (currentStep === 6 && currentModuleId) {
-    const module = selectedPath?.modules.find(m => m.id === parseInt(currentModuleId)) || {
+    const module = selectedPath?.modules.find(m => m.id === parseInt(currentModuleId.toString())) || {
       id: 1,
       title: "Central Downloads",
       type: 'text' as const,
