@@ -182,6 +182,11 @@ Investir é fundamental para fazer seu dinheiro crescer ao longo do tempo. Neste
 export default function EduVibeEnhanced() {
   // VOLTA PARA NAVEGAÇÃO NORMAL - COMEÇAR NO PASSO 0
   const [currentStep, setCurrentStep] = useState(0);
+  const [generatedDailyPlan, setGeneratedDailyPlan] = useState<DailyPlan[]>([]);
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
+  const [completedDays, setCompletedDays] = useState<number[]>([]);
+  const [isStudyMode, setIsStudyMode] = useState(false);
+  const [isPremiumMode, setIsPremiumMode] = useState(true); // SEMPRE PREMIUM
   // Botão flutuante para Central Downloads
   const FloatingDownloadButton = () => (
     <div className="fixed bottom-6 right-6 z-50">
@@ -1112,6 +1117,7 @@ export default function EduVibeEnhanced() {
                       // Gera trilha diária personalizada - corrige parâmetros
                       const days = parseInt(targetDays);
                       const dailyPlan = generateDailyLearningPlan(selectedTheme, days, studyLevel);
+                      setGeneratedDailyPlan(dailyPlan); // SALVA A TRILHA GERADA
                       
                       setCurrentStep(7); // Nova tela de cronograma diário
                       toast({
@@ -1803,7 +1809,7 @@ ${file.analysis.practiceExercises?.map((exercise: string, i: number) => `${i + 1
   // Tela 7: Cronograma Diário IA - NOVA FUNCIONALIDADE
   if (currentStep === 7) {
     const days = parseInt(targetDays) || 10;
-    const dailyPlan = generateDailyLearningPlan(selectedTheme, days, studyLevel);
+    const dailyPlan = generatedDailyPlan.length > 0 ? generatedDailyPlan : generateDailyLearningPlan(selectedTheme, days, studyLevel);
     
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-6">
@@ -1866,8 +1872,11 @@ ${file.analysis.practiceExercises?.map((exercise: string, i: number) => `${i + 1
                       variant={dailyProgress[day.day] ? "secondary" : "default"}
                       onClick={() => {
                         setCurrentDay(day.day);
+                        setCurrentDayIndex(day.day - 1);
                         setCurrentText(day.content);
                         setShowingText(true);
+                        setIsStudyMode(true);
+                        setCurrentStep(8); // CONECTA COM TELA 8
                       }}
                     >
                       <PlayCircle className="w-4 h-4 mr-2" />
@@ -1944,6 +1953,147 @@ ${file.analysis.practiceExercises?.map((exercise: string, i: number) => `${i + 1
               </div>
             </CardContent>
           </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // TELA 8: Modo de Estudo Diário - FUNCIONALIDADE REAL
+  if (currentStep === 8) {
+    const currentDayData = generatedDailyPlan[currentDayIndex] || generatedDailyPlan[0];
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <Button variant="outline" onClick={() => setCurrentStep(7)} className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Voltar à Trilha
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-800">Dia {currentDayData?.day || 1} - {currentDayData?.title}</h1>
+              <p className="text-gray-600">{currentDayData?.objective}</p>
+            </div>
+          </div>
+
+          {/* Progresso */}
+          <Card className="bg-white shadow-xl mb-6">
+            <CardHeader>  
+              <CardTitle className="flex items-center justify-between">
+                <span className="flex items-center">
+                  <Target className="w-6 h-6 mr-2 text-blue-600" />
+                  Progresso do Dia
+                </span>
+                <Badge variant="outline" className="text-blue-600">
+                  {currentDayData?.practiceTime} min
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Progress value={(currentDayIndex + 1) / generatedDailyPlan.length * 100} className="mb-4" />
+              <p className="text-sm text-gray-600">
+                Dia {currentDayIndex + 1} de {generatedDailyPlan.length} • {Math.round((currentDayIndex + 1) / generatedDailyPlan.length * 100)}% completo
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Conteúdo do Dia */}
+          <Card className="bg-white shadow-xl mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Book className="w-6 h-6 mr-2 text-purple-600" />
+                Conteúdo de Hoje
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="prose max-w-none">
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg mb-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4">{currentDayData?.title}</h2>
+                  <p className="text-gray-700 mb-4">{currentDayData?.objective}</p>
+                  <div className="text-gray-600 whitespace-pre-wrap">{currentDayData?.content}</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Mini-Teste */}
+          {currentDayData?.miniTest && (
+            <Card className="bg-white shadow-xl mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Brain className="w-6 h-6 mr-2 text-green-600" />
+                  Mini-Teste Adaptativo
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-green-50 p-4 rounded-lg mb-4">
+                  <p className="text-green-800 font-semibold mb-2">Teste seu conhecimento!</p>
+                  <p className="text-green-700 text-sm">
+                    Quiz personalizado baseado no conteúdo de hoje • Nível: {currentDayData.miniTest.adaptiveLevel}
+                  </p>
+                </div>
+                
+                <Button 
+                  className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+                  onClick={() => {
+                    toast({
+                      title: "🧠 Mini-Teste Iniciado!",
+                      description: "Teste adaptativo ativado com IA"
+                    });
+                  }}
+                >
+                  <Brain className="w-5 h-5 mr-2" />
+                  Fazer Mini-Teste Agora
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Ações */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <Button 
+              variant="outline"
+              onClick={() => {
+                if (currentDayIndex > 0) {
+                  setCurrentDayIndex(currentDayIndex - 1);
+                  setCurrentDay(currentDay - 1);
+                }
+              }}
+              disabled={currentDayIndex === 0}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Dia Anterior
+            </Button>
+            
+            <Button 
+              className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+              onClick={() => {
+                const newCompleted = [...completedDays];
+                if (!newCompleted.includes(currentDayData?.day || 1)) {
+                  newCompleted.push(currentDayData?.day || 1);
+                  setCompletedDays(newCompleted);
+                }
+                
+                if (currentDayIndex < generatedDailyPlan.length - 1) {
+                  setCurrentDayIndex(currentDayIndex + 1);
+                  setCurrentDay(currentDay + 1);
+                  toast({
+                    title: "✅ Dia Concluído!",
+                    description: `Parabéns! Avançando para o Dia ${currentDay + 1}`
+                  });
+                } else {
+                  toast({
+                    title: "🎉 Trilha Completa!",
+                    description: "Parabéns por concluir toda a trilha de aprendizado!"
+                  });
+                  setCurrentStep(7);
+                }
+              }}
+            >
+              <CheckCircle className="w-4 h-4 mr-2" />
+              {currentDayIndex < generatedDailyPlan.length - 1 ? 'Próximo Dia' : 'Finalizar Trilha'}
+            </Button>
+          </div>
         </div>
       </div>
     );
