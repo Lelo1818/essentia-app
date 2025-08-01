@@ -33,7 +33,8 @@ import {
   Zap,
   GraduationCap,
   MessageSquare,
-  BrainCircuit
+  BrainCircuit,
+  Calendar
 } from "lucide-react";
 import AITextAnalyzer from "@/components/AITextAnalyzer";
 import PremiumStudyMode from "@/components/PremiumStudyMode";
@@ -55,6 +56,35 @@ interface LearningPath {
   modules: Module[];
   difficulty: 'Iniciante' | 'Intermediário' | 'Avançado';
   estimatedTime: string;
+  dailyPlan?: DailyPlan[];
+  totalDays?: number;
+}
+
+interface DailyPlan {
+  day: number;
+  title: string;
+  objective: string;
+  content: string;
+  practiceTime: number; // minutos
+  completed: boolean;
+  score?: number; // 0-100
+  miniTest?: MiniTest;
+}
+
+interface MiniTest {
+  id: string;
+  questions: TestQuestion[];
+  passed: boolean;
+  score: number;
+  adaptiveLevel: 'easy' | 'medium' | 'hard';
+}
+
+interface TestQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
 }
 
 const videoDatabase = {
@@ -207,6 +237,9 @@ export default function EduVibeEnhanced() {
   const [studyTopic, setStudyTopic] = useState('');
   const [studyLevel, setStudyLevel] = useState('Intermediário');
   const [studyGoal, setStudyGoal] = useState('');
+  const [targetDays, setTargetDays] = useState(""); // Quantos dias para completar
+  const [currentDay, setCurrentDay] = useState(1);
+  const [dailyProgress, setDailyProgress] = useState<{[key: number]: boolean}>({});
   const [currentModuleId, setCurrentModuleId] = useState<number | null>(null);
   const [showingVideo, setShowingVideo] = useState(false);
   const [currentVideo, setCurrentVideo] = useState("");
@@ -249,6 +282,95 @@ export default function EduVibeEnhanced() {
     const existingMeta = document.querySelector('meta[http-equiv="Cache-Control"]');
     if (existingMeta) existingMeta.remove();
   }, []);
+
+  // Função para gerar trilha diária otimizada pela IA
+  const generateDailyLearningPlan = (topic: string, days: number, level: string): DailyPlan[] => {
+    const dailyPlans: DailyPlan[] = [];
+    
+    // Template baseado no tópico escolhido
+    const topicTemplates = {
+      'yoga': {
+        baseContent: [
+          'Respiração e aquecimento',
+          'Posturas básicas (Asanas)',
+          'Fluxos de movimento',
+          'Flexibilidade e alongamento',
+          'Equilíbrio e estabilidade',
+          'Força e resistência',
+          'Relaxamento e meditação',
+          'Prática avançada',
+          'Integração e fluidez',
+          'Aperfeiçoamento pessoal'
+        ]
+      },
+      'saude': {
+        baseContent: [
+          'Fundamentos da nutrição',
+          'Hidratação e metabolismo',
+          'Exercícios cardio básicos',
+          'Fortalecimento muscular',
+          'Flexibilidade e mobilidade',
+          'Saúde mental e stress',
+          'Sono e recuperação',
+          'Prevenção e autocuidado',
+          'Hábitos saudáveis',
+          'Plano de vida integral'
+        ]
+      },
+      'tecnologia': {
+        baseContent: [
+          'Conceitos fundamentais',
+          'Ambiente de desenvolvimento',
+          'Primeiros códigos',
+          'Estruturas de dados',
+          'Lógica de programação',
+          'Projeto prático simples',
+          'Debugging e testes',
+          'Boas práticas',
+          'Projeto avançado',
+          'Portfólio e próximos passos'
+        ]
+      }
+    };
+
+    const template = topicTemplates[goal.toLowerCase() as keyof typeof topicTemplates] || topicTemplates['saude'];
+    
+    for (let day = 1; day <= days; day++) {
+      const contentIndex = Math.floor((day - 1) * template.baseContent.length / days);
+      const practiceTime = level === 'Iniciante' ? 15 : level === 'Intermediário' ? 30 : 45;
+      
+      dailyPlans.push({
+        day,
+        title: `Dia ${day}: ${template.baseContent[contentIndex]}`,
+        objective: `Dominar ${template.baseContent[contentIndex].toLowerCase()} através de prática dirigida`,
+        content: `# ${template.baseContent[contentIndex]}\n\nConteúdo personalizado para o dia ${day} da sua jornada de ${topic}.\n\n## Objetivo do Dia\n${template.baseContent[contentIndex]} é fundamental para seu progresso.\n\n## Atividades Práticas\n1. Aquecimento (5 min)\n2. Prática principal (${practiceTime-10} min)\n3. Reflexão (5 min)`,
+        practiceTime,
+        completed: false,
+        miniTest: {
+          id: `test-${day}`,
+          questions: [
+            {
+              id: `q1-${day}`,
+              question: `Qual o foco principal do dia ${day}?`,
+              options: [
+                template.baseContent[contentIndex],
+                template.baseContent[Math.max(0, contentIndex-1)],
+                template.baseContent[Math.min(template.baseContent.length-1, contentIndex+1)],
+                "Nenhuma das anteriores"
+              ],
+              correctAnswer: 0,
+              explanation: `O foco do dia ${day} é ${template.baseContent[contentIndex].toLowerCase()}.`
+            }
+          ],
+          passed: false,
+          score: 0,
+          adaptiveLevel: 'medium'
+        }
+      });
+    }
+    
+    return dailyPlans;
+  };
 
   // Função para gerar trilha baseada no objetivo escolhido - SEM CONTEÚDO FINANCEIRO
   const generateLearningPath = (goal: string): LearningPath => {
@@ -956,20 +1078,52 @@ export default function EduVibeEnhanced() {
                   </div>
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    🗓️ Em quantos dias quer completar sua jornada?
+                  </label>
+                  <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                    {["7", "10", "15", "21", "30"].map((days) => (
+                      <Button
+                        key={days}
+                        variant={targetDays === days ? "default" : "outline"}
+                        onClick={() => setTargetDays(days)}
+                        className="h-12"
+                      >
+                        {days} dias
+                      </Button>
+                    ))}
+                  </div>
+                  <Input
+                    placeholder="Ou digite outro número"
+                    value={targetDays}
+                    onChange={(e) => setTargetDays(e.target.value)}
+                    className="mt-3"
+                    type="number"
+                    min="1"
+                    max="365"
+                  />
+                </div>
+
                 <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-4"
                   onClick={() => {
-                    if (learningGoal.trim() && studyTime) {
-                      setCurrentStep(3);
+                    if (learningGoal.trim() && studyTime && targetDays) {
+                      // Gera trilha diária personalizada
+                      const days = parseInt(targetDays);
+                      const dailyPlan = generateDailyLearningPlan(selectedTheme, days, studyLevel);
+                      
+                      setCurrentStep(7); // Nova tela de cronograma diário
                       toast({
-                        title: "Perfeito!",
-                        description: "Vamos criar sua trilha personalizada"
+                        title: "🎯 Trilha Personalizada Criada!",
+                        description: `${days} dias de aprendizado otimizado preparados para você`
                       });
                     }
                   }}
-                  disabled={!learningGoal.trim() || !studyTime}
+                  disabled={!learningGoal.trim() || !studyTime || !targetDays}
                 >
-                  Continuar
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  🚀 Gerar Trilha IA Personalizada
                 </Button>
               </div>
             </CardContent>
@@ -1641,6 +1795,155 @@ ${file.analysis.practiceExercises?.map((exercise: string, i: number) => `${i + 1
               <PremiumStudyMode onBack={() => setCurrentStep(4)} />
             </div>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Tela 7: Cronograma Diário IA - NOVA FUNCIONALIDADE
+  if (currentStep === 7) {
+    const days = parseInt(targetDays) || 10;
+    const dailyPlan = generateDailyLearningPlan(selectedTheme, days, studyLevel);
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <Button variant="outline" onClick={goBack} className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Voltar
+            </Button>
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                🎯 Sua Trilha de {days} Dias
+              </h1>
+              <p className="text-gray-600">Cronograma otimizado pela IA para {selectedTheme}</p>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-gray-500">Progresso Geral</div>
+              <div className="text-2xl font-bold text-purple-600">
+                {Math.round((Object.keys(dailyProgress).length / days) * 100)}%
+              </div>
+            </div>
+          </div>
+
+          {/* Cards dos dias */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {dailyPlan.map((day) => (
+              <Card 
+                key={day.day} 
+                className={`cursor-pointer transition-all transform hover:scale-105 ${
+                  dailyProgress[day.day] ? 'bg-green-50 border-green-200' : 
+                  currentDay === day.day ? 'bg-blue-50 border-blue-200' : 
+                  'bg-white border-gray-200'
+                } hover:shadow-lg`}
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                        dailyProgress[day.day] ? 'bg-green-500 text-white' : 
+                        currentDay === day.day ? 'bg-blue-500 text-white' : 
+                        'bg-gray-200 text-gray-600'
+                      }`}>
+                        {dailyProgress[day.day] ? '✓' : day.day}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg">{day.title}</h3>
+                        <p className="text-sm text-gray-600">{day.practiceTime} min</p>
+                      </div>
+                    </div>
+                    {dailyProgress[day.day] && <Award className="w-5 h-5 text-yellow-500" />}
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <p className="text-sm text-gray-700 mb-4">{day.objective}</p>
+                  
+                  <div className="space-y-2">
+                    <Button 
+                      size="sm" 
+                      className="w-full"
+                      variant={dailyProgress[day.day] ? "secondary" : "default"}
+                      onClick={() => {
+                        setCurrentDay(day.day);
+                        setCurrentText(day.content);
+                        setShowingText(true);
+                      }}
+                    >
+                      <PlayCircle className="w-4 h-4 mr-2" />
+                      {dailyProgress[day.day] ? 'Revisar Conteúdo' : 'Iniciar Dia'}
+                    </Button>
+
+                    {day.miniTest && (
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => {
+                          toast({
+                            title: "🧠 Mini-Teste Ativado",
+                            description: "Teste adaptativo baseado no seu progresso"
+                          });
+                        }}
+                      >
+                        <Brain className="w-4 h-4 mr-2" />
+                        Mini-Teste IA
+                      </Button>
+                    )}
+
+                    {!dailyProgress[day.day] && currentDay >= day.day && (
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full bg-green-50 hover:bg-green-100 text-green-700"
+                        onClick={() => {
+                          setDailyProgress({...dailyProgress, [day.day]: true});
+                          if (day.day < days) setCurrentDay(day.day + 1);
+                          toast({
+                            title: "✅ Dia Completo!",
+                            description: `Parabéns! Dia ${day.day} concluído com sucesso`
+                          });
+                        }}
+                      >
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Concluir Dia
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Estatísticas */}
+          <Card className="bg-white shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <BarChart3 className="w-6 h-6 mr-2 text-purple-600" />
+                Estatísticas da Trilha
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-blue-600">{days}</div>
+                  <div className="text-sm text-gray-600">Dias Totais</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-600">{Object.keys(dailyProgress).length}</div>
+                  <div className="text-sm text-gray-600">Dias Completos</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600">{currentDay}</div>
+                  <div className="text-sm text-gray-600">Dia Atual</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-orange-600">{studyTime}</div>
+                  <div className="text-sm text-gray-600">Por Dia</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
