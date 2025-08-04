@@ -75,7 +75,7 @@ import EssentiaFinalClean from "@/pages/essentia-final-clean";
 import EssentiaFluxo from "@/pages/essentia-fluxo";
 import EssentiaPitch from "@/pages/essentia-pitch";
 import PitchDeckStandalone from "@/pages/pitch-deck-standalone";
-import EssentiaPitchPremium from "@/pages/essentia-pitch-premium";
+import EssentiaPitchPremium from "@/pages/essentia-pitch-premium-clean";
 
 
 

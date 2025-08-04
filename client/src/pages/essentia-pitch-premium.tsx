@@ -6,7 +6,7 @@ const slides = [
   {
     id: 1,
     title: "Essentia",
-    subtitle: "IA, Gamificação e Ciência para o Bem-Estar Holístico",
+    subtitle: "Reconectando Propósito e Bem-Estar",
     content: (
       <div className="text-center space-y-8">
         <div className="relative">
@@ -18,8 +18,8 @@ const slides = [
                 ESSENTIA
               </div>
             </div>
-            <div className="text-xl mb-6 text-gray-700 font-medium">Rodada Seed - R$ 8M</div>
-            <div className="text-lg text-gray-600">Transformando o Bem-Estar Digital no Brasil</div>
+            <div className="text-xl mb-6 text-gray-700 font-medium">Um espaço íntimo de despertar</div>
+            <div className="text-lg text-gray-600">Práticas simbólicas • Trilhas reflexivas • Microações significativas</div>
           </div>
         </div>
       </div>
@@ -28,41 +28,41 @@ const slides = [
   },
   {
     id: 2,
-    title: "A Crise do Bem-Estar no Brasil",
+    title: "O Problema Real",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Brasileiros com Ansiedade/Estresse</h3>
-            <div className="relative w-64 h-64 mx-auto">
-              <div className="absolute inset-0 rounded-full" style={{
-                background: `conic-gradient(#1e40af 0deg 252deg, #e5e7eb 252deg 360deg)`
-              }}></div>
-              <div className="absolute inset-8 bg-white rounded-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-600">70%</div>
-                  <div className="text-sm text-gray-600">População</div>
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Vivemos numa era de excesso e desconexão</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-red-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative w-16 h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full mx-auto flex items-center justify-center">
+                  <Brain className="text-white" size={24} />
                 </div>
               </div>
+              <h4 className="text-xl font-bold text-gray-800">Excesso de Informação</h4>
+              <p className="text-gray-600">Burnout silencioso e sobrecarga mental constante</p>
             </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Taxa de Abandono Apps</h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-lg">90 dias</span>
-                <div className="flex-1 mx-4 bg-gray-200 rounded-full h-8 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-full" style={{width: '71%'}}></div>
-                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold">71% abandonam</div>
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto flex items-center justify-center">
+                  <Heart className="text-white" size={24} />
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-lg">30 dias</span>
-                <div className="flex-1 mx-4 bg-gray-200 rounded-full h-8 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 rounded-full" style={{width: '96.7%'}}></div>
-                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold">96,7% abandonam</div>
+              <h4 className="text-xl font-bold text-gray-800">Desconexão Profunda</h4>
+              <p className="text-gray-600">As pessoas não sabem mais como se escutar</p>
+            </div>
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gray-400 rounded-full blur-xl opacity-30"></div>
+                <div className="relative w-16 h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full mx-auto flex items-center justify-center">
+                  <Smartphone className="text-white" size={24} />
                 </div>
               </div>
+              <h4 className="text-xl font-bold text-gray-800">Apps Genéricos Falham</h4>
+              <p className="text-gray-600">Não tocam o que realmente importa: a alma</p>
             </div>
           </div>
         </div>
@@ -72,55 +72,56 @@ const slides = [
   },
   {
     id: 3,
-    title: "Mercado Bilionário e em Ascensão",
+    title: "A Nossa Solução",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Mercado Brasil - Bem-Estar Digital</h3>
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Essentia convida o usuário a sair do automático</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <div className="text-center">
-                <div className="text-lg text-gray-600">2024</div>
-                <div className="text-4xl font-bold text-blue-600">US$ 543,5M</div>
+              <div className="bg-purple-50 rounded-xl p-6">
+                <h4 className="text-xl font-bold text-purple-800 mb-3">Práticas Simbólicas</h4>
+                <p className="text-purple-700">Rituais, respiração, caminhadas conscientes que conectam com a essência</p>
               </div>
-              <div className="relative h-16 bg-gray-200 rounded-full overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-green-500 to-green-600 rounded-full transform scale-x-[0.42] origin-left"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <TrendingUp className="text-white" size={32} />
-                </div>
+              <div className="bg-blue-50 rounded-xl p-6">
+                <h4 className="text-xl font-bold text-blue-800 mb-3">Trilhas Reflexivas</h4>
+                <p className="text-blue-700">Jornadas personalizadas de autoconhecimento e despertar</p>
               </div>
-              <div className="text-center">
-                <div className="text-lg text-gray-600">2030</div>
-                <div className="text-4xl font-bold text-green-600">US$ 1,28B</div>
-                <div className="text-sm text-green-600 font-semibold">CAGR: 15,0%</div>
+              <div className="bg-green-50 rounded-xl p-6">
+                <h4 className="text-xl font-bold text-green-800 mb-3">Microações Significativas</h4>
+                <p className="text-green-700">Pequenos passos diários que geram transformação real</p>
               </div>
             </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Base de Usuários Mobile</h3>
-            <div className="text-center space-y-8">
+            <div className="text-center">
               <div className="relative">
-                <div className="w-48 h-64 mx-auto bg-gradient-to-b from-green-400 to-blue-500 rounded-3xl shadow-lg relative overflow-hidden">
-                  <div className="absolute inset-4 bg-gradient-to-b from-yellow-400 via-green-500 to-blue-600 opacity-80 rounded-2xl"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <Smartphone size={48} className="mx-auto mb-2" />
-                      <div className="text-2xl font-bold">Brasil</div>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/30 via-blue-400/30 to-green-400/30 rounded-3xl blur-2xl animate-pulse"></div>
+                <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-[3rem] p-4 shadow-2xl">
+                  <div className="bg-white rounded-[2.5rem] h-96 relative overflow-hidden">
+                    <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-r from-purple-500 via-blue-500 to-green-500"></div>
+                    <div className="p-6 pt-24">
+                      <div className="text-center mb-6">
+                        <div className="text-2xl font-bold text-gray-800">Essentia</div>
+                        <div className="text-sm text-gray-600">Reconecte-se consigo</div>
+                      </div>
+                      <div className="space-y-4">
+                        <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-3">
+                          <div className="text-sm font-medium">🌱 Sabedoria da natureza</div>
+                        </div>
+                        <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-xl p-3">
+                          <div className="text-sm font-medium">💝 Conexão humana</div>
+                        </div>
+                        <div className="bg-gradient-to-r from-green-100 to-yellow-100 rounded-xl p-3">
+                          <div className="text-sm font-medium">🔮 Apoio da tecnologia</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-xl p-4">
-                  <div className="text-3xl font-bold text-blue-600">185,4M</div>
-                  <div className="text-sm text-gray-600">usuários mobile até 2026</div>
-                </div>
-                <div className="bg-gradient-to-r from-green-100 to-yellow-100 rounded-xl p-4">
-                  <div className="text-3xl font-bold text-green-600">+5h/dia</div>
-                  <div className="text-sm text-gray-600">tempo em smartphones</div>
-                </div>
-              </div>
             </div>
+          </div>
+          <div className="text-center mt-8">
+            <p className="text-lg text-gray-700 italic">Não é terapia, nem autoajuda rápida — é um espaço íntimo de despertar</p>
           </div>
         </div>
       </div>
@@ -129,76 +130,56 @@ const slides = [
   },
   {
     id: 4,
-    title: "Essentia: Revolução do Autocuidado Digital",
+    title: "O que já foi feito",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/30 via-blue-400/30 to-green-400/30 rounded-3xl blur-2xl animate-pulse"></div>
-            <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-[3rem] p-4 shadow-2xl">
-              <div className="bg-white rounded-[2.5rem] h-96 relative overflow-hidden">
-                <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-r from-purple-500 via-blue-500 to-green-500"></div>
-                <div className="p-6 pt-24">
-                  <div className="text-center mb-6">
-                    <div className="text-2xl font-bold text-gray-800">Essentia</div>
-                    <div className="text-sm text-gray-600">Seu Bem-Estar Personalizado</div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-3">
-                      <div className="flex items-center space-x-3">
-                        <Brain className="text-purple-600" size={20} />
-                        <span className="text-sm font-medium">IA Adaptativa</span>
-                      </div>
-                    </div>
-                    <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-xl p-3">
-                      <div className="flex items-center space-x-3">
-                        <Trophy className="text-blue-600" size={20} />
-                        <span className="text-sm font-medium">Gamificação</span>
-                      </div>
-                    </div>
-                    <div className="bg-gradient-to-r from-green-100 to-yellow-100 rounded-xl p-3">
-                      <div className="flex items-center space-x-3">
-                        <Heart className="text-green-600" size={20} />
-                        <span className="text-sm font-medium">Bem-Estar Holístico</span>
-                      </div>
-                    </div>
-                  </div>
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">1 ano de dedicação solo, sem tração ainda</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div className="bg-purple-50 rounded-xl p-6">
+                <div className="flex items-center space-x-3 mb-3">
+                  <CheckCircle className="text-purple-600" size={24} />
+                  <h4 className="text-xl font-bold text-purple-800">100+ páginas de conteúdo</h4>
                 </div>
+                <p className="text-purple-700">Conteúdo simbólico e autoral já escritos</p>
+              </div>
+              <div className="bg-blue-50 rounded-xl p-6">
+                <div className="flex items-center space-x-3 mb-3">
+                  <CheckCircle className="text-blue-600" size={24} />
+                  <h4 className="text-xl font-bold text-blue-800">3 versões de mockups</h4>
+                </div>
+                <p className="text-blue-700">Protótipos navegáveis prontos no Replit</p>
+              </div>
+              <div className="bg-green-50 rounded-xl p-6">
+                <div className="flex items-center space-x-3 mb-3">
+                  <CheckCircle className="text-green-600" size={24} />
+                  <h4 className="text-xl font-bold text-green-800">Roteiro completo</h4>
+                </div>
+                <p className="text-green-700">Funcionalidades e jornadas mapeadas</p>
               </div>
             </div>
-          </div>
-          <div className="space-y-6">
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl">
-                  <Brain className="text-white" size={32} />
+            <div className="space-y-6">
+              <div className="bg-orange-50 rounded-xl p-6">
+                <div className="flex items-center space-x-3 mb-3">
+                  <CheckCircle className="text-orange-600" size={24} />
+                  <h4 className="text-xl font-bold text-orange-800">Validação informal</h4>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">IA Adaptativa</h3>
-                  <p className="text-gray-600">Personalização profunda com aprendizado contínuo</p>
-                </div>
+                <p className="text-orange-700">20+ pessoas com feedback positivo</p>
               </div>
-            </div>
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl">
-                  <Trophy className="text-white" size={32} />
+              <div className="bg-teal-50 rounded-xl p-6">
+                <div className="flex items-center space-x-3 mb-3">
+                  <CheckCircle className="text-teal-600" size={24} />
+                  <h4 className="text-xl font-bold text-teal-800">Dossiê organizado</h4>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">Gamificação Inteligente</h3>
-                  <p className="text-gray-600">Avatar evolutivo e sistema de recompensas</p>
-                </div>
+                <p className="text-teal-700">Documentação completa estruturada</p>
               </div>
-            </div>
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="p-3 bg-gradient-to-r from-green-500 to-yellow-500 rounded-xl">
-                  <Heart className="text-white" size={32} />
+              <div className="bg-red-50 rounded-xl p-6">
+                <div className="flex items-center space-x-3 mb-3">
+                  <Heart className="text-red-600" size={24} />
+                  <h4 className="text-xl font-bold text-red-800">Coração no jogo</h4>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">Abordagem Holística</h3>
-                  <p className="text-gray-600">Mente + Corpo + Propósito integrados</p>
-                </div>
+                <p className="text-red-700">Projeto nascido de transformação pessoal</p>
               </div>
             </div>
           </div>
@@ -209,76 +190,58 @@ const slides = [
   },
   {
     id: 5,
-    title: "Nossos Pilares: Inovação e Impacto",
+    title: "Tamanho de Mercado - Brasil",
     content: (
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl group hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative p-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl">
-                  <Brain className="text-white mx-auto" size={48} />
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Mercado Bem-Estar Digital</h3>
+            <div className="space-y-6">
+              <div className="text-center">
+                <div className="text-lg text-gray-600">2024</div>
+                <div className="text-4xl font-bold text-blue-600">US$ 543M</div>
+              </div>
+              <div className="relative h-16 bg-gray-200 rounded-full overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-green-500 to-green-600 rounded-full transform scale-x-[0.42] origin-left"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <TrendingUp className="text-white" size={32} />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800">IA Preditiva e Adaptativa</h3>
-              <div className="space-y-3">
-                <div className="bg-purple-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-purple-800">Conteúdo dinamicamente personalizado</div>
+              <div className="text-center">
+                <div className="text-lg text-gray-600">2030</div>
+                <div className="text-4xl font-bold text-green-600">US$ 1,28B</div>
+                <div className="text-sm text-green-600 font-semibold">+12% ao ano</div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Público-Alvo</h3>
+            <div className="space-y-4">
+              <div className="bg-purple-50 rounded-xl p-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-600">25-45 anos</div>
+                  <div className="text-sm text-purple-700">Faixa etária principal</div>
                 </div>
-                <div className="bg-blue-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-blue-800">Guias virtuais com IAs de personalidade</div>
+              </div>
+              <div className="bg-blue-50 rounded-xl p-4">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-blue-600">Apps de meditação</div>
+                  <div className="text-sm text-blue-700">Lideram downloads</div>
                 </div>
-                <div className="bg-indigo-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-indigo-800">Algoritmos proprietários brasileiros</div>
+              </div>
+              <div className="bg-green-50 rounded-xl p-4">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-green-600">Bem-estar digital</div>
+                  <div className="text-sm text-green-700">Crescimento acelerado</div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl group hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-green-400 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative p-6 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl">
-                  <Trophy className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">Gamificação Inteligente</h3>
-              <div className="space-y-3">
-                <div className="bg-blue-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-blue-800">Desafios e rituais personalizados</div>
-                </div>
-                <div className="bg-green-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-green-800">Avatares que evoluem com usuário</div>
-                </div>
-                <div className="bg-teal-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-teal-800">Sistema de recompensas inteligente</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl group hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-yellow-400 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative p-6 bg-gradient-to-r from-green-500 to-yellow-500 rounded-2xl">
-                  <Heart className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">Abordagem Holística e Cultural</h3>
-              <div className="space-y-3">
-                <div className="bg-green-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-green-800">Mental + Físico + Espiritual</div>
-                </div>
-                <div className="bg-yellow-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-yellow-800">Roda da Vida digital brasileira</div>
-                </div>
-                <div className="bg-orange-50 rounded-xl p-3">
-                  <div className="text-sm font-medium text-orange-800">Rituais de reconexão ancestral</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+          <p className="text-white text-center leading-relaxed">
+            <em>Fonte: Estimativas internas baseadas em recortes de mercado global e nacional de saúde e bem-estar digital</em>
+          </p>
         </div>
       </div>
     ),
@@ -286,82 +249,52 @@ const slides = [
   },
   {
     id: 6,
-    title: "A Jornada Essentia: Seu Caminho Personalizado",
+    title: "Concorrentes & Diferenciais",
     content: (
-      <div className="max-w-7xl mx-auto">
-        <div className="relative">
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-blue-400 via-green-400 to-yellow-400 transform -translate-y-1/2 z-0"></div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full mx-auto flex items-center justify-center">
-                    <div className="text-white font-bold text-xl">1</div>
-                  </div>
-                </div>
-                <h3 className="text-lg font-bold text-gray-800">Avaliação Holística</h3>
-                <p className="text-sm text-gray-600">Roda da Vida digital e questionários de IA personalizados</p>
-                <div className="bg-purple-50 rounded-xl p-3">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg mx-auto grid grid-cols-2 gap-1 p-1">
-                    {[...Array(4)].map((_, i) => (
-                      <div key={i} className="bg-purple-400 rounded"></div>
-                    ))}
-                  </div>
-                </div>
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Principais Concorrentes</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div className="text-center p-4 bg-gray-50 rounded-xl">
+              <h4 className="font-bold text-gray-800">Zenklub</h4>
+              <p className="text-sm text-gray-600">Saúde mental</p>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-xl">
+              <h4 className="font-bold text-gray-800">Vittude</h4>
+              <p className="text-sm text-gray-600">Terapia online</p>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-xl">
+              <h4 className="font-bold text-gray-800">Cíngulo</h4>
+              <p className="text-sm text-gray-600">Meditação guiada</p>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-xl">
+              <h4 className="font-bold text-gray-800">Zen App</h4>
+              <p className="text-sm text-gray-600">Bem-estar geral</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-green-600 to-blue-600 rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-white mb-8 text-center">🟢 Essentia se diferencia por:</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Integração simbólica</h4>
+                <p className="text-white/90">Propósito + bem-estar unidos</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Trilha viva e personalizada</h4>
+                <p className="text-white/90">Jornada que evolui com você</p>
               </div>
             </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto flex items-center justify-center">
-                    <div className="text-white font-bold text-xl">2</div>
-                  </div>
-                </div>
-                <h3 className="text-lg font-bold text-gray-800">Jornada Adaptativa</h3>
-                <p className="text-sm text-gray-600">Plano de autocuidado dinamicamente ajustado pela IA</p>
-                <div className="bg-blue-50 rounded-xl p-3">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Brain className="text-blue-500" size={20} />
-                    <div className="text-blue-500 text-xs">+</div>
-                    <Target className="text-blue-500" size={20} />
-                  </div>
-                </div>
+            <div className="space-y-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Rituais conscientes</h4>
+                <p className="text-white/90">Respiração, caminhadas, diários</p>
               </div>
-            </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full mx-auto flex items-center justify-center">
-                    <div className="text-white font-bold text-xl">3</div>
-                  </div>
-                </div>
-                <h3 className="text-lg font-bold text-gray-800">Engajamento Gamificado</h3>
-                <p className="text-sm text-gray-600">Desafios, rituais e avatar em evolução contínua</p>
-                <div className="bg-green-50 rounded-xl p-3">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Trophy className="text-green-500" size={16} />
-                    <Award className="text-green-500" size={16} />
-                    <Zap className="text-green-500" size={16} />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mx-auto flex items-center justify-center">
-                    <div className="text-white font-bold text-xl">4</div>
-                  </div>
-                </div>
-                <h3 className="text-lg font-bold text-gray-800">Acompanhamento Contínuo</h3>
-                <p className="text-sm text-gray-600">Insights personalizados, humor e progresso em tempo real</p>
-                <div className="bg-yellow-50 rounded-xl p-3">
-                  <TrendingUp className="text-yellow-600 mx-auto" size={24} />
-                </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Estética sensível</h4>
+                <p className="text-white/90">Experiência leve e profunda</p>
               </div>
             </div>
           </div>
@@ -372,70 +305,74 @@ const slides = [
   },
   {
     id: 7,
-    title: "Estratégia de Mercado: Múltiplas Vias de Crescimento",
+    title: "Monetização & MVP",
     content: (
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-300">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-6 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl">
-                  <Smartphone className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">B2C - Direto ao Consumidor</h3>
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Plano gratuito com alto valor de entrada</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <h4 className="text-2xl font-bold text-green-800">Versão Gratuita</h4>
               <div className="space-y-4">
-                <div className="bg-blue-50 rounded-xl p-4">
-                  <div className="text-lg font-bold text-blue-800">Marketing Digital</div>
-                  <div className="text-sm text-blue-600">Influenciadores + Mídia Paga</div>
+                <div className="bg-green-50 rounded-xl p-4 flex items-center space-x-3">
+                  <CheckCircle className="text-green-600" size={24} />
+                  <span className="text-green-800">Diário pessoal</span>
                 </div>
-                <div className="bg-indigo-50 rounded-xl p-4">
-                  <div className="text-lg font-bold text-indigo-800">CPI Baixo LatAm</div>
-                  <div className="text-sm text-indigo-600">US$ 0,50 - US$ 2,00</div>
+                <div className="bg-green-50 rounded-xl p-4 flex items-center space-x-3">
+                  <CheckCircle className="text-green-600" size={24} />
+                  <span className="text-green-800">Rituais básicos</span>
+                </div>
+                <div className="bg-green-50 rounded-xl p-4 flex items-center space-x-3">
+                  <CheckCircle className="text-green-600" size={24} />
+                  <span className="text-green-800">Frases inspiradoras</span>
+                </div>
+                <div className="bg-green-50 rounded-xl p-4 flex items-center space-x-3">
+                  <CheckCircle className="text-green-600" size={24} />
+                  <span className="text-green-800">Trilha inicial</span>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-300">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl">
-                  <Building className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">B2B - Corporativo</h3>
+            <div className="space-y-6">
+              <h4 className="text-2xl font-bold text-blue-800">Upgrade Opcional</h4>
               <div className="space-y-4">
-                <div className="bg-green-50 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-green-800">US$ 1,53B</div>
-                  <div className="text-sm text-green-600">Mercado BR bem-estar corporativo 2024</div>
+                <div className="bg-blue-50 rounded-xl p-6 text-center">
+                  <div className="text-4xl font-bold text-blue-600 mb-2">R$ 9,90</div>
+                  <div className="text-blue-800">por mês</div>
+                  <div className="text-sm text-blue-600 mt-2">Acesso a recursos extras</div>
                 </div>
-                <div className="bg-emerald-50 rounded-xl p-4">
-                  <div className="text-lg font-bold text-emerald-800">Alto LTV</div>
-                  <div className="text-sm text-emerald-600">Baixo CAC</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-300">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl">
-                  <Shield className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">B2B2C - Planos de Saúde</h3>
-              <div className="space-y-4">
                 <div className="bg-purple-50 rounded-xl p-4">
-                  <div className="text-lg font-bold text-purple-800">Parcerias Estratégicas</div>
-                  <div className="text-sm text-purple-600">Operadoras de saúde</div>
+                  <div className="text-lg font-bold text-purple-800 mb-2">Futuras opções:</div>
+                  <div className="text-purple-700 space-y-1">
+                    <div>• R$ 19,90/mês</div>
+                    <div>• R$ 29,90/mês</div>
+                  </div>
                 </div>
-                <div className="bg-pink-50 rounded-xl p-4">
-                  <div className="text-lg font-bold text-pink-800">CAC Reduzido</div>
-                  <div className="text-sm text-pink-600">Escala massiva</div>
-                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-white mb-6 text-center">Futuro - Expansão</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Comunidade simbólica</h4>
+                <p className="text-white/90">Conexão entre usuários</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Parcerias estratégicas</h4>
+                <p className="text-white/90">Colaborações com especialistas</p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">Mentorias exclusivas</h4>
+                <p className="text-white/90">Acompanhamento personalizado</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-lg font-bold text-white mb-2">IA aprofundada</h4>
+                <p className="text-white/90">Personalização avançada</p>
               </div>
             </div>
           </div>
@@ -446,79 +383,68 @@ const slides = [
   },
   {
     id: 8,
-    title: "Canais de Aquisição: Escalando com Eficiência",
+    title: "Projeções Realistas - 1º Ano",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="relative">
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 via-green-400 via-yellow-400 to-purple-400 rounded-full transform -translate-y-1/2 z-0"></div>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative z-10">
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Users className="text-white" size={24} />
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Métricas com os pés no chão</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <div className="bg-blue-50 rounded-xl p-6 text-center">
+                <div className="text-4xl font-bold text-blue-600 mb-2">5.000</div>
+                <div className="text-blue-800 text-lg">usuários</div>
+                <div className="text-sm text-blue-600 mt-2">Base inicial realista</div>
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">Influenciadores</h3>
-              <div className="text-sm space-y-1">
-                <div className="text-green-600 font-bold">US$ 0,50-2,00</div>
-                <div className="text-gray-600">CPI LatAm</div>
-              </div>
-            </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Building className="text-white" size={24} />
-              </div>
-              <h3 className="font-bold text-gray-800 mb-2">B2B Vendas</h3>
-              <div className="text-sm space-y-1">
-                <div className="text-green-600 font-bold">Alto LTV</div>
-                <div className="text-gray-600">Baixo CAC</div>
+              <div className="bg-green-50 rounded-xl p-6 text-center">
+                <div className="text-4xl font-bold text-green-600 mb-2">1.000</div>
+                <div className="text-green-800 text-lg">pagantes</div>
+                <div className="text-sm text-green-600 mt-2">~20% de conversão</div>
               </div>
             </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Shield className="text-white" size={24} />
+            <div className="space-y-6">
+              <div className="bg-purple-50 rounded-xl p-6 text-center">
+                <div className="text-4xl font-bold text-purple-600 mb-2">R$ 10</div>
+                <div className="text-purple-800 text-lg">ticket médio/mês</div>
+                <div className="text-sm text-purple-600 mt-2">Plano de entrada</div>
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">Parcerias B2B2C</h3>
-              <div className="text-sm space-y-1">
-                <div className="text-green-600 font-bold">CAC Reduzido</div>
-                <div className="text-gray-600">Escala</div>
-              </div>
-            </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Target className="text-white" size={24} />
-              </div>
-              <h3 className="font-bold text-gray-800 mb-2">Orgânico</h3>
-              <div className="text-sm space-y-1">
-                <div className="text-green-600 font-bold">CAC Zero</div>
-                <div className="text-gray-600">ASO/SEO</div>
-              </div>
-            </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Zap className="text-white" size={24} />
-              </div>
-              <h3 className="font-bold text-gray-800 mb-2">Mídia Paga</h3>
-              <div className="text-sm space-y-1">
-                <div className="text-green-600 font-bold">US$ 0,22-0,44</div>
-                <div className="text-gray-600">CPI Brasil</div>
+              <div className="bg-orange-50 rounded-xl p-6 text-center">
+                <div className="text-4xl font-bold text-orange-600 mb-2">R$ 10.000</div>
+                <div className="text-orange-800 text-lg">receita/mês</div>
+                <div className="text-sm text-orange-600 mt-2">Após validação do modelo</div>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-          <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">Vantagem Competitiva nos Canais</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-2xl font-bold text-white mb-6 text-center">Estimativas de CAC e Retenção</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">70%</div>
-              <div className="text-gray-600">Menor CPI que EUA/Europa</div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+                <div className="text-3xl font-bold text-yellow-400 mb-2">R$ 5-12</div>
+                <div className="text-white">CAC estimado</div>
+                <div className="text-white/70 text-sm mt-2">Custo de aquisição</div>
+              </div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">3x</div>
-              <div className="text-gray-600">Maior engajamento LatAm</div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+                <div className="text-3xl font-bold text-green-400 mb-2">25-30%</div>
+                <div className="text-white">Retenção dia 30</div>
+                <div className="text-white/70 text-sm mt-2">Meta realista</div>
+              </div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">5+</div>
-              <div className="text-gray-600">Canais diversificados</div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+                <div className="text-3xl font-bold text-blue-400 mb-2">Acima</div>
+                <div className="text-white">da média (3,3%)</div>
+                <div className="text-white/70 text-sm mt-2">Nosso diferencial</div>
+              </div>
             </div>
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-white/90 italic">
+              Nossa abordagem única, com IA personalizada e conteúdo cultural, visa resolver o problema de baixa conexão que causa o abandono
+            </p>
           </div>
         </div>
       </div>
@@ -527,100 +453,62 @@ const slides = [
   },
   {
     id: 9,
-    title: "Roadmap de Crescimento e Tração (24 Meses)",
+    title: "Quem sou eu - Marcelo Rymer",
     content: (
-      <div className="max-w-7xl mx-auto">
-        <div className="relative">
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 via-green-400 via-yellow-400 to-purple-400 rounded-full transform -translate-y-1/2 z-0"></div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto flex items-center justify-center">
-                    <Rocket className="text-white" size={24} />
-                  </div>
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">Brasileiro, ex-empresário</h3>
+              <div className="space-y-4 text-gray-700">
+                <p className="text-lg">Importação • Mercado financeiro</p>
+                <div className="bg-red-50 rounded-xl p-4">
+                  <p className="text-red-800 font-medium">Sem background em tech, mas com alma de construtor simbólico.</p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800">Q1-Q2 2025</h3>
-                <div className="space-y-3">
-                  <div className="bg-blue-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-blue-800">10K-20K</div>
-                    <div className="text-xs text-blue-600">usuários ativos</div>
-                  </div>
-                  <div className="bg-green-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-green-800">25%+</div>
-                    <div className="text-xs text-green-600">retenção 30 dias</div>
-                  </div>
-                </div>
-                <div className="text-sm text-gray-600">Lançamento MVP</div>
               </div>
             </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full mx-auto flex items-center justify-center">
-                    <DollarSign className="text-white" size={24} />
-                  </div>
+            
+            <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl p-8 shadow-2xl">
+              <h3 className="text-xl font-bold text-white mb-4">O Essentia é meu chamado</h3>
+              <p className="text-white/90">Criei o Essentia após um colapso de sentido.</p>
+            </div>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">Jornada de 1 ano</h3>
+              <div className="space-y-4">
+                <div className="bg-blue-50 rounded-xl p-4 flex items-center space-x-3">
+                  <CheckCircle className="text-blue-600" size={24} />
+                  <span className="text-blue-800">Pesquisei, escrevi, testei — sozinho</span>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800">Q3-Q4 2025</h3>
-                <div className="space-y-3">
-                  <div className="bg-green-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-green-800">50K-100K</div>
-                    <div className="text-xs text-green-600">usuários ativos</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-purple-800">5%</div>
-                    <div className="text-xs text-purple-600">conversão Premium</div>
-                  </div>
+                <div className="bg-green-50 rounded-xl p-4 flex items-center space-x-3">
+                  <CheckCircle className="text-green-600" size={24} />
+                  <span className="text-green-800">Fiz mockups, contratei dev</span>
                 </div>
-                <div className="text-sm text-gray-600">Otimização monetização</div>
+                <div className="bg-orange-50 rounded-xl p-4 flex items-center space-x-3">
+                  <Heart className="text-orange-600" size={24} />
+                  <span className="text-orange-800">Perdi dinheiro, insisti</span>
+                </div>
               </div>
             </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mx-auto flex items-center justify-center">
-                    <TrendingUp className="text-white" size={24} />
-                  </div>
-                </div>
-                <h3 className="text-lg font-bold text-gray-800">2026</h3>
-                <div className="space-y-3">
-                  <div className="bg-yellow-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-yellow-800">200K-500K</div>
-                    <div className="text-xs text-yellow-600">usuários ativos</div>
-                  </div>
-                  <div className="bg-red-50 rounded-xl p-3">
-                    <div className="text-lg font-bold text-red-800">Ensaios</div>
-                    <div className="text-xs text-red-600">clínicos</div>
-                  </div>
-                </div>
-                <div className="text-sm text-gray-600">Escala Brasil</div>
-              </div>
+          </div>
+        </div>
+        
+        <div className="bg-gray-800/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">O que estou buscando</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+              <h4 className="text-lg font-bold text-white mb-3">Um co-founder ou small builder</h4>
+              <p className="text-white/90">Com visão, sensibilidade e energia de execução</p>
             </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
-                  <div className="relative w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto flex items-center justify-center">
-                    <Globe className="text-white" size={24} />
-                  </div>
-                </div>
-                <h3 className="text-lg font-bold text-gray-800">2027+</h3>
-                <div className="space-y-3">
-                  <div className="bg-purple-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-purple-800">LatAm</div>
-                    <div className="text-xs text-purple-600">expansão</div>
-                  </div>
-                  <div className="bg-pink-50 rounded-xl p-3">
-                    <div className="text-xl font-bold text-pink-800">1M+</div>
-                    <div className="text-xs text-pink-600">usuários</div>
-                  </div>
-                </div>
-                <div className="text-sm text-gray-600">Expansão regional</div>
-              </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+              <h4 className="text-lg font-bold text-white mb-3">Alguém que entre agora</h4>
+              <p className="text-white/90">Ajude a moldar o MVP certo, valide com usuários</p>
             </div>
+          </div>
+          <div className="mt-6 text-white/90">
+            <p className="italic">Quero alguém dentro, não só prestando serviço. Equity aberta. Zero ego. Projeto vivo.</p>
           </div>
         </div>
       </div>
@@ -629,484 +517,77 @@ const slides = [
   },
   {
     id: 10,
-    title: "Nosso Modelo de Negócio: Diversificado e Escalável",
+    title: "Contato - Se algo aqui mexeu com você",
     content: (
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Modelo Freemium B2C</h3>
-            <div className="space-y-4">
-              <div className="text-center mb-6">
-                <div className="text-lg text-gray-600">ARPU Anual Alvo</div>
-                <div className="text-3xl font-bold text-green-600">US$ 60-80</div>
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
+          <h3 className="text-4xl font-bold text-gray-800 mb-8">Não tenho todas as respostas,<br/>mas tenho o coração no jogo</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <div className="bg-purple-50 rounded-xl p-6">
+                <h4 className="text-2xl font-bold text-purple-800 mb-4">Se algo aqui mexeu com você</h4>
+                <p className="text-purple-700 text-lg">Me chama. Vamos conversar.</p>
               </div>
-              <div className="space-y-3">
-                <div className="bg-blue-50 rounded-xl p-4 flex justify-between items-center">
-                  <span className="font-medium text-blue-800">Básico</span>
-                  <span className="text-xl font-bold text-blue-600">R$ 9,90</span>
-                </div>
-                <div className="bg-purple-50 rounded-xl p-4 flex justify-between items-center">
-                  <span className="font-medium text-purple-800">Premium</span>
-                  <span className="text-xl font-bold text-purple-600">R$ 19,90</span>
-                </div>
-                <div className="bg-orange-50 rounded-xl p-4 flex justify-between items-center">
-                  <span className="font-medium text-orange-800">Pro</span>
-                  <span className="text-xl font-bold text-orange-600">R$ 29,90</span>
+              <div className="bg-blue-50 rounded-xl p-6">
+                <h4 className="text-xl font-bold text-blue-800 mb-3">O que eu acredito</h4>
+                <div className="text-blue-700 space-y-2">
+                  <p>• As pessoas precisam se reconectar consigo</p>
+                  <p>• A tecnologia pode servir ao humano</p>
+                  <p>• O Brasil merece soluções próprias</p>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Planos Corporativos B2B</h3>
-            <div className="space-y-4">
-              <div className="text-center mb-6">
-                <div className="text-lg text-gray-600">Mercado Corporativo BR</div>
-                <div className="text-3xl font-bold text-green-600">US$ 1,53B</div>
-              </div>
-              <div className="space-y-3">
-                <div className="bg-green-50 rounded-xl p-4">
-                  <div className="flex items-center justify-between">
-                    <Building className="text-green-600" size={24} />
-                    <span className="font-medium text-green-800">Assinaturas Anuais</span>
-                  </div>
-                  <div className="text-sm text-green-600 mt-2">Alto LTV, Baixo CAC</div>
+            <div className="space-y-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h4 className="text-xl font-bold text-green-800 mb-3">O que eu ofereço</h4>
+                <div className="text-green-700 space-y-2">
+                  <p>• 1 ano de dedicação integral</p>
+                  <p>• 100+ páginas de conteúdo autoral</p>
+                  <p>• 3 protótipos funcionais</p>
+                  <p>• Validação com 20+ pessoas</p>
                 </div>
-                <div className="bg-teal-50 rounded-xl p-4">
-                  <div className="flex items-center justify-between">
-                    <Shield className="text-teal-600" size={24} />
-                    <span className="font-medium text-teal-800">Parcerias Planos Saúde</span>
-                  </div>
-                  <div className="text-sm text-teal-600 mt-2">Licenciamento B2B2C</div>
+              </div>
+              <div className="bg-orange-50 rounded-xl p-6">
+                <h4 className="text-xl font-bold text-orange-800 mb-3">O que eu busco</h4>
+                <div className="text-orange-700 space-y-2">
+                  <p>• Parceiro(a) que acredite na visão</p>
+                  <p>• Alguém com energia de execução</p>
+                  <p>• Zero ego, muito propósito</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Projeção de Receita Diversificada</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">40%</div>
-              <div className="text-gray-600">Assinaturas B2C</div>
+        
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 shadow-2xl text-center">
+          <h3 className="text-3xl font-bold text-white mb-6">Marcelo "Lelo" Rymer</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+              <h4 className="text-lg font-bold text-white mb-2">WhatsApp</h4>
+              <p className="text-white/90">(11) 99999-9999</p>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">45%</div>
-              <div className="text-gray-600">Contratos B2B</div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+              <h4 className="text-lg font-bold text-white mb-2">Email</h4>
+              <p className="text-white/90">lelo@essentia.app</p>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-purple-600 mb-2">15%</div>
-              <div className="text-gray-600">Parcerias B2B2C</div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+              <h4 className="text-lg font-bold text-white mb-2">LinkedIn</h4>
+              <p className="text-white/90">/in/marcelo-rymer</p>
             </div>
+          </div>
+          <div className="mt-8">
+            <p className="text-white/90 text-xl italic">
+              "O Essentia nasceu de uma transformação pessoal.<br/>
+              Agora quero transformar outras vidas."
+            </p>
           </div>
         </div>
       </div>
     ),
     bg: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
-  },
-  {
-    id: 11,
-    title: "Nossos KPIs para a Série A: Crescimento Sustentável",
-    content: (
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl">
-                  <BarChart3 className="text-white mx-auto" size={32} />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800">LTV:CAC</h3>
-              <div className="text-3xl font-bold text-green-600">&gt; 3:1</div>
-              <div className="text-sm text-gray-600">Economia unitária saudável</div>
-            </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl">
-                  <TrendingUp className="text-white mx-auto" size={32} />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800">Retenção</h3>
-              <div className="space-y-2">
-                <div className="text-sm"><span className="font-bold text-blue-600">30%</span> - Dia 30</div>
-                <div className="text-sm"><span className="font-bold text-blue-600">15%</span> - Dia 90</div>
-                <div className="text-sm"><span className="font-bold text-blue-600">60%</span> - Anual</div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl">
-                  <DollarSign className="text-white mx-auto" size={32} />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800">ARR</h3>
-              <div className="text-2xl font-bold text-purple-600">&gt; US$ 1M</div>
-              <div className="text-sm text-gray-600">Receita recorrente anual</div>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-orange-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl">
-                  <Target className="text-white mx-auto" size={32} />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800">CAC Payback Period</h3>
-              <div className="text-3xl font-bold text-orange-600">&lt; 12 meses</div>
-              <div className="text-sm text-gray-600">Retorno rápido do investimento</div>
-            </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-4 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-2xl">
-                  <Star className="text-white mx-auto" size={32} />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800">Net Promoter Score</h3>
-              <div className="text-3xl font-bold text-yellow-600">&gt; 60</div>
-              <div className="text-sm text-gray-600">Alta satisfação do usuário</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-    bg: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
-  },
-  {
-    id: 12,
-    title: "Cenário Competitivo: Nossa Vantagem Inovadora",
-    content: (
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-          <h3 className="text-2xl font-bold text-center text-white mb-8">Comparativo Competitivo</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-600">
-                  <th className="text-left p-4 font-bold text-gray-200">Características</th>
-                  <th className="text-center p-4 font-bold text-green-400 bg-green-900/30 rounded-t-lg">Essentia</th>
-                  <th className="text-center p-4 font-bold text-gray-300">Calm</th>
-                  <th className="text-center p-4 font-bold text-gray-300">Headspace</th>
-                  <th className="text-center p-4 font-bold text-gray-300">Outros</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-gray-600">
-                  <td className="p-4 font-medium text-gray-200">IA Adaptativa/Personalidade</td>
-                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
-                  <td className="text-center p-4 text-gray-400">Básica</td>
-                  <td className="text-center p-4 text-gray-400">Básica</td>
-                  <td className="text-center p-4 text-gray-400">Limitada</td>
-                </tr>
-                <tr className="border-b border-gray-600">
-                  <td className="p-4 font-medium text-gray-200">Gamificação</td>
-                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
-                  <td className="text-center p-4 text-gray-400">Limitada</td>
-                  <td className="text-center p-4 text-gray-400">Média</td>
-                  <td className="text-center p-4 text-gray-400">Básica</td>
-                </tr>
-                <tr className="border-b border-gray-600">
-                  <td className="p-4 font-medium text-gray-200">Abordagem Holística</td>
-                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
-                  <td className="text-center p-4 text-gray-400">Parcial</td>
-                  <td className="text-center p-4 text-gray-400">Parcial</td>
-                  <td className="text-center p-4 text-gray-400">Não</td>
-                </tr>
-                <tr className="border-b border-gray-600">
-                  <td className="p-4 font-medium text-gray-200">Conteúdo Cultural</td>
-                  <td className="text-center p-4 bg-green-900/30"><CheckCircle className="text-green-400 mx-auto" size={20} /></td>
-                  <td className="text-center p-4 text-gray-400">Global</td>
-                  <td className="text-center p-4 text-gray-400">Global</td>
-                  <td className="text-center p-4 text-gray-400">Global</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-medium text-gray-200">Foco Geográfico</td>
-                  <td className="text-center p-4 bg-green-900/30 font-bold text-green-400">Brasil & LatAm</td>
-                  <td className="text-center p-4 text-gray-400">Global</td>
-                  <td className="text-center p-4 text-gray-400">Global</td>
-                  <td className="text-center p-4 text-gray-400">Variado</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-          <p className="text-white leading-relaxed">
-            Enquanto líderes globais como Calm e Headspace oferecem soluções valiosas, a Essentia se diferencia por uma 
-            <strong className="text-blue-400"> personalização de IA mais profunda</strong>, 
-            <strong className="text-green-400"> gamificação integrada</strong> e uma 
-            <strong className="text-purple-400"> abordagem holística e culturalmente adaptada</strong> ao público latino-americano. 
-            Nossa IA com personalidade e avatares em evolução criam uma conexão única, e a validação científica será um pilar para nossa credibilidade.
-          </p>
-        </div>
-      </div>
-    ),
-    bg: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-  },
-  {
-    id: 13,
-    title: "Marcelo \"Lelo\" Rymer - Fundador & Visionário",
-    content: (
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="text-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-green-400/30 rounded-full blur-2xl"></div>
-              <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
-                <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/attached_assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg"
-                    alt="Marcelo Lelo Rymer"
-                    className="w-full h-full object-cover rounded-full"
-                    onError={(e) => {
-                      // Tentar caminhos alternativos
-                      const img = e.currentTarget;
-                      if (img.src.includes('Lelo_rosto')) {
-                        img.src = '/attached_assets/image_1753917701795.png';
-                      } else if (img.src.includes('image_1753917701795')) {
-                        img.src = 'https://via.placeholder.com/200x200/4F46E5/FFFFFF?text=ML';
-                      } else {
-                        img.style.display = 'none';
-                        const nextElement = img.nextElementSibling as HTMLElement;
-                        if (nextElement) {
-                          nextElement.style.display = 'flex';
-                          nextElement.classList.remove('hidden');
-                        }
-                      }
-                    }}
-                  />
-                  <Users className="text-gray-500 hidden" size={80} />
-                </div>
-              </div>
-            </div>
-            <h3 className="text-3xl font-bold text-white mt-6">Marcelo "Lelo" Rymer</h3>
-            <p className="text-xl text-gray-200">Fundador & Visionário da Essentia</p>
-          </div>
-          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-2xl font-bold text-white mb-6">Especialista em bem-estar digital e comportamento humano</h4>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-green-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200"><strong>20+ anos de experiência</strong> como empresário em tecnologia, educação e mercado financeiro</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-blue-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200"><strong>Trajetória pessoal de autoconhecimento</strong> que deu origem à Essentia</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-purple-400 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-200"><strong>Capacidade comprovada</strong> de construir negócios do zero e liderar equipes multidisciplinares</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-xl font-bold text-white mb-6 flex items-center">
-              <Users className="text-blue-400 mr-3" size={24} />
-              Rede Estratégica
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                <span className="text-gray-200">Psicólogos clínicos</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span className="text-gray-200">Neurocientistas</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                <span className="text-gray-200">Especialistas em IA e gamificação</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-                <span className="text-gray-200">Designers UX/UI</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-gray-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-xl font-bold text-white mb-6 flex items-center">
-              <Building className="text-green-400 mr-3" size={24} />
-              Parcerias Acadêmicas
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                <span className="text-gray-200">USP - Validação científica</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span className="text-gray-200">Hospital Albert Einstein</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                <span className="text-gray-200">Centros de pesquisa</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    ),
-    bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-  },
-  {
-    id: 14,
-    title: "Projeções Financeiras: Crescimento Exponencial",
-    content: (
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Receita Anual Potencial (2027)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl">
-                  <BarChart3 className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h4 className="text-xl font-bold text-gray-800">Cenário Conservador</h4>
-              <div className="text-4xl font-bold text-blue-600">US$ 25M</div>
-              <div className="text-sm text-gray-600">Base sólida e realista</div>
-            </div>
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-6 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl">
-                  <TrendingUp className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h4 className="text-xl font-bold text-gray-800">Cenário Moderado</h4>
-              <div className="text-4xl font-bold text-green-600">US$ 77M</div>
-              <div className="text-sm text-gray-600">Crescimento equilibrado</div>
-            </div>
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-purple-400 rounded-full blur-xl opacity-30"></div>
-                <div className="relative p-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl">
-                  <Rocket className="text-white mx-auto" size={48} />
-                </div>
-              </div>
-              <h4 className="text-xl font-bold text-gray-800">Cenário Agressivo</h4>
-              <div className="text-4xl font-bold text-purple-600">US$ 154M</div>
-              <div className="text-sm text-gray-600">Alto potencial</div>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-xl font-bold text-gray-800 mb-6 text-center">Participação de Mercado 2030</h4>
-            <div className="text-center space-y-4">
-              <div className="text-lg text-gray-600">SAM Brasil: US$ 1,28 bilhão</div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-600 font-medium">Conservador</span>
-                  <span className="text-2xl font-bold text-blue-600">1,0%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-green-600 font-medium">Moderado</span>
-                  <span className="text-2xl font-bold text-green-600">3,0%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-purple-600 font-medium">Agressivo</span>
-                  <span className="text-2xl font-bold text-purple-600">6,0%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h4 className="text-xl font-bold text-gray-800 mb-6 text-center">Valuation Projetada 2027</h4>
-            <div className="text-center space-y-6">
-              <div className="space-y-2">
-                <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                  R$ 400M - 960M
-                </div>
-                <div className="text-gray-600">Revenue Multiple (Health Tech): 8-12x</div>
-              </div>
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4">
-                <div className="text-sm text-gray-700">
-                  <ArrowUp className="text-green-600 inline mr-2" size={16} />
-                  <strong>Crescimento sustentável</strong> baseado em métricas sólidas de engajamento e retenção
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-    bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-  },
-  {
-    id: 15,
-    title: "Essentia: Transformando Vidas, Construindo Valor",
-    content: (
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="text-center space-y-6">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="relative flex items-center justify-center mb-6 space-x-4">
-              <AppLogo app="purpose" size="xl" />
-              <div className="text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-black">
-                ESSENTIA
-              </div>
-            </div>
-          </div>
-          <h2 className="text-2xl font-bold text-white/90">Construindo um movimento para democratizar o bem-estar holístico e a saúde mental no Brasil</h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-green-600 rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-white mb-6">Nossa Missão</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-green-200 mt-1 flex-shrink-0" size={20} />
-                <p className="text-white">Tecnologia de ponta e abordagem humana</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-blue-200 mt-1 flex-shrink-0" size={20} />
-                <p className="text-white">Mercado em ascensão, diferenciais comprovados</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-purple-200 mt-1 flex-shrink-0" size={20} />
-                <p className="text-white">Liderança de excelência e visão clara</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-yellow-200 mt-1 flex-shrink-0" size={20} />
-                <p className="text-white">Prontos para capturar fatia significativa do mercado bilionário</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-white mb-6">Contato</h3>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-blue-200 rounded-full"></div>
-                <span className="text-white">contato@essentia.app</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-green-200 rounded-full"></div>
-                <span className="text-white">LinkedIn: /company/essentia-wellness</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-purple-200 rounded-full"></div>
-                <span className="text-white">www.essentia.app</span>
-              </div>
-            </div>
-            
-            <div className="mt-8 p-4 bg-white/20 backdrop-blur-sm rounded-xl">
+];
+
+export default function EssentiaPitchPremium() {
               <h4 className="font-bold text-white mb-2">Próximos Passos</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center space-x-2">

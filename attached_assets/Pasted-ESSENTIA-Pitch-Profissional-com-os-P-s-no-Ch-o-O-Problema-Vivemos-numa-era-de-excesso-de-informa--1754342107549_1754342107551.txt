@@ -1,0 +1,80 @@
+ESSENTIA – Pitch Profissional com os Pés no Chão
+
+O Problema
+Vivemos numa era de excesso de informação, burnout silencioso e desconexão profunda com nós mesmos.
+
+As pessoas não sabem mais por onde começar a se escutar. Faltam ferramentas simples, simbólicas e acessíveis para reconectar propósito, bem-estar e ação. Apps genéricos falham em tocar o que realmente importa: a alma.
+
+A Solução
+Essentia é um app que convida o usuário a sair do automático e se reconectar com seu propósito por meio de práticas simbólicas, trilhas reflexivas e microações significativas.
+
+Não é terapia, nem autoajuda rápida — é um espaço íntimo de despertar, que integra a sabedoria da natureza e a conexão humana com o apoio da tecnologia.
+
+O que já foi feito
+100+ páginas de conteúdo simbólico e autoral já escritas
+3 versões de mockups navegáveis prontos no Replit
+Roteiro completo de funcionalidades e jornadas
+Validação informal com mais de 20 pessoas (feedback positivo)
+Dossiê de documentação organizado
+1 ano de dedicação solo (sem tração ainda)
+
+Tamanho de Mercado (Brasil)
+Mercado de Bem-Estar Digital (2024): US$ 543M
+Projeção para 2030: US$ 1,28B
+(Fonte: Estimativas internas baseadas em recortes de mercado global e nacional de saúde e bem-estar digital)
+Crescimento médio: +12% ao ano
+Apps de meditação e bem-estar lideram downloads entre 25–45 anos
+
+Concorrentes & Diferenciais
+Zenklub / Vittude / Cíngulo / Zen App
+
+Foco: saúde mental, terapia ou meditação guiada
+🟢 Essentia se diferencia por:
+
+Integração simbólica de propósito + bem-estar
+Trilha viva e personalizada
+Rituais, respiração, caminhadas conscientes, diários
+Estética e experiência mais sensível, leve, profunda
+
+Monetização & MVP
+Plano gratuito com alto valor de entrada, e upgrade opcional:
+
+R$ 9,90/mês (acesso a recursos extras)
+Futuras opções de planos premium (ex: R$ 19,90/mês, R$ 29,90/mês)
+Versão gratuita com diário, rituais, frases, trilha inicial
+Futuro: comunidade simbólica, parcerias, mentorias, aprofundamento da IA personalizada
+
+Projeções realistas (1º ano)
+5.000 usuários
+1.000 pagantes (~20% de conversão)
+Ticket médio: R$ 10/mês (considerando plano de entrada)
+Receita estimada: R$ 10.000/mês após validação do modelo
+Custo de aquisição (CAC) estimado: R$ 5 a R$ 12
+Retenção-alvo (dia 30): 25–30%. Nossa abordagem única, com IA personalizada e conteúdo cultural, visa resolver o problema de baixa conexão que causa o abandono, buscando uma retenção significativamente acima da média do mercado (que é ~3,3% no primeiro mês).
+
+Quem sou eu
+Marcelo Rymer, brasileiro, ex-empresário (importação, mercado financeiro).
+
+Sem background em tech, mas com alma de construtor simbólico.
+
+Criei o Essentia após um colapso de sentido.
+
+Passei 1 ano pesquisando, escrevendo, testando — sozinho.
+
+Fiz mockups, contratei dev, perdi dinheiro, insisti.
+O Essentia é meu chamado.
+
+O que estou buscando
+Um co-founder ou small builder com visão, sensibilidade e energia de execução.
+
+Alguém que entre agora, ajude a moldar o MVP certo, valide com os usuários, e pense grande junto.
+
+Quero alguém dentro, não só prestando serviço.
+Equity aberta. Zero ego. Projeto vivo.
+
+Contato
+Se algo aqui mexeu com você, me chama.
+
+Não tenho todas as respostas, mas tenho o coração no jogo.
+
+Vamos conversar.
