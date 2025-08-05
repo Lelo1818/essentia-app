@@ -266,29 +266,29 @@ const slides = [
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p><strong>100+ páginas</strong> de conteúdo autoral simbólico prontas</p>
+                <p className="text-gray-800"><strong>100+ páginas</strong> de conteúdo autoral simbólico prontas</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p><strong>3 versões</strong> de mockups navegáveis (Replit)</p>
+                <p className="text-gray-800"><strong>3 versões</strong> de mockups navegáveis (Replit)</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p><strong>Roteiro funcional completo</strong> de jornadas e features</p>
+                <p className="text-gray-800"><strong>Roteiro funcional completo</strong> de jornadas e features</p>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p><strong>Validação informal</strong> com +20 pessoas (feedback positivo)</p>
+                <p className="text-gray-800"><strong>Validação informal</strong> com +20 pessoas (feedback positivo)</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p><strong>Dossiê de documentação</strong> organizado e estruturado</p>
+                <p className="text-gray-800"><strong>Dossiê de documentação</strong> organizado e estruturado</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p><strong>1 ano de dedicação solo total</strong> (conteúdo, design, estratégia)</p>
+                <p className="text-gray-800"><strong>1 ano de dedicação solo total</strong> (conteúdo, design, estratégia)</p>
               </div>
             </div>
           </div>
