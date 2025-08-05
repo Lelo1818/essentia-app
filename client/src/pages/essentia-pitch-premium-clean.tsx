@@ -241,15 +241,6 @@ const slides = [
                     src="/attached_assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg"
                     alt="Marcelo Rymer"
                     className="w-full h-full object-cover rounded-full"
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      img.style.display = 'none';
-                      const nextElement = img.nextElementSibling as HTMLElement;
-                      if (nextElement) {
-                        nextElement.style.display = 'flex';
-                        nextElement.classList.remove('hidden');
-                      }
-                    }}
                   />
                   <Users className="text-gray-500 hidden" size={80} />
                 </div>
