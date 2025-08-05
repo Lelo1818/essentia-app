@@ -532,12 +532,7 @@ export default function EssentiaPitchPremium() {
         </div>
       </div>
 
-      {/* Navigation Instructions */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-20">
-        <p className="text-sm opacity-80 bg-black/20 backdrop-blur-sm rounded-lg px-4 py-2">
-          Use as setas do teclado ou os botões para navegar • Espaço para próximo slide
-        </p>
-      </div>
+
     </div>
   );
 }
