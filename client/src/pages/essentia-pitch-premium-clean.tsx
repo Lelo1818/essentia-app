@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, CheckCircle, Users, Building, Target, DollarSign, TrendingUp, BarChart3, Star, Rocket, ArrowUp, Heart, Brain, Globe } from 'lucide-react';
+import leloPhoto from "@assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg";
 
 const slides = [
   {
@@ -236,13 +237,14 @@ const slides = [
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-green-400/30 rounded-full blur-2xl"></div>
               <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
-                <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/attached_assets/Lelo_rosto_melhorado_pitch_1753874485532.jpg"
-                    alt="Marcelo Rymer"
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                  <Users className="text-gray-500 hidden" size={80} />
+                <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center overflow-hidden border-4 border-white/50">
+                  <div className="text-center">
+                    <div className="w-20 h-20 mx-auto mb-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                      <Users className="text-white" size={40} />
+                    </div>
+                    <div className="text-sm font-medium text-gray-600">Lelo</div>
+                    <div className="text-xs text-gray-500">Empresário</div>
+                  </div>
                 </div>
               </div>
             </div>
