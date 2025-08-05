@@ -256,12 +256,12 @@ const slides = [
               </div>
             </div>
             <h3 className="text-3xl font-bold text-white mt-6">Marcelo Rymer</h3>
-            <p className="text-xl text-gray-200">Ex-empresário, Construtor Simbólico</p>
+            <p className="text-xl text-gray-200">Empresário, Construtor Simbólico</p>
           </div>
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8">
             <h4 className="text-2xl font-bold text-gray-800 mb-6">A Jornada Real</h4>
             <div className="space-y-4 text-gray-700">
-              <p><strong>Ex-empresário</strong> (importação, mercado financeiro)</p>
+              <p><strong>Empresário</strong> (importação, mercado financeiro)</p>
               <p><strong>Sem background em tech</strong>, mas com alma de construtor simbólico</p>
               <p className="bg-blue-50 rounded-lg p-3">
                 <strong>Criei o Essentia após um colapso pessoal de sentido.</strong>
