@@ -237,14 +237,28 @@ const slides = [
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-green-400/30 rounded-full blur-2xl"></div>
               <div className="relative w-64 h-64 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 shadow-2xl">
-                <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center overflow-hidden border-4 border-white/50">
-                  <div className="text-center">
-                    <div className="w-20 h-20 mx-auto mb-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                      <Users className="text-white" size={40} />
-                    </div>
-                    <div className="text-sm font-medium text-gray-600">Lelo</div>
-                    <div className="text-xs text-gray-500">Empresário</div>
-                  </div>
+                <div className="w-full h-full bg-gray-100 rounded-full flex items-center justify-center overflow-hidden border-4 border-white/50">
+                  <img 
+                    src="/lelo_photo.jpg"
+                    alt="Marcelo Rymer"
+                    className="w-full h-full object-cover rounded-full"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      img.style.display = 'none';
+                      const fallback = document.createElement('div');
+                      fallback.className = 'w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center';
+                      fallback.innerHTML = `
+                        <div class="text-center">
+                          <div class="w-20 h-20 mx-auto mb-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                          </div>
+                          <div class="text-sm font-medium text-gray-600">Lelo</div>
+                          <div class="text-xs text-gray-500">Empresário</div>
+                        </div>
+                      `;
+                      img.parentNode?.appendChild(fallback);
+                    }}
+                  />
                 </div>
               </div>
             </div>
