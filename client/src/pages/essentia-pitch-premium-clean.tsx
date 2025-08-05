@@ -116,33 +116,45 @@ const slides = [
           </div>
           <p className="text-gray-700 mt-4">Apps de meditação, propósito e autocuidado estão entre os mais baixados (25-45 anos)</p>
         </div>
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 mb-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">🥊 Posicionamento Estratégico</h3>
+          <p className="text-gray-700 text-center mb-6">O mercado está saturado de apps com foco em produtividade, sono ou meditação isolada.</p>
+          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-xl p-6 text-center">
+            <h4 className="text-xl font-bold text-white mb-2">🟢 Essentia propõe um novo caminho:</h4>
+            <p className="text-white/90 text-lg">Integrar alma, corpo e intenção</p>
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6">
-            <h4 className="text-xl font-bold text-gray-800 mb-4">🥊 Concorrência</h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Zenklub, Vittude</span>
-                <span className="text-sm text-gray-500">Terapia online</span>
+          <div className="bg-red-50 rounded-3xl p-6">
+            <h4 className="text-xl font-bold text-red-800 mb-4">📱 Concorrência por Categoria</h4>
+            <div className="space-y-3 text-sm">
+              <div>
+                <div className="font-semibold text-red-700">Meditação Global</div>
+                <div className="text-gray-600">Calm, Headspace, Balance → Mindfulness e sono</div>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Cíngulo</span>
-                <span className="text-sm text-gray-500">Meditação guiada</span>
+              <div>
+                <div className="font-semibold text-red-700">Psicoterapia Online</div>
+                <div className="text-gray-600">Zenklub, Vittude → Atendimento clínico</div>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Zen App</span>
-                <span className="text-sm text-gray-500">Mindfulness</span>
+              <div>
+                <div className="font-semibold text-red-700">Autoajuda Guiada</div>
+                <div className="text-gray-600">Cíngulo, Zen App → Autoavaliação</div>
+              </div>
+              <div>
+                <div className="font-semibold text-red-700">Holismo Superficial</div>
+                <div className="text-gray-600">Aura, Breethe, Zen → Relaxamento genérico</div>
               </div>
             </div>
           </div>
           <div className="bg-green-50 rounded-3xl p-6">
-            <h4 className="text-xl font-bold text-green-800 mb-4">🌱 Nossos Diferenciais</h4>
-            <ul className="space-y-2 text-green-700">
-              <li>• Integração real propósito + bem-estar</li>
-              <li>• Trilha simbólica viva e personalizada</li>
-              <li>• Rituais, respiração, caminhadas conscientes</li>
-              <li>• Diários e frases essenciais</li>
-              <li>• Estética sensível, leve, profunda</li>
-              <li>• Experiência emocional, não só funcional</li>
+            <h4 className="text-xl font-bold text-green-800 mb-4">🌱 Nossa Diferenciação</h4>
+            <ul className="space-y-3 text-green-700">
+              <li>• <strong>Práticas simbólicas</strong> autênticas</li>
+              <li>• <strong>Trilhas reflexivas</strong> guiadas</li>
+              <li>• <strong>Microações</strong> com significado real</li>
+              <li>• <strong>Profundidade simbólica</strong> real</li>
+              <li>• <strong>Espaço íntimo</strong> de despertar</li>
+              <li>• Não é terapia nem autoajuda rápida</li>
             </ul>
           </div>
         </div>
@@ -197,8 +209,8 @@ const slides = [
         </div>
         <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-3xl p-6 text-center">
           <h4 className="text-xl font-bold text-white mb-2">🔑 Nosso Trunfo</h4>
-          <p className="text-white/90">Abordagem simbólica + IA personalizada contra abandono precoce</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <p className="text-white/90 mb-4">Nossa abordagem única, com IA personalizada e conteúdo cultural, visa resolver o problema de desconexão que causa o abandono precoce</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
               <p className="text-white/90 text-sm">Retenção-alvo (dia 30)</p>
               <p className="text-white font-bold">25-30%</p>
@@ -208,6 +220,7 @@ const slides = [
               <p className="text-white font-bold">~3,3%</p>
             </div>
           </div>
+          <p className="text-white/80 text-sm mt-3">Engajamento e retenção significativamente superiores</p>
         </div>
       </div>
     ),
@@ -276,22 +289,18 @@ const slides = [
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
-                <p className="text-gray-800"><strong>100+ páginas</strong> de conteúdo autoral simbólico prontas</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-gray-800"><strong>3 versões</strong> de mockups navegáveis (Replit)</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-gray-800"><strong>Roteiro funcional completo</strong> de jornadas e features</p>
               </div>
-            </div>
-            <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-gray-800"><strong>Validação informal</strong> com +20 pessoas (feedback positivo)</p>
               </div>
+            </div>
+            <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-gray-800"><strong>Dossiê de documentação</strong> organizado e estruturado</p>
