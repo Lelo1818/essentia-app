@@ -213,7 +213,7 @@ const slides = [
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
               <p className="text-white/90 text-sm">Retenção-alvo (dia 30)</p>
-              <p className="text-white font-bold">25-30%</p>
+              <p className="text-white font-bold">10-15%</p>
             </div>
             <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
               <p className="text-white/90 text-sm">vs. média mercado</p>
