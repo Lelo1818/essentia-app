@@ -101,21 +101,20 @@ const slides = [
     content: (
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6">Bem-Estar Digital no Brasil</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-6">Mercado de Bem-Estar Mental no Brasil</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <div className="text-3xl font-bold text-blue-600">US$ 543M</div>
-              <div className="text-gray-600">Mercado atual (2024)</div>
+              <div className="text-3xl font-bold text-blue-600">US$ 2.7B</div>
+              <div className="text-gray-600">Mercado atual (2022)</div>
+              <div className="text-sm text-gray-500">Global Wellness Institute</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-green-600">US$ 1.28B</div>
-              <div className="text-gray-600">Projeção 2030</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-purple-600">+12%</div>
-              <div className="text-gray-600">Crescimento anual</div>
+              <div className="text-gray-600">Bem-estar digital - Projeção 2030</div>
+              <div className="text-sm text-gray-500">Apps meditação, saúde mental</div>
             </div>
           </div>
+          <p className="text-gray-700 mt-4">Apps de meditação, propósito e autocuidado estão entre os mais baixados (25-45 anos)</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6">
@@ -140,6 +139,8 @@ const slides = [
             <ul className="space-y-2 text-green-700">
               <li>• Integração real propósito + bem-estar</li>
               <li>• Trilha simbólica viva e personalizada</li>
+              <li>• Rituais, respiração, caminhadas conscientes</li>
+              <li>• Diários e frases essenciais</li>
               <li>• Estética sensível, leve, profunda</li>
               <li>• Experiência emocional, não só funcional</li>
             </ul>
@@ -168,7 +169,7 @@ const slides = [
               </div>
               <div className="bg-purple-50 rounded-xl p-4">
                 <h4 className="font-bold text-purple-800">💎 Futuro Premium</h4>
-                <p className="text-purple-700 text-sm">R$ 19,90-29,90, comunidade, mentorias, IA simbólica</p>
+                <p className="text-purple-700 text-sm">R$ 19,90-29,90, comunidade, mentorias, IA simbólica avançada</p>
               </div>
             </div>
           </div>
@@ -180,16 +181,16 @@ const slides = [
                 <span className="text-xl font-bold text-blue-600">5.000</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-600">Pagantes (20%)</span>
+                <span className="text-gray-600">Pagantes (~20%)</span>
                 <span className="text-xl font-bold text-green-600">1.000</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Ticket médio</span>
-                <span className="text-xl font-bold text-purple-600">R$ 10/mês</span>
+                <span className="text-xl font-bold text-purple-600">R$ 15/mês</span>
               </div>
               <div className="flex justify-between items-center border-t pt-2">
                 <span className="text-gray-800 font-bold">Receita estimada</span>
-                <span className="text-2xl font-bold text-green-600">R$ 10K/mês</span>
+                <span className="text-2xl font-bold text-green-600">R$ 15K/mês</span>
               </div>
             </div>
           </div>
@@ -197,7 +198,16 @@ const slides = [
         <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-3xl p-6 text-center">
           <h4 className="text-xl font-bold text-white mb-2">🔑 Nosso Trunfo</h4>
           <p className="text-white/90">Abordagem simbólica + IA personalizada contra abandono precoce</p>
-          <p className="text-white/80 text-sm">Retenção-alvo (30 dias): 25-30% vs. média 3,3%</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
+              <p className="text-white/90 text-sm">Retenção-alvo (dia 30)</p>
+              <p className="text-white font-bold">25-30%</p>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
+              <p className="text-white/90 text-sm">vs. média mercado</p>
+              <p className="text-white font-bold">~3,3%</p>
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -330,6 +340,7 @@ const slides = [
               <li>• Alguém dentro, não só prestando serviço</li>
               <li>• Zero ego, muito propósito</li>
               <li>• Visão de impacto real</li>
+              <li>• Sensibilidade e energia de execução</li>
             </ul>
           </div>
           <div className="bg-purple-50 rounded-3xl p-6">
@@ -337,7 +348,7 @@ const slides = [
             <ul className="space-y-3 text-purple-700">
               <li>• Equity aberta</li>
               <li>• Base sólida construída</li>
-              <li>• Visão clara do futuro</li>
+              <li>• Projeto vivo</li>
               <li>• Parceria verdadeira</li>
             </ul>
           </div>
