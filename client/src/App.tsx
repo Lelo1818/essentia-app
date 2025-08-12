@@ -53,6 +53,7 @@ import EduVibeEnhanced from "@/pages/eduvibe-enhanced";
 import EduVibeDirect from "@/pages/eduvibe-direct";
 import EduVibeSimple from "@/pages/eduvibe-simple";
 import EduVibeCleanSimple from "@/pages/eduvibe-clean-simple";
+import EduVibeV2 from "@/pages/eduvibe-v2";
 import FlowStandalone from "@/pages/flow-standalone";
 import MobileTest from "./pages/mobile-test";
 import MinimalTest from "./pages/minimal-test";
@@ -97,6 +98,7 @@ function Router() {
       <Route path="/eduvibe-direct" component={EduVibeDirect} />
       <Route path="/eduvibe" component={EduVibeCleanSimple} />
       <Route path="/eduvibe-simple" component={EduVibeSimple} />
+      <Route path="/eduvibe-v2" component={EduVibeV2} />
       <Route path="/purpose" component={PurposeApp} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />
