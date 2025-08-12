@@ -107,6 +107,16 @@ const EduVibeV2Complete = () => {
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Study Plan Configuration
+  const [showStudyPlanModal, setShowStudyPlanModal] = useState(false);
+  const [studyPlan, setStudyPlan] = useState({
+    hoursPerDay: 3,
+    daysPerWeek: 5,
+    startDate: new Date(),
+    goals: ['Melhorar conhecimentos em tecnologia', 'Desenvolver habilidades de análise'],
+    subjects: ['Tecnologia', 'Negócios', 'Educação']
+  });
+
   // Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -933,6 +943,477 @@ Quiz personalizado com questões específicas do PDF`;
           </div>
         )}
 
+        {activeTab === 'progress' && (
+          <div className="space-y-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-800">Meu Progresso</h2>
+              <button 
+                onClick={() => setShowStudyPlanModal(true)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
+                Configurar Plano
+              </button>
+            </div>
+
+            {/* Progress Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
+                <h3 className="text-lg font-semibold mb-2">Meta Diária</h3>
+                <div className="flex items-end space-x-2 mb-4">
+                  <span className="text-3xl font-bold">2.5</span>
+                  <span className="text-blue-200">/ 3.0 horas</span>
+                </div>
+                <div className="w-full bg-blue-400 rounded-full h-2">
+                  <div className="bg-white h-2 rounded-full" style={{ width: '83%' }}></div>
+                </div>
+                <p className="text-sm text-blue-200 mt-2">83% concluído hoje</p>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
+                <h3 className="text-lg font-semibold mb-2">Semana Atual</h3>
+                <div className="flex items-end space-x-2 mb-4">
+                  <span className="text-3xl font-bold">18.5</span>
+                  <span className="text-green-200">/ 21 horas</span>
+                </div>
+                <div className="w-full bg-green-400 rounded-full h-2">
+                  <div className="bg-white h-2 rounded-full" style={{ width: '88%' }}></div>
+                </div>
+                <p className="text-sm text-green-200 mt-2">88% da meta semanal</p>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
+                <h3 className="text-lg font-semibold mb-2">Próxima Meta</h3>
+                <div className="flex items-end space-x-2 mb-4">
+                  <span className="text-3xl font-bold">Level</span>
+                  <span className="text-purple-200">16</span>
+                </div>
+                <div className="w-full bg-purple-400 rounded-full h-2">
+                  <div className="bg-white h-2 rounded-full" style={{ width: '65%' }}></div>
+                </div>
+                <p className="text-sm text-purple-200 mt-2">350 XP para próximo nível</p>
+              </div>
+            </div>
+
+            {/* Weekly Progress Chart */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-800 mb-6">Progresso Semanal</h3>
+              <div className="grid grid-cols-7 gap-2">
+                {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day, index) => {
+                  const hours = [1.5, 3.2, 2.8, 3.0, 2.5, 2.0, 1.5][index];
+                  const target = 3.0;
+                  const percentage = Math.min((hours / target) * 100, 100);
+                  
+                  return (
+                    <div key={day} className="text-center">
+                      <div className="mb-2 text-xs font-medium text-gray-600">{day}</div>
+                      <div className="h-32 bg-gray-100 rounded-lg flex items-end justify-center p-2">
+                        <div 
+                          className={`w-6 rounded-lg ${
+                            percentage >= 100 ? 'bg-green-500' : 
+                            percentage >= 80 ? 'bg-blue-500' :
+                            percentage >= 60 ? 'bg-yellow-500' : 'bg-red-400'
+                          }`}
+                          style={{ height: `${Math.max(percentage, 10)}%` }}
+                        ></div>
+                      </div>
+                      <div className="mt-2 text-xs text-gray-600">{hours}h</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Study Streak */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-800 mb-6">Sequência de Estudos</h3>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                    <Target className="text-orange-600" size={24} />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-800">{userProgress.streak} dias</p>
+                    <p className="text-sm text-gray-600">Sequência atual</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-semibold text-gray-800">Melhor: 18 dias</p>
+                  <p className="text-sm text-gray-600">Recorde pessoal</p>
+                </div>
+              </div>
+              
+              {/* Calendar view */}
+              <div className="grid grid-cols-7 gap-1">
+                {Array.from({ length: 21 }, (_, i) => {
+                  const isActive = i >= 21 - userProgress.streak;
+                  return (
+                    <div 
+                      key={i}
+                      className={`w-8 h-8 rounded-lg border-2 ${
+                        isActive 
+                          ? 'bg-green-500 border-green-500' 
+                          : 'border-gray-200 bg-gray-50'
+                      }`}
+                    >
+                      {isActive && (
+                        <CheckCircle className="text-white w-full h-full p-1" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Performance Analytics */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Desempenho por Tipo</h3>
+                <div className="space-y-4">
+                  {[
+                    { type: 'Texto', average: 92, sessions: 15, color: 'orange' },
+                    { type: 'PDF', average: 87, sessions: 8, color: 'blue' },
+                    { type: 'YouTube', average: 89, sessions: 12, color: 'red' },
+                    { type: 'Câmera', average: 84, sessions: 6, color: 'purple' }
+                  ].map((item) => (
+                    <div key={item.type} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-3 h-3 rounded-full bg-${item.color}-500`}></div>
+                        <span className="font-medium text-gray-800">{item.type}</span>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <span className="text-sm text-gray-600">{item.sessions} sessões</span>
+                        <span className="font-semibold text-gray-800">{item.average}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Temas Favoritos</h3>
+                <div className="space-y-3">
+                  {[
+                    { tag: 'educação', count: 8, growth: '+12%' },
+                    { tag: 'tecnologia', count: 6, growth: '+8%' },
+                    { tag: 'negócios', count: 5, growth: '+15%' },
+                    { tag: 'ciências', count: 4, growth: '+5%' }
+                  ].map((item, index) => (
+                    <div key={item.tag} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-sm font-medium text-gray-600">#{index + 1}</span>
+                        <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
+                          {item.tag}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-600">{item.count} estudos</span>
+                        <span className="text-sm text-green-600 font-medium">{item.growth}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'achievements' && (
+          <div className="space-y-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-800">Conquistas</h2>
+              <div className="text-right">
+                <p className="text-lg font-semibold text-gray-800">{userProgress.badges.length}/20</p>
+                <p className="text-sm text-gray-600">Conquistas desbloqueadas</p>
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-700">Progresso Geral</span>
+                <span className="text-sm text-gray-600">{Math.round((userProgress.badges.length / 20) * 100)}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-3">
+                <div 
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" 
+                  style={{ width: `${(userProgress.badges.length / 20) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Achievement Categories */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Iniciante */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <Star className="text-green-600" size={16} />
+                  </div>
+                  <span>Iniciante</span>
+                </h3>
+                
+                <div className="space-y-3">
+                  {[
+                    { 
+                      id: 'first_upload', 
+                      title: 'Primeiro Upload', 
+                      description: 'Enviou seu primeiro conteúdo',
+                      unlocked: userProgress.badges.includes('first_upload'),
+                      icon: Upload,
+                      color: 'blue'
+                    },
+                    { 
+                      id: 'first_analysis', 
+                      title: 'Primeira Análise', 
+                      description: 'Completou sua primeira análise de IA',
+                      unlocked: true,
+                      icon: Brain,
+                      color: 'purple'
+                    },
+                    { 
+                      id: 'first_quiz', 
+                      title: 'Primeiro Quiz', 
+                      description: 'Finalizou seu primeiro quiz',
+                      unlocked: true,
+                      icon: Award,
+                      color: 'yellow'
+                    }
+                  ].map((achievement) => (
+                    <div 
+                      key={achievement.id}
+                      className={`flex items-center space-x-3 p-3 rounded-lg border-2 transition-all ${
+                        achievement.unlocked 
+                          ? 'border-green-200 bg-green-50' 
+                          : 'border-gray-200 bg-gray-50 opacity-50'
+                      }`}
+                    >
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                        achievement.unlocked 
+                          ? `bg-${achievement.color}-100` 
+                          : 'bg-gray-100'
+                      }`}>
+                        <achievement.icon 
+                          size={20} 
+                          className={achievement.unlocked ? `text-${achievement.color}-600` : 'text-gray-400'} 
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800">{achievement.title}</h4>
+                        <p className="text-xs text-gray-600">{achievement.description}</p>
+                      </div>
+                      {achievement.unlocked && (
+                        <CheckCircle className="text-green-500" size={20} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Progresso */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="text-blue-600" size={16} />
+                  </div>
+                  <span>Progresso</span>
+                </h3>
+                
+                <div className="space-y-3">
+                  {[
+                    { 
+                      id: 'streak_7', 
+                      title: 'Semana Completa', 
+                      description: '7 dias consecutivos estudando',
+                      unlocked: userProgress.badges.includes('streak_7'),
+                      icon: Target,
+                      color: 'orange',
+                      progress: userProgress.streak >= 7 ? 100 : (userProgress.streak / 7) * 100
+                    },
+                    { 
+                      id: 'level_10', 
+                      title: 'Nível 10', 
+                      description: 'Alcançou o nível 10',
+                      unlocked: userProgress.level >= 10,
+                      icon: Star,
+                      color: 'purple',
+                      progress: userProgress.level >= 10 ? 100 : (userProgress.level / 10) * 100
+                    },
+                    { 
+                      id: 'sessions_50', 
+                      title: 'Dedicação', 
+                      description: '50 sessões de estudo completas',
+                      unlocked: userProgress.totalSessions >= 50,
+                      icon: Clock,
+                      color: 'green',
+                      progress: Math.min((userProgress.totalSessions / 50) * 100, 100)
+                    }
+                  ].map((achievement) => (
+                    <div 
+                      key={achievement.id}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        achievement.unlocked 
+                          ? 'border-green-200 bg-green-50' 
+                          : 'border-gray-200 bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                            achievement.unlocked 
+                              ? `bg-${achievement.color}-100` 
+                              : 'bg-gray-100'
+                          }`}>
+                            <achievement.icon 
+                              size={16} 
+                              className={achievement.unlocked ? `text-${achievement.color}-600` : 'text-gray-400'} 
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-800 text-sm">{achievement.title}</h4>
+                            <p className="text-xs text-gray-600">{achievement.description}</p>
+                          </div>
+                        </div>
+                        {achievement.unlocked && (
+                          <CheckCircle className="text-green-500" size={16} />
+                        )}
+                      </div>
+                      
+                      {!achievement.unlocked && (
+                        <div className="mt-2">
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div 
+                              className={`bg-${achievement.color}-500 h-2 rounded-full transition-all`}
+                              style={{ width: `${achievement.progress}%` }}
+                            ></div>
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {Math.round(achievement.progress)}% completo
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Especialista */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <Award className="text-yellow-600" size={16} />
+                  </div>
+                  <span>Especialista</span>
+                </h3>
+                
+                <div className="space-y-3">
+                  {[
+                    { 
+                      id: 'pdf_master', 
+                      title: 'Mestre dos PDFs', 
+                      description: '20+ documentos analisados',
+                      unlocked: userProgress.badges.includes('pdf_master'),
+                      icon: FileText,
+                      color: 'blue',
+                      requirement: 20,
+                      current: 8
+                    },
+                    { 
+                      id: 'video_analyst', 
+                      title: 'Analista de Vídeos', 
+                      description: '15+ vídeos processados',
+                      unlocked: userProgress.badges.includes('video_analyst'),
+                      icon: Play,
+                      color: 'red',
+                      requirement: 15,
+                      current: 12
+                    },
+                    { 
+                      id: 'high_scorer', 
+                      title: 'Nota Alta', 
+                      description: 'Média acima de 90%',
+                      unlocked: userProgress.averageScore >= 90,
+                      icon: Zap,
+                      color: 'yellow',
+                      requirement: 90,
+                      current: userProgress.averageScore
+                    }
+                  ].map((achievement) => (
+                    <div 
+                      key={achievement.id}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        achievement.unlocked 
+                          ? 'border-green-200 bg-green-50' 
+                          : 'border-gray-200 bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                            achievement.unlocked 
+                              ? `bg-${achievement.color}-100` 
+                              : 'bg-gray-100'
+                          }`}>
+                            <achievement.icon 
+                              size={16} 
+                              className={achievement.unlocked ? `text-${achievement.color}-600` : 'text-gray-400'} 
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-800 text-sm">{achievement.title}</h4>
+                            <p className="text-xs text-gray-600">{achievement.description}</p>
+                          </div>
+                        </div>
+                        {achievement.unlocked && (
+                          <CheckCircle className="text-green-500" size={16} />
+                        )}
+                      </div>
+                      
+                      {!achievement.unlocked && achievement.requirement && (
+                        <div className="mt-2">
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div 
+                              className={`bg-${achievement.color}-500 h-2 rounded-full transition-all`}
+                              style={{ width: `${Math.min((achievement.current! / achievement.requirement) * 100, 100)}%` }}
+                            ></div>
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {achievement.current}/{achievement.requirement}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Next Achievements */}
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Próximas Conquistas</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Target className="text-blue-600" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Sequência Diamante</h4>
+                    <p className="text-sm text-gray-600">30 dias consecutivos • {30 - userProgress.streak} restantes</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Star className="text-purple-600" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Nível 20</h4>
+                    <p className="text-sm text-gray-600">Próximo marco • {20 - userProgress.level} níveis restantes</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === 'sessions' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -1488,6 +1969,243 @@ Quiz personalizado com questões específicas do PDF`;
                   </button>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Study Plan Configuration Modal */}
+      {showStudyPlanModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white rounded-t-3xl z-10">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Calendar className="text-blue-600" size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-800">Configurar Plano de Estudos</h2>
+                  <p className="text-sm text-gray-500">Personalize sua jornada de aprendizado</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowStudyPlanModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-8">
+              {/* Time Configuration */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-800">Disponibilidade de Tempo</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Horas por dia
+                    </label>
+                    <div className="flex items-center space-x-3">
+                      <input 
+                        type="range"
+                        min="0.5"
+                        max="8"
+                        step="0.5"
+                        value={studyPlan.hoursPerDay}
+                        onChange={(e) => setStudyPlan(prev => ({ ...prev, hoursPerDay: parseFloat(e.target.value) }))}
+                        className="flex-1"
+                      />
+                      <span className="text-lg font-semibold text-blue-600 min-w-[60px]">
+                        {studyPlan.hoursPerDay}h
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Recomendado: 2-4 horas</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Dias por semana
+                    </label>
+                    <div className="flex items-center space-x-3">
+                      <input 
+                        type="range"
+                        min="1"
+                        max="7"
+                        step="1"
+                        value={studyPlan.daysPerWeek}
+                        onChange={(e) => setStudyPlan(prev => ({ ...prev, daysPerWeek: parseInt(e.target.value) }))}
+                        className="flex-1"
+                      />
+                      <span className="text-lg font-semibold text-green-600 min-w-[60px]">
+                        {studyPlan.daysPerWeek} dias
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Consistência é mais importante que intensidade</p>
+                  </div>
+                </div>
+
+                {/* Time Summary */}
+                <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                  <h4 className="font-semibold text-blue-800 mb-2">Resumo do Seu Plano</h4>
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <p className="text-2xl font-bold text-blue-600">
+                        {(studyPlan.hoursPerDay * studyPlan.daysPerWeek).toFixed(1)}h
+                      </p>
+                      <p className="text-sm text-blue-700">Por semana</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-blue-600">
+                        {Math.round(studyPlan.hoursPerDay * studyPlan.daysPerWeek * 4.33)}h
+                      </p>
+                      <p className="text-sm text-blue-700">Por mês</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-blue-600">
+                        {Math.round(studyPlan.hoursPerDay * studyPlan.daysPerWeek * 52)}h
+                      </p>
+                      <p className="text-sm text-blue-700">Por ano</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Goals Configuration */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-800">Objetivos de Aprendizado</h3>
+                
+                <div className="space-y-3">
+                  {studyPlan.goals.map((goal, index) => (
+                    <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                      <Target className="text-orange-600" size={16} />
+                      <input
+                        type="text"
+                        value={goal}
+                        onChange={(e) => {
+                          const newGoals = [...studyPlan.goals];
+                          newGoals[index] = e.target.value;
+                          setStudyPlan(prev => ({ ...prev, goals: newGoals }));
+                        }}
+                        className="flex-1 bg-transparent border-none outline-none text-gray-800"
+                        placeholder="Digite seu objetivo"
+                      />
+                      <button
+                        onClick={() => {
+                          const newGoals = studyPlan.goals.filter((_, i) => i !== index);
+                          setStudyPlan(prev => ({ ...prev, goals: newGoals }));
+                        }}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))}
+                  
+                  <button
+                    onClick={() => {
+                      if (studyPlan.goals.length < 5) {
+                        setStudyPlan(prev => ({ ...prev, goals: [...prev.goals, ''] }));
+                      }
+                    }}
+                    className="w-full p-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    + Adicionar objetivo
+                  </button>
+                </div>
+              </div>
+
+              {/* Subjects Preference */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-800">Áreas de Interesse</h3>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {[
+                    'Tecnologia', 'Negócios', 'Educação', 'Ciências', 'Arte & Design',
+                    'Idiomas', 'Matemática', 'História', 'Filosofia', 'Psicologia',
+                    'Medicina', 'Engenharia'
+                  ].map((subject) => (
+                    <button
+                      key={subject}
+                      onClick={() => {
+                        const isSelected = studyPlan.subjects.includes(subject);
+                        if (isSelected) {
+                          setStudyPlan(prev => ({
+                            ...prev,
+                            subjects: prev.subjects.filter(s => s !== subject)
+                          }));
+                        } else {
+                          setStudyPlan(prev => ({
+                            ...prev,
+                            subjects: [...prev.subjects, subject]
+                          }));
+                        }
+                      }}
+                      className={`p-3 rounded-lg border-2 text-sm font-medium transition-all ${
+                        studyPlan.subjects.includes(subject)
+                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      {subject}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <button
+                  onClick={() => setShowStudyPlanModal(false)}
+                  className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  Cancelar
+                </button>
+                
+                <div className="space-x-3">
+                  <button
+                    onClick={() => {
+                      // Save as draft
+                      setShowStudyPlanModal(false);
+                    }}
+                    className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+                  >
+                    Salvar Rascunho
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      // Apply study plan
+                      setUserProgress(prev => ({
+                        ...prev,
+                        studyHours: studyPlan.hoursPerDay * studyPlan.daysPerWeek * 4.33
+                      }));
+                      setShowStudyPlanModal(false);
+                    }}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105"
+                  >
+                    Aplicar Plano
+                  </button>
+                </div>
+              </div>
+
+              {/* AI Recommendation */}
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-4 border border-purple-200">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Brain className="text-purple-600" size={16} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-purple-800 mb-1">Recomendação da IA</h4>
+                    <p className="text-sm text-purple-700">
+                      Com base no seu perfil, recomendamos {Math.min(Math.max(studyPlan.hoursPerDay, 2), 4)} horas por dia, 
+                      focando em sessões de 45-60 minutos com pausas de 15 minutos. 
+                      Seus interesses em {studyPlan.subjects.slice(0, 2).join(' e ')} sugerem 
+                      uma abordagem prática com análise de casos reais.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
