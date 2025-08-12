@@ -253,47 +253,104 @@ Assim a IA pode analisar o conteúdo real ao invés de gerar análises genérica
   `;
 }
 
-export async function generateStudyPlan(topic: string, difficulty: string = "intermediário"): Promise<string[]> {
+
+
+// Interface para plano de estudos
+export interface StudyPlan {
+  overview: string;
+  weeklyGoals: string[];
+  detailedPlan: string;
+  practiceActivities: string[];
+  milestones: string[];
+  estimatedDuration: string;
+}
+
+// Função para gerar plano de estudos personalizado
+export async function generateDetailedStudyPlan(
+  topic: string, 
+  difficulty: string = 'intermediário',
+  timeFrame: number = 30,
+  dailyHours: number = 2,
+  studyType: string = 'general'
+): Promise<StudyPlan> {
   try {
-    const prompt = `
-Crie um plano de estudos detalhado para o tópico "${topic}" no nível ${difficulty}.
+    const prompt = `Você é um especialista em educação e planejamento de estudos. Crie um plano de estudos DETALHADO e PERSONALIZADO para o seguinte perfil:
 
-Gere 5-7 etapas específicas de estudo, cada uma com ações práticas.
+**PERFIL DO ESTUDANTE:**
+- Tópico: ${topic}
+- Nível atual: ${difficulty}
+- Tempo disponível: ${timeFrame} dias
+- Horas por dia: ${dailyHours}h
+- Objetivo: ${studyType === 'exam' ? 'Passar em prova/concurso' : 
+              studyType === 'project' ? 'Aplicar em projeto específico' : 
+              studyType === 'skill' ? 'Desenvolver nova habilidade' : 'Conhecimento geral'}
 
-Formato: Array JSON de strings, apenas o array sem texto adicional.
+**INSTRUÇÕES:**
+1. Crie um plano REALISTA e EXECUTÁVEL
+2. Divida em marcos semanais claros
+3. Inclua atividades práticas específicas
+4. Considere o nível atual do estudante
+5. Mantenha motivação e progressão gradual
 
-Exemplo: ["Etapa 1: Ler introdução básica", "Etapa 2: Fazer exercícios práticos"]
-`;
+Retorne APENAS um JSON válido no seguinte formato:
+{
+  "overview": "Visão geral do plano em 2-3 frases",
+  "weeklyGoals": ["Meta semana 1", "Meta semana 2", "Meta semana 3", "Meta semana 4"],
+  "detailedPlan": "Cronograma detalhado dia a dia com horários e atividades específicas",
+  "practiceActivities": ["Atividade prática 1", "Atividade prática 2", "Atividade prática 3", "Atividade prática 4", "Atividade prática 5"],
+  "milestones": ["Marco 1", "Marco 2", "Marco 3"],
+  "estimatedDuration": "${timeFrame} dias, ${dailyHours}h/dia"
+}`;
 
     const message = await anthropic.messages.create({
-      max_tokens: 1000,
+      max_tokens: 2000,
       messages: [{ role: 'user', content: prompt }],
-      // "claude-sonnet-4-20250514"
       model: DEFAULT_MODEL_STR,
     });
 
-    const responseText = message.content[0].text;
+    let responseText = message.content[0].text;
+    
+    // Clean JSON response
+    responseText = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      responseText = jsonMatch[0];
+    }
     
     try {
-      const plan = JSON.parse(responseText);
-      return Array.isArray(plan) ? plan : [];
+      const studyPlan = JSON.parse(responseText);
+      console.log("✅ PLANO DE ESTUDOS GERADO:", studyPlan);
+      return studyPlan;
     } catch (parseError) {
-      return [
-        "1. Revisar conceitos fundamentais",
-        "2. Estudar exemplos práticos",
-        "3. Fazer exercícios de fixação",
-        "4. Aplicar em projeto real",
-        "5. Revisar e consolidar conhecimento"
-      ];
+      console.error("Erro ao parsear plano de estudos:", parseError);
+      // Fallback plan
+      return {
+        overview: `Plano de estudos estruturado para ${topic} em ${timeFrame} dias, focado no nível ${difficulty}.`,
+        weeklyGoals: [
+          `Semana 1: Fundamentos e conceitos básicos de ${topic}`,
+          `Semana 2: Aprofundamento teórico e primeiros exercícios`,
+          `Semana 3: Prática intensiva e aplicação real`,
+          `Semana 4: Consolidação e avaliação final`
+        ],
+        detailedPlan: `Cronograma diário de ${dailyHours}h: manhã para teoria, tarde para prática, com revisões semanais.`,
+        practiceActivities: [
+          "Exercícios de fixação conceitual",
+          "Projetos práticos aplicados", 
+          "Simulações e testes",
+          "Criação de resumos e mapas mentais",
+          "Avaliações de progresso"
+        ],
+        milestones: [
+          "Domínio dos conceitos fundamentais",
+          "Aplicação prática consolidada", 
+          "Avaliação final aprovada"
+        ],
+        estimatedDuration: `${timeFrame} dias, ${dailyHours}h/dia`
+      };
     }
   } catch (error) {
     console.error("Erro ao gerar plano de estudos:", error);
-    return [
-      "1. Identificar pontos principais do tema",
-      "2. Buscar recursos complementares", 
-      "3. Praticar com exercícios",
-      "4. Testar conhecimento adquirido"
-    ];
+    throw new Error("Erro ao gerar plano de estudos personalizado");
   }
 }
 

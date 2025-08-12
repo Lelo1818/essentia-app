@@ -4,21 +4,27 @@ import {
   TrendingUp, Users, Clock, Award, Star, BarChart3, 
   ChevronRight, X, Send, Lightbulb, Target, Zap,
   Download, Share2, Volume2, VolumeX, Maximize2, Minimize2,
-  CheckCircle, Circle, RefreshCw, Trash2, Edit3
+  CheckCircle, Circle, RefreshCw, Trash2, Edit3, Calendar
 } from 'lucide-react';
 
 // Enhanced interfaces for Replit v2
 interface StudySession {
-  id: string;
+  id: string | number;
   title: string;
   content: string;
-  type: 'video' | 'text' | 'pdf' | 'camera';
-  analysis: string;
+  type: 'video' | 'text' | 'pdf' | 'camera' | 'youtube' | 'ai-plan';
+  analysis: string | {
+    summary: string;
+    studySuggestions: string[];
+    practiceExercises: string[];
+  };
   duration: number;
   score?: number;
-  completed: boolean;
-  createdAt: Date;
+  completed?: boolean;
+  createdAt?: Date;
+  date?: string;
   tags: string[];
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
 }
 
 interface UserProgress {
@@ -2265,7 +2271,7 @@ Quiz personalizado com questões específicas do PDF`;
                   <label className="block text-sm font-bold text-gray-700 mb-3">
                     Em quanto tempo você quer dominar este assunto?
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-3 mb-4">
                     {[
                       { days: 15, label: '2 semanas', desc: 'Introdução rápida' },
                       { days: 30, label: '1 mês', desc: 'Fundamentos sólidos' },
@@ -2284,6 +2290,40 @@ Quiz personalizado com questões específicas do PDF`;
                         <div className="text-sm text-gray-600 mt-1">{option.desc}</div>
                       </button>
                     ))}
+                  </div>
+                  
+                  {/* Custom Days Input */}
+                  <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Ou escolha exatamente quantos dias:
+                    </label>
+                    <div className="flex items-center space-x-4">
+                      <input 
+                        type="range"
+                        min="7"
+                        max="365"
+                        step="1"
+                        value={initialSetup.timeFrame}
+                        onChange={(e) => setInitialSetup(prev => ({ ...prev, timeFrame: parseInt(e.target.value) }))}
+                        className="flex-1"
+                      />
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="number"
+                          min="7"
+                          max="365"
+                          value={initialSetup.timeFrame}
+                          onChange={(e) => setInitialSetup(prev => ({ ...prev, timeFrame: parseInt(e.target.value) || 30 }))}
+                          className="w-20 p-2 border border-gray-300 rounded-lg text-center font-bold"
+                        />
+                        <span className="text-sm font-semibold text-blue-600">dias</span>
+                      </div>
+                    </div>
+                    <div className="mt-2 text-xs text-gray-500">
+                      {initialSetup.timeFrame < 30 ? '⚡ Ritmo intensivo' : 
+                       initialSetup.timeFrame < 90 ? '📚 Ritmo equilibrado' : 
+                       '🎯 Ritmo confortável'}
+                    </div>
                   </div>
                 </div>
 
@@ -2377,7 +2417,7 @@ Quiz personalizado com questões específicas do PDF`;
                 </button>
                 
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     setShowInitialSetup(false);
                     // Apply initial setup to study plan
                     setStudyPlan(prev => ({
@@ -2386,11 +2426,68 @@ Quiz personalizado com questões específicas do PDF`;
                       goals: [initialSetup.studyTopic],
                       subjects: [initialSetup.studyTopic]
                     }));
+                    
+                    // Generate AI-powered study plan
+                    try {
+                      const response = await fetch('/api/ai/study-plan', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          topic: initialSetup.studyTopic,
+                          difficulty: initialSetup.currentLevel,
+                          timeFrame: initialSetup.timeFrame,
+                          dailyHours: initialSetup.dailyTime,
+                          studyType: initialSetup.studyType
+                        })
+                      });
+                      
+                      if (response.ok) {
+                        const planData = await response.json();
+                        console.log('Plano de estudos gerado:', planData);
+                        
+                        // Create new study session with the generated plan
+                        const newSession: StudySession = {
+                          id: Date.now(),
+                          title: `Plano: ${initialSetup.studyTopic}`,
+                          type: 'ai-plan',
+                          content: planData.studyPlan.detailedPlan || 'Plano personalizado gerado pela IA',
+                          analysis: {
+                            summary: planData.studyPlan.overview || `Plano de estudos para ${initialSetup.studyTopic} em ${initialSetup.timeFrame} dias`,
+                            studySuggestions: planData.studyPlan.weeklyGoals || [
+                              'Seguir cronograma diário estabelecido',
+                              'Revisar conceitos fundamentais',
+                              'Praticar exercícios regularmente',
+                              'Avaliar progresso semanalmente',
+                              'Ajustar estratégias conforme necessário'
+                            ],
+                            practiceExercises: planData.studyPlan.practiceActivities || [
+                              'Exercícios práticos específicos',
+                              'Projetos aplicados',
+                              'Testes de conhecimento',
+                              'Simulações reais',
+                              'Avaliações periódicas'
+                            ]
+                          },
+                          duration: Math.round(initialSetup.timeFrame * initialSetup.dailyTime * 60 / 7), // duration per week in minutes
+                          date: new Date().toISOString(),
+                          tags: [initialSetup.studyType, initialSetup.currentLevel, 'plano-personalizado'],
+                          difficulty: initialSetup.currentLevel as 'beginner' | 'intermediate' | 'advanced'
+                        };
+                        
+                        setStudySessions(prev => [newSession, ...prev]);
+                        setUserProgress(prev => ({
+                          ...prev,
+                          xp: prev.xp + 100
+                        }));
+                      }
+                    } catch (error) {
+                      console.error('Erro ao gerar plano:', error);
+                    }
                   }}
                   disabled={!initialSetup.studyTopic.trim()}
                   className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
                 >
-                  Criar Meu Plano
+                  Criar Meu Plano (+100 XP)
                 </button>
               </div>
 

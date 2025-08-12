@@ -10,7 +10,7 @@ import {
   insertGoalSchema, insertAchievementSchema
 } from "@shared/schema";
 import { z } from "zod";
-import { analyzeTextWithAI, generateStudyPlan } from "./anthropic";
+import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
 import multer from "multer";
 import * as fs from 'fs/promises';
 // import { poppler } from 'node-poppler';
@@ -380,7 +380,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log("Gerando plano de estudos para:", topic);
       
-      const studyPlan = await generateStudyPlan(topic, difficulty || "intermediário");
+      const studyPlan = await generateDetailedStudyPlan(topic, difficulty || "intermediário");
       
       console.log("Plano de estudos gerado com sucesso");
       res.json({
