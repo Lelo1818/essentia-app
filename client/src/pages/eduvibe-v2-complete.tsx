@@ -109,12 +109,29 @@ const EduVibeV2Complete = () => {
 
   // Study Plan Configuration
   const [showStudyPlanModal, setShowStudyPlanModal] = useState(false);
+  const [showInitialSetup, setShowInitialSetup] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [studyPlan, setStudyPlan] = useState({
     hoursPerDay: 3,
     daysPerWeek: 5,
     startDate: new Date(),
     goals: ['Melhorar conhecimentos em tecnologia', 'Desenvolver habilidades de análise'],
     subjects: ['Tecnologia', 'Negócios', 'Educação']
+  });
+  const [initialSetup, setInitialSetup] = useState({
+    studyTopic: '',
+    timeFrame: 30, // dias
+    dailyTime: 2, // horas por dia
+    currentLevel: 'beginner', // beginner, intermediate, advanced
+    studyType: 'general' // general, exam, project, skill
+  });
+  const [sessionToSchedule, setSessionToSchedule] = useState<StudySession | null>(null);
+  const [scheduleConfig, setScheduleConfig] = useState({
+    startDate: new Date(),
+    sessionsPerWeek: 3,
+    sessionDuration: 60, // minutos
+    reminderEnabled: true,
+    studyDays: ['monday', 'wednesday', 'friday'] as string[]
   });
 
   // Refs
@@ -129,6 +146,8 @@ const EduVibeV2Complete = () => {
       email: 'maria@exemplo.com',
       avatar: 'https://images.unsplash.com/photo-1494790108755-2616b96db3c8?w=64&h=64&fit=crop&crop=face'
     });
+    // Show initial setup for new users
+    setTimeout(() => setShowInitialSetup(true), 1000);
   };
 
   const handleLogout = () => {
@@ -1803,11 +1822,14 @@ Quiz personalizado com questões específicas do PDF`;
                           xp: prev.xp + 75,
                           totalSessions: prev.totalSessions + 1
                         }));
+                        const latestSession = studySessions[0];
+                        setSessionToSchedule(latestSession);
+                        setShowScheduleModal(true);
                         closeUploadModal();
                       }}
                       className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
                     >
-                      Salvar Análise (+75 XP)
+                      Programar Estudos (+75 XP)
                     </button>
                   </div>
                 </div>
@@ -2205,6 +2227,440 @@ Quiz personalizado com questões específicas do PDF`;
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Initial Study Setup Modal */}
+      {showInitialSetup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="p-8 text-center">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                <Lightbulb className="text-white" size={32} />
+              </div>
+              
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">Bem-vindo ao EduVibe!</h2>
+              <p className="text-gray-600 mb-8">Vamos configurar seu plano de estudos personalizado</p>
+
+              <div className="space-y-6 text-left">
+                {/* Study Topic */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-3">
+                    O que você quer estudar?
+                  </label>
+                  <input
+                    type="text"
+                    value={initialSetup.studyTopic}
+                    onChange={(e) => setInitialSetup(prev => ({ ...prev, studyTopic: e.target.value }))}
+                    className="w-full p-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                    placeholder="Ex: Programação Python, Marketing Digital, Inglês..."
+                  />
+                </div>
+
+                {/* Time Frame */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-3">
+                    Em quanto tempo você quer dominar este assunto?
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { days: 15, label: '2 semanas', desc: 'Introdução rápida' },
+                      { days: 30, label: '1 mês', desc: 'Fundamentos sólidos' },
+                      { days: 90, label: '3 meses', desc: 'Domínio completo' }
+                    ].map((option) => (
+                      <button
+                        key={option.days}
+                        onClick={() => setInitialSetup(prev => ({ ...prev, timeFrame: option.days }))}
+                        className={`p-4 rounded-xl border-2 text-center transition-all ${
+                          initialSetup.timeFrame === option.days
+                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="font-bold text-lg">{option.label}</div>
+                        <div className="text-sm text-gray-600 mt-1">{option.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Daily Time */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-3">
+                    Quantas horas por dia você pode estudar?
+                  </label>
+                  <div className="flex items-center space-x-4">
+                    <input 
+                      type="range"
+                      min="0.5"
+                      max="6"
+                      step="0.5"
+                      value={initialSetup.dailyTime}
+                      onChange={(e) => setInitialSetup(prev => ({ ...prev, dailyTime: parseFloat(e.target.value) }))}
+                      className="flex-1"
+                    />
+                    <div className="text-2xl font-bold text-blue-600 min-w-[80px]">
+                      {initialSetup.dailyTime}h/dia
+                    </div>
+                  </div>
+                  <div className="mt-2 text-sm text-gray-600">
+                    Total: <strong>{Math.round(initialSetup.timeFrame * initialSetup.dailyTime)}h</strong> de estudo
+                  </div>
+                </div>
+
+                {/* Current Level */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-3">
+                    Qual seu nível atual neste assunto?
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { id: 'beginner', label: 'Iniciante', desc: 'Nunca estudei' },
+                      { id: 'intermediate', label: 'Intermediário', desc: 'Conheço o básico' },
+                      { id: 'advanced', label: 'Avançado', desc: 'Quero aprofundar' }
+                    ].map((level) => (
+                      <button
+                        key={level.id}
+                        onClick={() => setInitialSetup(prev => ({ ...prev, currentLevel: level.id }))}
+                        className={`p-3 rounded-lg border-2 text-center transition-all ${
+                          initialSetup.currentLevel === level.id
+                            ? 'border-purple-500 bg-purple-50 text-purple-700'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="font-semibold">{level.label}</div>
+                        <div className="text-xs text-gray-600">{level.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Study Type */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-3">
+                    Qual é seu objetivo principal?
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { id: 'general', label: 'Conhecimento Geral', desc: 'Aprender por curiosidade' },
+                      { id: 'exam', label: 'Prova/Concurso', desc: 'Preciso passar em um teste' },
+                      { id: 'project', label: 'Projeto Específico', desc: 'Aplicar em um trabalho' },
+                      { id: 'skill', label: 'Nova Habilidade', desc: 'Desenvolver competência' }
+                    ].map((type) => (
+                      <button
+                        key={type.id}
+                        onClick={() => setInitialSetup(prev => ({ ...prev, studyType: type.id }))}
+                        className={`p-3 rounded-lg border-2 text-left transition-all ${
+                          initialSetup.studyType === type.id
+                            ? 'border-green-500 bg-green-50 text-green-700'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="font-semibold">{type.label}</div>
+                        <div className="text-xs text-gray-600">{type.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+                <button
+                  onClick={() => setShowInitialSetup(false)}
+                  className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  Pular por agora
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setShowInitialSetup(false);
+                    // Apply initial setup to study plan
+                    setStudyPlan(prev => ({
+                      ...prev,
+                      hoursPerDay: initialSetup.dailyTime,
+                      goals: [initialSetup.studyTopic],
+                      subjects: [initialSetup.studyTopic]
+                    }));
+                  }}
+                  disabled={!initialSetup.studyTopic.trim()}
+                  className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
+                >
+                  Criar Meu Plano
+                </button>
+              </div>
+
+              {/* AI Preview */}
+              {initialSetup.studyTopic && (
+                <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Brain className="text-blue-600" size={16} />
+                    </div>
+                    <div className="text-left">
+                      <h4 className="font-semibold text-blue-800 mb-1">Preview do seu plano:</h4>
+                      <p className="text-sm text-blue-700">
+                        <strong>{initialSetup.studyTopic}</strong> em {initialSetup.timeFrame} dias, 
+                        estudando {initialSetup.dailyTime}h por dia. 
+                        Nível {initialSetup.currentLevel === 'beginner' ? 'iniciante' : initialSetup.currentLevel === 'intermediate' ? 'intermediário' : 'avançado'} 
+                        para {initialSetup.studyType === 'general' ? 'conhecimento geral' : 
+                        initialSetup.studyType === 'exam' ? 'aprovação em prova' :
+                        initialSetup.studyType === 'project' ? 'aplicação em projeto' : 'desenvolvimento de habilidade'}.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Study Schedule Modal */}
+      {showScheduleModal && sessionToSchedule && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white rounded-t-3xl z-10">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                  <Calendar className="text-green-600" size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-800">Programar Estudos</h2>
+                  <p className="text-sm text-gray-500">"{sessionToSchedule.title}"</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowScheduleModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Content Summary */}
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">Conteúdo para Estudar</h3>
+                <div className="flex items-center space-x-3 mb-2">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                    sessionToSchedule.type === 'text' ? 'bg-orange-100' :
+                    sessionToSchedule.type === 'pdf' ? 'bg-blue-100' :
+                    sessionToSchedule.type === 'youtube' ? 'bg-red-100' :
+                    'bg-purple-100'
+                  }`}>
+                    {sessionToSchedule.type === 'text' && <FileText className="text-orange-600" size={16} />}
+                    {sessionToSchedule.type === 'pdf' && <Upload className="text-blue-600" size={16} />}
+                    {sessionToSchedule.type === 'youtube' && <Youtube className="text-red-600" size={16} />}
+                    {sessionToSchedule.type === 'camera' && <Camera className="text-purple-600" size={16} />}
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-800">{sessionToSchedule.title}</p>
+                    <p className="text-sm text-gray-600">Duração estimada: {sessionToSchedule.duration} min</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {sessionToSchedule.tags.map((tag, index) => (
+                    <span key={index} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Schedule Configuration */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-800">Como você quer estudar este conteúdo?</h3>
+                
+                {/* Start Date */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Quando começar?
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { label: 'Hoje', date: new Date() },
+                      { label: 'Amanhã', date: new Date(Date.now() + 86400000) },
+                      { label: 'Segunda-feira', date: (() => {
+                        const date = new Date();
+                        const day = date.getDay();
+                        const diff = day === 0 ? 1 : (8 - day);
+                        return new Date(date.getTime() + diff * 86400000);
+                      })() }
+                    ].map((option, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setScheduleConfig(prev => ({ ...prev, startDate: option.date }))}
+                        className={`p-3 rounded-lg border-2 text-center transition-all ${
+                          scheduleConfig.startDate.toDateString() === option.date.toDateString()
+                            ? 'border-green-500 bg-green-50 text-green-700'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="font-semibold">{option.label}</div>
+                        <div className="text-xs text-gray-600">
+                          {option.date.toLocaleDateString('pt-BR')}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sessions per Week */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Quantas vezes por semana?
+                  </label>
+                  <div className="flex items-center space-x-4">
+                    <input 
+                      type="range"
+                      min="1"
+                      max="7"
+                      step="1"
+                      value={scheduleConfig.sessionsPerWeek}
+                      onChange={(e) => setScheduleConfig(prev => ({ ...prev, sessionsPerWeek: parseInt(e.target.value) }))}
+                      className="flex-1"
+                    />
+                    <div className="text-xl font-bold text-green-600 min-w-[100px]">
+                      {scheduleConfig.sessionsPerWeek}x por semana
+                    </div>
+                  </div>
+                </div>
+
+                {/* Session Duration */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Duração de cada sessão
+                  </label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[30, 45, 60, 90].map((minutes) => (
+                      <button
+                        key={minutes}
+                        onClick={() => setScheduleConfig(prev => ({ ...prev, sessionDuration: minutes }))}
+                        className={`p-3 rounded-lg border-2 text-center transition-all ${
+                          scheduleConfig.sessionDuration === minutes
+                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="font-bold">{minutes}min</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Study Days */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Dias da semana preferidos
+                  </label>
+                  <div className="grid grid-cols-7 gap-2">
+                    {[
+                      { id: 'sunday', label: 'Dom' },
+                      { id: 'monday', label: 'Seg' },
+                      { id: 'tuesday', label: 'Ter' },
+                      { id: 'wednesday', label: 'Qua' },
+                      { id: 'thursday', label: 'Qui' },
+                      { id: 'friday', label: 'Sex' },
+                      { id: 'saturday', label: 'Sáb' }
+                    ].map((day) => (
+                      <button
+                        key={day.id}
+                        onClick={() => {
+                          const isSelected = scheduleConfig.studyDays.includes(day.id);
+                          if (isSelected && scheduleConfig.studyDays.length > 1) {
+                            setScheduleConfig(prev => ({
+                              ...prev,
+                              studyDays: prev.studyDays.filter(d => d !== day.id)
+                            }));
+                          } else if (!isSelected && scheduleConfig.studyDays.length < scheduleConfig.sessionsPerWeek) {
+                            setScheduleConfig(prev => ({
+                              ...prev,
+                              studyDays: [...prev.studyDays, day.id]
+                            }));
+                          }
+                        }}
+                        className={`p-2 rounded-lg border-2 text-center transition-all ${
+                          scheduleConfig.studyDays.includes(day.id)
+                            ? 'border-purple-500 bg-purple-50 text-purple-700'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="text-sm font-semibold">{day.label}</div>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Selecione {scheduleConfig.sessionsPerWeek} dias
+                  </p>
+                </div>
+
+                {/* Reminder */}
+                <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                      <Clock className="text-yellow-600" size={16} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-yellow-800">Lembretes</h4>
+                      <p className="text-sm text-yellow-700">Receber notificações para não esquecer</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setScheduleConfig(prev => ({ ...prev, reminderEnabled: !prev.reminderEnabled }))}
+                    className={`w-12 h-6 rounded-full transition-colors relative ${
+                      scheduleConfig.reminderEnabled ? 'bg-green-500' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`w-5 h-5 bg-white rounded-full shadow-md transition-transform absolute top-0.5 ${
+                      scheduleConfig.reminderEnabled ? 'transform translate-x-6' : 'transform translate-x-0.5'
+                    }`}></div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Schedule Preview */}
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4 border border-green-200">
+                <h4 className="font-semibold text-green-800 mb-2">Resumo da Programação</h4>
+                <div className="text-sm text-green-700 space-y-1">
+                  <p>📅 <strong>Início:</strong> {scheduleConfig.startDate.toLocaleDateString('pt-BR')}</p>
+                  <p>⏰ <strong>Frequência:</strong> {scheduleConfig.sessionsPerWeek}x por semana, {scheduleConfig.sessionDuration} min cada</p>
+                  <p>📚 <strong>Total:</strong> {Math.ceil(sessionToSchedule.duration / scheduleConfig.sessionDuration)} sessões necessárias</p>
+                  <p>🗓️ <strong>Dias:</strong> {scheduleConfig.studyDays.map(d => 
+                    ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][
+                      ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(d)
+                    ]
+                  ).join(', ')}</p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <button
+                  onClick={() => setShowScheduleModal(false)}
+                  className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  Cancelar
+                </button>
+                
+                <button
+                  onClick={() => {
+                    // Save schedule
+                    setUserProgress(prev => ({
+                      ...prev,
+                      xp: prev.xp + 25
+                    }));
+                    setShowScheduleModal(false);
+                    setSessionToSchedule(null);
+                  }}
+                  className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-105"
+                >
+                  Programar Estudos (+25 XP)
+                </button>
               </div>
             </div>
           </div>
