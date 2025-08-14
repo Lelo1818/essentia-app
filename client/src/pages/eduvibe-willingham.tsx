@@ -69,6 +69,7 @@ interface LearningMyth {
 const EduVibeWillingham = () => {
   // Estados principais
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<{name: string, email: string, avatar?: string} | null>(null);
   const [activeTab, setActiveTab] = useState('myths');
   const [showInitialSetup, setShowInitialSetup] = useState(false);
   
