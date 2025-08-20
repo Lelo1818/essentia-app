@@ -63,7 +63,7 @@ export default function EssentiaPro() {
   };
 
   const [completedPortals, setCompletedPortals] = useState<string[]>([]);
-  const [unlockedPortals, setUnlockedPortals] = useState<string[]>(['clareza', 'presenca', 'coragem']);
+  const [unlockedPortals, setUnlockedPortals] = useState<string[]>(['clareza', 'presenca', 'coragem', 'conexao']);
   const [userXP, setUserXP] = useState(280);
 
   const handlePortalComplete = (portalId: string, reflection: string) => {
@@ -77,7 +77,8 @@ export default function EssentiaPro() {
         'coragem': { clarityIncrease: 12, xp: 120 },
         'sabedoria': { clarityIncrease: 15, xp: 150 },
         'intuicao': { clarityIncrease: 8, xp: 130 },
-        'proposito': { clarityIncrease: 20, xp: 200 }
+        'proposito': { clarityIncrease: 20, xp: 200 },
+        'conexao': { clarityIncrease: 25, xp: 300 }
       };
       
       const reward = rewards[portalId as keyof typeof rewards];
