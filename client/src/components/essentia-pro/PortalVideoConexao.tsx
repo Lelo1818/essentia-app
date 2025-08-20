@@ -38,44 +38,44 @@ interface VideoScene {
 const videoScenes: VideoScene[] = [
   {
     id: 1,
-    title: 'O Vazio e a Respiração',
-    description: 'Fundo escuro minimalista, avatar sozinho com brilho sutil',
-    narration: 'Respire fundo. Sinta-se aqui, agora, com o seu corpo. Apenas você.',
+    title: 'O Despertar',
+    description: 'Universo nascendo com partículas de luz se formando',
+    narration: 'Respire fundo. Você é parte de algo infinito.',
     startTime: 0,
-    duration: 30
+    duration: 12
   },
   {
     id: 2,
-    title: 'O Fio de Luz',
-    description: 'Luz pulsando no peito, fios de energia se expandindo',
-    narration: 'Sinta a sua própria energia. Imagine uma luz, um calor que vem do centro do seu peito. A cada expiração, visualize essa luz se expandindo.',
-    startTime: 30,
-    duration: 45
+    title: 'A Conexão',
+    description: 'Energia irradiando e conectando com outras consciências',
+    narration: 'Sinta sua energia se expandindo e se conectando.',
+    startTime: 12,
+    duration: 12
   },
   {
     id: 3,
-    title: 'O Grande Tecido',
-    description: 'Conexões se formando, vasto tecido de estrelas interconectadas',
-    narration: 'Esses fios de luz são suas conexões. Sinta-os se unindo ao grande tecido da vida. Você não está sozinho. Você está interconectado a tudo que existe.',
-    startTime: 75,
-    duration: 60
+    title: 'O Tecido Universal',
+    description: 'Rede cósmica de conexões pulsando em harmonia',
+    narration: 'Você faz parte do grande tecido da existência.',
+    startTime: 24,
+    duration: 12
   },
   {
     id: 4,
-    title: 'A Prática do Toque',
-    description: 'Momento interativo - O Toque da Unidade',
-    narration: 'Toque algo próximo a você. A sua pele, uma mesa, o chão. Sinta a textura, a temperatura. Sua consciência está viva nesse toque.',
-    startTime: 135,
-    duration: 30,
+    title: 'O Toque da Unidade',
+    description: 'Momento interativo com ondas de conexão',
+    narration: 'Toque a tela e sinta a unidade.',
+    startTime: 36,
+    duration: 12,
     interactive: true
   },
   {
     id: 5,
-    title: 'O Círculo Completo',
-    description: 'Constelação final revelando a beleza das conexões',
-    narration: 'Você não está sozinho. A conexão essencial vive em você.',
-    startTime: 165,
-    duration: 15
+    title: 'A Revelação',
+    description: 'Explosão de luz revelando a interconexão total',
+    narration: 'Você nunca esteve sozinho. A conexão é eterna.',
+    startTime: 48,
+    duration: 12
   }
 ];
 
@@ -91,7 +91,7 @@ export const PortalVideoConexao = ({ isOpen, onOpenChange, onComplete }: PortalV
   const [touchPoints, setTouchPoints] = useState<{x: number, y: number, time: number}[]>([]);
   const animationFrameRef = useRef<number>();
 
-  const totalDuration = 180; // 3 minutos
+  const totalDuration = 60; // 1 minuto
   const currentScene = videoScenes[currentSceneIndex];
 
   // Síntese de voz usando Web Speech API
@@ -117,170 +117,236 @@ export const PortalVideoConexao = ({ isOpen, onOpenChange, onComplete }: PortalV
     }
   };
 
-  // Renderização das cenas no canvas
+  // Sistema de partículas avançado
+  const particles = useRef<Array<{
+    x: number, y: number, vx: number, vy: number, 
+    size: number, life: number, maxLife: number,
+    color: string, type: 'star' | 'energy' | 'connection'
+  }>>([]);
+
+  // Renderização cinematográfica avançada
   const renderScene = (ctx: CanvasRenderingContext2D, sceneId: number, progress: number) => {
     const canvas = ctx.canvas;
     const width = canvas.width;
     const height = canvas.height;
+    const time = Date.now() * 0.001;
 
-    // Limpar canvas
-    ctx.clearRect(0, 0, width, height);
+    // Limpar com fade suave
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, width, height);
 
     switch (sceneId) {
-      case 1: // O Vazio e a Respiração
-        // Fundo escuro com gradiente
-        const gradient1 = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width/2);
-        gradient1.addColorStop(0, 'rgba(20, 20, 40, 0.8)');
-        gradient1.addColorStop(1, 'rgba(0, 0, 0, 1)');
-        ctx.fillStyle = gradient1;
+      case 1: // O Despertar - Universo nascendo
+        // Fundo Big Bang
+        const bigBangGradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width);
+        bigBangGradient.addColorStop(0, `rgba(255, 255, 255, ${progress * 0.8})`);
+        bigBangGradient.addColorStop(0.3, `rgba(255, 215, 0, ${progress * 0.6})`);
+        bigBangGradient.addColorStop(0.7, `rgba(138, 43, 226, ${progress * 0.4})`);
+        bigBangGradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
+        ctx.fillStyle = bigBangGradient;
         ctx.fillRect(0, 0, width, height);
 
-        // Avatar central com brilho sutil
-        const pulse = Math.sin(Date.now() * 0.005) * 0.3 + 0.7;
-        ctx.beginPath();
-        ctx.arc(width/2, height/2, 30 * pulse, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(34, 211, 238, ${pulse * 0.6})`;
-        ctx.fill();
-        
-        // Aura sutil
-        ctx.beginPath();
-        ctx.arc(width/2, height/2, 50 * pulse, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(34, 211, 238, ${pulse * 0.3})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        break;
-
-      case 2: // O Fio de Luz
-        // Fundo escuro
-        ctx.fillStyle = '#1a1a2e';
-        ctx.fillRect(0, 0, width, height);
-
-        // Coração pulsante
-        const heartPulse = Math.sin(Date.now() * 0.008) * 0.4 + 1;
-        ctx.beginPath();
-        ctx.arc(width/2, height/2, 25 * heartPulse, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(34, 211, 238, ${heartPulse * 0.8})`;
-        ctx.fill();
-
-        // Fios de luz irradiando
-        for (let i = 0; i < 8; i++) {
-          const angle = (i / 8) * Math.PI * 2;
-          const length = 80 + Math.sin(Date.now() * 0.003 + i) * 20;
-          const x1 = width/2 + Math.cos(angle) * 30;
-          const y1 = height/2 + Math.sin(angle) * 30;
-          const x2 = width/2 + Math.cos(angle) * length;
-          const y2 = height/2 + Math.sin(angle) * length;
+        // Partículas de luz se formando
+        for (let i = 0; i < 100; i++) {
+          const angle = (i / 100) * Math.PI * 2;
+          const radius = 50 + Math.sin(time * 2 + i * 0.1) * 30;
+          const x = width/2 + Math.cos(angle) * radius * progress;
+          const y = height/2 + Math.sin(angle) * radius * progress;
+          const size = Math.random() * 3 + 1;
           
-          const threadGradient = ctx.createLinearGradient(x1, y1, x2, y2);
-          threadGradient.addColorStop(0, 'rgba(34, 211, 238, 0.8)');
-          threadGradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
-          
-          ctx.strokeStyle = threadGradient;
-          ctx.lineWidth = 3;
           ctx.beginPath();
-          ctx.moveTo(x1, y1);
-          ctx.lineTo(x2, y2);
-          ctx.stroke();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.8 * progress})`;
+          ctx.fill();
+          
+          // Rastro de luz
+          ctx.beginPath();
+          ctx.arc(x, y, size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(34, 211, 238, ${0.3 * progress})`;
+          ctx.fill();
         }
         break;
 
-      case 3: // O Grande Tecido
-        // Fundo cósmico
+      case 2: // A Conexão - Energia irradiando
+        // Fundo energético
+        ctx.fillStyle = 'rgba(10, 10, 30, 0.9)';
+        ctx.fillRect(0, 0, width, height);
+
+        // Centro energético pulsante
+        const energyPulse = Math.sin(time * 4) * 0.3 + 1;
+        const coreGradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, 100 * energyPulse);
+        coreGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+        coreGradient.addColorStop(0.5, 'rgba(34, 211, 238, 0.6)');
+        coreGradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
+        ctx.fillStyle = coreGradient;
+        ctx.fillRect(0, 0, width, height);
+
+        // Raios de energia cinematográficos
+        for (let i = 0; i < 12; i++) {
+          const angle = (i / 12) * Math.PI * 2 + time * 0.5;
+          const length = 200 + Math.sin(time * 3 + i) * 50;
+          
+          ctx.save();
+          ctx.translate(width/2, height/2);
+          ctx.rotate(angle);
+          
+          const energyGradient = ctx.createLinearGradient(0, 0, length, 0);
+          energyGradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+          energyGradient.addColorStop(0.5, 'rgba(34, 211, 238, 0.6)');
+          energyGradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
+          
+          ctx.strokeStyle = energyGradient;
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(length, 0);
+          ctx.stroke();
+          
+          ctx.restore();
+        }
+        break;
+
+      case 3: // O Tecido Universal - Rede cósmica
+        // Fundo cósmico profundo
         const cosmicGradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width);
-        cosmicGradient.addColorStop(0, 'rgba(30, 20, 60, 1)');
-        cosmicGradient.addColorStop(0.5, 'rgba(60, 20, 80, 1)');
+        cosmicGradient.addColorStop(0, 'rgba(20, 20, 60, 1)');
+        cosmicGradient.addColorStop(0.5, 'rgba(60, 20, 100, 0.8)');
         cosmicGradient.addColorStop(1, 'rgba(0, 0, 20, 1)');
         ctx.fillStyle = cosmicGradient;
         ctx.fillRect(0, 0, width, height);
 
-        // Pontos de conexão
-        const points = [];
-        for (let i = 0; i < 15; i++) {
-          const x = (i % 5) * (width / 4) + width / 8;
-          const y = Math.floor(i / 5) * (height / 3) + height / 6;
-          const pulse = Math.sin(Date.now() * 0.004 + i * 0.5) * 0.5 + 1;
-          
-          points.push({ x, y });
-          
-          ctx.beginPath();
-          ctx.arc(x, y, 4 * pulse, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${pulse * 0.8})`;
-          ctx.fill();
+        // Rede neural cósmica
+        const nodes = [];
+        for (let i = 0; i < 8; i++) {
+          for (let j = 0; j < 6; j++) {
+            const x = (i * width / 7) + 50;
+            const y = (j * height / 5) + 50;
+            const pulse = Math.sin(time * 2 + i * 0.5 + j * 0.3) * 0.5 + 1;
+            nodes.push({ x, y, pulse });
+          }
         }
 
-        // Linhas de conexão
-        ctx.strokeStyle = 'rgba(34, 211, 238, 0.4)';
-        ctx.lineWidth = 1;
-        for (let i = 0; i < points.length; i++) {
-          for (let j = i + 1; j < points.length; j++) {
-            if (Math.random() > 0.7) {
+        // Conexões pulsantes
+        ctx.strokeStyle = 'rgba(34, 211, 238, 0.6)';
+        ctx.lineWidth = 2;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dist = Math.sqrt((nodes[i].x - nodes[j].x) ** 2 + (nodes[i].y - nodes[j].y) ** 2);
+            if (dist < 150) {
+              const opacity = 1 - (dist / 150);
+              ctx.strokeStyle = `rgba(34, 211, 238, ${opacity * 0.8})`;
               ctx.beginPath();
-              ctx.moveTo(points[i].x, points[i].y);
-              ctx.lineTo(points[j].x, points[j].y);
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
               ctx.stroke();
             }
           }
         }
 
-        // Avatar central integrado
-        ctx.beginPath();
-        ctx.arc(width/2, height/2, 20, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(34, 211, 238, 1)';
-        ctx.fill();
-        break;
-
-      case 4: // A Prática do Toque
-        // Fundo sereno
-        ctx.fillStyle = '#0f4c75';
-        ctx.fillRect(0, 0, width, height);
-
-        // Indicação de toque
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.font = '24px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Toque da Unidade', width/2, height/2 - 40);
-        ctx.font = '16px Arial';
-        ctx.fillText('Toque aqui para criar conexões', width/2, height/2 + 20);
-
-        // Renderizar ondas de toque
-        touchPoints.forEach(point => {
-          const age = Date.now() - point.time;
-          const radius = (age / 10) % 100;
-          const opacity = Math.max(0, 1 - age / 2000);
+        // Nós da rede
+        nodes.forEach(node => {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 6 * node.pulse, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${node.pulse * 0.9})`;
+          ctx.fill();
           
           ctx.beginPath();
-          ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`;
+          ctx.arc(node.x, node.y, 12 * node.pulse, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(34, 211, 238, ${node.pulse * 0.5})`;
           ctx.lineWidth = 2;
           ctx.stroke();
         });
         break;
 
-      case 5: // O Círculo Completo
-        // Fundo da constelação final
-        ctx.fillStyle = '#000011';
+      case 4: // O Toque da Unidade - Interativo
+        // Fundo místico
+        const mysticGradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width/2);
+        mysticGradient.addColorStop(0, 'rgba(75, 0, 130, 0.8)');
+        mysticGradient.addColorStop(1, 'rgba(25, 25, 112, 1)');
+        ctx.fillStyle = mysticGradient;
         ctx.fillRect(0, 0, width, height);
 
-        // Constelação completa
-        for (let i = 0; i < 50; i++) {
-          const x = Math.random() * width;
-          const y = Math.random() * height;
-          const size = Math.random() * 3 + 1;
-          const twinkle = Math.sin(Date.now() * 0.005 + i) * 0.5 + 0.5;
+        // Mandala interativa central
+        ctx.save();
+        ctx.translate(width/2, height/2);
+        ctx.rotate(time * 0.5);
+        
+        for (let i = 0; i < 8; i++) {
+          const angle = (i / 8) * Math.PI * 2;
+          const radius = 80;
+          
+          ctx.strokeStyle = `rgba(255, 215, 0, ${0.6 + Math.sin(time * 3 + i) * 0.4})`;
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.arc(0, 0, radius, angle, angle + Math.PI / 4);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // Texto chamativo
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.font = 'bold 32px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Toque da Unidade', width/2, height/2 - 60);
+        ctx.font = '20px Arial';
+        ctx.fillText('Toque a tela para conectar', width/2, height/2 + 100);
+
+        // Ondas de toque cinematográficas
+        touchPoints.forEach(point => {
+          const age = Date.now() - point.time;
+          const radius = (age / 5) % 150;
+          const opacity = Math.max(0, 1 - age / 3000);
+          
+          for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, radius + i * 20, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(255, 215, 0, ${opacity / (i + 1)})`;
+            ctx.lineWidth = 4 - i;
+            ctx.stroke();
+          }
+        });
+        break;
+
+      case 5: // A Revelação - Explosão de luz
+        // Explosão cósmica final
+        const explosionGradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width);
+        explosionGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+        explosionGradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.7)');
+        explosionGradient.addColorStop(0.6, 'rgba(138, 43, 226, 0.5)');
+        explosionGradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+        ctx.fillStyle = explosionGradient;
+        ctx.fillRect(0, 0, width, height);
+
+        // Galáxia de conexões
+        for (let i = 0; i < 200; i++) {
+          const angle = (i / 200) * Math.PI * 2 * 3;
+          const radius = (i / 200) * 300 + Math.sin(time * 2 + i * 0.1) * 20;
+          const x = width/2 + Math.cos(angle) * radius * progress;
+          const y = height/2 + Math.sin(angle) * radius * progress;
+          const size = Math.random() * 4 + 1;
           
           ctx.beginPath();
           ctx.arc(x, y, size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${twinkle})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.9 - (radius / 300) * 0.7})`;
           ctx.fill();
         }
 
-        // Mensagem final
-        ctx.fillStyle = 'rgba(255, 215, 0, 0.9)';
-        ctx.font = 'bold 28px Arial';
+        // Mensagem final épica
+        ctx.save();
+        ctx.translate(width/2, height/2);
+        ctx.rotate(Math.sin(time) * 0.05);
+        
+        ctx.fillStyle = 'rgba(255, 215, 0, 0.95)';
+        ctx.font = 'bold 36px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('Você é parte do todo', width/2, height/2 - 20);
-        ctx.font = '20px Arial';
-        ctx.fillText('A conexão essencial vive em você', width/2, height/2 + 20);
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 10;
+        ctx.fillText('CONEXÃO ETERNA', 0, -30);
+        
+        ctx.font = '24px Arial';
+        ctx.fillText('Você nunca esteve sozinho', 0, 30);
+        
+        ctx.restore();
         break;
     }
   };
@@ -429,7 +495,7 @@ export const PortalVideoConexao = ({ isOpen, onOpenChange, onComplete }: PortalV
             <div className="absolute bottom-4 left-4 right-4 bg-black/70 rounded-lg p-3">
               <div className="flex items-center justify-between text-white text-sm">
                 <span>{currentScene?.title}</span>
-                <span>{Math.floor(currentTime / 60)}:{(currentTime % 60).toString().padStart(2, '0')} / 3:00</span>
+                <span>{Math.floor(currentTime / 60)}:{(currentTime % 60).toString().padStart(2, '0')} / 1:00</span>
               </div>
               <Progress value={progressPercentage} className="h-2 mt-2" />
             </div>
@@ -533,14 +599,15 @@ export const PortalVideoConexao = ({ isOpen, onOpenChange, onComplete }: PortalV
             <CardContent className="p-4">
               <h4 className="font-semibold text-indigo-800 mb-2 flex items-center">
                 <Film className="w-4 h-4 mr-2" />
-                Experiência Cinematográfica
+                Experiência Cinematográfica Avançada
               </h4>
               <ul className="text-sm text-indigo-700 space-y-1">
-                <li>• Vídeo renderizado em tempo real com Canvas HTML5</li>
-                <li>• Narração em português usando síntese de voz</li>
-                <li>• 5 cenas sequenciais com 3 minutos de duração total</li>
-                <li>• Interatividade na cena 4 com efeitos de toque</li>
-                <li>• Animações suaves e transições cinematográficas</li>
+                <li>• Renderização cinematográfica em tempo real</li>
+                <li>• Sistema de partículas e efeitos visuais avançados</li>
+                <li>• 5 cenas épicas em 1 minuto de duração</li>
+                <li>• Interatividade com ondas de conexão</li>
+                <li>• Animações fluidas tipo filme de ficção científica</li>
+                <li>• Gradientes dinâmicos e explosões de luz</li>
               </ul>
             </CardContent>
           </Card>
