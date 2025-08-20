@@ -8,6 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { Lock, Unlock, CheckCircle, ArrowRight, Sparkles, Clock } from 'lucide-react';
 import { Portal } from '../../types/essentia';
 import { PortalConexaoEssencial } from './PortalConexaoEssencial';
+import { PortalVideoConexao } from './PortalVideoConexao';
 
 interface PortalCardProProps {
   portal: Portal;
@@ -23,15 +24,16 @@ export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProP
   const [practiceProgress, setPracticeProgress] = useState(0);
   const [isPlayingPractice, setIsPlayingPractice] = useState(false);
   const [showSpecialPortal, setShowSpecialPortal] = useState(false);
+  const [showVideoPortal, setShowVideoPortal] = useState(false);
 
   const Icon = portal.icon;
 
   const handleEnterPortal = () => {
     if (!portal.unlocked) return;
     
-    // Se for o portal especial da conexão, usar componente dedicado
+    // Se for o portal especial da conexão, usar versão em vídeo
     if (portal.isSpecial && portal.id === 'conexao') {
-      setShowSpecialPortal(true);
+      setShowVideoPortal(true);
       return;
     }
     
@@ -119,7 +121,7 @@ export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProP
             onClick={handleEnterPortal}
             disabled={!portal.unlocked}
           >
-            {portal.isSpecial ? '✨ Experiência Imersiva' : 
+            {portal.isSpecial ? '🎬 Experiência Cinematográfica' : 
              portal.unlocked ? 'Entrar no Portal' : 'Requer Desbloqueio'}
           </Button>
         </CardContent>
@@ -215,7 +217,17 @@ export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProP
         </DialogContent>
       </Dialog>
 
-      {/* Portal Conexão Essencial - Componente Especial */}
+      {/* Portal Conexão Essencial - Versão em Vídeo */}
+      <PortalVideoConexao 
+        isOpen={showVideoPortal}
+        onOpenChange={setShowVideoPortal}
+        onComplete={(reflection) => {
+          onComplete(portal.id, reflection);
+          setIsCompleted(true);
+        }}
+      />
+
+      {/* Portal Conexão Essencial - Versão Interativa (backup) */}
       <PortalConexaoEssencial 
         isOpen={showSpecialPortal}
         onOpenChange={setShowSpecialPortal}
