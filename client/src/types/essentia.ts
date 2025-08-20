@@ -24,6 +24,16 @@ export interface Portal {
   practice: string;
   unlocked: boolean;
   completed?: boolean;
+  isSpecial?: boolean;
+  scenes?: PortalScene[];
+}
+
+export interface PortalScene {
+  id: number;
+  title: string;
+  description: string;
+  audio: string;
+  duration: number;
 }
 
 export interface AIPersonality {

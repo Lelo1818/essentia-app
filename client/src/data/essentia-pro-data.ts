@@ -1,4 +1,4 @@
-import { Eye, Heart, Shield, Star, TreePine, Mountain, Waves, Sparkles } from 'lucide-react';
+import { Eye, Heart, Shield, Star, TreePine, Mountain, Waves, Sparkles, Users, Zap } from 'lucide-react';
 import { JourneyStage, Portal, AIPersonality, BreathingTechnique, Environment } from '../types/essentia';
 
 export const journeyStages: JourneyStage[] = [
@@ -133,6 +133,53 @@ export const portals: Portal[] = [
     phrase: 'Seu propósito é a ponte entre quem você é e quem você pode se tornar',
     practice: 'Imagine-se daqui a 10 anos, vivendo sua vida ideal. O que você está fazendo? Que legado está construindo?',
     unlocked: false
+  },
+  {
+    id: 'conexao',
+    name: 'Portal da Conexão Essencial',
+    icon: Users,
+    color: 'from-cyan-500 to-teal-600',
+    phrase: 'Você é parte do todo. Sinta a conexão que te une.',
+    practice: 'Respire fundo e sinta sua energia se expandindo, conectando-se ao grande tecido da vida.',
+    unlocked: true,
+    isSpecial: true,
+    scenes: [
+      {
+        id: 1,
+        title: 'O Vazio e a Respiração',
+        description: 'Começa com um fundo escuro, minimalista. Você está sozinho, no centro, envolto por um brilho sutil.',
+        audio: 'Respire fundo. Sinta-se aqui, agora, com o seu corpo. Apenas você.',
+        duration: 30
+      },
+      {
+        id: 2,
+        title: 'O Fio de Luz',
+        description: 'Uma luz suave pulsa no seu peito, como um coração. Pequenos fios de luz se movem para fora, como raízes brilhantes.',
+        audio: 'Sinta a sua própria energia. Imagine uma luz, um calor que vem do centro do seu peito. A cada expiração, visualize essa luz se expandindo.',
+        duration: 45
+      },
+      {
+        id: 3,
+        title: 'O Grande Tecido',
+        description: 'Os fios de luz se conectam a outros pontos luminosos. O vazio se transforma em um vasto tecido de estrelas interconectadas.',
+        audio: 'Esses fios de luz são suas conexões. Sinta-os se unindo ao grande tecido da vida. Você não está sozinho. Você está interconectado a tudo que existe.',
+        duration: 60
+      },
+      {
+        id: 4,
+        title: 'A Prática do Toque',
+        description: 'Surge a instrução "O Toque da Unidade". Você interage tocando uma representação digital, criando ondas de luz.',
+        audio: 'Toque algo próximo a você. A sua pele, uma mesa, o chão. Sinta a textura, a temperatura. Sua consciência está viva nesse toque.',
+        duration: 30
+      },
+      {
+        id: 5,
+        title: 'O Círculo Completo',
+        description: 'Você não está mais sozinho, mas sim um ponto luminoso em uma vasta constelação. A beleza da rede de conexões se revela.',
+        audio: 'Você não está sozinho(a). A conexão essencial vive em você.',
+        duration: 15
+      }
+    ]
   }
 ];
 

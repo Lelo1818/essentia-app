@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { Lock, Unlock, CheckCircle, ArrowRight, Sparkles, Clock } from 'lucide-react';
 import { Portal } from '../../types/essentia';
+import { PortalConexaoEssencial } from './PortalConexaoEssencial';
 
 interface PortalCardProProps {
   portal: Portal;
@@ -21,11 +22,19 @@ export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProP
   const [isReflecting, setIsReflecting] = useState(false);
   const [practiceProgress, setPracticeProgress] = useState(0);
   const [isPlayingPractice, setIsPlayingPractice] = useState(false);
+  const [showSpecialPortal, setShowSpecialPortal] = useState(false);
 
   const Icon = portal.icon;
 
   const handleEnterPortal = () => {
     if (!portal.unlocked) return;
+    
+    // Se for o portal especial da conexão, usar componente dedicado
+    if (portal.isSpecial && portal.id === 'conexao') {
+      setShowSpecialPortal(true);
+      return;
+    }
+    
     setIsOpen(true);
     onProgress?.(portal.id, 10);
   };
@@ -110,7 +119,8 @@ export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProP
             onClick={handleEnterPortal}
             disabled={!portal.unlocked}
           >
-            {portal.unlocked ? 'Entrar no Portal' : 'Requer Desbloqueio'}
+            {portal.isSpecial ? '✨ Experiência Imersiva' : 
+             portal.unlocked ? 'Entrar no Portal' : 'Requer Desbloqueio'}
           </Button>
         </CardContent>
       </Card>
@@ -204,6 +214,16 @@ export const PortalCardPro = ({ portal, onComplete, onProgress }: PortalCardProP
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Portal Conexão Essencial - Componente Especial */}
+      <PortalConexaoEssencial 
+        isOpen={showSpecialPortal}
+        onOpenChange={setShowSpecialPortal}
+        onComplete={(reflection) => {
+          onComplete(portal.id, reflection);
+          setIsCompleted(true);
+        }}
+      />
     </>
   );
 };
