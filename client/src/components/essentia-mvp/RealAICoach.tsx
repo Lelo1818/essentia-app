@@ -335,7 +335,7 @@ export const RealAICoach = ({ triadScores, isOpen, onClose }: RealAICoachProps) 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-4xl h-[80vh] flex flex-col">
+      <Card className="w-full max-w-5xl h-[90vh] flex flex-col">
         <CardHeader className="border-b">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center">
@@ -428,8 +428,8 @@ export const RealAICoach = ({ triadScores, isOpen, onClose }: RealAICoachProps) 
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder={`Converse com ${currentPersonality.name}...`}
-              className="resize-none"
-              rows={2}
+              className="resize-none min-h-[80px]"
+              rows={3}
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();

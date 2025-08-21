@@ -166,9 +166,10 @@ export default function EssentiaMVP() {
   };
 
   const handlePortalAccept = (portalId: string) => {
+    console.log('Portal aceito:', portalId);
     setActiveRitual(portalId);
     setShowEnhancedPortal(true);
-    // setCurrentStep('ritual'); // Comentado para usar portal aprimorado
+    setCurrentStep('ritual'); // Garantir que muda para ritual
   };
 
   const handleRitualComplete = (portalId: string) => {
@@ -412,7 +413,10 @@ export default function EssentiaMVP() {
                 todayMood={todayMood || undefined}
                 lastPortalId={user?.lastPortalId}
                 streak={user?.streak || 0}
-                onPortalRequest={handlePortalAccept}
+                onPortalRequest={(portalId: string) => {
+                  console.log('Portal solicitado via recomendações:', portalId);
+                  handlePortalAccept(portalId);
+                }}
               />
             )}
 

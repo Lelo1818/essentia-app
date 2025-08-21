@@ -343,9 +343,10 @@ export const SmartRecommendations = ({
                           <Button
                             onClick={() => {
                               console.log('Botão clicado:', rec);
+                              console.log('Chamando onPortalRequest com:', rec.portalId);
                               if (rec.portalId) {
                                 onPortalRequest(rec.portalId);
-                              } else {
+                              } else if (rec.action) {
                                 rec.action.onClick();
                               }
                             }}

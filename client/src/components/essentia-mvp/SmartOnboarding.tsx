@@ -297,10 +297,23 @@ export const SmartOnboarding = ({ onComplete }: SmartOnboardingProps) => {
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && e.currentTarget.value.trim()) {
                   handleAnswer(e.currentTarget.value.trim());
+                  e.currentTarget.value = '';
                 }
               }}
               autoFocus
             />
+            <Button
+              onClick={() => {
+                const input = document.querySelector('input') as HTMLInputElement;
+                if (input && input.value.trim()) {
+                  handleAnswer(input.value.trim());
+                  input.value = '';
+                }
+              }}
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-2"
+            >
+              Continuar <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
             <p className="text-sm text-gray-500 text-center">Pressione Enter para continuar</p>
           </div>
         );
