@@ -22,11 +22,12 @@ import { PortalRecommendation } from '../components/essentia-mvp/PortalRecommend
 import { RitualExecution } from '../components/essentia-mvp/RitualExecution';
 import { PresencaViva } from '../components/essentia-mvp/PresencaViva';
 import { ProgressDashboard } from '../components/essentia-mvp/ProgressDashboard';
-import { AICoach } from '../components/essentia-mvp/AICoach';
+import { RealAICoach } from '../components/essentia-mvp/RealAICoach';
 import { PersonalInsights } from '../components/essentia-mvp/PersonalInsights';
 import { SmartRecommendations } from '../components/essentia-mvp/SmartRecommendations';
 import { ContextualGuidance } from '../components/essentia-mvp/ContextualGuidance';
 import { EnhancedPortals } from '../components/essentia-mvp/EnhancedPortals';
+import { SmartOnboarding } from '../components/essentia-mvp/SmartOnboarding';
 
 interface TriadScores {
   consciencia: number;  // 0-100
@@ -37,13 +38,19 @@ interface TriadScores {
 interface UserProfile {
   id: string;
   name: string;
-  email: string;
+  age?: number;
+  interests?: string[];
+  lifeGoals?: string[];
+  currentChallenges?: string[];
   triadScores: TriadScores;
-  lastPortalId?: string;
-  lastCompletedAt?: Date;
+  personalityType?: 'reflexivo' | 'ativo' | 'equilibrado';
+  preferredPortal?: 'proposito' | 'vitalidade' | 'harmonia';
+  motivation?: string;
   streak: number;
   totalRitualsCompleted: number;
-  createdAt: Date;
+  lastPortalId?: string;
+  lastCompletedAt?: Date;
+  createdAt?: Date;
 }
 
 interface DailyMood {
@@ -135,19 +142,9 @@ export default function EssentiaMVP() {
   };
 
   // Handlers
-  const handleOnboardingComplete = (name: string, email: string, triadScores: TriadScores) => {
-    const newUser: UserProfile = {
-      id: `user_${Date.now()}`,
-      name,
-      email,
-      triadScores,
-      streak: 0,
-      totalRitualsCompleted: 0,
-      createdAt: new Date()
-    };
-    
-    setUser(newUser);
-    localStorage.setItem('essentia-mvp-user', JSON.stringify(newUser));
+  const handleOnboardingComplete = (userProfile: UserProfile) => {
+    setUser(userProfile);
+    localStorage.setItem('essentia-mvp-user', JSON.stringify(userProfile));
     setIsOnboarding(false);
     setCurrentStep('checkin');
   };
@@ -312,7 +309,26 @@ export default function EssentiaMVP() {
                       Dia {user?.streak || 0}
                     </Badge>
                     <Button
-                      onClick={() => setIsAICoachOpen(true)}
+                      onClick={() => {
+                      // Som de botão
+                      try {
+                        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                        oscillator.type = 'sine';
+                        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                        gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+                        gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.1);
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                      } catch (error) {
+                        // Silent fallback
+                      }
+                      setIsAICoachOpen(true);
+                    }}
                       size="sm"
                       className="bg-gradient-to-r from-blue-600 to-purple-600"
                     >
@@ -414,8 +430,8 @@ export default function EssentiaMVP() {
               onDailyCheckin={() => setCurrentStep('checkin')}
             />
 
-            {/* Sistema 4: IA Coach Modal */}
-            <AICoach
+            {/* Sistema 4: IA Coach Real */}
+            <RealAICoach
               triadScores={user?.triadScores!}
               isOpen={isAICoachOpen}
               onClose={() => setIsAICoachOpen(false)}
@@ -491,7 +507,11 @@ export default function EssentiaMVP() {
 
         {/* Conteúdo Principal */}
         <div className="max-w-4xl mx-auto">
-          {renderCurrentStep()}
+          {isOnboarding ? (
+            <SmartOnboarding onComplete={handleOnboardingComplete} />
+          ) : (
+            renderCurrentStep()
+          )}
         </div>
       </div>
     </div>
