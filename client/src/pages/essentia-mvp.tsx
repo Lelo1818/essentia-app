@@ -29,6 +29,8 @@ import { ContextualGuidance } from '../components/essentia-mvp/ContextualGuidanc
 import { EnhancedPortals } from '../components/essentia-mvp/EnhancedPortals';
 import { SmartOnboarding } from '../components/essentia-mvp/SmartOnboarding';
 import { ImmersivePortalExperience } from '../components/essentia-mvp/ImmersivePortalExperience';
+import { SixPillarsPortalSystem } from '../components/essentia-mvp/SixPillarsPortalSystem';
+import { FunctionalAIDashboard } from '../components/essentia-mvp/FunctionalAIDashboard';
 
 interface TriadScores {
   consciencia: number;  // 0-100
@@ -51,6 +53,7 @@ interface UserProfile {
   totalRitualsCompleted: number;
   lastPortalId?: string;
   lastCompletedAt?: Date;
+  insights?: string[];
   createdAt?: Date;
 }
 
@@ -71,7 +74,7 @@ export default function EssentiaMVP() {
   const [todayMood, setTodayMood] = useState<DailyMood | null>(null);
   
   // Controle de fluxo
-  const [currentStep, setCurrentStep] = useState<'onboarding' | 'checkin' | 'portal' | 'ritual' | 'dashboard'>('onboarding');
+  const [currentStep, setCurrentStep] = useState<'onboarding' | 'checkin' | 'portal' | 'ritual' | 'dashboard' | 'pillar'>('onboarding');
   
   // Estados para os 4 sistemas de IA
   const [isAICoachOpen, setIsAICoachOpen] = useState(false);
@@ -79,6 +82,8 @@ export default function EssentiaMVP() {
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [showGuidance, setShowGuidance] = useState(true);
   const [showEnhancedPortal, setShowEnhancedPortal] = useState(false);
+  const [activePillar, setActivePillar] = useState<string | null>(null);
+  const [showSixPillars, setShowSixPillars] = useState(false);
 
   // Verificar se usuário já existe
   useEffect(() => {
@@ -143,7 +148,7 @@ export default function EssentiaMVP() {
   };
 
   // Handlers
-  const handleOnboardingComplete = (userProfile: UserProfile) => {
+  const handleOnboardingComplete = (userProfile: any) => {
     setUser(userProfile);
     localStorage.setItem('essentia-mvp-user', JSON.stringify(userProfile));
     setIsOnboarding(false);
@@ -170,7 +175,34 @@ export default function EssentiaMVP() {
     console.log('Portal aceito:', portalId);
     setActiveRitual(portalId);
     setShowEnhancedPortal(true);
-    setCurrentStep('ritual'); // Garantir que muda para ritual
+    setCurrentStep('ritual');
+  };
+
+  const handlePillarRecommendation = (pillarId: string) => {
+    console.log('Pilar recomendado:', pillarId);
+    setActivePillar(pillarId);
+    setShowSixPillars(true);
+    setCurrentStep('pillar');
+  };
+
+  const handleSixPillarsComplete = (insights: string[]) => {
+    console.log('6 Pilares concluídos com insights:', insights);
+    
+    // Atualizar user com insights
+    const updatedUser = {
+      ...user!,
+      lastCompletedAt: new Date(),
+      totalRitualsCompleted: (user?.totalRitualsCompleted || 0) + 1,
+      insights: [...(user?.insights || []), ...insights]
+    };
+    
+    localStorage.setItem('essentia-mvp-user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    
+    // Voltar ao dashboard
+    setShowSixPillars(false);
+    setActivePillar(null);
+    setCurrentStep('dashboard');
   };
 
   const handleRitualComplete = (portalId: string) => {
@@ -268,7 +300,7 @@ export default function EssentiaMVP() {
       case 'onboarding':
         return (
           <OnboardingTriad 
-            onComplete={handleOnboardingComplete}
+            onComplete={(userProfile: any) => handleOnboardingComplete(userProfile)}
           />
         );
         
@@ -306,6 +338,21 @@ export default function EssentiaMVP() {
             portalId={activeRitual!}
             onComplete={handleRitualComplete}
           />
+        );
+        
+      case 'pillar':
+        return showSixPillars && activePillar ? (
+          <SixPillarsPortalSystem
+            pillarId={activePillar}
+            onComplete={handleSixPillarsComplete}
+            onBack={() => {
+              setShowSixPillars(false);
+              setActivePillar(null);
+              setCurrentStep('dashboard');
+            }}
+          />
+        ) : (
+          <div>Carregando experiência dos 6 pilares...</div>
         );
         
       case 'dashboard':
@@ -450,6 +497,12 @@ export default function EssentiaMVP() {
               triadScores={user?.triadScores!}
               isOpen={isAICoachOpen}
               onClose={() => setIsAICoachOpen(false)}
+            />
+
+            {/* Sistemas de IA Funcionais */}
+            <FunctionalAIDashboard
+              triadScores={user?.triadScores!}
+              onPillarRecommendation={handlePillarRecommendation}
             />
 
             {/* Portal Aprimorado */}
