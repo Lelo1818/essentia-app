@@ -22,6 +22,10 @@ import { PortalRecommendation } from '../components/essentia-mvp/PortalRecommend
 import { RitualExecution } from '../components/essentia-mvp/RitualExecution';
 import { PresencaViva } from '../components/essentia-mvp/PresencaViva';
 import { ProgressDashboard } from '../components/essentia-mvp/ProgressDashboard';
+import { AICoach } from '../components/essentia-mvp/AICoach';
+import { PersonalInsights } from '../components/essentia-mvp/PersonalInsights';
+import { SmartRecommendations } from '../components/essentia-mvp/SmartRecommendations';
+import { ContextualGuidance } from '../components/essentia-mvp/ContextualGuidance';
 
 interface TriadScores {
   consciencia: number;  // 0-100
@@ -59,6 +63,12 @@ export default function EssentiaMVP() {
   
   // Controle de fluxo
   const [currentStep, setCurrentStep] = useState<'onboarding' | 'checkin' | 'portal' | 'ritual' | 'dashboard'>('onboarding');
+  
+  // Estados para os 4 sistemas de IA
+  const [isAICoachOpen, setIsAICoachOpen] = useState(false);
+  const [showInsights, setShowInsights] = useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(true);
 
   // Verificar se usuário já existe
   useEffect(() => {
@@ -192,6 +202,27 @@ export default function EssentiaMVP() {
     }
   };
 
+  // Handlers para os sistemas de IA
+  const handleAIAction = (action: string) => {
+    switch (action) {
+      case 'accept-portal':
+        if (recommendedPortal) {
+          handlePortalAccept(recommendedPortal);
+        }
+        break;
+      case 'start-ritual':
+        if (activeRitual) {
+          // Ritual já iniciado
+        }
+        break;
+      case 'new-portal':
+        handleNewPortalRequest();
+        break;
+      default:
+        console.log('Ação IA:', action);
+    }
+  };
+
   // Renderização baseada no fluxo
   const renderCurrentStep = () => {
     switch (currentStep) {
@@ -231,14 +262,23 @@ export default function EssentiaMVP() {
       case 'dashboard':
         return (
           <div className="space-y-6">
-            {/* Header com Tríade */}
+            {/* Header com Tríade e Controles IA */}
             <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>Sua Tríade Essencial</span>
-                  <Badge variant="outline" className="bg-white">
-                    Dia {user?.streak || 0}
-                  </Badge>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="outline" className="bg-white">
+                      Dia {user?.streak || 0}
+                    </Badge>
+                    <Button
+                      onClick={() => setIsAICoachOpen(true)}
+                      size="sm"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600"
+                    >
+                      💬 IA Coach
+                    </Button>
+                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -262,8 +302,63 @@ export default function EssentiaMVP() {
                     <div className="text-lg font-semibold mt-1">{user?.triadScores.coerencia || 0}%</div>
                   </div>
                 </div>
+                
+                {/* Controles dos 4 Sistemas de IA */}
+                <div className="flex justify-center space-x-2 mt-4">
+                  <Button
+                    onClick={() => setShowGuidance(!showGuidance)}
+                    variant={showGuidance ? "default" : "outline"}
+                    size="sm"
+                  >
+                    🧭 Orientação
+                  </Button>
+                  <Button
+                    onClick={() => setShowInsights(!showInsights)}
+                    variant={showInsights ? "default" : "outline"}
+                    size="sm"
+                  >
+                    📊 Insights
+                  </Button>
+                  <Button
+                    onClick={() => setShowRecommendations(!showRecommendations)}
+                    variant={showRecommendations ? "default" : "outline"}
+                    size="sm"
+                  >
+                    🎯 Recomendações
+                  </Button>
+                </div>
               </CardContent>
             </Card>
+
+            {/* Sistema 1: Orientação Contextual */}
+            {showGuidance && (
+              <ContextualGuidance
+                triadScores={user?.triadScores!}
+                currentStep={currentStep}
+                streak={user?.streak || 0}
+                totalRitualsCompleted={user?.totalRitualsCompleted || 0}
+                onActionRequest={handleAIAction}
+              />
+            )}
+
+            {/* Sistema 2: Insights Pessoais */}
+            {showInsights && (
+              <PersonalInsights
+                user={user!}
+                todayMood={todayMood}
+              />
+            )}
+
+            {/* Sistema 3: Recomendações Inteligentes */}
+            {showRecommendations && (
+              <SmartRecommendations
+                triadScores={user?.triadScores!}
+                todayMood={todayMood}
+                lastPortalId={user?.lastPortalId}
+                streak={user?.streak || 0}
+                onPortalRequest={handlePortalAccept}
+              />
+            )}
 
             {/* Presença Viva */}
             <PresencaViva 
@@ -277,6 +372,13 @@ export default function EssentiaMVP() {
               todayMood={todayMood}
               onNewPortalRequest={handleNewPortalRequest}
               onDailyCheckin={() => setCurrentStep('checkin')}
+            />
+
+            {/* Sistema 4: IA Coach Modal */}
+            <AICoach
+              triadScores={user?.triadScores!}
+              isOpen={isAICoachOpen}
+              onClose={() => setIsAICoachOpen(false)}
             />
           </div>
         );
