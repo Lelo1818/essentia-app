@@ -20,6 +20,7 @@ import {
   Headphones,
   Edit3
 } from 'lucide-react';
+import { AudioManager } from './AudioManager';
 
 interface EnhancedPortalsProps {
   portalId: string;
@@ -43,6 +44,15 @@ interface PortalConfig {
     intro: string;
     meditation: string;
     conclusion: string;
+  };
+  backgroundMusic: {
+    url: string;
+    volume: number;
+  };
+  ambientSounds: {
+    breathing: string;
+    nature: string;
+    meditation: string;
   };
   interactiveElements: {
     breathing: boolean;
@@ -70,6 +80,15 @@ const portalsConfig: Record<string, PortalConfig> = {
       meditation: 'Conecte-se com seus valores mais profundos. O que realmente importa para você?',
       conclusion: 'Sua missão está se revelando. Confie no processo de descoberta.'
     },
+    backgroundMusic: {
+      url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+      volume: 0.3
+    },
+    ambientSounds: {
+      breathing: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ==',
+      nature: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ==',
+      meditation: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ=='
+    },
     interactiveElements: {
       breathing: true,
       writing: true,
@@ -93,6 +112,15 @@ const portalsConfig: Record<string, PortalConfig> = {
       intro: 'Desperte a energia que habita em você. Sinta a vitalidade pulsando.',
       meditation: 'Visualize luz dourada preenchendo cada célula do seu corpo.',
       conclusion: 'Sua energia está renovada. Carregue esta vitalidade para o mundo.'
+    },
+    backgroundMusic: {
+      url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+      volume: 0.4
+    },
+    ambientSounds: {
+      breathing: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ==',
+      nature: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ==',
+      meditation: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ=='
     },
     interactiveElements: {
       breathing: true,
@@ -118,6 +146,15 @@ const portalsConfig: Record<string, PortalConfig> = {
       meditation: 'Sinta a coerência entre seus pensamentos, emoções e ações.',
       conclusion: 'A harmonia está estabelecida. Você encontrou seu equilíbrio interior.'
     },
+    backgroundMusic: {
+      url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+      volume: 0.2
+    },
+    ambientSounds: {
+      breathing: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ==',
+      nature: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ==',
+      meditation: 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmIdAzuS2OjIeSgGKX/K8dF8OQgVYbTk4a1VEQ8EZZUAAFLgAADN2+UJPQ=='
+    },
     interactiveElements: {
       breathing: true,
       writing: true,
@@ -136,8 +173,11 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
   const [writings, setWritings] = useState<string[]>([]);
   const [currentWriting, setCurrentWriting] = useState('');
   const [insights, setInsights] = useState<string[]>([]);
+  const [currentAmbientSound, setCurrentAmbientSound] = useState<string>('meditation');
   
   const audioRef = useRef<HTMLAudioElement>(null);
+  const backgroundMusicRef = useRef<HTMLAudioElement>(null);
+  const ambientSoundRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   const portal = portalsConfig[portalId];
@@ -214,6 +254,65 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
     speechSynthesis.speak(utterance);
   };
 
+  // Controle de música de fundo
+  const playBackgroundMusic = () => {
+    if (backgroundMusicRef.current && audioEnabled) {
+      backgroundMusicRef.current.volume = (portal.backgroundMusic.volume * volume[0]) / 100;
+      backgroundMusicRef.current.loop = true;
+      backgroundMusicRef.current.play().catch(console.error);
+    }
+  };
+
+  const stopBackgroundMusic = () => {
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.pause();
+      backgroundMusicRef.current.currentTime = 0;
+    }
+  };
+
+  // Controle de sons ambientes
+  const playAmbientSound = (soundType: keyof typeof portal.ambientSounds) => {
+    if (ambientSoundRef.current && audioEnabled) {
+      setCurrentAmbientSound(soundType);
+      ambientSoundRef.current.volume = (volume[0] / 100) * 0.6;
+      ambientSoundRef.current.loop = true;
+      ambientSoundRef.current.play().catch(console.error);
+    }
+  };
+
+  const stopAmbientSound = () => {
+    if (ambientSoundRef.current) {
+      ambientSoundRef.current.pause();
+      ambientSoundRef.current.currentTime = 0;
+    }
+  };
+
+  // Gerador de som de respiração procedural
+  const generateBreathingSound = () => {
+    if (!audioEnabled) return;
+    
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.1 * volume[0] / 100, audioContext.currentTime + 0.1);
+      gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + breathingRate);
+      
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + breathingRate);
+    } catch (error) {
+      console.log('Web Audio API não suportada');
+    }
+  };
+
   // Navegação entre fases
   const handlePhaseTransition = (nextPhase: typeof currentPhase) => {
     setCurrentPhase(nextPhase);
@@ -221,13 +320,16 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
     switch (nextPhase) {
       case 'intro':
         speakText(portal.audioGuides.intro);
+        playBackgroundMusic();
         break;
       case 'experience':
         speakText(portal.audioGuides.meditation);
+        playAmbientSound('meditation');
         setIsPlaying(true);
         break;
       case 'integration':
         speakText(portal.audioGuides.conclusion);
+        stopAmbientSound();
         break;
     }
   };
@@ -242,8 +344,18 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
 
   // Completar portal
   const handleComplete = () => {
+    stopBackgroundMusic();
+    stopAmbientSound();
     onComplete(insights);
   };
+
+  // Cleanup ao desmontar
+  useEffect(() => {
+    return () => {
+      stopBackgroundMusic();
+      stopAmbientSound();
+    };
+  }, []);
 
   const IconComponent = portal.icon;
 
@@ -345,6 +457,55 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
                 )}
               </div>
               
+              {/* Controles de Áudio */}
+              <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
+                <h4 className="text-sm font-semibold mb-3 text-center">🎵 Ambiente Sonoro</h4>
+                <div className="grid grid-cols-3 gap-2 mb-3">
+                  <Button
+                    onClick={() => playAmbientSound('meditation')}
+                    variant={currentAmbientSound === 'meditation' ? 'default' : 'outline'}
+                    size="sm"
+                    className="text-xs"
+                  >
+                    🧘 Meditação
+                  </Button>
+                  <Button
+                    onClick={() => playAmbientSound('nature')}
+                    variant={currentAmbientSound === 'nature' ? 'default' : 'outline'}
+                    size="sm"
+                    className="text-xs"
+                  >
+                    🌿 Natureza
+                  </Button>
+                  <Button
+                    onClick={() => playAmbientSound('breathing')}
+                    variant={currentAmbientSound === 'breathing' ? 'default' : 'outline'}
+                    size="sm"
+                    className="text-xs"
+                  >
+                    🫁 Respiração
+                  </Button>
+                </div>
+                <div className="flex items-center justify-center space-x-2">
+                  <Button
+                    onClick={stopAmbientSound}
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs"
+                  >
+                    ⏸️ Pausar
+                  </Button>
+                  <Button
+                    onClick={playBackgroundMusic}
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs"
+                  >
+                    🎼 Música
+                  </Button>
+                </div>
+              </div>
+              
               <Button 
                 onClick={() => handlePhaseTransition('experience')}
                 className={`bg-gradient-to-r ${portal.gradient} hover:opacity-90`}
@@ -368,20 +529,39 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
                     className="mx-auto border border-gray-200 rounded-lg shadow-lg"
                   />
                   
-                  <div className="flex items-center justify-center space-x-4">
-                    <span className="text-sm text-gray-600">Ritmo:</span>
-                    <Slider
-                      value={[breathingRate]}
-                      onValueChange={(value) => setBreathingRate(value[0])}
-                      min={2}
-                      max={8}
-                      step={1}
-                      className="w-32"
-                    />
-                    <span className="text-sm text-gray-600">{breathingRate}s</span>
+                  <div className="flex items-center justify-center space-x-6">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-gray-600">Ritmo:</span>
+                      <Slider
+                        value={[breathingRate]}
+                        onValueChange={(value) => setBreathingRate(value[0])}
+                        min={2}
+                        max={8}
+                        step={1}
+                        className="w-32"
+                      />
+                      <span className="text-sm text-gray-600">{breathingRate}s</span>
+                    </div>
+                    
+                    <Button
+                      onClick={generateBreathingSound}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center space-x-1"
+                    >
+                      <Volume2 className="w-3 h-3" />
+                      <span className="text-xs">Som Respiração</span>
+                    </Button>
                   </div>
                 </div>
               )}
+              
+              {/* Sistema de Áudio Avançado */}
+              <AudioManager 
+                portalId={portal.id}
+                isActive={currentPhase === 'experience'}
+                onVolumeChange={(vol) => setVolume([vol])}
+              />
               
               {/* Área de Escrita Reflexiva */}
               {portal.interactiveElements.writing && (
@@ -473,6 +653,15 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
           )}
         </CardContent>
       </Card>
+      
+      {/* Elementos de áudio ocultos */}
+      <audio ref={backgroundMusicRef} preload="none">
+        <source src={portal.backgroundMusic.url} type="audio/mpeg" />
+      </audio>
+      
+      <audio ref={ambientSoundRef} preload="none" loop>
+        <source src={portal.ambientSounds[currentAmbientSound as keyof typeof portal.ambientSounds]} type="audio/wav" />
+      </audio>
     </div>
   );
 };
