@@ -395,7 +395,7 @@ export const EnhancedPortals = ({ portalId, onComplete, onClose }: EnhancedPorta
                 </div>
               </div>
               <Button onClick={onClose} variant="ghost" size="sm" className="text-white hover:bg-white/20">
-                ✕
+                ← Voltar
               </Button>
             </div>
           </div>

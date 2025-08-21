@@ -47,6 +47,7 @@ interface SmartRecommendation {
     label: string;
     onClick: () => void;
   };
+  portalId?: string;
 }
 
 export const SmartRecommendations = ({ 
@@ -113,8 +114,12 @@ export const SmartRecommendations = ({
         bgColor: portal.bgColor,
         action: {
           label: 'Iniciar Portal',
-          onClick: () => onPortalRequest(lowestArea.portal)
-        }
+          onClick: () => {
+            console.log('Portal clicado:', lowestArea.portal);
+            onPortalRequest(lowestArea.portal);
+          }
+        },
+        portalId: lowestArea.portal
       });
     }
 
@@ -336,7 +341,14 @@ export const SmartRecommendations = ({
                         
                         {rec.action && (
                           <Button
-                            onClick={rec.action.onClick}
+                            onClick={() => {
+                              console.log('Botão clicado:', rec);
+                              if (rec.portalId) {
+                                onPortalRequest(rec.portalId);
+                              } else {
+                                rec.action.onClick();
+                              }
+                            }}
                             size="sm"
                             className={`bg-white ${rec.color} hover:bg-gray-50`}
                             variant="outline"

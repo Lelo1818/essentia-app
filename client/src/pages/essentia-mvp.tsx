@@ -443,12 +443,29 @@ export default function EssentiaMVP() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {/* Header com navegação */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            Essentia MVP
-          </h1>
-          <p className="text-gray-600 mt-2">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex-1">
+              {currentStep !== 'onboarding' && (
+                <Button 
+                  onClick={() => setCurrentStep('dashboard')}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center space-x-2"
+                >
+                  <span>← Dashboard</span>
+                </Button>
+              )}
+            </div>
+            <div className="flex-1">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                Essentia MVP
+              </h1>
+            </div>
+            <div className="flex-1"></div>
+          </div>
+          <p className="text-gray-600">
             Sua jornada de crescimento pessoal baseada na Tríade Essencial
           </p>
         </div>
