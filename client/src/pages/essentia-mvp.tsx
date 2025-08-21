@@ -28,6 +28,7 @@ import { SmartRecommendations } from '../components/essentia-mvp/SmartRecommenda
 import { ContextualGuidance } from '../components/essentia-mvp/ContextualGuidance';
 import { EnhancedPortals } from '../components/essentia-mvp/EnhancedPortals';
 import { SmartOnboarding } from '../components/essentia-mvp/SmartOnboarding';
+import { ImmersivePortalExperience } from '../components/essentia-mvp/ImmersivePortalExperience';
 
 interface TriadScores {
   consciencia: number;  // 0-100
@@ -290,7 +291,17 @@ export default function EssentiaMVP() {
         );
         
       case 'ritual':
-        return (
+        return showEnhancedPortal && activeRitual ? (
+          <ImmersivePortalExperience
+            portalId={activeRitual}
+            onComplete={handleEnhancedPortalComplete}
+            onBack={() => {
+              setShowEnhancedPortal(false);
+              setActiveRitual(null);
+              setCurrentStep('dashboard');
+            }}
+          />
+        ) : (
           <RitualExecution 
             portalId={activeRitual!}
             onComplete={handleRitualComplete}

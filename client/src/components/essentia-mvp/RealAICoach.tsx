@@ -218,10 +218,11 @@ export const RealAICoach = ({ triadScores, isOpen, onClose }: RealAICoachProps) 
         ];
 
       case 'luna':
-        if (lowerMessage.includes('ansioso') || lowerMessage.includes('estresse')) {
+        if (lowerMessage.includes('ansioso') || lowerMessage.includes('estresse') || lowerMessage.includes('tenso') || lowerMessage.includes('nervoso')) {
           return [
             'Sinto a tensão em suas palavras. 🌸 Ansiedade é um sinal de que nossa mente está no futuro, longe do presente.\n\nVamos praticar: respire fundo agora e me diga três coisas que você pode ver ao seu redor.',
-            'O estresse é como ondas no oceano - intenso, mas temporário. 🌊 Podemos aprender a surfar essas ondas em vez de lutar contra elas.\n\nQue estratégia tem funcionado melhor para você quando se sente assim?'
+            'O estresse é como ondas no oceano - intenso, mas temporário. 🌊 Podemos aprender a surfar essas ondas em vez de lutar contra elas.\n\nQue tal uma respiração guiada de 2 minutos para acalmar seu sistema nervoso?',
+            'Percebo que você está tenso. Que tal experimentarmos o Portal da Harmonia? Ele tem exercícios específicos para equilibrar as emoções e trazer mais serenidade.'
           ];
         }
         if (lowerMessage.includes('raiva') || lowerMessage.includes('irritado')) {
