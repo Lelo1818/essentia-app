@@ -26,6 +26,7 @@ import { AICoach } from '../components/essentia-mvp/AICoach';
 import { PersonalInsights } from '../components/essentia-mvp/PersonalInsights';
 import { SmartRecommendations } from '../components/essentia-mvp/SmartRecommendations';
 import { ContextualGuidance } from '../components/essentia-mvp/ContextualGuidance';
+import { EnhancedPortals } from '../components/essentia-mvp/EnhancedPortals';
 
 interface TriadScores {
   consciencia: number;  // 0-100
@@ -69,6 +70,7 @@ export default function EssentiaMVP() {
   const [showInsights, setShowInsights] = useState(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [showGuidance, setShowGuidance] = useState(true);
+  const [showEnhancedPortal, setShowEnhancedPortal] = useState(false);
 
   // Verificar se usuário já existe
   useEffect(() => {
@@ -168,7 +170,8 @@ export default function EssentiaMVP() {
 
   const handlePortalAccept = (portalId: string) => {
     setActiveRitual(portalId);
-    setCurrentStep('ritual');
+    setShowEnhancedPortal(true);
+    // setCurrentStep('ritual'); // Comentado para usar portal aprimorado
   };
 
   const handleRitualComplete = (portalId: string) => {
@@ -191,6 +194,43 @@ export default function EssentiaMVP() {
     localStorage.setItem('essentia-mvp-user', JSON.stringify(updatedUser));
     
     setActiveRitual(null);
+    setCurrentStep('dashboard');
+  };
+
+  // Handler para portal aprimorado
+  const handleEnhancedPortalComplete = (insights: string[]) => {
+    if (!user || !activeRitual) return;
+    
+    // Aplicar reforço simbólico
+    const newTriadScores = applySymbolicReinforcement(activeRitual, user.triadScores);
+    
+    // Atualizar usuário
+    const updatedUser: UserProfile = {
+      ...user,
+      triadScores: newTriadScores,
+      lastPortalId: activeRitual,
+      lastCompletedAt: new Date(),
+      streak: user.streak + 1,
+      totalRitualsCompleted: user.totalRitualsCompleted + 1
+    };
+    
+    setUser(updatedUser);
+    localStorage.setItem('essentia-mvp-user', JSON.stringify(updatedUser));
+    
+    // Salvar insights se houver
+    if (insights.length > 0) {
+      const savedInsights = JSON.parse(localStorage.getItem('essentia-mvp-insights') || '[]');
+      savedInsights.push({
+        portalId: activeRitual,
+        insights,
+        date: new Date().toISOString(),
+        userId: user.id
+      });
+      localStorage.setItem('essentia-mvp-insights', JSON.stringify(savedInsights));
+    }
+    
+    setActiveRitual(null);
+    setShowEnhancedPortal(false);
     setCurrentStep('dashboard');
   };
 
@@ -345,7 +385,7 @@ export default function EssentiaMVP() {
             {showInsights && (
               <PersonalInsights
                 user={user!}
-                todayMood={todayMood}
+                todayMood={todayMood || undefined}
               />
             )}
 
@@ -353,7 +393,7 @@ export default function EssentiaMVP() {
             {showRecommendations && (
               <SmartRecommendations
                 triadScores={user?.triadScores!}
-                todayMood={todayMood}
+                todayMood={todayMood || undefined}
                 lastPortalId={user?.lastPortalId}
                 streak={user?.streak || 0}
                 onPortalRequest={handlePortalAccept}
@@ -380,6 +420,18 @@ export default function EssentiaMVP() {
               isOpen={isAICoachOpen}
               onClose={() => setIsAICoachOpen(false)}
             />
+
+            {/* Portal Aprimorado */}
+            {showEnhancedPortal && activeRitual && (
+              <EnhancedPortals
+                portalId={activeRitual}
+                onComplete={handleEnhancedPortalComplete}
+                onClose={() => {
+                  setShowEnhancedPortal(false);
+                  setActiveRitual(null);
+                }}
+              />
+            )}
           </div>
         );
         
