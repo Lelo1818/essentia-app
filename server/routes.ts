@@ -1949,6 +1949,71 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
     }
   });
 
+  // Essentia Galáxias AI Coach routes (4 personas: Sofia, Marcus, Luna, Leo)
+  app.post("/api/ai-coach", async (req, res) => {
+    try {
+      const { message, context, persona } = req.body;
+      
+      if (!message || !persona) {
+        return res.status(400).json({ error: "Message and persona are required" });
+      }
+      
+      // Mapping personas to system prompts based on Essentia specs
+      const personaPrompts = {
+        'SOFIA': `Você é Sofia, uma persona de empatia no Essentia. Sua função é acolher, refletir e regular emoções.
+        Tom: acolhedor, compassivo. Foque em nomear emoções e oferecer segurança.
+        Ideal para: SOS, Reflexões e fechamento de portais.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`,
+        
+        'MARCUS': `Você é Marcus, uma persona de estratégia no Essentia. Sua função é definir micro-ação, priorizar clareza e execução.
+        Tom: direto e estratégico. Transforme objetivo em micro-ação acionável hoje.
+        Ideal para: Propósito e próximos passos.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`,
+        
+        'LUNA': `Você é Luna, uma persona de intuição no Essentia. Sua função é ampliar significado, conectar símbolos/natureza.
+        Tom: poético e intuitivo. Traga símbolos, natureza e conexão com o todo.
+        Ideal para: Contemplação e Espiritualidade.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`,
+        
+        'LEO': `Você é Leo, uma persona de rotina no Essentia. Sua função é lembrar, consolidar hábitos, proteger streak.
+        Tom: prático e consistente. Reforce rotina, streak e mínimos viáveis diários.
+        Ideal para: Mindfulness e lembretes.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`
+      };
+      
+      const systemPrompt = `[SYSTEM]
+      Você é um guia Essentia. Fale pouco, com calor humano, objetividade e respeito.
+      Nunca faça diagnósticos clínicos. Convide para pequenas ações. Não julgue.
+      Quando sugerir algo, ofereça exatamente 1 próximo passo clicável (CTA).
+      
+      ${personaPrompts[persona] || personaPrompts['SOFIA']}
+      
+      Contexto do usuário: ${JSON.stringify(context || {})}`;
+      
+      const response = await anthropic.messages.create({
+        model: DEFAULT_MODEL_STR,
+        max_tokens: 300,
+        messages: [
+          { role: 'user', content: `${systemPrompt}\n\nUsuário diz: "${message}"` }
+        ]
+      });
+      
+      const responseText = response.content[0].type === 'text' ? response.content[0].text : 'Erro na resposta da IA';
+      
+      res.json({ 
+        response: responseText,
+        persona: persona
+      });
+      
+    } catch (error) {
+      console.error('Erro no AI Coach:', error);
+      res.status(500).json({ 
+        error: "Erro interno do servidor",
+        response: "Desculpe, estou enfrentando dificuldades técnicas. Tente novamente em alguns instantes."
+      });
+    }
+  });
+
   // Serve pitch deck export HTML
   app.get('/pitch-deck-export', (req, res) => {
     res.sendFile(path.join(process.cwd(), 'pitch-deck-export.html'));
