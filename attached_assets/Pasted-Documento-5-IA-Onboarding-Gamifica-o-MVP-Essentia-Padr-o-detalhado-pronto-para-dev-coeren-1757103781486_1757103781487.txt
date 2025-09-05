@@ -1,0 +1,172 @@
+Documento 5 — IA, Onboarding, Gamificação (MVP Essentia)
+Padrão: detalhado, pronto para dev, coerente com os Docs 1–4. Este documento consolida motor de IA, fluxos de onboarding, regras de recomendação e gamificação mínima, mantendo simplicidade de implementação e alta qualidade de experiência.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1) Objetivo e Escopo
+Definir com precisão como a IA opera no MVP (personas, prompts, regras), como é o onboarding (consentimento, foto simbólica, Tríade, preferências), como o sistema recomenda próximos passos (portais, micropráticas, abas fixas) e como a gamificação mínima funciona (streak).
+Fora do escopo: comunidade, marketplace, pagamentos, IA generativa personalizada por usuário, integrações com wearables (após MVP).
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+2) Arquitetura de IA no MVP
+Camadas:
+• Camada de Conteúdo: Portais (Docs 3), Abas Fixas & Micropráticas (Doc 4), textos e áudios curtos.
+• Camada de Regras (Rule Engine v1): mapeia sinais (Tríade, Roda da Vida, uso) → ações recomendadas.
+• Camada LLM (Personas): gera linguagem empática/estratégica e micro-feedback; não decide sozinha, segue as regras.
+• Camada de Contexto: estado do usuário (scores, últimos rituais, streak, preferências, fuso).
+• Camada de Telemetria: eventos para melhorar recomendações futuras.
+Personas (voz e função):
+• Sofia (Empatia): acolhe, reflete, regula emoções; ideal para SOS, Reflexões e fechamento de portais.
+• Marcus (Estratégia): define micro-ação, prioriza clareza e execução; ideal para Propósito e próximos passos.
+• Luna (Intuição): amplia significado, conecta símbolos/natureza; ideal para Contemplação e Espiritualidade.
+• Leo (Rotina): lembra, consolida hábitos, protege streak; ideal para Mindfulness e lembretes.
+Quando cada persona aparece:
+• Check-in baixo de energia → Leo guia Mindfulness 2min.
+• Emoção densa no Diário → Sofia oferece acolhimento + ritual curto.
+• Baixo propósito/carreira → Marcus propõe micro-ação e priorização.
+• Busca de conexão/elevação → Luna convida à Contemplação/Espiritualidade.
+Contexto mínimo que a IA recebe em cada resposta:
+• triad: {consciência, energia, coerência}
+• roda_da_vida: vetor de 8 dimensões (0–10) + última alteração
+• uso: últimos 7 dias (rituais concluídos, streak, abas acessadas)
+• preferências: idioma, horário de lembretes, tempo disponível
+• objetivo_atual: micro‑ação ativa (se houver)
+Prompt base (system) — usado por todas as personas:
+[SYSTEM]
+Você é um guia Essentia. Fale pouco, com calor humano, objetividade e respeito.
+Nunca faça diagnósticos clínicos. Convide para pequenas ações. Não julgue.
+Quando sugerir algo, ofereça exatamente 1 próximo passo clicável (CTA).
+Adapte estilo à persona ativa (Sofia/Marcus/Luna/Leo).
+Complementos por persona (append ao system):
+[SOFIA]
+Tom: acolhedor, compassivo. Foque em nomear emoções e oferecer segurança.
+
+[MARCUS]
+Tom: direto e estratégico. Transforme objetivo em micro-ação acionável hoje.
+
+[LUNA]
+Tom: poético e intuitivo. Traga símbolos, natureza e conexão com o todo.
+
+[LEO]
+Tom: prático e consistente. Reforce rotina, streak e mínimos viáveis diários.
+Template de mensagem (LLM receives):
+contexto={triad, roda_da_vida_resumo, uso_resumo, objetivo_atual}
+persona=SOFIA|MARCUS|LUNA|LEO
+usuario_msg="<texto do diário ou ação>"
+tarefa="responda em 2 frases e ofereça 1 CTA de 2–5 minutos" 
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+3) Onboarding (fluxo e conteúdo)
+Objetivo: iniciar com consentimento (LGPD), criar vínculo simbólico (foto), calibrar Tríade e preferências, e propor 1º passo significativo.
+Passos (telas):
+1. Boas‑vindas + LGPD (checkbox obrigatório).
+2. Foto simbólica (opcional, ‘pular’ visível) — armazena apenas hash/placeholder.
+3. Preferências: idioma, horário de lembretes, tempo disponível/dia (5, 10, 15 min).
+4. Tríade Quick‑Check (3 perguntas 0–10):
+   • Consciência: ‘Quanta presença você sentiu hoje?’
+   • Energia: ‘Quanta vitalidade você sente agora?’
+   • Coerência: ‘Suas ações refletem seus valores hoje?’
+5. Objetivo leve (opcional): ‘O que você mais precisa nas próximas 2 semanas?’ [clareza, energia, calma, propósito]
+6. Sugestão inicial (IA+regras): 1 Portal ou 1 prática curta → CTA imediato.
+Telemetria: onboarding_started, consent_given, photo_skipped, triad_seeded, first_reco_shown.
+Campos mínimos (DB/API):
+users(id, email, created_at)
+profiles(user_id, locale, reminder_hour, daily_time_budget_min)
+triad(user_id, consc, ener, coer, updated_at)
+goals(user_id, key, created_at, active)
+events(user_id, name, props_json, ts)
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+4) Motor de Recomendação v1 (regras simples + cooldown)
+Entradas: triad (0–10), roda_da_vida (8 dimensões 0–10), uso (streak, últimas ações), objetivo_atual, horário do dia.
+Saídas: 1 sugestão por vez (Portal, Mindfulness, Contemplação, Reflexão, Aba Propósito/Espiritualidade).
+Princípios:
+• Priorizar micro‑ações curtas quando energia está baixa; portais quando energia e foco permitem.
+• Evitar repetição com cooldown (ex.: não repetir mesma sugestão < 20h).
+• Alternar tipos (respiro ↔ reflexão ↔ ritual) para variar estímulo.
+Regras (exemplos MVP):
+R1 (energia<=4) → Mindfulness 2min (Leo)  [cooldown 12h, prioridade 90]
+R2 (consciência<=4) → Portal Consciência (Marcus guia ação inicial) [cooldown 20h, prio 80]
+R3 (coerência<=4) → Contemplação Árvore + Reflexão ‘o que é essencial hoje?’ (Sofia) [cooldown 16h, prio 80]
+R4 (propósito<=5 na Roda) → Aba Propósito ‘micro‑ação de 5min’ (Marcus) [cooldown 20h, prio 85]
+R5 (emoção densa no Diário) → SOS ou Ritual curto 60s (Sofia) [cooldown 6h, prio 95]
+R6 (streak>=3 e tempo>=10min) → Portal Gratidão/Coragem (Luna p/ abertura simbólica) [cooldown 24h, prio 70]
+Pseudocódigo:
+def recommend(state):
+    candidates = []
+    for rule in RULES:
+        if rule.matches(state) and rule.not_in_cooldown(state.user):
+            candidates.append(rule)
+    ranked = sorted(candidates, key=lambda r: r.priority, reverse=True)
+    return first_not_recent(ranked, state.user.history)
+Representação JSON (para armazenar/editar regras):
+{
+  "rule_id": "E_LOW",
+  "if": {"triad.energy": {"lte": 4}},
+  "then": [{"type": "practice", "id": "mindfulness_box_2m", "persona": "LEO"}],
+  "cooldown_hours": 12,
+  "priority": 90
+}
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+5) ‘Guru Sempre Aberto’ (micro‑chat lateral)
+UI: bolha fixa no canto. Ao abrir, mostra pílula diária + input curto (140 caracteres).
+Comportamento:
+• Persona escolhida pelo motor (ou usuário troca).
+• Resposta em 2 frases + 1 CTA (deep‑link para prática/portal/aba).
+• Após CTA concluído, enviar reconhecimento (‘bela escolha, quer salvar no Diário?’).
+Telemetria: guru_opened, guru_reply_shown, guru_cta_clicked.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+6) Gamificação (MVP)
+Apenas streak de dias seguidos.
+Regras: +1 dia se completar ≥1 ação (Mindfulness, Contemplação, Reflexão, Portal) no dia;
+‘Perdão’ de 1 dia a cada 7 completos (grace).
+Feedback visual: contagem de dias, pequenos marcos (3, 7, 14).
+Sem loja de pontos; sem rankings; antidesgaste: ocultar badges se o usuário não ligar para isso.
+Telemetria: streak_incremented, streak_broken, streak_grace_used.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+7) Notificações & Cadência
+Padrão inicial: 3/semana (seg 8h, qua 19h, sáb 10h). IA ajusta por engajamento.
+Exemplos de cópia (curtas, com deep‑link):
+• ‘60s para respirar e voltar ao centro?’ → Abrir Mindfulness 2min
+• ‘Uma linha no seu diário agora muda seu dia.’ → Abrir Reflexão Rápida
+• ‘Hoje, água corrente em 90s?’ → Abrir Contemplação
+Regras de redução: ignorou 2 lembretes seguidos → reduzir freq; concluiu 3 propostas seguidas → sugerir Portal.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+8) Telemetria & Métricas de Sucesso
+Eventos mínimos (nome, ts, user_id, props):
+• onboarding_started, consent_given, triad_seeded
+• reflection_saved, mindfulness_complete, contemplation_complete, portal_step_complete
+• recommendation_issued, guru_cta_clicked
+• streak_incremented, streak_broken
+Métricas-alvo: Ativação D0/D1; Retenção D7/D14; rituais/semana; % sugestões aceitas; média da Tríade por semana.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+9) Privacidade & Segurança (LGPD)
+Consentimento explícito no onboarding; finalidade clara; minimização de dados; guarda de logs anônimos para melhoria.
+Criptografia em trânsito e repouso; controle de acesso por papéis; exportação/eliminação a pedido.
+Foto simbólica: apenas placeholder/hash; sem biometria; opção de pular ou apagar.
+Uso de IA: sem diagnósticos; sem perfis sensíveis; linguagem de apoio; rota SOS sem armazenar conteúdo textual do usuário.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+10) Limites do MVP (para evitar escopo oculto)
+• Sem comunidade, marketplace, pagamentos, loja de pontos.
+• Sem avatares 3D personalizados; sem geração de vídeo automática in‑app.
+• Sem integrações com wearables; sem recomendações por sinais biométricos.
+• Sons: pacote leve pré‑curado; sem gerador de frequências.
+• Portais: 3 cinematográficos completos já entregues no Doc 3.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+11) Anexos técnicos
+A) Endpoints (esboço):
+POST /onboarding/consent
+POST /onboarding/triad-seed {consc, ener, coer}
+GET  /recommendations/next
+POST /events {name, props}
+GET  /streak
+POST /streak/claim-grace
+GET  /personas/current
+B) Variáveis e enums:
+persona: SOFIA | MARCUS | LUNA | LEO
+action.type: practice | portal | reflection | contemplation | purpose | spirituality | sos
+cooldown_hours: int (default 12)
+priority: 0..100
+C) Exemplo de resposta do /recommendations/next:
+{
+  "persona": "LEO",
+  "title": "Respiração no Quadrado (2 min)",
+  "cta": {"type":"practice","id":"mindfulness_box_2m","deeplink": "app://practice/mindfulness_box_2m"},
+  "copy": "Vamos desinflar a pressão de hoje em 120 segundos?",
+  "cooldown_hours": 12
+}

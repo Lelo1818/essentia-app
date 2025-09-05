@@ -1,0 +1,38 @@
+Documento 2 — Fluxos Essenciais (Atualizado)
+Consolida fluxos do usuário e admin, com decision points do motor de IA e caminhos de exceção.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1) Fluxo do Usuário (MVP)
+• 1. Abrir app → Boas-vindas + LGPD (obrigatório).
+• 2. (Opcional) Foto simbólica → pular possível; registrar placeholder.
+• 3. Preferências: idioma, lembretes, tempo diário (5/10/15min).
+• 4. Tríade seed: 3 perguntas (0–10).
+• 5. Sugestão inicial (motor v1): 1 Portal OU 1 microprática (Mindfulness/Contemplação/Reflexão).
+• 6. Execução com timer (120s padrão nas micropráticas).
+• 7. Resumo + streak + convite ao Diário.
+• 8. Acesso livre: Portais (3), Abas Fixas (Reflexões, Mindfulness, Contemplação, Espiritualidade, Propósito, SOS).
+• 9. Guru sempre aberto: resposta em 2 frases + 1 CTA.
+• 10. Reavaliação: check-ins diários e Roda da Vida periódica.
+2) Fluxo do Admin (Backoffice mínimo)
+• Login.
+• Cadastro/edição de Portais (nome, descrição, cenas, áudio).
+• Cadastro de micropráticas nas Abas Fixas (texto, duração, áudio/ambiente).
+• Publicação de conteúdo inicial.
+• Acompanhamento de métricas (ativação, streak, aceitação de recomendações).
+3) Decisões do Motor (resumo prático)
+• Entrada: Tríade, Roda da Vida, uso recente, objetivo atual, horário.
+• Saída: 1 sugestão por vez + persona ativa para copy.
+• Regras-chave com cooldown para evitar repetição.
+4) Exceções & Fallbacks
+• Login falhou → recuperar senha.
+• Sem conteúdo no Portal → fallback para microprática do mesmo tema.
+• Notificações negadas → lembrete in‑app no resumo do dia.
+• Energia muito baixa → sempre oferecer opção de 60–120s.
+5) Telemetria mínima
+• onboarding_started, consent_given, triad_seeded
+• recommendation_issued, cta_clicked, portal_step_complete
+• reflection_saved, mindfulness_complete, contemplation_complete
+• streak_incremented, streak_broken
+6) Diagramas (referência)
+Inclui os fluxos visuais usados nesta versão.
+ 
+ 

@@ -1,0 +1,33 @@
+Documento 1 — Essentia: Visão Geral (Atualizado)
+Versão alinhada aos Docs 3, 4 e 5. Foco: visão com alma + mapa funcional para o desenvolvedor entender ‘o que’ e ‘por quê’.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1) Essência
+Essentia é um guia vivo de propósito e equilíbrio. Une tecnologia e simbologia para conduzir o usuário a micro-ações diárias significativas.
+2) Princípios de Experiência
+• Sempre há um próximo passo visível (nunca tela ‘vazia’).
+• Simplicidade: 2–5 minutos por ação como padrão; profundidade nas jornadas (Portais).
+• Acolhimento sem julgamento; espiritualidade sem doutrina.
+• IA com alma: linguagem humana, decisões simples por regras (MVP).
+3) Núcleo de Personalização
+• Roda da Vida Viva: 8 áreas, reavaliável; alimenta a Tríade e as recomendações.
+• Tríade (Consciência, Energia, Coerência): check-in leve diário e recalibração periódica.
+• Guru sempre aberto: micro-chat lateral com personas (Sofia, Marcus, Luna, Leo).
+• Motor de Recomendação v1 (regras): 1 sugestão por vez (Portal ou microprática).
+4) Conteúdo do MVP
+Portais Cinematográficos (3): Consciência, Gratidão e Coragem — experiências guiadas em cenas com áudio e rituais.
+Abas Fixas & Micropráticas: Reflexões Rápidas, Mindfulness/Presença, Contemplação da Natureza, Espiritualidade, Propósito, SOS.
+Diário integrado: prompts leves conectados às recomendações.
+Gamificação mínima: streak de dias, com ‘grace’ de 1 dia a cada 7.
+5) Fluxo Macro (resumo)
+Onboarding → Foto simbólica (opcional) → Preferências → Tríade (3 perguntas) → Sugestão inicial (Portal ou prática).
+Uso diário: check-in simples, 1 sugestão ativa, acesso aos Portais e Abas Fixas, Guru aberto para micro-suporte.
+Reavaliação periódica da Roda da Vida e reajuste da Tríade.
+6) Personas de IA (voz e papel)
+Sofia (empatia): acolhe e regula.
+Marcus (estratégia): define micro-ação e prioriza foco.
+Luna (intuição): simbolismo e natureza.
+Leo (rotina): consistência e streak.
+7) Privacidade e Ética (LGPD)
+Consentimento explícito, minimização de dados, sem diagnósticos clínicos. Foto simbólica sem biometria (pode pular).
+8) Como os Docs se conectam
+Doc 2 — Fluxos essenciais; Doc 3 — Portais cinematográficos; Doc 4 — Abas Fixas e Micropráticas; Doc 5 — IA, Onboarding e Gamificação.

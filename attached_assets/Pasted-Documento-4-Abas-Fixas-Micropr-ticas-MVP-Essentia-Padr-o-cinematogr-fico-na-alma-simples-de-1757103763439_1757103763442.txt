@@ -1,0 +1,118 @@
+Documento 4 — Abas Fixas & Micropráticas (MVP Essentia)
+Padrão: cinematográfico na alma, simples de implementar. Conteúdo mínimo para não haver telas vazias. Integrado à Roda da Vida e ao Motor de IA.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1) Princípios Globais (para todas as abas)
+• Tempo-para-valor curto (sessões de 30–120s).
+• Todas as ações geram telemetria e podem virar recomendação.
+• IA escolhe linguagem do guia (Sofia/Marcus/Luna/Leo) conforme contexto.
+• Conteúdo offline-friendly (texto + áudio leve opcional).
+• UI mínima: título, breve instrução, timer 30/45/60/120s, botão Concluir, botão Salvar no Diário.
+• Push padrão: 1 lembrete/semana por aba ligada a uma lacuna da Roda da Vida; usuário pode desligar.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+2) Reflexões Rápidas
+Objetivo: provocar insight em ≤60s e alimentar o Diário e as recomendações.
+Fluxo UX: escolher pergunta → timer 45s → salvar resposta → feedback curto da IA.
+Conteúdo mínimo (exibir 1 aleatória por dia):
+• ‘Qual foi o melhor momento do seu dia até agora? Por quê?’
+• ‘O que você pode fazer em 5 minutos para se sentir 1% melhor?’
+• ‘Qual emoção está mais presente agora? Onde ela aparece no corpo?’
+• ‘Qual pequena ação de hoje te aproximou do seu propósito?’
+IA/Triggers: se resposta menciona cansaço/ansiedade → sugerir Mindfulness 2min; se menciona falta de sentido → sugerir Portal da Consciência ou Propósito (aba).
+Telemetria: reflections_start, reflection_saved, ia_feedback_shown.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+3) Mindfulness (Presença)
+Objetivo: regular atenção/energia rapidamente. Duas rotas simples.
+Fluxo UX: escolher prática → timer visível → conclusão → marcar streak.
+Práticas:
+• Mindfulness 2 min — ‘Respiração no Quadrado (4-4-4-4)’: guia por 3 ciclos. Texto-guia: ‘Inspire 4, segure 4, expire 4, segure 4. Observe sem julgar.’
+• Mindfulness 5 min — ‘Escaneamento Corporal’: pés→cabeça em 8 etapas. Texto-guia: ‘Leve a atenção aos pés... panturrilhas... joelhos... até o topo da cabeça.’
+IA/Triggers: energia<4 na Roda da Vida → sugerir Mindfulness 2 min; consciência<5 → sugerir 5 min.
+Telemetria: mindfulness_start, mindfulness_cycle, mindfulness_complete.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+4) Contemplação da Natureza
+Objetivo: induzir calma/elevação simbólica com estímulos naturais.
+Fluxo UX: escolher foco → timer 60–90s → salvar 1 frase → opcional foto do momento.
+Cenas (texto+som ambiente):
+• Céu (60–90s): ‘Observe camadas de cor/movimento. Nomeie 3 tons.’ Som: vento leve.
+• Árvore (60–90s): ‘Observe textura, sombras e variações.’ Som: folhas/pássaros.
+• Água (60–90s): ‘Observe padrões de fluxo/ondas. Sincronize respiração com o som.’ Som: água corrente.
+IA/Triggers: coerência<5 → sugerir Contemplação (Árvore/Água).
+Telemetria: contemplation_start, note_saved, photo_captured (opcional).
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+5) Roda da Vida (Viva)
+Objetivo: calibrar a Tríade e personalizar a jornada. 8 dimensões; escala 0–10.
+Dimensões & perguntas base (mostrar 2 por dimensão):
+• Espiritualidade: ‘Quando foi a última vez que você sentiu sentido/elevação?’ / ‘Você reserva tempo para silêncio/reflexão?’
+• Propósito/Carreira: ‘Seu trabalho atual expressa seus valores centrais?’ / ‘Que pequena ação hoje te aproximaria do que importa?’
+• Relacionamentos: ‘Sente-se visto/escutado por quem importa?’ / ‘O que você pode oferecer de presença esta semana?’
+• Bem‑estar físico: ‘Como estão sono e alimentação nesta semana?’ / ‘Seu corpo pede descanso ou movimento hoje?’
+• Emoções: ‘Qual emoção predominou esta semana?’ / ‘Você encontrou espaço seguro para sentir?’
+• Lazer/Criação: ‘Houve brincadeira/criatividade nos últimos dias?’ / ‘O que te diverte sem esforço?’
+• Finanças: ‘Você sente clareza e tranquilidade com dinheiro?’ / ‘Qual micro-ação reduziria sua ansiedade financeira?’
+• Ambiente: ‘Seu espaço físico favorece calma e foco?’ / ‘O que você pode arrumar em 5 minutos?’
+Regras de recomendação (exemplos simples p/MVP):
+• consciência≤4 → Mindfulness 5 min ou Portal Consciência;
+• energia≤4 → Mindfulness 2 min + Contemplação (Água);
+• coerência≤4 → Reflexão Rápida + Contemplação (Árvore);
+• propósito≤5 → Aba Propósito (exercício ‘Missão em 1 frase’) ou Portal Coragem;
+• gratidão baixa (emoções negativas recorrentes) → Portal Gratidão.
+Telemetria: wheel_complete, wheel_score_changed, recommendation_issued.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+6) Espiritualidade (Aba Fixa)
+Objetivo: nutrir sentido e elevação sem dogma. Conteúdo leve, universal.
+Conteúdo mínimo (gira diariamente):
+• Texto 1: ‘Você é parte de algo maior. Permita-se ser tocado pelo mistério do agora.’
+• Texto 2: ‘O silêncio também é uma oração. Hoje, ofereça 60s de silêncio a si mesmo.’
+• Micro‑ritual (2 min): mãos no coração, 3 respirações, ‘Que eu veja com clareza e aja com amor.’
+IA/Triggers: se usuário busca conexão/elevação → sugerir esta aba após Contemplação.
+Telemetria: spirituality_opened, micro_ritual_done.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+7) Propósito (Aba Fixa)
+Objetivo: alinhar ação diária a valores centrais. Concreto e curto.
+Conteúdo mínimo:
+• Pergunta do dia: ‘Qual micro‑ação de 5 min hoje expressa quem você é?’ (salvar tarefa)
+• Exercício ‘Missão em 1 frase’: ‘Eu existo para ___, por meio de ___, para impactar ___.’
+• Revisão semanal (checklist): o que avançou / o que travou / próximo micro‑passo.
+IA/Triggers: propósito≤5 na Roda → puxar esta aba; após Portal Coragem → sugerir micro‑ação.
+Telemetria: purpose_task_saved, purpose_review_done.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+8) SOS (Socorro Emocional)
+Objetivo: amparo imediato em alta carga emocional. Acesso pela barra flutuante.
+Opções (1 toque):
+• Áudio de Ancoragem 60s (respiração guiada suave).
+• Frase de Apoio: ‘Você não está sozinho. Traga a atenção ao corpo. Um passo de cada vez.’
+• Portal Calmante: atalho para Mindfulness 2 min ou Contemplação (Água).
+Privacidade: não registrar texto do usuário aqui; apenas eventos anônimos para melhorar recomendações.
+Telemetria: sos_opened, sos_option_selected.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+9) Sons (opcional leve no MVP)
+Objetivo: camadas sonoras para suporte (não um gerador completo).
+Pacote inicial:
+• Ambientes: vento suave, floresta leve, água corrente.
+• Sinos cristalinos (início/fim), tambor leve (coragem).
+Uso: anexar faixas leves nas abas/portais; volume controlado pelo usuário.
+Telemetria: sound_started, sound_stopped.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+10) Push & Ritmo
+Padrão MVP (ajustável): 3 lembretes/semana máx., evitando overpush.
+• Segunda 8h — Mindfulness 2 min;
+• Quarta 19h — Reflexão Rápida;
+• Sábado 10h — Contemplação (Natureza).
+Regra IA: se usuário ignora 2× seguidas, reduzir frequência; se completa 3× seguidas, sugerir Portal alinhado à Roda.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+11) Campos mínimos por item (para dev/DB)
+• quick_reflections(id, title, prompt, tags, duration_s=45)
+• mindfulness(id, name, steps_json, duration_s, audio_id)
+• contemplation(id, focus, instruction, duration_s, ambient_audio_id)
+• spirituality(id, text, ritual_text, duration_s)
+• purpose(id, prompt, template, checklist_json)
+• sos(id, option_type, action_link, notes)
+• wheel_dimensions(id, name, questions_json)
+• recommendations(rule_id, condition_json, action_json, priority)
+Eventos (telemetria): start, complete, saved, ia_reco_shown com portal/prática alvo.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+12) Diretrizes de UX redonda
+• Cada tela deve ter: título claro, instrução de 1 linha, timer, call-to-action único.
+• Após concluir, sempre propor ‘Próximo passo’ (IA) com 1 clique.
+• Garantir estado vazio elegante (placeholder com exemplo).
+• Acessibilidade: fonte ≥16pt, contraste AA, feedback háptico leve.

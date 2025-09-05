@@ -1,0 +1,136 @@
+Documento 3 — Portais Cinematográficos (MVP v1.0 • Versão Expandida)
+Portais incluídos: Consciência, Gratidão e Coragem. Formato cinematográfico + interações para alongar a experiência sem encarecer o MVP.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+Portal da Consciência
+Propósito: Despertar para o momento presente e treinar atenção plena em atos simples.
+Frase de encerramento: “Eu sou a minha consciência. Eu sou a minha presença.”
+Paleta/atmosfera sugerida: #8FA3FF → #B5FFC8
+Formato e diretrizes (fixo para os 3 portais):
+• Tempo total por portal (usuário): 5–8 min.
+• Base de vídeo: 90–120s (3 cenas filmadas/renderizadas) + pausas interativas (3× 30–60s) + ritual e encerramento.
+• Estrutura padrão: Ritual de Abertura → Cenas (com narração) + Pausas → Reflexão Escrita → Prática do Dia → Frase de Encerramento.
+• Direção de áudio: som ambiente contínuo (vento/água/floresta), instrumentos suaves (sino, cordas, tambor leve), voz humana ou TTS natural.
+• Notas de dev (MVP): usar timer visível (30/45/60s) nas pausas; disparar eventos de telemetria (start_scene, pause_start, reflection_saved, ritual_done, portal_complete).
+Cenas Cinematográficas (vídeo base ~90–120s)
+Cena 1 (40s) — Piloto automático
+  [Visual] Avatar atravessa rua movimentada; tudo embaçado nas bordas, rastro de luz nas pessoas e carros.
+  [Áudio]  Camada urbana abafada + batimentos acelerados; respiração curta.
+  [Voz]    “Reconheça a pressa. Veja como sua atenção foi sequestrada.”
+Pausa Interativa 1 (45s) — Respiração 4‑4‑4‑4
+  • Instrução: Siga o box breathing por 3 ciclos. Toque no contador a cada transição (inspire/segure/expire/segure).
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Cena 2 (60s) — Âncora no agora
+  [Visual] Avatar para, fecha os olhos, inspira; as cores voltam; luz suave acende no peito.
+  [Áudio]  Sinos cristalinos; som de respiração ritmada 4–4; ruído urbano reduz 70%.
+  [Voz]    “Sua âncora é a respiração. Inspire por quatro, segure por quatro, expire por quatro, segure por quatro.”
+Pausa Interativa 2 (60s) — 5‑4‑3‑2‑1 dos sentidos
+  • Instrução: Escreva: 5 coisas que vê, 4 que toca, 3 que ouve, 2 cheiros, 1 sabor. Salve no diário.
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Cena 3 (55s) — Toque consciente
+  [Visual] Close na mão tocando uma folha/pedra; macro de textura, luz, sombra; micro‑partículas flutuam.
+  [Áudio]  Melodia mínima (cordas), plano de fundo natural (pássaros leves).
+  [Voz]    “Traga sua mente para os sentidos. Um gesto presente transforma o mundo à sua volta.”
+Pausa Interativa 3 (45s) — Micro‑diário do agora
+  • Instrução: Em uma frase: ‘O que eu estou realmente sentindo agora?’
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Ritual de Abertura (30–45s)
+Postura ereta, pés firmes. Três respirações profundas pelo nariz. Toque o objeto mais próximo por 10s. Repita mentalmente: “Eu escolho estar aqui.”
+Mini‑Reflexão Escrita (45–60s)
+• Onde o piloto automático mais te captura no dia?
+• Qual é a sua âncora favorita para retornar ao presente?
+Prática Simples do Dia (≤2 min)
+Escolha um ato cotidiano (beber água/lavar mãos). Execute com atenção total por 30–60s. Marque ‘feito’ para registrar streak de presença.
+Notas técnicas / Assets sugeridos
+• Áudio: 2 trilhas (urbana abafada; natureza leve).
+• SFX: sinos cristalinos; batimento; pássaros leves.
+• Cores: cinza→cor (gradiente #8FA3FF→#B5FFC8).
+• UI: temporizador 45/60s; botão ‘Salvar no diário’.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+Portal da Gratidão
+Propósito: Mudar o foco de carência para plenitude, criando um ciclo virtuoso de abundância.
+Frase de encerramento: “Minha gratidão abre a porta da abundância.”
+Paleta/atmosfera sugerida: #AAAAAA → #CBA46A/#7ED957
+Formato e diretrizes (fixo para os 3 portais):
+• Tempo total por portal (usuário): 5–8 min.
+• Base de vídeo: 90–120s (3 cenas filmadas/renderizadas) + pausas interativas (3× 30–60s) + ritual e encerramento.
+• Estrutura padrão: Ritual de Abertura → Cenas (com narração) + Pausas → Reflexão Escrita → Prática do Dia → Frase de Encerramento.
+• Direção de áudio: som ambiente contínuo (vento/água/floresta), instrumentos suaves (sino, cordas, tambor leve), voz humana ou TTS natural.
+• Notas de dev (MVP): usar timer visível (30/45/60s) nas pausas; disparar eventos de telemetria (start_scene, pause_start, reflection_saved, ritual_done, portal_complete).
+Cenas Cinematográficas (vídeo base ~90–120s)
+Cena 1 (40s) — Escassez percebida
+  [Visual] Cenário dessaturado; avatar de mãos vazias, olhar baixo; objetos sem cor.
+  [Áudio]  Carrilhão metálico rarefeito; silêncio com leve reverberação.
+  [Voz]    “Perceba o foco no que falta. Reconheça a carência que nublou sua visão.”
+Pausa Interativa 1 (45s) — 3 motivos de gratidão
+  • Instrução: Liste três coisas de hoje pelas quais é grato. Uma deve ser bem pequena.”
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Cena 2 (60s) — Coração que acende
+  [Visual] Mão no peito; luz pulsa junto ao batimento; cores voltam em suaves ondas ao redor.
+  [Áudio]  Sinos leves + cordas quentes; batida cardíaca estabiliza.
+  [Voz]    “A gratidão é sua luz interna. Deixe-a iluminar o que já existe.”
+Pausa Interativa 2 (60s) — Mini‑carta de agradecimento
+  • Instrução: Escreva 2 frases para alguém (ou para si) expressando gratidão concreta.”
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Cena 3 (70s) — Florescer do entorno
+  [Visual] O ambiente ‘floresce’: plantas, luz e vida retornam; câmera gira lentamente 360º.
+  [Áudio]  Melodia ascendente; som de brisa e folhas.
+  [Voz]    “O que você foca, se expande. Agradeça e veja o mundo florescer.”
+Pausa Interativa 3 (30s) — Sorriso consciente
+  • Instrução: Relaxe a face e sustente um sorriso leve por 30s. Observe o efeito no corpo.”
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Ritual de Abertura (30–45s)
+Mão no coração por 10s; inspire pelo nariz e expire pela boca lentamente (3×). Diga em voz baixa: “Eu escolho ver o que já há.”
+Mini‑Reflexão Escrita (45–60s)
+• O que na sua rotina você tem ignorado e poderia agradecer?
+• Qual foi o menor gesto que te trouxe alegria recentemente?
+Prática Simples do Dia (≤2 min)
+Antes de dormir, registre no diário 3 acontecimentos positivos do dia. Ative lembrete diário opcional.
+Notas técnicas / Assets sugeridos
+• Áudio: cama sonora cálida; sinos; brisa.
+• Cores: cinza→dourado/verde (#CBA46A, #7ED957).
+• UI: campo de texto rápido; botão ‘Enviar carta’ (salva no diário).
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+Portal da Coragem
+Propósito: Desbloquear ação autêntica diante de incertezas, transformando medo em movimento.
+Frase de encerramento: “Eu ajo com coragem. Eu ajo apesar do medo.”
+Paleta/atmosfera sugerida: #1C2541 → #F2C14E
+Formato e diretrizes (fixo para os 3 portais):
+• Tempo total por portal (usuário): 5–8 min.
+• Base de vídeo: 90–120s (3 cenas filmadas/renderizadas) + pausas interativas (3× 30–60s) + ritual e encerramento.
+• Estrutura padrão: Ritual de Abertura → Cenas (com narração) + Pausas → Reflexão Escrita → Prática do Dia → Frase de Encerramento.
+• Direção de áudio: som ambiente contínuo (vento/água/floresta), instrumentos suaves (sino, cordas, tambor leve), voz humana ou TTS natural.
+• Notas de dev (MVP): usar timer visível (30/45/60s) nas pausas; disparar eventos de telemetria (start_scene, pause_start, reflection_saved, ritual_done, portal_complete).
+Cenas Cinematográficas (vídeo base ~90–120s)
+Cena 1 (50s) — Encarar o abismo
+  [Visual] Avatar na beira de um penhasco; vento forte; noite com relâmpagos distantes.
+  [Áudio]  Vento grave + tambores lentos; respiração audível.
+  [Voz]    “Sinta o medo que te paralisa. Nomeie-o. Ele não define quem você é.”
+Pausa Interativa 1 (45s) — Nomear o medo
+  • Instrução: Escreva: ‘Estou com medo de…’ (uma frase). Depois: ‘Mesmo assim, escolho…’
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Cena 2 (65s) — Chama no peito
+  [Visual] Close no peito: uma chama dourada surge e cresce; o entorno escurecido ganha contornos.
+  [Áudio]  Tambores diminuem; entra melodia tribal suave e pulsante.
+  [Voz]    “A coragem já vive em você. Dê espaço para ela crescer com a sua respiração.”
+Pausa Interativa 2 (45s) — Power pose suave
+  • Instrução: Em pé, ombros abertos, pés firmes, 45s em silêncio atento à respiração.”
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Cena 3 (60s) — Passo decisivo
+  [Visual] O avatar dá um passo; surge uma ponte de luz; cada passo firma a ponte e ilumina o abismo.
+  [Áudio]  Música ascendente; respiração estabiliza; vento suaviza.
+  [Voz]    “Um passo de cada vez. Caminhe apesar do medo. O caminho aparece com o passo.”
+Pausa Interativa 3 (45s) — Compromisso mínimo
+  • Instrução: Defina um micro‑passo que fará hoje (≤5 min). Registre no diário.”
+  • UI: contador regressivo; botão “Concluir pausa”; salvar automaticamente o texto/ação do usuário.
+Ritual de Abertura (30–45s)
+Toque o esterno com a ponta dos dedos (3×), inspire pelo nariz e expire pela boca (3×). Afirme em voz clara: “Eu ajo apesar do medo.”
+Mini‑Reflexão Escrita (45–60s)
+• Qual risco ‘pequeno’ você pode assumir hoje que te aproxima do que importa?
+• O que em você merece ser protegido pela sua coragem?
+Prática Simples do Dia (≤2 min)
+Execute o micro‑passo definido na pausa 3. Volte para marcar ‘feito’. O app registra streak de atos corajosos.
+Notas técnicas / Assets sugeridos
+• Áudio: vento grave→suaviza; tambores tribais leves; melodia ascendente.
+• Cores: azul‑noite→dourado (#1C2541 → #F2C14E).
+• UI: componente ‘micro‑compromisso’ com checklist e lembrete opcional.
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
