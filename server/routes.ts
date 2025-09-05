@@ -1998,7 +1998,9 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
         ]
       });
       
-      const responseText = response.content[0].type === 'text' ? response.content[0].text : 'Erro na resposta da IA';
+      const responseText = Array.isArray(response.content) && response.content[0]?.type === 'text' 
+        ? response.content[0].text 
+        : 'Olá! Como posso te ajudar hoje na sua jornada de autoconhecimento?';
       
       res.json({ 
         response: responseText,

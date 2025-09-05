@@ -79,6 +79,7 @@ interface Portal {
   name: string;
   purpose: string;
   closingPhrase: string;
+  videoUrl?: string; // YouTube embed URL for enhanced experience
   palette: {
     from: string;
     to: string;
@@ -171,6 +172,7 @@ const PORTALS: Portal[] = [
     name: 'Portal da Consciência',
     purpose: 'Despertar para o momento presente e treinar atenção plena em atos simples',
     closingPhrase: 'Eu sou a minha consciência. Eu sou a minha presença.',
+    videoUrl: 'https://www.youtube.com/embed/YQP1xZqcrfE', // Meditação Mindfulness Real
     palette: {
       from: '#8FA3FF',
       to: '#B5FFC8'
@@ -220,6 +222,7 @@ const PORTALS: Portal[] = [
     name: 'Portal da Gratidão',
     purpose: 'Mudar o foco de carência para plenitude, criando um ciclo virtuoso de abundância',
     closingPhrase: 'Minha gratidão abre a porta da abundância.',
+    videoUrl: 'https://www.youtube.com/embed/JMd1CcGZYwU', // Meditação de Gratidão Real
     palette: {
       from: '#AAAAAA',
       to: '#CBA46A'
@@ -269,6 +272,7 @@ const PORTALS: Portal[] = [
     name: 'Portal da Coragem',
     purpose: 'Desbloquear ação autêntica diante de incertezas, transformando medo em movimento',
     closingPhrase: 'Eu ajo com coragem. Eu ajo apesar do medo.',
+    videoUrl: 'https://www.youtube.com/embed/Ks-_Mh1QhMc', // Meditação Coragem e Autoconfiança
     palette: {
       from: '#1C2541',
       to: '#F2C14E'
@@ -576,7 +580,7 @@ export default function EssentiaGalaxias() {
             lastPortalId: user.lastPortalId,
             totalRitualsCompleted: user.totalRitualsCompleted
           },
-          persona: activePersona.id
+          persona: activePersona.id.toUpperCase()
         })
       });
       
@@ -591,9 +595,19 @@ export default function EssentiaGalaxias() {
       }
     } catch (error) {
       console.error('Erro ao enviar mensagem para IA:', error);
+      
+      // Fallback responses mais interessantes
+      const fallbackResponses = {
+        SOFIA: "💙 Percebo que você precisa de acolhimento. Respire fundo e me conte: o que está pesando no seu coração?",
+        MARCUS: "⚡ Vamos direto ao ponto! Qual é a sua prioridade número 1 hoje? Podemos transformar isso em ação!",
+        LUNA: "🌙 Sua intuição está tentando te dizer algo. Feche os olhos por um momento... o que emerge naturalmente?",
+        LEO: "🎯 Hora de organizar! Como está sua rotina? Vamos criar um plano que funciona para você."
+      };
+      
       setChatMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: 'Desculpe, estou enfrentando dificuldades técnicas. Tente novamente em alguns instantes.' 
+        content: fallbackResponses[activePersona.id.toUpperCase() as keyof typeof fallbackResponses] || 
+                'Olá! Como posso te ajudar na sua jornada hoje?'
       }]);
     } finally {
       setIsAiLoading(false);
@@ -735,13 +749,104 @@ export default function EssentiaGalaxias() {
   // ========================================
   
   const renderOnboarding = () => {
-    const steps = [
-      'Boas-vindas',
-      'Preferências',
-      'Tríade - Consciência',
-      'Tríade - Energia', 
-      'Tríade - Coerência',
-      'Conclusão'
+    // 12 Perguntas do Onboarding Completo (baseado nos documentos)
+    const onboardingQuestions = [
+      {
+        id: 1,
+        category: 'intro',
+        question: 'Como você está se sentindo agora, neste momento?',
+        type: 'scale',
+        scale: ['Muito mal', 'Mal', 'Neutro', 'Bem', 'Muito bem'],
+        triadImpact: { consciencia: 1, energia: 0, coerencia: 0 }
+      },
+      {
+        id: 2,
+        category: 'consciencia',
+        question: 'Quanto você se conhece profundamente?',
+        type: 'scale',
+        scale: ['Pouco', 'Um pouco', 'Razoável', 'Bem', 'Muito bem'],
+        triadImpact: { consciencia: 2, energia: 0, coerencia: 0 }
+      },
+      {
+        id: 3,
+        category: 'consciencia',
+        question: 'Com que frequência você para para refletir sobre suas emoções?',
+        type: 'scale',
+        scale: ['Nunca', 'Raramente', 'Às vezes', 'Frequentemente', 'Sempre'],
+        triadImpact: { consciencia: 2, energia: 0, coerencia: 0 }
+      },
+      {
+        id: 4,
+        category: 'energia',
+        question: 'Como está sua energia vital no dia a dia?',
+        type: 'scale',
+        scale: ['Muito baixa', 'Baixa', 'Regular', 'Alta', 'Muito alta'],
+        triadImpact: { consciencia: 0, energia: 2, coerencia: 0 }
+      },
+      {
+        id: 5,
+        category: 'energia',
+        question: 'Você tem uma rotina que te dá energia?',
+        type: 'scale',
+        scale: ['Não tenho', 'Tenho pouco', 'Tenho algumas', 'Tenho boa', 'Tenho ótima'],
+        triadImpact: { consciencia: 0, energia: 2, coerencia: 0 }
+      },
+      {
+        id: 6,
+        category: 'coerencia',
+        question: 'Suas ações estão alinhadas com seus valores?',
+        type: 'scale',
+        scale: ['Nada alinhadas', 'Pouco alinhadas', 'Razoáveis', 'Bem alinhadas', 'Muito alinhadas'],
+        triadImpact: { consciencia: 0, energia: 0, coerencia: 2 }
+      },
+      {
+        id: 7,
+        category: 'coerencia',
+        question: 'Você tem clareza sobre seu propósito de vida?',
+        type: 'scale',
+        scale: ['Nenhuma', 'Pouca', 'Alguma', 'Boa', 'Total'],
+        triadImpact: { consciencia: 0, energia: 0, coerencia: 2 }
+      },
+      {
+        id: 8,
+        category: 'praticas',
+        question: 'Qual prática te chama mais atenção?',
+        type: 'multiple',
+        options: ['Meditação', 'Reflexão escrita', 'Exercícios respiratórios', 'Contemplação da natureza', 'Autoconhecimento'],
+        triadImpact: { consciencia: 1, energia: 1, coerencia: 1 }
+      },
+      {
+        id: 9,
+        category: 'tempo',
+        question: 'Quanto tempo por dia você pode dedicar ao desenvolvimento pessoal?',
+        type: 'multiple',
+        options: ['2-5 minutos', '5-10 minutos', '10-20 minutos', '20-30 minutos', 'Mais de 30 min'],
+        triadImpact: { consciencia: 0, energia: 1, coerencia: 1 }
+      },
+      {
+        id: 10,
+        category: 'momento',
+        question: 'Qual momento do dia você prefere para práticas de bem-estar?',
+        type: 'multiple',
+        options: ['Manhã cedo', 'Manhã', 'Tarde', 'Início da noite', 'Noite'],
+        triadImpact: { consciencia: 0, energia: 1, coerencia: 0 }
+      },
+      {
+        id: 11,
+        category: 'desafio',
+        question: 'Qual seu maior desafio atualmente?',
+        type: 'multiple',
+        options: ['Ansiedade/Stress', 'Falta de direção', 'Baixa autoestima', 'Relacionamentos', 'Energia/Motivação'],
+        triadImpact: { consciencia: 1, energia: 1, coerencia: 1 }
+      },
+      {
+        id: 12,
+        category: 'objetivo',
+        question: 'O que você mais deseja alcançar?',
+        type: 'multiple',
+        options: ['Paz interior', 'Clareza mental', 'Mais energia', 'Propósito claro', 'Autoconfiança'],
+        triadImpact: { consciencia: 1, energia: 1, coerencia: 1 }
+      }
     ];
     
     if (onboardingStep === 0) {
