@@ -1401,7 +1401,7 @@ export default function EssentiaGalaxias() {
               </div>
               <div className="text-center">
                 <Calendar className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-                <div className="text-2xl font-bold">{Math.floor((Date.now() - user.createdAt.getTime()) / (1000 * 60 * 60 * 24))}</div>
+                <div className="text-2xl font-bold">{Math.floor((Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24))}</div>
                 <div className="text-sm text-gray-600">Dias na jornada</div>
               </div>
             </div>
