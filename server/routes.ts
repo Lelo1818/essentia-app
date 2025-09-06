@@ -11,6 +11,13 @@ import {
 import { z } from "zod";
 import { analyzeTextWithAI, generateStudyPlan, analyzeImageContent } from "./anthropic";
 import { getAICoachResponse, generatePersonalizedInsight } from "./ai-coach";
+import Anthropic from '@anthropic-ai/sdk';
+
+const DEFAULT_MODEL_STR = "claude-sonnet-4-20250514";
+
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Servir arquivo HTML estático para EduVie
@@ -1990,6 +1997,10 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
       
       Contexto do usuário: ${JSON.stringify(context || {})}`;
       
+      if (!process.env.ANTHROPIC_API_KEY) {
+        throw new Error('API key não configurada');
+      }
+
       const response = await anthropic.messages.create({
         model: DEFAULT_MODEL_STR,
         max_tokens: 300,
