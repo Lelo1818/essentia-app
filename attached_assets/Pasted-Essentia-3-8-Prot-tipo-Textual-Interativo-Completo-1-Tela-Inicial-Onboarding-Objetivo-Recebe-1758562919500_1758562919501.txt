@@ -1,0 +1,186 @@
+Essentia 3.8 – Protótipo Textual Interativo Completo
+1️⃣ Tela Inicial / Onboarding
+
+Objetivo: Receber, avaliar estado do usuário e preparar contexto personalizado.
+
+Fluxo detalhado:
+
+Boas-vindas
+
+Avatar animado, luz suave, música ambiente leve.
+
+Texto acolhedor:
+
+“Bem-vindo ao Essentia! Hoje vamos explorar seu potencial. Cada passo é seu, mas vamos guiar você com clareza e energia.”
+
+Primeira Tríade – Avaliação inicial
+
+Energia (1–10): indicador visual + texto livre
+
+Coerência (1–10): indicador visual + exemplos
+
+Consciência (1–10): indicador visual + texto livre
+
+Arquetipo da IA
+
+Mentor (profundo, reflexivo)
+
+Coach (estratégico, objetivo)
+
+Amigo próximo (leve, motivador)
+
+Configuração de Avatar
+
+Nome, cores, expressão facial inicial baseada na Tríade
+
+Micro-animações: respiração, braços, olhos
+
+Micro-feedback inicial
+
+Exemplo:
+
+Energia baixa → avatar com braços caídos
+
+Coerência média → sorriso leve
+
+Consciência alta → postura ereta
+
+IA: “Vejo que sua energia está baixa. Que tal começar com um Portal Sono de 5 minutos?”
+
+2️⃣ Dashboard / Home
+
+Abas principais:
+
+Home / Dashboard: Tríade, avatar, progresso diário, insights rápidos
+
+Portais / Práticas: Portais aparecem somente quando necessário
+
+Diário + IA: Escrita guiada, micro-diálogos
+
+Comunidade / Evolução: Minorstones, conquistas, interações sociais
+
+Perfil / Configurações: Avatar, notificações, personalização
+
+Botões rápidos:
+
+SOS: chama IA para suporte imediato
+
+Portais Contextuais: aparecem de acordo com a Tríade e check-in
+
+Exemplo de micro-feedback na Home:
+
+“Energia baixa detectada. Portal Sono disponível. Coerência média – diário sugerido. Consciência alta – ótimo momento para Mindfulness.”
+
+3️⃣ Tríade + Micro-feedback Contínuo
+
+Visualização: triângulo dinâmico ou radar 3D
+
+Tooltip explicativo: detalha cada ponto da Tríade
+
+Avatar reage conforme níveis: animações de braços, sorriso e olhos
+
+IA: micro-feedback adaptativo
+
+Energia baixa → sugestão Portal Sono
+
+Coerência média → diário guiado
+
+Consciência alta → Mindfulness avançado
+
+4️⃣ Portais Contextuais
+Portal	Tipo	Critério de ativação	Micro-feedback	Prática sugerida
+Sono	Principal	Energia <5	“Vamos recarregar energia”	Respiração guiada 5 min
+Diário	Principal	Coerência <6	“Hora de alinhar pensamentos e ações”	Escrita reflexiva 3 min
+Mindfulness	Principal	Consciência <6	“Aumente sua percepção emocional”	Meditação guiada 3–5 min
+Exercício físico	Secundário	Sedentarismo detectado	“Movimente seu corpo”	Caminhada / alongamento adaptável
+Micro-hábito	Secundário	Check-in positivo	“Pequeno hábito, grande resultado”	Hidratação, alongamento, respiração
+
+Nota: Portais aparecem apenas quando contextualmente necessários.
+
+5️⃣ Diário + IA – Escrita Guiada e Micro-diálogos
+
+Arquetipos da IA: Mentor, Coach, Amigo Próximo
+
+Funcionalidade: micro-diálogos ou escrita livre
+
+Exemplo completo:
+
+Usuário: “Não consegui focar hoje”
+
+Mentor: “Perceber isso já é um passo enorme. Qual momento foi mais difícil?”
+
+Coach: “Vamos dividir tarefas em blocos. Qual prioridade agora?”
+
+Amigo: “Relax! Quer escrever três pontos importantes do dia?”
+
+Integração com Portais: sugestões adaptadas automaticamente
+
+6️⃣ Fluxo Diário / Semanal
+
+Segunda: Check-in rápido + definição Tríade
+
+Terça a sexta: Portais, Diário, Mindfulness, Exercícios sugeridos
+
+Sábado: Revisão semanal, insights, desbloqueio Minorstones
+
+Domingo: Checkpoint completo + planejamento da semana seguinte
+
+Exemplo Minorstone desbloqueado:
+
+“Você manteve coerência acima de 7 durante 5 dias! Avatar ganha animação especial e medalha visual.”
+
+7️⃣ Motor Administrativo
+
+Painel: métricas da Tríade, histórico, Minorstones, progresso semanal/mensal
+
+Telemetria: uso de abas, interações, frequência de Portais/SOS
+
+Sugestões automáticas: evolução do usuário, ajustes de IA
+
+Personalização: arquetipo IA, intensidade das práticas, notificações
+
+Exemplo micro-feedback administrativo:
+
+“Usuário avançou 20% em coerência. Sugerimos foco em energia amanhã com Portal Sono curto.”
+
+8️⃣ Motor de IA – Maestro
+
+Função: decisões estratégicas, recomendações adaptativas, micro-feedback contínuo
+
+Exemplo contextual:
+
+Usuário: “Estou ansioso”
+
+IA Maestro: “Vamos começar com 3 minutos de respiração guiada e depois revisar o diário para organizar pensamentos.”
+
+Ajuste automático baseado em dados diários e semanais
+
+9️⃣ Avatar Evolutivo
+
+Representa Tríade em cores, expressões e animações
+
+Evolui conforme progresso semanal/mensal
+
+Desbloqueio visual: roupas, cores, gestos
+
+Integrado a micro-feedback da IA e Minorstones
+
+🔟 Experiência Integrada
+
+Narrativa fluida e acolhedora
+
+Portais e práticas contextuais
+
+Exercícios adaptados aos objetivos do usuário
+
+Insights do Diário com micro-textos personalizados
+
+Feedback contínuo para alinhamento diário
+
+Se você quiser, posso agora criar a versão desenhada do fluxo, em diagramas visuais estilo fluxograma para:
+
+Fluxo do Usuário
+
+Fluxo Administrativo
+
+Isso vai transformar o Essentia 3.8 em documento vivo + blueprint visual completo, pronto para dev e
