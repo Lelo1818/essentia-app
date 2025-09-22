@@ -216,6 +216,14 @@ export default function EssentiaRenascido() {
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState<Array<{role: 'user' | 'assistant', content: string}>>([]);
   const [isAiLoading, setIsAiLoading] = useState(false);
+  
+  // Onboarding states - MOVIDOS PARA O TOPO
+  const [onboardingStep, setOnboardingStep] = useState(0);
+  const [onboardingAnswers, setOnboardingAnswers] = useState<number[]>([50, 50, 50]);
+  
+  // Checkin states - MOVIDOS PARA O TOPO
+  const [humor, setHumor] = useState(3);
+  const [energia, setEnergia] = useState(3);
 
   // ========================================
   // CORE FUNCTIONS
@@ -368,16 +376,13 @@ export default function EssentiaRenascido() {
   // ========================================
 
   const renderOnboarding = () => {
-    const [step, setStep] = useState(0);
-    const [answers, setAnswers] = useState<number[]>([50, 50, 50]);
-
     const questions = [
       { title: 'Como está sua consciência hoje?', subtitle: 'Presença e percepção do momento', icon: Brain, color: 'purple' },
       { title: 'Como está sua energia?', subtitle: 'Vitalidade física e mental', icon: Zap, color: 'green' },
       { title: 'Como está sua coerência?', subtitle: 'Alinhamento entre valores e ações', icon: Heart, color: 'red' }
     ];
 
-    if (step === 0) {
+    if (onboardingStep === 0) {
       return (
         <Card className="max-w-2xl mx-auto">
           <CardHeader className="text-center">
@@ -406,7 +411,7 @@ export default function EssentiaRenascido() {
             </div>
             
             <Button 
-              onClick={() => setStep(1)}
+              onClick={() => setOnboardingStep(1)}
               className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3"
               size="lg"
             >
@@ -417,13 +422,13 @@ export default function EssentiaRenascido() {
       );
     }
 
-    const currentQ = questions[step - 1];
+    const currentQ = questions[onboardingStep - 1];
     const IconComponent = currentQ.icon;
 
     return (
       <Card className="max-w-2xl mx-auto">
         <CardHeader className="text-center">
-          <Badge variant="secondary">{step}/3</Badge>
+          <Badge variant="secondary">{onboardingStep}/3</Badge>
           <div className={`text-6xl mb-4 text-${currentQ.color}-500`}>
             <IconComponent className="w-16 h-16 mx-auto" />
           </div>
@@ -436,26 +441,26 @@ export default function EssentiaRenascido() {
               type="range"
               min="0"
               max="100"
-              value={answers[step - 1]}
+              value={onboardingAnswers[onboardingStep - 1]}
               onChange={(e) => {
-                const newAnswers = [...answers];
-                newAnswers[step - 1] = Number(e.target.value);
-                setAnswers(newAnswers);
+                const newAnswers = [...onboardingAnswers];
+                newAnswers[onboardingStep - 1] = Number(e.target.value);
+                setOnboardingAnswers(newAnswers);
               }}
               className={`w-full accent-${currentQ.color}-500`}
             />
             <div className="text-center">
               <div className={`text-4xl font-bold text-${currentQ.color}-600`}>
-                {answers[step - 1]}%
+                {onboardingAnswers[onboardingStep - 1]}%
               </div>
             </div>
           </div>
 
           <div className="flex space-x-3">
-            {step > 1 && (
+            {onboardingStep > 1 && (
               <Button 
                 variant="outline" 
-                onClick={() => setStep(step - 1)}
+                onClick={() => setOnboardingStep(onboardingStep - 1)}
                 className="flex-1"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -464,15 +469,15 @@ export default function EssentiaRenascido() {
             )}
             <Button
               onClick={() => {
-                if (step === 3) {
-                  completeOnboarding(answers);
+                if (onboardingStep === 3) {
+                  completeOnboarding(onboardingAnswers);
                 } else {
-                  setStep(step + 1);
+                  setOnboardingStep(onboardingStep + 1);
                 }
               }}
               className="flex-1"
             >
-              {step === 3 ? 'Finalizar' : 'Próximo'}
+              {onboardingStep === 3 ? 'Finalizar' : 'Próximo'}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
@@ -482,8 +487,6 @@ export default function EssentiaRenascido() {
   };
 
   const renderCheckin = () => {
-    const [humor, setHumor] = useState(3);
-    const [energia, setEnergia] = useState(3);
 
     return (
       <Card className="max-w-2xl mx-auto">
