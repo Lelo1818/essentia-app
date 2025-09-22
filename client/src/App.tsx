@@ -84,6 +84,7 @@ import EssentiaMVP from "@/pages/essentia-mvp";
 import EssentiaGalaxias from "@/pages/essentia-galaxias";
 import EssentiaGalaxiasFinal from "@/pages/essentia-galaxias-final";
 import EssentiaDefinitive from "@/pages/essentia-definitive";
+import EssentiaRenascido from "@/pages/essentia-renascido";
 
 
 
@@ -157,6 +158,7 @@ function Router() {
       <Route path="/essentia-galaxias" component={EssentiaGalaxias} />
       <Route path="/essentia-galaxias-final" component={EssentiaGalaxiasFinal} />
       <Route path="/essentia-definitive" component={EssentiaDefinitive} />
+      <Route path="/essentia-renascido" component={EssentiaRenascido} />
       <Route path="/essentia-purpose-style" component={EssentiaPurposeStyle} />
       <Route path="/essentia-purpose-original" component={EssentiaPurposeOriginal} />
       <Route path="/essentia-clean-demo" component={EssentiaCleanDemo} />
