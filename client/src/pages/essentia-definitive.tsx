@@ -355,31 +355,26 @@ const MINORSTONES: Minorstone[] = [
 // ========================================
 
 export default function EssentiaDefinitive() {
-  // Estados principais
+  // Estados principais - TODOS declarados no início
   const [currentFlow, setCurrentFlow] = useState<'onboarding' | 'dashboard' | 'portal' | 'diary' | 'community'>('onboarding');
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [user, setUser] = useState<UserProfile | null>(null);
-  
-  // Portal contextual
   const [availablePortals, setAvailablePortals] = useState<ContextualPortal[]>([]);
   const [activePortal, setActivePortal] = useState<ContextualPortal | null>(null);
   const [portalProgress, setPortalProgress] = useState(0);
-  
-  // IA e feedback
   const [currentArchetype, setCurrentArchetype] = useState<AIArchetype>(AI_ARCHETYPES[0]);
   const [aiChatOpen, setAiChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<Array<{role: 'user' | 'assistant', content: string}>>([]);
   const [chatInput, setChatInput] = useState('');
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [microFeedback, setMicroFeedback] = useState<string>('');
-  
-  // Diário guiado
   const [diaryEntry, setDiaryEntry] = useState('');
   const [diaryPrompts, setDiaryPrompts] = useState<string[]>([]);
-  
-  // Timer e práticas
   const [currentTimer, setCurrentTimer] = useState(0);
   const [isTimerActive, setIsTimerActive] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(5);
+  
+  // Ref sempre no mesmo lugar
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // ========================================
@@ -775,7 +770,6 @@ export default function EssentiaDefinitive() {
       const questionIndex = onboardingStep - 1;
       const question = questions[questionIndex];
       const IconComponent = question.icon;
-      const [selectedValue, setSelectedValue] = useState(5);
 
       return (
         <Card className="max-w-2xl mx-auto">
