@@ -559,6 +559,11 @@ export default function EssentiaUnified() {
     setAvatarState('attentive');
     
     try {
+      // Safely extract mood from latest check-in
+      const latestMood = user?.dailyCheckIns?.length 
+        ? user.dailyCheckIns[user.dailyCheckIns.length - 1]?.mood 
+        : null;
+      
       const response = await fetch('/api/ai-coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -566,8 +571,8 @@ export default function EssentiaUnified() {
           message: chatInput,
           persona: selectedPersona,
           context: { 
-            triad: user?.triadScores,
-            mood: user?.dailyCheckIns[user.dailyCheckIns.length - 1]?.mood
+            triad: user?.triadScores || null,
+            mood: latestMood
           }
         })
       });
