@@ -528,6 +528,7 @@ export default function EssentiaMega() {
     const userMessage: AIMessage = { role: 'user', content: chatInput };
     setChatMessages(prev => [...prev, userMessage]);
     setIsAiLoading(true);
+    const messageToSend = chatInput;
     setChatInput('');
     
     try {
@@ -535,11 +536,17 @@ export default function EssentiaMega() {
         ? user.dailyCheckIns[user.dailyCheckIns.length - 1]?.mood 
         : null;
       
+      console.log('Enviando mensagem para IA:', {
+        message: messageToSend,
+        persona: selectedPersona,
+        context: { triad: user?.triadScores, mood: latestMood }
+      });
+      
       const response = await fetch('/api/ai-coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: chatInput,
+          message: messageToSend,
           persona: selectedPersona,
           context: { 
             triad: user?.triadScores || null,
@@ -548,7 +555,14 @@ export default function EssentiaMega() {
         })
       });
       
+      console.log('Resposta HTTP status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('Dados recebidos da IA:', data);
       
       const aiMessage: AIMessage = {
         role: 'assistant',
@@ -559,7 +573,7 @@ export default function EssentiaMega() {
       setChatMessages(prev => [...prev, aiMessage]);
       
     } catch (error) {
-      console.error('Erro na IA:', error);
+      console.error('Erro completo na IA:', error);
       setChatMessages(prev => [...prev, {
         role: 'assistant',
         content: 'Desculpe, estou com dificuldades técnicas.',
