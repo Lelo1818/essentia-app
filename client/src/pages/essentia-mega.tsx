@@ -11,7 +11,7 @@ import {
   ArrowRight, Star, Volume2, VolumeX, Wind, Book, Sun, Moon,
   Target, Compass, Flame, Calendar, TrendingUp, ArrowLeft, Users,
   Home, Eye, Shield, Lightbulb, TreePine, Globe, UserPlus,
-  Coffee, Share2, RotateCcw
+  Coffee, Share2, RotateCcw, Sunrise, Crown
 } from 'lucide-react';
 
 // ========================================
@@ -402,12 +402,12 @@ export default function EssentiaMega() {
   ];
 
   const journeyStages = [
-    { id: 1, name: 'Despertar Interior', icon: Sun },
-    { id: 2, name: 'Autoconhecimento Profundo', icon: Brain },
-    { id: 3, name: 'Descoberta de Paixões', icon: Heart },
-    { id: 4, name: 'Relacionamentos Significativos', icon: Users },
-    { id: 5, name: 'Missão e Contribuição', icon: Target },
-    { id: 6, name: 'Vida com Propósito', icon: Star }
+    { id: 1, name: 'Despertar Interior', icon: Sunrise, emoji: '🌅', description: 'Primeiros passos no autoconhecimento' },
+    { id: 2, name: 'Autoconhecimento Profundo', icon: Brain, emoji: '🧠', description: 'Compreender padrões e crenças' },
+    { id: 3, name: 'Descoberta de Paixões', icon: Sparkles, emoji: '✨', description: 'Encontrar o que te move' },
+    { id: 4, name: 'Relacionamentos Significativos', icon: Heart, emoji: '💫', description: 'Conexões autênticas' },
+    { id: 5, name: 'Missão e Contribuição', icon: Compass, emoji: '🎯', description: 'Impactar o mundo' },
+    { id: 6, name: 'Vida com Propósito', icon: Crown, emoji: '👑', description: 'Plenitude e realização' }
   ];
 
   const portals = [
@@ -1424,17 +1424,21 @@ export default function EssentiaMega() {
                     const isCurrent = user?.journeyStage === stage.id;
                     
                     return (
-                      <div key={stage.id} className={`flex items-center space-x-4 p-4 rounded-lg ${
-                        isCurrent ? 'bg-purple-50 border-2 border-purple-600' :
-                        isCompleted ? 'bg-green-50' : 'bg-gray-50'
+                      <div key={stage.id} className={`flex items-center space-x-4 p-4 rounded-lg transition-all ${
+                        isCurrent ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-600 shadow-md' :
+                        isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'
                       }`}>
-                        <Icon className={`w-6 h-6 ${
-                          isCurrent ? 'text-purple-600' :
-                          isCompleted ? 'text-green-600' : 'text-gray-400'
-                        }`} />
+                        <div className="flex items-center space-x-2">
+                          <span className="text-3xl">{stage.emoji}</span>
+                          <Icon className={`w-6 h-6 ${
+                            isCurrent ? 'text-purple-600' :
+                            isCompleted ? 'text-green-600' : 'text-gray-400'
+                          }`} />
+                        </div>
                         <div className="flex-1">
-                          <p className="font-semibold">{stage.name}</p>
-                          {isCurrent && <Badge className="mt-1">Atual</Badge>}
+                          <p className="font-bold">{stage.name}</p>
+                          <p className="text-xs text-gray-600">{stage.description}</p>
+                          {isCurrent && <Badge className="mt-1 bg-purple-600">✨ Atual</Badge>}
                         </div>
                         {isCompleted && <CheckCircle className="w-5 h-5 text-green-600" />}
                       </div>
