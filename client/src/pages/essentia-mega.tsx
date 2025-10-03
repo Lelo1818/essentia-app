@@ -673,11 +673,17 @@ export default function EssentiaMega() {
 
           <Card>
             <CardHeader className="text-center">
-              <CardTitle className="text-xl">{currentArea.question}</CardTitle>
+              <CardTitle className="text-xl mb-4">{currentArea.question}</CardTitle>
+              <p className="text-gray-600">De 0 (insatisfeito) a 10 (plenitude)</p>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <p className="text-center mb-4 text-gray-600">De 0 (insatisfeito) a 10 (plenitude)</p>
+            <CardContent className="space-y-8">
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="text-6xl font-bold text-purple-600 mb-4">
+                    {lifeWheelData[currentArea.id as keyof LifeWheelData]}
+                  </div>
+                </div>
+                
                 <input
                   type="range"
                   min="0"
@@ -687,13 +693,19 @@ export default function EssentiaMega() {
                     ...prev,
                     [currentArea.id]: Number(e.target.value)
                   }))}
-                  className="w-full accent-purple-600"
+                  className="w-full h-3 accent-purple-600"
+                  style={{ cursor: 'pointer' }}
                 />
-                <div className="text-center mt-2">
-                  <div className="text-4xl font-bold text-purple-600">
-                    {lifeWheelData[currentArea.id as keyof LifeWheelData]}/10
-                  </div>
+                
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>0 - Insatisfeito</span>
+                  <span>10 - Plenitude</span>
                 </div>
+
+                <Textarea
+                  placeholder="Escreva suas reflexões sobre esta área... (opcional)"
+                  className="min-h-24"
+                />
               </div>
 
               <div className="flex space-x-3">
@@ -716,8 +728,9 @@ export default function EssentiaMega() {
                     }
                   }}
                   className="flex-1"
+                  size="lg"
                 >
-                  {wheelStep === lifeAreas.length - 1 ? 'Finalizar Roda' : 'Próximo'}
+                  {wheelStep === lifeAreas.length - 1 ? 'Finalizar Roda' : 'Próxima Área'} <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
             </CardContent>
