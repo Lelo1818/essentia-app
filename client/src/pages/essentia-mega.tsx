@@ -952,7 +952,7 @@ export default function EssentiaMega() {
             <BreathingGuide isActive={breathingActive} onComplete={completeBreathing} />
             
             <div className="text-center mt-6">
-              <p className="text-gray-600 mb-4">5 ciclos • Técnica 4-4-6 • Som 174Hz</p>
+              <p className="text-gray-600 mb-4">5 ciclos • Técnica 4-4-6 • 🔊 Som 174Hz ativo</p>
               <Button
                 onClick={completeBreathing}
                 variant="outline"
@@ -1061,9 +1061,12 @@ export default function EssentiaMega() {
         <Card className="max-w-4xl mx-auto h-[90vh] flex flex-col">
           <CardHeader className="border-b">
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-2xl">Coach IA - 4 Personas</CardTitle>
-                <p className="text-gray-600 text-sm">Escolha quem te guiará hoje</p>
+              <div className="flex items-center space-x-3">
+                <EssentiaAvatar state={avatarState} />
+                <div>
+                  <CardTitle className="text-2xl">Coach IA - 4 Personas</CardTitle>
+                  <p className="text-gray-600 text-sm">Escolha quem te guiará hoje</p>
+                </div>
               </div>
               <Button variant="outline" size="sm" onClick={() => setStep('dashboard')}>
                 Voltar
@@ -1422,11 +1425,13 @@ export default function EssentiaMega() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Button
                 onClick={startBreathing}
-                className="h-32 text-lg bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 flex-col"
+                className="h-32 text-lg bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 flex-col relative"
               >
                 <Wind className="w-8 h-8 mb-2" />
                 Respiração Guiada
-                <span className="text-sm mt-1">Com som 174Hz</span>
+                <span className="text-sm mt-1 flex items-center">
+                  🔊 Com som 174Hz
+                </span>
               </Button>
 
               <Button
