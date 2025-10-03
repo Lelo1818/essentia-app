@@ -62,7 +62,7 @@ interface UserProfile {
 }
 
 type Persona = 'SOFIA' | 'MARCUS' | 'LUNA' | 'LEO';
-type Step = 'intro' | 'name' | 'wheel' | 'triad' | 'checkin' | 'dashboard' | 'portal' | 'breathing' | 'journal' | 'chat' | 'community';
+type Step = 'intro' | 'name' | 'wheel' | 'triad' | 'checkin' | 'dashboard' | 'portal' | 'breathing' | 'journal' | 'chat' | 'community' | 'ritual';
 
 interface AIMessage {
   role: 'user' | 'assistant';
@@ -455,6 +455,8 @@ export default function EssentiaMega() {
   const completeCheckIn = () => {
     if (!user) return;
     
+    const isMorning = new Date().getHours() < 12;
+    
     const updatedUser = {
       ...user,
       dailyCheckIns: [...user.dailyCheckIns, {
@@ -462,6 +464,31 @@ export default function EssentiaMega() {
         mood,
         energy: energyLevel
       }]
+    };
+    
+    setUser(updatedUser);
+    localStorage.setItem('essentia-mega-user', JSON.stringify(updatedUser));
+    
+    // Ir para ritual se for manhã e ainda não fez
+    if (isMorning && !user.rituals.morning) {
+      setStep('ritual');
+    } else {
+      setStep('dashboard');
+    }
+  };
+
+  const completeRitual = (type: 'morning' | 'evening') => {
+    if (!user) return;
+    
+    const updatedUser = {
+      ...user,
+      rituals: {
+        ...user.rituals,
+        [type]: true
+      },
+      totalPractices: user.totalPractices + 1,
+      clarity: Math.min(100, user.clarity + 5),
+      journeyStage: user.totalPractices >= 10 && user.journeyStage < 6 ? user.journeyStage + 1 : user.journeyStage
     };
     
     setUser(updatedUser);
@@ -966,6 +993,75 @@ export default function EssentiaMega() {
     );
   }
 
+  if (step === 'ritual') {
+    const isMorning = new Date().getHours() < 12;
+    const ritualType = isMorning ? 'morning' : 'evening';
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-50 flex items-center justify-center p-4">
+        <Card className="max-w-2xl w-full">
+          <CardHeader className="text-center">
+            <div className="text-6xl mb-4">{isMorning ? '🌅' : '🌙'}</div>
+            <CardTitle className="text-3xl">
+              {isMorning ? 'Ritual Matinal' : 'Ritual Noturno'}
+            </CardTitle>
+            <p className="text-gray-600 mt-2">
+              {isMorning 
+                ? 'Comece seu dia com intenção e clareza' 
+                : 'Encerre seu dia com gratidão e reflexão'}
+            </p>
+            <div className="mt-4">
+              <EssentiaAvatar state="calm" />
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm space-y-4">
+              <h3 className="font-bold text-lg flex items-center">
+                <Sparkles className="w-5 h-5 mr-2 text-yellow-600" />
+                {isMorning ? '3 Gratidões' : '3 Aprendizados'}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {isMorning 
+                  ? 'Pelo que você é grato hoje? (mental ou escrito)' 
+                  : 'O que você aprendeu hoje? (mental ou escrito)'}
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm space-y-4">
+              <h3 className="font-bold text-lg flex items-center">
+                <Target className="w-5 h-5 mr-2 text-blue-600" />
+                {isMorning ? 'Intenção do Dia' : 'Reflexão do Dia'}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {isMorning 
+                  ? 'Qual sua principal intenção para hoje?' 
+                  : 'Como foi seu dia de 0-10?'}
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm space-y-4">
+              <h3 className="font-bold text-lg flex items-center">
+                <Wind className="w-5 h-5 mr-2 text-green-600" />
+                Respiração Consciente
+              </h3>
+              <p className="text-gray-600 text-sm">3 respirações profundas (4-4-6)</p>
+              <div className="text-center text-4xl">🧘</div>
+            </div>
+
+            <Button
+              onClick={() => completeRitual(ritualType)}
+              className="w-full"
+              size="lg"
+            >
+              <CheckCircle className="w-5 h-5 mr-2" />
+              Ritual Concluído
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (step === 'portal') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
@@ -1422,7 +1518,7 @@ export default function EssentiaMega() {
           </TabsContent>
 
           <TabsContent value="practices" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Button
                 onClick={startBreathing}
                 className="h-32 text-lg bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 flex-col relative"
@@ -1432,6 +1528,23 @@ export default function EssentiaMega() {
                 <span className="text-sm mt-1 flex items-center">
                   🔊 Com som 174Hz
                 </span>
+              </Button>
+
+              <Button
+                onClick={() => setStep('ritual')}
+                className="h-32 text-lg bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700 flex-col"
+                disabled={user?.rituals.morning && user?.rituals.evening}
+              >
+                {new Date().getHours() < 12 ? '🌅' : '🌙'}
+                <span className="text-base mt-2">
+                  {new Date().getHours() < 12 ? 'Ritual Matinal' : 'Ritual Noturno'}
+                </span>
+                {user?.rituals.morning && new Date().getHours() < 12 && (
+                  <Badge className="mt-1 bg-green-600">Feito ✓</Badge>
+                )}
+                {user?.rituals.evening && new Date().getHours() >= 18 && (
+                  <Badge className="mt-1 bg-green-600">Feito ✓</Badge>
+                )}
               </Button>
 
               <Button
