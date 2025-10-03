@@ -13,6 +13,13 @@ import { z } from "zod";
 import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
 import multer from "multer";
 import * as fs from 'fs/promises';
+import Anthropic from '@anthropic-ai/sdk';
+
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
+const DEFAULT_MODEL_STR = "claude-sonnet-4-20250514";
 // import { poppler } from 'node-poppler';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -523,6 +530,89 @@ Informações do arquivo:
         res.status(404).send('File not found');
       }
     });
+  });
+
+  // Essentia AI Coach route - 4 personas (Sofia, Marcus, Luna, Leo)
+  app.post("/api/ai-coach", async (req, res) => {
+    try {
+      const { message, context, persona } = req.body;
+      
+      console.log('=== AI COACH REQUEST ===');
+      console.log('Message:', message);
+      console.log('Persona:', persona);
+      console.log('Context:', context);
+      
+      if (!message || !persona) {
+        console.log('ERROR: Missing message or persona');
+        return res.status(400).json({ error: "Message and persona are required" });
+      }
+      
+      const personaPrompts: Record<string, string> = {
+        'SOFIA': `Você é Sofia, uma persona de empatia no Essentia. Sua função é acolher, refletir e regular emoções.
+        Tom: acolhedor, compassivo. Foque em nomear emoções e oferecer segurança.
+        Ideal para: SOS, Reflexões e fechamento de portais.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`,
+        
+        'MARCUS': `Você é Marcus, uma persona de estratégia no Essentia. Sua função é definir micro-ação, priorizar clareza e execução.
+        Tom: direto e estratégico. Transforme objetivo em micro-ação acionável hoje.
+        Ideal para: Propósito e próximos passos.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`,
+        
+        'LUNA': `Você é Luna, uma persona de intuição no Essentia. Sua função é ampliar significado, conectar símbolos/natureza.
+        Tom: poético e intuitivo. Traga símbolos, natureza e conexão com o todo.
+        Ideal para: Contemplação e Espiritualidade.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`,
+        
+        'LEO': `Você é Leo, uma persona de rotina no Essentia. Sua função é lembrar, consolidar hábitos, proteger streak.
+        Tom: prático e consistente. Reforce rotina, streak e mínimos viáveis diários.
+        Ideal para: Mindfulness e lembretes.
+        Responda em 2 frases máximo e ofereça 1 CTA (call-to-action) de 2–5 minutos.`
+      };
+      
+      const systemPrompt = `[SYSTEM]
+      Você é um guia Essentia. Fale pouco, com calor humano, objetividade e respeito.
+      Nunca faça diagnósticos clínicos. Convide para pequenas ações. Não julgue.
+      Quando sugerir algo, ofereça exatamente 1 próximo passo clicável (CTA).
+      
+      ${personaPrompts[persona] || personaPrompts['SOFIA']}
+      
+      Contexto do usuário: ${JSON.stringify(context || {})}`;
+      
+      if (!process.env.ANTHROPIC_API_KEY) {
+        console.log('ERROR: No ANTHROPIC_API_KEY');
+        throw new Error('API key não configurada');
+      }
+
+      console.log('Calling Anthropic API...');
+      const response = await anthropic.messages.create({
+        model: DEFAULT_MODEL_STR,
+        max_tokens: 300,
+        messages: [
+          { role: 'user', content: `${systemPrompt}\n\nUsuário diz: "${message}"` }
+        ]
+      });
+      
+      const responseText = Array.isArray(response.content) && response.content[0]?.type === 'text' 
+        ? response.content[0].text 
+        : 'Olá! Como posso te ajudar hoje na sua jornada de autoconhecimento?';
+      
+      console.log('AI Response:', responseText);
+      
+      res.json({ 
+        response: responseText,
+        persona: persona
+      });
+      
+    } catch (error: any) {
+      console.error('=== AI COACH ERROR ===');
+      console.error('Error type:', error?.constructor?.name);
+      console.error('Error message:', error?.message);
+      console.error('Full error:', error);
+      res.status(500).json({ 
+        error: "Erro interno do servidor",
+        response: "Desculpe, estou enfrentando dificuldades técnicas. Tente novamente em alguns instantes."
+      });
+    }
   });
 
   const httpServer = createServer(app);

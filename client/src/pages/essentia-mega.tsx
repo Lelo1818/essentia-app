@@ -83,11 +83,18 @@ const BreathingGuide = ({ isActive, onComplete }: { isActive: boolean; onComplet
   const oscillatorRef = useRef<OscillatorNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  const startSound = () => {
+  const startSound = async () => {
     if (audioContextRef.current) return;
     
     try {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      // CRITICAL: Resume AudioContext (browser autoplay policy)
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+        console.log('AudioContext resumed:', audioContext.state);
+      }
+      
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
@@ -104,6 +111,8 @@ const BreathingGuide = ({ isActive, onComplete }: { isActive: boolean; onComplet
       audioContextRef.current = audioContext;
       oscillatorRef.current = oscillator;
       gainNodeRef.current = gainNode;
+      
+      console.log('Som iniciado com sucesso: 174Hz');
     } catch (error) {
       console.error('Erro ao iniciar som:', error);
     }
