@@ -1961,7 +1961,13 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
     try {
       const { message, context, persona } = req.body;
       
+      console.log('=== AI COACH REQUEST ===');
+      console.log('Message:', message);
+      console.log('Persona:', persona);
+      console.log('Context:', context);
+      
       if (!message || !persona) {
+        console.log('ERROR: Missing message or persona');
         return res.status(400).json({ error: "Message and persona are required" });
       }
       
@@ -1998,9 +2004,11 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
       Contexto do usuário: ${JSON.stringify(context || {})}`;
       
       if (!process.env.ANTHROPIC_API_KEY) {
+        console.log('ERROR: No ANTHROPIC_API_KEY');
         throw new Error('API key não configurada');
       }
 
+      console.log('Calling Anthropic API...');
       const response = await anthropic.messages.create({
         model: DEFAULT_MODEL_STR,
         max_tokens: 300,
@@ -2013,13 +2021,18 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
         ? response.content[0].text 
         : 'Olá! Como posso te ajudar hoje na sua jornada de autoconhecimento?';
       
+      console.log('AI Response:', responseText);
+      
       res.json({ 
         response: responseText,
         persona: persona
       });
       
-    } catch (error) {
-      console.error('Erro no AI Coach:', error);
+    } catch (error: any) {
+      console.error('=== AI COACH ERROR ===');
+      console.error('Error type:', error?.constructor?.name);
+      console.error('Error message:', error?.message);
+      console.error('Full error:', error);
       res.status(500).json({ 
         error: "Erro interno do servidor",
         response: "Desculpe, estou enfrentando dificuldades técnicas. Tente novamente em alguns instantes."

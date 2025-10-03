@@ -385,8 +385,6 @@ export default function EssentiaMega() {
   // ========================================
 
   const completeOnboarding = () => {
-    const avgWheel = Object.values(lifeWheelData).reduce((a, b) => a + b, 0) / 8;
-    
     const newUser: UserProfile = {
       id: 'essentia_mega_user',
       name: userName || 'Explorador',
@@ -395,7 +393,7 @@ export default function EssentiaMega() {
       streak: 0,
       totalPractices: 0,
       clarity: Math.round((consciencia + energia + coerencia) / 3),
-      journeyStage: avgWheel < 40 ? 1 : avgWheel < 60 ? 2 : 3,
+      journeyStage: 1, // Sempre começa no estágio 1
       dailyCheckIns: [],
       journal: [],
       completedPortals: [],
@@ -1214,6 +1212,18 @@ export default function EssentiaMega() {
                   Clareza: {user?.clarity}% • {user?.totalPractices} práticas • Estágio {user?.journeyStage}/6
                 </p>
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  localStorage.removeItem('essentia-mega-user');
+                  window.location.reload();
+                }}
+                className="bg-white/20 text-white border-white/40 hover:bg-white/30"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Resetar
+              </Button>
             </div>
           </CardHeader>
         </Card>
