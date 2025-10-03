@@ -211,6 +211,41 @@ const BreathingGuide = ({ isActive, onComplete }: { isActive: boolean; onComplet
 };
 
 // ========================================
+// AVATAR COMPONENT
+// ========================================
+
+const EssentiaAvatar = ({ state, breathingSync = false }: { state: 'calm' | 'attentive' | 'grateful'; breathingSync?: boolean }) => {
+  const getColor = () => {
+    if (state === 'calm') return '#8b5cf6';
+    if (state === 'attentive') return '#f59e0b';
+    return '#10b981';
+  };
+
+  const getEmoji = () => {
+    if (state === 'calm') return '🧘';
+    if (state === 'attentive') return '👁️';
+    return '🌟';
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <div
+        className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl ${
+          breathingSync ? 'animate-pulse' : ''
+        }`}
+        style={{
+          backgroundColor: getColor() + '40',
+          border: `3px solid ${getColor()}`,
+          boxShadow: `0 0 20px ${getColor()}40`
+        }}
+      >
+        {getEmoji()}
+      </div>
+    </div>
+  );
+};
+
+// ========================================
 // PORTAL VISUAL
 // ========================================
 
@@ -320,6 +355,9 @@ export default function EssentiaMega() {
   const [chatMessages, setChatMessages] = useState<AIMessage[]>([]);
   const [chatInput, setChatInput] = useState('');
   const [isAiLoading, setIsAiLoading] = useState(false);
+  
+  // Avatar
+  const [avatarState, setAvatarState] = useState<'calm' | 'attentive' | 'grateful'>('calm');
 
   // Community
   const [communityPosts] = useState([
@@ -427,6 +465,7 @@ export default function EssentiaMega() {
     setStep('portal');
     setPortalActive(true);
     setPortalProgress(0);
+    setAvatarState('attentive');
     
     const interval = setInterval(() => {
       setPortalProgress(prev => {
@@ -453,15 +492,18 @@ export default function EssentiaMega() {
     
     setUser(updatedUser);
     localStorage.setItem('essentia-mega-user', JSON.stringify(updatedUser));
+    setAvatarState('grateful');
     
     setTimeout(() => {
       setStep('dashboard');
+      setAvatarState('calm');
     }, 2000);
   };
 
   const startBreathing = () => {
     setStep('breathing');
     setBreathingActive(true);
+    setAvatarState('calm');
   };
 
   const completeBreathing = () => {
@@ -477,14 +519,18 @@ export default function EssentiaMega() {
     
     setUser(updatedUser);
     localStorage.setItem('essentia-mega-user', JSON.stringify(updatedUser));
+    setAvatarState('grateful');
     
     setTimeout(() => {
       setStep('dashboard');
+      setAvatarState('calm');
     }, 1500);
   };
 
   const saveJournal = async () => {
     if (!journalEntry.trim() || !user) return;
+    
+    setAvatarState('attentive');
     
     try {
       const response = await fetch('/api/ai-coach', {
@@ -513,10 +559,12 @@ export default function EssentiaMega() {
       
       setUser(updatedUser);
       localStorage.setItem('essentia-mega-user', JSON.stringify(updatedUser));
+      setAvatarState('grateful');
       
     } catch (error) {
       console.error('Erro ao salvar diário:', error);
       setAiInsight('Sua reflexão foi registrada com carinho.');
+      setAvatarState('calm');
     }
   };
 
@@ -528,6 +576,7 @@ export default function EssentiaMega() {
     setIsAiLoading(true);
     const messageToSend = chatInput;
     setChatInput('');
+    setAvatarState('attentive');
     
     try {
       const latestMood = user?.dailyCheckIns?.length 
@@ -569,6 +618,7 @@ export default function EssentiaMega() {
       };
       
       setChatMessages(prev => [...prev, aiMessage]);
+      setAvatarState('calm');
       
     } catch (error) {
       console.error('Erro completo na IA:', error);
@@ -577,6 +627,7 @@ export default function EssentiaMega() {
         content: 'Desculpe, estou com dificuldades técnicas.',
         persona: selectedPersona
       }]);
+      setAvatarState('calm');
     } finally {
       setIsAiLoading(false);
     }
@@ -884,6 +935,9 @@ export default function EssentiaMega() {
               <Wind className="w-6 h-6 mr-2 text-purple-600" />
               Respiração Guiada com Som
             </CardTitle>
+            <div className="mt-4">
+              <EssentiaAvatar state={avatarState} breathingSync={breathingActive} />
+            </div>
           </CardHeader>
           <CardContent>
             <BreathingGuide isActive={breathingActive} onComplete={completeBreathing} />
@@ -909,6 +963,9 @@ export default function EssentiaMega() {
         <Card className="max-w-3xl w-full">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Portal {portals.find(p => p.id === selectedPortal)?.name}</CardTitle>
+            <div className="mt-4">
+              <EssentiaAvatar state={avatarState} />
+            </div>
             <Progress value={portalProgress} className="mt-4" />
           </CardHeader>
           <CardContent>
@@ -944,6 +1001,9 @@ export default function EssentiaMega() {
             <Book className="w-12 h-12 mx-auto mb-2 text-purple-600" />
             <CardTitle className="text-2xl">Diário de Jornada</CardTitle>
             <p className="text-gray-600">O que você está sentindo ou pensando?</p>
+            <div className="mt-4">
+              <EssentiaAvatar state={avatarState} />
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <Textarea
@@ -1206,11 +1266,14 @@ export default function EssentiaMega() {
         <Card className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-3xl">Olá, {user?.name}! ✨</CardTitle>
-                <p className="text-purple-100 mt-1">
-                  Clareza: {user?.clarity}% • {user?.totalPractices} práticas • Estágio {user?.journeyStage}/6
-                </p>
+              <div className="flex items-center space-x-4">
+                <EssentiaAvatar state={avatarState} />
+                <div>
+                  <CardTitle className="text-3xl">Olá, {user?.name}! ✨</CardTitle>
+                  <p className="text-purple-100 mt-1">
+                    Clareza: {user?.clarity}% • {user?.totalPractices} práticas • Estágio {user?.journeyStage}/6
+                  </p>
+                </div>
               </div>
               <Button
                 variant="outline"
