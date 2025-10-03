@@ -1422,12 +1422,47 @@ export default function EssentiaMega() {
                     const Icon = stage.icon;
                     const isCompleted = user && user.journeyStage > stage.id;
                     const isCurrent = user?.journeyStage === stage.id;
+                    const isLocked = user && stage.id > user.journeyStage + 1;
+                    
+                    const handleStageClick = () => {
+                      if (isLocked) return;
+                      
+                      // Navegação baseada no estágio
+                      switch(stage.id) {
+                        case 1: // Despertar Interior
+                          startBreathing();
+                          break;
+                        case 2: // Autoconhecimento
+                          setStep('journal');
+                          break;
+                        case 3: // Paixões
+                          startPortal('clareza');
+                          break;
+                        case 4: // Relacionamentos
+                          setStep('community');
+                          break;
+                        case 5: // Missão
+                          startPortal('proposito');
+                          break;
+                        case 6: // Propósito
+                          setStep('chat');
+                          break;
+                      }
+                    };
                     
                     return (
-                      <div key={stage.id} className={`flex items-center space-x-4 p-4 rounded-lg transition-all ${
-                        isCurrent ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-600 shadow-md' :
-                        isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'
-                      }`}>
+                      <button
+                        key={stage.id}
+                        onClick={handleStageClick}
+                        disabled={isLocked}
+                        className={`w-full flex items-center space-x-4 p-4 rounded-lg transition-all ${
+                          isLocked ? 'opacity-50 cursor-not-allowed' :
+                          'cursor-pointer hover:scale-[1.02] hover:shadow-lg'
+                        } ${
+                          isCurrent ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-600 shadow-md' :
+                          isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'
+                        }`}
+                      >
                         <div className="flex items-center space-x-2">
                           <span className="text-3xl">{stage.emoji}</span>
                           <Icon className={`w-6 h-6 ${
@@ -1435,13 +1470,15 @@ export default function EssentiaMega() {
                             isCompleted ? 'text-green-600' : 'text-gray-400'
                           }`} />
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 text-left">
                           <p className="font-bold">{stage.name}</p>
                           <p className="text-xs text-gray-600">{stage.description}</p>
                           {isCurrent && <Badge className="mt-1 bg-purple-600">✨ Atual</Badge>}
+                          {isLocked && <Badge className="mt-1 bg-gray-400">🔒 Bloqueado</Badge>}
                         </div>
                         {isCompleted && <CheckCircle className="w-5 h-5 text-green-600" />}
-                      </div>
+                        {!isLocked && !isCompleted && <ArrowRight className="w-5 h-5 text-purple-400" />}
+                      </button>
                     );
                   })}
                 </div>
