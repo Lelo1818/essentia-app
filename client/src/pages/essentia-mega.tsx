@@ -1411,7 +1411,10 @@ export default function EssentiaMega() {
           <TabsContent value="journey" className="space-y-6 mt-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <div className="text-center mb-4">
+                  <EssentiaAvatar state={avatarState} />
+                </div>
+                <CardTitle className="flex items-center justify-center">
                   <Compass className="w-5 h-5 mr-2 text-purple-600" />
                   Jornada de 6 Estágios
                 </CardTitle>
@@ -1422,11 +1425,8 @@ export default function EssentiaMega() {
                     const Icon = stage.icon;
                     const isCompleted = user && user.journeyStage > stage.id;
                     const isCurrent = user?.journeyStage === stage.id;
-                    const isLocked = user && stage.id > user.journeyStage + 1;
                     
                     const handleStageClick = () => {
-                      if (isLocked) return;
-                      
                       // Navegação baseada no estágio
                       switch(stage.id) {
                         case 1: // Despertar Interior
@@ -1454,13 +1454,9 @@ export default function EssentiaMega() {
                       <button
                         key={stage.id}
                         onClick={handleStageClick}
-                        disabled={isLocked}
-                        className={`w-full flex items-center space-x-4 p-4 rounded-lg transition-all ${
-                          isLocked ? 'opacity-50 cursor-not-allowed' :
-                          'cursor-pointer hover:scale-[1.02] hover:shadow-lg'
-                        } ${
+                        className={`w-full flex items-center space-x-4 p-4 rounded-lg transition-all cursor-pointer hover:scale-[1.02] hover:shadow-lg ${
                           isCurrent ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-600 shadow-md' :
-                          isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'
+                          isCompleted ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200 hover:bg-purple-50/30'
                         }`}
                       >
                         <div className="flex items-center space-x-2">
@@ -1474,10 +1470,9 @@ export default function EssentiaMega() {
                           <p className="font-bold">{stage.name}</p>
                           <p className="text-xs text-gray-600">{stage.description}</p>
                           {isCurrent && <Badge className="mt-1 bg-purple-600">✨ Atual</Badge>}
-                          {isLocked && <Badge className="mt-1 bg-gray-400">🔒 Bloqueado</Badge>}
                         </div>
                         {isCompleted && <CheckCircle className="w-5 h-5 text-green-600" />}
-                        {!isLocked && !isCompleted && <ArrowRight className="w-5 h-5 text-purple-400" />}
+                        <ArrowRight className="w-5 h-5 text-purple-400 group-hover:translate-x-1 transition-transform" />
                       </button>
                     );
                   })}
