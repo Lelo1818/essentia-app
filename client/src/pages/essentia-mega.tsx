@@ -368,6 +368,13 @@ export default function EssentiaMega() {
   // Avatar
   const [avatarState, setAvatarState] = useState<'calm' | 'attentive' | 'grateful'>('calm');
 
+  // Audio System
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [musicEnabled, setMusicEnabled] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const oscillatorRef = useRef<OscillatorNode | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+
   // Community
   const [communityPosts] = useState([
     {
@@ -536,14 +543,64 @@ export default function EssentiaMega() {
     }, 2000);
   };
 
+  const startSound174Hz = () => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    
+    const audioContext = audioContextRef.current;
+    
+    // Resume AudioContext (necessário para navegadores modernos)
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+    
+    // Criar oscilador para 174Hz
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(174, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime); // Volume moderado
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.start();
+    
+    oscillatorRef.current = oscillator;
+    gainNodeRef.current = gainNode;
+    setSoundEnabled(true);
+  };
+
+  const stopSound174Hz = () => {
+    if (oscillatorRef.current) {
+      oscillatorRef.current.stop();
+      oscillatorRef.current.disconnect();
+      oscillatorRef.current = null;
+    }
+    if (gainNodeRef.current) {
+      gainNodeRef.current.disconnect();
+      gainNodeRef.current = null;
+    }
+    setSoundEnabled(false);
+  };
+
+  const toggleBackgroundMusic = () => {
+    setMusicEnabled(!musicEnabled);
+    // Música ambiente poderia ser adicionada aqui com <audio> element
+  };
+
   const startBreathing = () => {
     setStep('breathing');
     setBreathingActive(true);
     setAvatarState('calm');
+    startSound174Hz(); // Inicia som automaticamente
   };
 
   const completeBreathing = () => {
     setBreathingActive(false);
+    stopSound174Hz(); // Para o som ao sair
     
     if (!user) return;
     
@@ -1383,18 +1440,29 @@ export default function EssentiaMega() {
                   </p>
                 </div>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  localStorage.removeItem('essentia-mega-user');
-                  window.location.reload();
-                }}
-                className="bg-white/20 text-white border-white/40 hover:bg-white/30"
-              >
-                <RotateCcw className="w-4 h-4 mr-2" />
-                Resetar
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={toggleBackgroundMusic}
+                  className="bg-white/20 text-white border-white/40 hover:bg-white/30"
+                  title="Música ambiente"
+                >
+                  {musicEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    localStorage.removeItem('essentia-mega-user');
+                    window.location.reload();
+                  }}
+                  className="bg-white/20 text-white border-white/40 hover:bg-white/30"
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  Resetar
+                </Button>
+              </div>
             </div>
           </CardHeader>
         </Card>
@@ -1510,24 +1578,38 @@ export default function EssentiaMega() {
           </TabsContent>
 
           <TabsContent value="portals" className="mt-6">
+            <div className="text-center mb-6">
+              <EssentiaAvatar state={avatarState} />
+              <p className="text-gray-600 mt-2">Escolha um portal para explorar</p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {portals.map(portal => {
                 const Icon = portal.icon;
                 const isCompleted = user?.completedPortals.includes(portal.id);
                 
+                const gradients = {
+                  blue: 'from-blue-500 to-cyan-500',
+                  green: 'from-green-500 to-emerald-500',
+                  red: 'from-red-500 to-orange-500',
+                  purple: 'from-purple-500 to-pink-500',
+                  pink: 'from-pink-500 to-rose-500',
+                  orange: 'from-orange-500 to-amber-500',
+                  cyan: 'from-cyan-500 to-teal-500'
+                };
+                
                 return (
-                  <Card key={portal.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <CardTitle className="text-lg flex items-center">
-                        <Icon className={`w-5 h-5 mr-2 text-${portal.color}-600`} />
+                  <Card key={portal.id} className={`hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden ${isCompleted ? 'border-2 border-green-400' : ''}`}>
+                    <div className={`h-2 bg-gradient-to-r ${gradients[portal.color as keyof typeof gradients]}`} />
+                    <CardHeader className="text-center pb-2">
+                      <Icon className={`w-12 h-12 mx-auto mb-2 text-${portal.color}-600`} />
+                      <CardTitle className="text-lg">
                         {portal.name}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <Button
                         onClick={() => startPortal(portal.id)}
-                        className="w-full"
-                        variant={isCompleted ? "outline" : "default"}
+                        className={`w-full bg-gradient-to-r ${gradients[portal.color as keyof typeof gradients]} hover:opacity-90`}
                       >
                         {isCompleted ? (
                           <>
@@ -1557,12 +1639,15 @@ export default function EssentiaMega() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Button
                 onClick={startBreathing}
-                className="h-32 text-lg bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 flex-col relative"
+                className="h-32 text-lg bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 flex-col relative overflow-hidden"
               >
-                <Wind className="w-8 h-8 mb-2" />
-                Respiração Guiada
-                <span className="text-sm mt-1 flex items-center">
-                  🔊 Com som 174Hz
+                {soundEnabled && (
+                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                )}
+                <Wind className="w-8 h-8 mb-2 relative z-10" />
+                <span className="relative z-10">Respiração Guiada</span>
+                <span className="text-sm mt-1 flex items-center relative z-10">
+                  🔊 Som 174Hz {soundEnabled && '• Tocando'}
                 </span>
               </Button>
 
