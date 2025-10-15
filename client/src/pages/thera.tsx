@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
 import Ranking from "@/components/thera/Ranking";
 import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/useAuth";
 
 const BRAND = {
   bg: "#0f1a2a",
@@ -117,8 +118,8 @@ const Metric = ({ label, value, delta }: any) => (
 type Route = "login" | "dashboard" | "journal" | "game" | "reports" | "community" | "pipeline";
 
 export default function Thera() {
-  const [route, setRoute] = useState<Route>("login");
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const { user } = useAuth();
+  const [route, setRoute] = useState<Route>("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const go = (r: Route) => {
@@ -127,14 +128,13 @@ export default function Thera() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const traderName = user?.firstName || user?.name || "Trader";
+
   return (
     <div className="min-h-screen" style={{ background: BRAND.bg }}>
-      {route !== "login" && (
-        <TopBar onNavigate={go} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-      )}
+      <TopBar onNavigate={go} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} traderName={traderName} />
 
-      {route === "login" && <ScreenLogin onEnter={(u: string) => { setUser({ name: u }); go("dashboard"); }} onGuest={() => go("game")} />}
-      {route === "dashboard" && <ScreenDashboard onNavigate={go} />}
+      {route === "dashboard" && <ScreenDashboard onNavigate={go} traderName={traderName} />}
       {route === "journal" && <ScreenJournal />}
       {route === "game" && <ScreenGame onNavigate={go} />}
       {route === "reports" && <ScreenReports />}
@@ -146,7 +146,7 @@ export default function Thera() {
   );
 }
 
-const TopBar = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => (
+const TopBar = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen, traderName }: any) => (
   <div className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-[#0f1a2a]/90 bg-[#0f1a2a] border-b border-white/10">
     <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
       <Logo />
@@ -159,6 +159,9 @@ const TopBar = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen }: any) => (
         <NavBtn onClick={() => onNavigate("reports")}>Relatórios</NavBtn>
         <NavBtn onClick={() => onNavigate("community")}>Comunidade</NavBtn>
         <NavBtn onClick={() => onNavigate("pipeline")}>Pipeline</NavBtn>
+        <div className="ml-4 px-3 py-1.5 bg-[#c6a86b]/10 rounded-lg border border-[#c6a86b]/20">
+          <span className="text-sm text-[#c6a86b] font-medium">{traderName}</span>
+        </div>
       </nav>
       
       {/* Mobile Menu Button */}
@@ -271,7 +274,7 @@ const ScreenLogin = ({ onEnter, onGuest }: any) => {
   );
 };
 
-const ScreenDashboard = ({ onNavigate }: any) => {
+const ScreenDashboard = ({ onNavigate, traderName }: any) => {
   const [performanceData, setPerformanceData] = useState<any[]>([]);
   const [isLoadingPerf, setIsLoadingPerf] = useState(true);
   const [perfStats, setPerfStats] = useState({ change: '+0%', changeValue: 0 });
@@ -317,7 +320,7 @@ const ScreenDashboard = ({ onNavigate }: any) => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
       <div className="mb-6 flex flex-col md:flex-row md:items-center gap-3">
-        <h2 className="text-white text-xl md:text-2xl font-semibold">Painel</h2>
+        <h2 className="text-white text-xl md:text-2xl font-semibold">Olá, {traderName} 👋</h2>
         <Chip>Conta Demo</Chip>
       </div>
 
