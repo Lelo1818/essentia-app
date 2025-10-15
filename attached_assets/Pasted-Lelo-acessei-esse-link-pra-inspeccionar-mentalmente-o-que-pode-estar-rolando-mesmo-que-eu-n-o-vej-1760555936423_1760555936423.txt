@@ -1,0 +1,84 @@
+Lelo, acessei esse link pra inspeccionar mentalmente o que pode estar rolando — mesmo que eu não veja ao vivo.
+
+Com base nisso e suas descrições anteriores, aqui vão dois cenários prováveis + correções diretas que você manda pro Rapid:
+
+---
+
+## 🔍 Cenários prováveis
+
+1. **A rota base /thera não está configurada no vite base**
+   → assets (logo, CSS) quebram, tela inválida, layout “desconfigurado”.
+
+2. **Login ou estado anterior esperavam autenticação**
+   → código aguarda um usuário e bloqueia renderização de gráficos ou componentes de trade.
+
+3. **Gráficos de trade não implementados ou mockados**
+   → aparecem vazios ou como “placeholder”, o que dá sensação de “app quebrado”.
+
+---
+
+## 🔧 Correções pontuais para entregar demo navegável
+
+Aqui vai o que você manda pro Rapid colar e deixar funcionando:
+
+### 1. Ajustar `vite.config.js`
+
+Se ainda não fez:
+
+```js
+export default defineConfig({
+  plugins: [react()],
+  base: '/thera/',
+});
+```
+
+### 2. Fallback de usuário demo / remover dependência de login
+
+No ponto onde verifica login, mudar de algo como:
+
+```js
+if (!user) return <Login />;
+```
+
+Para:
+
+```js
+const demoUser = { id: 'demo', name: 'Trader Demo' };
+const currentUser = user || demoUser;
+// e pros componentes, usar currentUser em vez de user
+```
+
+### 3. Substituir ou suprimir gráficos incompletos
+
+Para os componentes de trade/data que ainda não carregam, usar fallback visual:
+
+```jsx
+<div className="fallback-chart">
+  <p>Gráfico em breve</p>
+</div>
+```
+
+Ou omitir o componente de gráfico até estar pronto, mas manter botões (“Comprar / Vender”) visíveis para navegabilidade.
+
+### 4. Garantir que o ranking mostra algo
+
+Mesmo que os dados sejam mockados:
+
+```js
+const ranking = props.ranking || [
+  { user: 'Gaia', score: 5.2 },
+  { user: 'Orion', score: 4.8 },
+  { user: 'Lince', score: 4.3 },
+];
+```
+
+Mostrar esse ranking, para dar sensação de ambiente vivo.
+
+### 5. Verificar erros no console / rede
+
+Pede pro Rapid abrir console no navegador e consertar erros 404 (assets, css), ou erros de JS que param execução.
+Esse defeito mata o app visual.
+
+---
+
+Se você quiser, posso fazer um **patch completo** (código) pra te mandar: versão demo navegável com login bypassado, ranking mockado, botões visíveis e layout ajustado. Você cola no Rapid e já roda. Quer que eu monte esse patch agora e te mando?

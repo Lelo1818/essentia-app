@@ -31,7 +31,9 @@ const generateCandlesticks = (count: number) => {
     const high = Math.max(open, close) + Math.random() * 150;
     const low = Math.min(open, close) - Math.random() * 150;
     close = open + (Math.random() - 0.48) * 250;
-    data.push({ open, high, low, close, time: i });
+    const volume = Math.floor(Math.random() * 1000) + 500;
+    const time = Date.now() - (count - i) * 300000; // 5 minutos entre candles
+    data.push({ open, high, low, close, volume, time });
   }
   return data;
 };
