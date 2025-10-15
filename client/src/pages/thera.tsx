@@ -1,8 +1,9 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
 import Ranking from "@/components/thera/Ranking";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
+import { LogOut, User, ChevronDown } from "lucide-react";
 
 const BRAND = {
   bg: "#0f1a2a",
@@ -146,55 +147,106 @@ export default function Thera() {
   );
 }
 
-const TopBar = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen, traderName }: any) => (
-  <div className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-[#0f1a2a]/90 bg-[#0f1a2a] border-b border-white/10">
-    <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
-      <Logo />
-      
-      {/* Desktop Nav */}
-      <nav className="hidden md:flex items-center gap-2">
-        <NavBtn onClick={() => onNavigate("dashboard")}>Dashboard</NavBtn>
-        <NavBtn onClick={() => onNavigate("journal")}>Diário</NavBtn>
-        <NavBtn onClick={() => onNavigate("game")}>Game Mode</NavBtn>
-        <NavBtn onClick={() => onNavigate("reports")}>Relatórios</NavBtn>
-        <NavBtn onClick={() => onNavigate("community")}>Comunidade</NavBtn>
-        <NavBtn onClick={() => onNavigate("pipeline")}>Pipeline</NavBtn>
-        <div className="ml-4 px-3 py-1.5 bg-[#c6a86b]/10 rounded-lg border border-[#c6a86b]/20">
-          <span className="text-sm text-[#c6a86b] font-medium">{traderName}</span>
-        </div>
-      </nav>
-      
-      {/* Mobile Menu Button */}
-      <button 
-        className="md:hidden p-2 rounded-lg text-[#c6a86b] hover:bg-white/5 touch-manipulation min-h-[44px] min-w-[44px]"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        data-testid="button-mobile-menu"
-      >
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          {mobileMenuOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
-    </div>
+const TopBar = ({ onNavigate, mobileMenuOpen, setMobileMenuOpen, traderName }: any) => {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-    {/* Mobile Menu */}
-    {mobileMenuOpen && (
-      <div className="md:hidden border-t border-white/10 bg-[#0f1a2a]">
-        <nav className="flex flex-col p-4 gap-2">
-          <MobileNavBtn onClick={() => onNavigate("dashboard")}>📊 Dashboard</MobileNavBtn>
-          <MobileNavBtn onClick={() => onNavigate("journal")}>📝 Diário</MobileNavBtn>
-          <MobileNavBtn onClick={() => onNavigate("game")}>🎮 Game Mode</MobileNavBtn>
-          <MobileNavBtn onClick={() => onNavigate("reports")}>📈 Relatórios</MobileNavBtn>
-          <MobileNavBtn onClick={() => onNavigate("community")}>👥 Comunidade</MobileNavBtn>
-          <MobileNavBtn onClick={() => onNavigate("pipeline")}>🎯 Pipeline</MobileNavBtn>
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-[#0f1a2a]/90 bg-[#0f1a2a] border-b border-white/10">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+        <Logo />
+        
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-2">
+          <NavBtn onClick={() => onNavigate("dashboard")}>Dashboard</NavBtn>
+          <NavBtn onClick={() => onNavigate("journal")}>Diário</NavBtn>
+          <NavBtn onClick={() => onNavigate("game")}>Game Mode</NavBtn>
+          <NavBtn onClick={() => onNavigate("reports")}>Relatórios</NavBtn>
+          <NavBtn onClick={() => onNavigate("community")}>Comunidade</NavBtn>
+          <NavBtn onClick={() => onNavigate("pipeline")}>Pipeline</NavBtn>
+          
+          {/* User Menu */}
+          <div className="relative ml-4" ref={menuRef}>
+            <button
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#c6a86b]/10 rounded-lg border border-[#c6a86b]/20 hover:bg-[#c6a86b]/20 transition"
+              data-testid="button-user-menu"
+            >
+              <span className="text-sm text-[#c6a86b] font-medium">{traderName}</span>
+              <ChevronDown className={`w-4 h-4 text-[#c6a86b] transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            {userMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-[#1a2332] border border-[#c6a86b]/20 rounded-lg shadow-xl overflow-hidden">
+                <button
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    // Navegar para perfil ou abrir modal de perfil
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-[#c6a86b]/10 transition"
+                  data-testid="button-profile"
+                >
+                  <User className="w-4 h-4 text-[#c6a86b]" />
+                  Meu Perfil
+                </button>
+                <button
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    window.location.href = '/api/logout';
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-red-500/10 transition border-t border-white/5"
+                  data-testid="button-logout"
+                >
+                  <LogOut className="w-4 h-4 text-red-400" />
+                  Sair
+                </button>
+              </div>
+            )}
+          </div>
         </nav>
+      
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden p-2 rounded-lg text-[#c6a86b] hover:bg-white/5 touch-manipulation min-h-[44px] min-w-[44px]"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          data-testid="button-mobile-menu"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {mobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
-    )}
-  </div>
-);
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-white/10 bg-[#0f1a2a]">
+          <nav className="flex flex-col p-4 gap-2">
+            <MobileNavBtn onClick={() => onNavigate("dashboard")}>📊 Dashboard</MobileNavBtn>
+            <MobileNavBtn onClick={() => onNavigate("journal")}>📝 Diário</MobileNavBtn>
+            <MobileNavBtn onClick={() => onNavigate("game")}>🎮 Game Mode</MobileNavBtn>
+            <MobileNavBtn onClick={() => onNavigate("reports")}>📈 Relatórios</MobileNavBtn>
+            <MobileNavBtn onClick={() => onNavigate("community")}>👥 Comunidade</MobileNavBtn>
+            <MobileNavBtn onClick={() => onNavigate("pipeline")}>🎯 Pipeline</MobileNavBtn>
+          </nav>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const NavBtn = ({ children, onClick }: any) => (
   <button
