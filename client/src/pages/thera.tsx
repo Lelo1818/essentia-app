@@ -56,12 +56,12 @@ const Logo = ({ size = 28 }: { size?: number }) => (
 
 const Button = ({ children, onClick, variant = "gold", size = "md", className = "" }: any) => {
   const base = "inline-flex items-center justify-center rounded-xl font-semibold transition active:scale-[0.98] touch-manipulation min-h-[44px]";
-  const sizes = {
+  const sizes: Record<string, string> = {
     sm: "px-3 py-2 text-sm",
     md: "px-4 py-3 text-[0.95rem]",
     lg: "px-5 py-3.5 text-base",
   };
-  const variants = {
+  const variants: Record<string, string> = {
     gold: "bg-[#c6a86b] text-[#0b1220] hover:opacity-90 active:opacity-80",
     ghost: "bg-transparent text-[#c6a86b] border-2 border-[#c6a86b] hover:bg-[#c6a86b] hover:text-[#0b1220]",
     dark: "bg-[#0b1220] text-[#c6a86b] border-2 border-[#c6a86b] hover:bg-[#0d1424]",
@@ -69,7 +69,7 @@ const Button = ({ children, onClick, variant = "gold", size = "md", className = 
   return (
     <button 
       onClick={onClick} 
-      className={[base, sizes[size], variants[variant], className].join(" ")}
+      className={[base, sizes[size] || sizes.md, variants[variant] || variants.gold, className].join(" ")}
       data-testid={`button-${children?.toString().toLowerCase().replace(/\s+/g, '-')}`}
     > 
       {children}
@@ -131,7 +131,7 @@ export default function Thera() {
         <TopBar onNavigate={go} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       )}
 
-      {route === "login" && <ScreenLogin onEnter={(u) => { setUser({ name: u }); go("dashboard"); }} onGuest={() => go("game")} />}
+      {route === "login" && <ScreenLogin onEnter={(u: string) => { setUser({ name: u }); go("dashboard"); }} onGuest={() => go("game")} />}
       {route === "dashboard" && <ScreenDashboard onNavigate={go} />}
       {route === "journal" && <ScreenJournal />}
       {route === "game" && <ScreenGame onNavigate={go} />}
