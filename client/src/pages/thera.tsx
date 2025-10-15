@@ -664,10 +664,64 @@ const ScreenGame = ({ onNavigate }: any) => {
 
 const ScreenReports = () => {
   const consistencyData = useMemo(() => generatePriceData(20, 60, 8), []);
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  
+  // Mock trades for demo
+  const mockTrades = [
+    { side: 'buy', qty: 1, entryPrice: 127450, exitPrice: 127650, pnl: 200 },
+    { side: 'sell', qty: 2, entryPrice: 127600, exitPrice: 127700, pnl: -200 },
+    { side: 'buy', qty: 1, entryPrice: 127500, exitPrice: 127800, pnl: 300 },
+  ];
+  
+  const generateAIInsights = async () => {
+    setIsAnalyzing(true);
+    try {
+      const response = await fetch('/api/thera/analyze-trades', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          trades: mockTrades,
+          sessionData: { balance: 50300 }
+        })
+      });
+      const data = await response.json();
+      setAiAnalysis(data.analysis);
+    } catch (error) {
+      setAiAnalysis('Erro ao gerar análise. Tente novamente.');
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
   
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
       <h2 className="text-white text-xl md:text-2xl font-semibold mb-4">Relatórios & Insights</h2>
+
+      <div className="mb-4">
+        <Card title="🤖 Análise AI de Trades" subtitle="insights personalizados por IA">
+          {!aiAnalysis ? (
+            <div className="text-center py-8">
+              <p className="text-white/60 mb-4">Gere uma análise inteligente dos seus trades usando IA</p>
+              <Button onClick={generateAIInsights} disabled={isAnalyzing}>
+                {isAnalyzing ? 'Analisando...' : 'Gerar Análise com IA'}
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <div className="bg-white/5 rounded-xl p-4 border border-[#c6a86b]/20">
+                <div className="text-white/90 text-sm whitespace-pre-wrap leading-relaxed">
+                  {aiAnalysis}
+                </div>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <Button size="sm" onClick={generateAIInsights}>Gerar Nova Análise</Button>
+                <Button size="sm" variant="ghost" onClick={() => setAiAnalysis(null)}>Limpar</Button>
+              </div>
+            </div>
+          )}
+        </Card>
+      </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
         <Card title="Consistência" subtitle="média móvel 20 sessões">

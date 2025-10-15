@@ -2085,6 +2085,59 @@ IMPORTANTE: Este é um vídeo real sobre pedagogia moderna. Use essas informaç�
     });
   });
 
+  // Thera Funding - AI Trade Analysis
+  app.post("/api/thera/analyze-trades", async (req, res) => {
+    try {
+      const { trades, sessionData } = req.body;
+      
+      if (!process.env.ANTHROPIC_API_KEY) {
+        return res.status(400).json({ 
+          error: "API key não configurada"
+        });
+      }
+
+      const tradesContext = trades.map((t: any, i: number) => 
+        `Trade ${i+1}: ${t.side === 'buy' ? 'COMPRA' : 'VENDA'} ${t.qty}x @ ${t.entryPrice} → ${t.exitPrice} | P&L: ${t.pnl.toFixed(2)}`
+      ).join('\n');
+
+      const prompt = `Você é um analista profissional de trading. Analise os seguintes trades:
+
+${tradesContext}
+
+Saldo da Sessão: ${sessionData?.balance || 0}
+Total de Trades: ${trades.length}
+
+Forneça uma análise concisa (máx. 150 palavras) incluindo:
+1. **Padrões identificados**: O que funcionou bem e o que não funcionou
+2. **Gestão de risco**: Como está o gerenciamento das posições
+3. **Sugestões práticas**: 2-3 dicas objetivas para melhorar
+
+Seja direto e prático. Foco em insights acionáveis.`;
+
+      const message = await anthropic.messages.create({
+        model: DEFAULT_MODEL_STR,
+        max_tokens: 400,
+        messages: [{
+          role: 'user',
+          content: prompt
+        }]
+      });
+
+      const analysis = message.content[0].type === 'text' 
+        ? message.content[0].text 
+        : 'Análise não disponível';
+      
+      res.json({ analysis });
+      
+    } catch (error) {
+      console.error('Erro na análise AI de trades:', error);
+      res.status(500).json({ 
+        error: "Erro na análise",
+        analysis: "Desculpe, não foi possível gerar a análise no momento. Tente novamente."
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
