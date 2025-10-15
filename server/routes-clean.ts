@@ -532,6 +532,32 @@ Informações do arquivo:
     });
   });
 
+  // Essentia download page
+  app.get('/download-essentia', (req, res) => {
+    try {
+      const htmlPath = path.join(__dirname, '..', 'client', 'download-essentia.html');
+      const html = fs.readFileSync(htmlPath, 'utf8');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(html);
+    } catch (error) {
+      console.error('Erro ao carregar página de download:', error);
+      res.status(500).send('Erro interno do servidor');
+    }
+  });
+
+  // Essentia complete package download
+  app.get('/ESSENTIA-COMPLETO.tar.gz', (req, res) => {
+    const filePath = path.join(process.cwd(), 'ESSENTIA-COMPLETO.tar.gz');
+    
+    res.download(filePath, 'ESSENTIA-COMPLETO.tar.gz', (err) => {
+      if (err) {
+        console.error('Download error:', err);
+        res.status(404).send('Arquivo não encontrado');
+      }
+    });
+  });
+
   // Essentia AI Coach route - 4 personas (Sofia, Marcus, Luna, Leo)
   app.post("/api/ai-coach", async (req, res) => {
     try {
