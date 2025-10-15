@@ -232,7 +232,7 @@ export default function Purpose() {
 
       {/* Main Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-10">
           <TabsTrigger value="journey" className="flex items-center space-x-1">
             <Compass className="w-4 h-4" />
             <span className="hidden sm:inline">Jornada</span>
@@ -264,6 +264,14 @@ export default function Purpose() {
           <TabsTrigger value="community" className="flex items-center space-x-1">
             <Users className="w-4 h-4" />
             <span className="hidden sm:inline">Comunidade</span>
+          </TabsTrigger>
+          <TabsTrigger value="biometric" className="flex items-center space-x-1">
+            <Brain className="w-4 h-4" />
+            <span className="hidden sm:inline">Biometria</span>
+          </TabsTrigger>
+          <TabsTrigger value="therapist" className="flex items-center space-x-1">
+            <Heart className="w-4 h-4" />
+            <span className="hidden sm:inline">Terapeuta IA</span>
           </TabsTrigger>
           <TabsTrigger value="profile" className="flex items-center space-x-1">
             <User className="w-4 h-4" />

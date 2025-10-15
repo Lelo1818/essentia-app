@@ -29,6 +29,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));
   
+  // Download routes para Essentia packages
+  app.get('/ESSENTIA_SOURCE.tar.gz', (req, res) => {
+    const filePath = path.join(__dirname, '..', 'ESSENTIA_SOURCE.tar.gz');
+    res.download(filePath, 'ESSENTIA_SOURCE.tar.gz', (err) => {
+      if (err) {
+        console.error('Erro ao baixar fonte:', err);
+        res.status(404).send('Arquivo não encontrado');
+      }
+    });
+  });
+
+  app.get('/ESSENTIA_DIST_NETLIFY.tar.gz', (req, res) => {
+    const filePath = path.join(__dirname, '..', 'ESSENTIA_DIST_NETLIFY.tar.gz');
+    res.download(filePath, 'ESSENTIA_DIST_NETLIFY.tar.gz', (err) => {
+      if (err) {
+        console.error('Erro ao baixar dist:', err);
+        res.status(404).send('Arquivo não encontrado');
+      }
+    });
+  });
+  
   // Mock user ID for development (in real app, this would come from authentication)
   const getCurrentUserId = () => 1;
 

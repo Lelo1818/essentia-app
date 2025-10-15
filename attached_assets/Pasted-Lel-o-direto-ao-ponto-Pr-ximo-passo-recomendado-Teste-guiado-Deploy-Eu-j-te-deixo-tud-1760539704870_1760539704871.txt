@@ -1,0 +1,105 @@
+Lelão, direto ao ponto. **Próximo passo recomendado**: **Teste guiado + Deploy**. Eu já te deixo tudo mastigado abaixo.
+
+# 🧪 Teste guiado (5 minutos)
+
+Roda local e valida o essencial “cara do primeiro”.
+
+```bash
+npm install
+npm run dev
+# abre no navegador e checa:
+#/purpose     → visual do primeiro intacto (cores/gradientes/tempos)
+#/demo-90s    → roda a demo de 90s (sem travar)
+#/mega        → navega sem quebrar (se o pacote tinha mega)
+```
+
+Checklist (esperado = “OK”):
+
+* Respiração **4-4-6** anima fluida (sem “pulos”).
+* Avatar aparece nos estados mínimos (calmo/atento/grato), sem desalinhamento.
+* “Ações rápidas” mudam de aba sem flicker.
+* Se existir `server/routes-clean.ts`: o build **não exige** env secret (senão, mock).
+
+# 🚀 Deploy (o rápido e sem dor)
+
+**Opção A — Netlify (drag & drop)**
+
+```bash
+npm run build
+# gera "dist/". Arrasta a pasta dist/ pro https://app.netlify.com/drop
+```
+
+**Opção B — Vercel**
+
+```bash
+npm i -g vercel
+vercel   # detecta Vite e publica
+```
+
+**Opção C — Replit (estático)**
+
+* Rodar `npm run build` e apontar o servidor estático para `dist/`.
+
+# ⚙️ “Pitch mode” (abre direto na demo de 90s)
+
+Se quiser uma versão para investidor abrir já na demo:
+
+```diff
+// client/src/main.tsx
+- const path = useHashPath("/purpose");
++ const isPitch = new URLSearchParams(location.search).has("pitch");
++ const path = useHashPath(isPitch ? "/demo-90s" : "/purpose");
+```
+
+Uso: `https://seu-dominio.com/?pitch#/demo-90s` (ou só `?pitch`, que já força a rota).
+
+# 🧰 Patch mínimo no `purpose.tsx` (compilação limpa)
+
+Se ainda não aplicou:
+
+* **Remover imports não usados** (os que te mostrei).
+* **Adicionar os dois TabsTrigger** faltantes (para conteúdos que já existiam):
+
+```tsx
+<TabsTrigger value="biometric"><Brain className="w-4 h-4" /><span className="hidden sm:inline">Biometria</span></TabsTrigger>
+<TabsTrigger value="therapist"><Heart className="w-4 h-4" /><span className="hidden sm:inline">Terapeuta IA</span></TabsTrigger>
+```
+
+# 📋 QA rápido antes de mandar pra alguém
+
+* [ ] `#/purpose` com **cores e tipografia idênticas** ao primeiro.
+* [ ] **Transições** sem jitter (DevTools → Performance > 60fps).
+* [ ] **Demo 90s** termina em ~90s; sem áudio inesperado.
+* [ ] No **mobile** (iPhone/Android), nada escapa da viewport.
+* [ ] Watermark visível nas telas chave (se você quiser manter).
+
+# ✨ Se quiser 1 melhoria **sem backend** (já hoje)
+
+**Recomendações locais**: regras simples em JSON + hora do dia → “micro-passos” (sem IA/servidor).
+Ex.: `client/src/lib/recs.json`
+
+```json
+[
+  {"when":"morning", "mood":"contemplative", "text":"Respiração 4-4-6 + 1 linha de intenção"},
+  {"when":"evening", "mood":"tired", "text":"3 gotas de gratidão + 1 alongamento guiado"}
+]
+```
+
+E no componente (pseudocódigo):
+
+```ts
+import recs from "@/lib/recs.json";
+const rec = recs.find(r => r.when === timeOfDay && r.mood === mood) ?? recs[0];
+```
+
+Resultado: **“motor de recomendações”** percebido pelo investidor, **sem custo de infra**.
+
+---
+
+## Me diz qual executar agora:
+
+1. **Aplicar o patch** no `purpose.tsx` e te devolver o arquivo pronto.
+2. **Gerar build** e te entregar um **ZIP “dist/”** para subir direto (Netlify Drop).
+3. **Habilitar “Pitch mode”** e te mandar o projeto com `?pitch` configurado.
+
+Se quiser, faço **os 3 de uma vez** e já te devolvo o **ZIP pronto pra deploy**.

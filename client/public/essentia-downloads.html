@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦 Essentia - Downloads Prontos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+        .cards {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            color: #1f2937;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+            color: #8b5cf6;
+        }
+        .card p {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        .features {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .features h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+        .features ul {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+        .features li {
+            padding-left: 24px;
+            position: relative;
+        }
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #10b981;
+        }
+        .footer {
+            text-align: center;
+            padding: 32px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+        }
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        .footer p {
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+        .links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .link-btn {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .link-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Essentia Unificado</h1>
+        <p class="subtitle">Pacotes prontos para uso e deploy</p>
+
+        <div class="cards">
+            <!-- CARD 1: Source Code -->
+            <div class="card">
+                <h2>📦 Código Fonte Completo</h2>
+                <p>Projeto completo consolidado com Purpose como baseline visual, Demo 90s e Mega. Pronto para rodar localmente e personalizar.</p>
+                
+                <div class="meta">
+                    <span class="badge">📦 223 KB</span>
+                    <span class="badge">⚡ Vite + React</span>
+                    <span class="badge">🎨 Tailwind</span>
+                </div>
+
+                <div class="features">
+                    <h3>✨ O que vem dentro:</h3>
+                    <ul>
+                        <li>Purpose.tsx (baseline visual preservado)</li>
+                        <li>Demo 90s auto-play</li>
+                        <li>Mega consolidado</li>
+                        <li>42 componentes prontos</li>
+                        <li>Pitch Mode (?pitch)</li>
+                        <li>README com instruções completas</li>
+                    </ul>
+                </div>
+
+                <a href="/ESSENTIA_SOURCE.tar.gz" download="ESSENTIA_SOURCE.tar.gz" class="btn">
+                    ⬇️ Baixar Código Fonte
+                </a>
+            </div>
+
+            <!-- CARD 2: Build Pronto -->
+            <div class="card">
+                <h2>🚀 Build Pronto (Netlify Drop)</h2>
+                <p>Build de produção otimizado. Extraia e arraste a pasta direto para Netlify Drop. Deploy em 30 segundos!</p>
+                
+                <div class="meta">
+                    <span class="badge">📦 1.1 MB</span>
+                    <span class="badge">⚡ Otimizado</span>
+                    <span class="badge">🎯 Prod Ready</span>
+                </div>
+
+                <div class="features">
+                    <h3>🎯 Como usar:</h3>
+                    <ul>
+                        <li>Baixe e extraia o arquivo</li>
+                        <li>Arraste para https://app.netlify.com/drop</li>
+                        <li>Pronto! URL gerada automaticamente</li>
+                        <li>Sem configuração necessária</li>
+                        <li>SSL e CDN inclusos</li>
+                    </ul>
+                </div>
+
+                <a href="/ESSENTIA_DIST_NETLIFY.tar.gz" download="ESSENTIA_DIST_NETLIFY.tar.gz" class="btn">
+                    ⬇️ Baixar Build Pronto
+                </a>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <h3>🔗 Links Úteis</h3>
+            <p>Acesse as versões funcionais diretamente:</p>
+            <div class="links">
+                <a href="/#/purpose" class="link-btn">Purpose</a>
+                <a href="/#/demo-90s" class="link-btn">Demo 90s</a>
+                <a href="/#/mega" class="link-btn">Mega</a>
+                <a href="/?pitch" class="link-btn">Pitch Mode</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
