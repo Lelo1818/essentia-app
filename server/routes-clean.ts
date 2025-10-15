@@ -2,6 +2,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from 'url';
@@ -26,6 +27,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Setup Replit Auth middleware
+  await setupAuth(app);
+
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+  
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));
   
