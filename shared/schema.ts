@@ -25,11 +25,15 @@ export const sessions = pgTable(
   (table) => [index("IDX_session_expire").on(table.expire)],
 );
 
-// Users table
+// Users table (compatible with Replit Auth)
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
+  replitId: varchar("replit_id", { length: 255 }).unique(), // Replit user ID from OAuth
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }).unique(),
+  firstName: varchar("first_name", { length: 255 }),
+  lastName: varchar("last_name", { length: 255 }),
+  profileImageUrl: varchar("profile_image_url", { length: 500 }),
   initials: varchar("initials", { length: 10 }),
   role: varchar("role", { length: 100 }),
   avatar: text("avatar"),
@@ -240,6 +244,25 @@ export const achievements = pgTable("achievements", {
   earnedAt: timestamp("earned_at").defaultNow(),
 });
 
+// Thera Funding - Trades table
+export const theraTrades = pgTable("thera_trades", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  symbol: varchar("symbol", { length: 50 }).notNull(),
+  type: varchar("type", { length: 10 }).notNull(), // buy, sell
+  quantity: integer("quantity").notNull(),
+  entryPrice: decimal("entry_price", { precision: 12, scale: 2 }).notNull(),
+  exitPrice: decimal("exit_price", { precision: 12, scale: 2 }),
+  pnl: decimal("pnl", { precision: 12, scale: 2 }),
+  status: varchar("status", { length: 20 }).default("open"), // open, closed
+  entryTime: timestamp("entry_time").defaultNow(),
+  exitTime: timestamp("exit_time"),
+  notes: text("notes"),
+  emotion: varchar("emotion", { length: 50 }), // calm, anxious, confident, etc
+  setup: varchar("setup", { length: 100 }), // breakout, support, etc
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   flowData: many(flowData),
@@ -270,6 +293,13 @@ export const purposeDataRelations = relations(purposeData, ({ one }) => ({
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+export type UpsertUser = {
+  replitId: string;
+  email: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  profileImageUrl: string | null;
+};
 
 export type FlowData = typeof flowData.$inferSelect;
 export type InsertFlowData = typeof flowData.$inferInsert;
@@ -349,3 +379,8 @@ export const insertCreditCardSchema = createInsertSchema(creditCards);
 export const insertInsurancePolicySchema = createInsertSchema(insurancePolicies);
 export const insertTaxRecordSchema = createInsertSchema(taxRecords);
 export const insertMilesProgramSchema = createInsertSchema(milesPrograms);
+
+// THERA FUNDING SCHEMAS
+export type TheraTrade = typeof theraTrades.$inferSelect;
+export type InsertTheraTrade = typeof theraTrades.$inferInsert;
+export const insertTheraTradeSchema = createInsertSchema(theraTrades);
