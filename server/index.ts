@@ -74,8 +74,12 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Setup Vite AFTER all API routes to prevent conflicts
-  await setupVite(app, server);
+  // Setup Vite or static serving based on environment
+  if (process.env.NODE_ENV === "production") {
+    serveStatic(app);
+  } else {
+    await setupVite(app, server);
+  }
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
