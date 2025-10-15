@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "@/components/layout/navigation";
 import MobileNavigation from "@/components/layout/mobile-navigation";
 import { FloatingAIAssistant, ScrollToTop, LiveStats } from "@/components/enhanced/floating-elements";
+import { useAuth } from "@/hooks/useAuth";
+import Landing from "@/pages/Landing";
 import Dashboard from "@/pages/dashboard";
 import Income from "@/pages/income";
 import Expenses from "@/pages/expenses";
@@ -94,6 +96,21 @@ import Thera from "@/pages/thera";
 
 
 function Router() {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  // Show landing page for non-authenticated users
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0f1a2a] flex items-center justify-center">
+        <div className="text-[#c6a86b] text-lg">Carregando...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Landing />;
+  }
+
   return (
     <Switch>
       <Route path="/" component={DashboardWorking} />
