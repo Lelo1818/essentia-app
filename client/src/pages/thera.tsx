@@ -515,8 +515,8 @@ const ScreenGame = ({ onNavigate }: any) => {
     setBoleta({ qty: 1, stop: '', gain: '', orderType: 'Mercado' });
   };
   
-  // Update position P&L in real-time using useEffect
-  useState(() => {
+  // Update position P&L in real-time
+  useEffect(() => {
     if (!position) return;
     
     const pnl = position.side === 'buy'
@@ -532,7 +532,7 @@ const ScreenGame = ({ onNavigate }: any) => {
         (position.side === 'sell' && currentPrice <= position.gain)) {
       setTimeout(closePosition, 100);
     }
-  });
+  }, [currentPrice, position?.entryPrice, position?.qty, position?.side]);
   
   const sessionPnL = trades.reduce((sum, t) => sum + t.pnl, 0) + (position?.pnl || 0);
   const totalBalance = accountBalance + (position?.pnl || 0);
@@ -1172,18 +1172,28 @@ const CandlestickChart = ({ data, height = 200 }: any) => {
         const lowY = height - paddingBottom - ((d.low - minPrice) / priceRange) * chartHeight;
         
         const bodyTop = Math.min(openY, closeY);
-        const bodyHeight = Math.abs(closeY - openY) || 1;
+        const bodyHeight = Math.abs(closeY - openY) || 0.5;
         
         return (
           <g key={i}>
-            <line x1={x} y1={highY} x2={x} y2={lowY} stroke={color} strokeWidth="1" opacity="0.8" />
+            <line 
+              x1={x} 
+              y1={highY} 
+              x2={x} 
+              y2={lowY} 
+              stroke={color} 
+              strokeWidth="0.5" 
+              opacity="0.9" 
+            />
             <rect
               x={x - candleWidth / 2}
               y={bodyTop}
               width={candleWidth}
               height={bodyHeight}
-              fill={color}
-              opacity="0.9"
+              fill={isGreen ? color : '#0a0f1a'}
+              stroke={color}
+              strokeWidth="0.8"
+              opacity="1"
             />
           </g>
         );
