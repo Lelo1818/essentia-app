@@ -41,6 +41,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to fetch user" });
     }
   });
+
+  // Thera evaluation tracking
+  app.post('/api/thera/track-evaluation', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const click = await storage.trackEvaluationClick(
+        user.id,
+        user.email || null,
+        user.whatsapp || null
+      );
+      
+      res.json({ success: true, click });
+    } catch (error) {
+      console.error("Error tracking evaluation click:", error);
+      res.status(500).json({ message: "Failed to track evaluation click" });
+    }
+  });
+
+  app.get('/api/thera/evaluation-clicks', isAuthenticated, async (req: any, res) => {
+    try {
+      const clicks = await storage.getEvaluationClicks();
+      res.json(clicks);
+    } catch (error) {
+      console.error("Error fetching evaluation clicks:", error);
+      res.status(500).json({ message: "Failed to fetch clicks" });
+    }
+  });
   
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));
