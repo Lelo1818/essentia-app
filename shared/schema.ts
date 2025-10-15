@@ -31,6 +31,7 @@ export const users = pgTable("users", {
   replitId: varchar("replit_id", { length: 255 }).unique(), // Replit user ID from OAuth
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).unique(),
+  whatsapp: varchar("whatsapp", { length: 20 }), // Para integração futura
   firstName: varchar("first_name", { length: 255 }),
   lastName: varchar("last_name", { length: 255 }),
   profileImageUrl: varchar("profile_image_url", { length: 500 }),
@@ -263,6 +264,15 @@ export const theraTrades = pgTable("thera_trades", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Thera Funding - Evaluation clicks tracking
+export const theraEvaluationClicks = pgTable("thera_evaluation_clicks", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  clickedAt: timestamp("clicked_at").defaultNow(),
+  userEmail: varchar("user_email", { length: 255 }), // Snapshot para integração
+  userWhatsapp: varchar("user_whatsapp", { length: 20 }), // Snapshot para integração
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   flowData: many(flowData),
@@ -384,3 +394,7 @@ export const insertMilesProgramSchema = createInsertSchema(milesPrograms);
 export type TheraTrade = typeof theraTrades.$inferSelect;
 export type InsertTheraTrade = typeof theraTrades.$inferInsert;
 export const insertTheraTradeSchema = createInsertSchema(theraTrades);
+
+export type TheraEvaluationClick = typeof theraEvaluationClicks.$inferSelect;
+export type InsertTheraEvaluationClick = typeof theraEvaluationClicks.$inferInsert;
+export const insertTheraEvaluationClickSchema = createInsertSchema(theraEvaluationClicks);

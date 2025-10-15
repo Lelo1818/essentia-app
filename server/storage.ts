@@ -40,6 +40,10 @@ export interface IStorage {
   createProfile(profile: any): Promise<any>;
   updateProfile(id: number, updates: any): Promise<any>;
   deleteProfile(id: number): Promise<boolean>;
+  
+  // Thera evaluation tracking
+  trackEvaluationClick(userId: number, email: string | null, whatsapp: string | null): Promise<any>;
+  getEvaluationClicks(): Promise<any[]>;
 }
 
 class MemStorage implements IStorage {
@@ -450,6 +454,26 @@ class MemStorage implements IStorage {
 
   async deleteProfile(id: number): Promise<boolean> {
     return this.profiles.delete(id);
+  }
+
+  // Thera evaluation tracking methods
+  private evaluationClicks = new Map<number, any>();
+
+  async trackEvaluationClick(userId: number, email: string | null, whatsapp: string | null): Promise<any> {
+    const id = this.currentId++;
+    const click = {
+      id,
+      userId,
+      userEmail: email,
+      userWhatsapp: whatsapp,
+      clickedAt: new Date()
+    };
+    this.evaluationClicks.set(id, click);
+    return click;
+  }
+
+  async getEvaluationClicks(): Promise<any[]> {
+    return Array.from(this.evaluationClicks.values());
   }
 }
 
