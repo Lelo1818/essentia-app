@@ -1,5 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
+import Ranking from "@/components/thera/Ranking";
+import { apiRequest } from "@/lib/queryClient";
 
 const BRAND = {
   bg: "#0f1a2a",
@@ -366,18 +368,30 @@ const ScreenDashboard = ({ onNavigate }: any) => {
             <li>Setup X performa melhor em contratos mini. Ajustar alocação.</li>
           </ul>
         </Card>
-        <Card title="Ranking Semanal" right={<Chip>liga interna</Chip>}>
-          <ol className="text-white/80 text-sm space-y-1">
-            <li>1º @Lobo – +4.3%</li>
-            <li>2º @Gaia – +3.8%</li>
-            <li>3º @Orion – +3.2%</li>
-            <li>…</li>
-          </ol>
-        </Card>
         <Card title="Pipeline" subtitle="Trilha para operar capital da mesa" className="md:col-span-2 lg:col-span-1">
           <p className="text-white/70 text-sm">Jogue → Consistência ≥ 20 sessões → Envio automático de relatório → Convite.</p>
-          <div className="mt-3"><Button onClick={() => onNavigate("pipeline")}>Ver pipeline</Button></div>
+          <div className="mt-3 space-y-2">
+            <Button onClick={() => onNavigate("pipeline")}>Ver Pipeline</Button>
+            <Button 
+              variant="gold"
+              onClick={async () => {
+                try {
+                  await apiRequest('/api/thera/track-evaluation', { method: 'POST' });
+                  window.open('https://checkout.therafunding.com', '_blank');
+                } catch (error) {
+                  console.error('Erro ao rastrear clique:', error);
+                  window.open('https://checkout.therafunding.com', '_blank');
+                }
+              }}
+            >
+              🏆 Quero ser Avaliado
+            </Button>
+          </div>
         </Card>
+      </div>
+
+      <div className="mt-4">
+        <Ranking />
       </div>
     </div>
   );
