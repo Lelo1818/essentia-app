@@ -375,24 +375,47 @@ const ScreenJournal = () => {
 
 const ScreenGame = ({ onNavigate }: any) => {
   const candleData = useMemo(() => generateCandlesticks(40), []);
+  const [availableAssets, setAvailableAssets] = useState<any[]>([]);
+  const [selectedAsset, setSelectedAsset] = useState('WINM25');
   const [currentPrice, setCurrentPrice] = useState(127500);
+  const [marketData, setMarketData] = useState<any>(null);
   const [position, setPosition] = useState<any>(null);
   const [trades, setTrades] = useState<any[]>([]);
   const [accountBalance, setAccountBalance] = useState(50000);
   const [boleta, setBoleta] = useState({ qty: 1, stop: '', gain: '', orderType: 'Mercado' });
   const [priceHistory, setPriceHistory] = useState<number[]>([127500]);
   
-  // Simulate real-time price updates (1s interval)
+  // Load available assets on mount
   useState(() => {
-    const interval = setInterval(() => {
-      setCurrentPrice(prev => {
-        const change = (Math.random() - 0.5) * 30;
-        const newPrice = Math.max(prev + change, 125000);
-        setPriceHistory(h => [...h.slice(-30), newPrice]);
-        return newPrice;
-      });
-    }, 1000);
+    fetch('/api/thera/assets')
+      .then(r => r.json())
+      .then(data => setAvailableAssets(data))
+      .catch(console.error);
+  });
+  
+  // Fetch real/simulated market data
+  useState(() => {
+    const fetchMarketData = async () => {
+      try {
+        const response = await fetch(`/api/thera/market/${selectedAsset}`);
+        const data = await response.json();
+        setMarketData(data);
+        setCurrentPrice(data.price);
+      } catch (error) {
+        console.error('Market data fetch error:', error);
+      }
+    };
+    
+    fetchMarketData();
+    const interval = setInterval(fetchMarketData, 2000); // Update every 2s
     return () => clearInterval(interval);
+  });
+  
+  // Update price history
+  useState(() => {
+    if (currentPrice) {
+      setPriceHistory(h => [...h.slice(-30), currentPrice]);
+    }
   });
   
   // Generate order book
@@ -462,12 +485,14 @@ const ScreenGame = ({ onNavigate }: any) => {
   const minPrice = Math.min(...priceHistory.slice(-10));
   const spread = orderBook.sell[0]?.price - orderBook.buy[0]?.price;
   
+  const currentAsset = availableAssets.find(a => a.symbol === selectedAsset) || availableAssets[0];
+  
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 md:py-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
           <h2 className="text-white text-xl md:text-2xl font-semibold">Game Mode – Trader Academy</h2>
-          <Chip>live simulation</Chip>
+          <Chip>{marketData?.isRealData ? '🔴 DADOS REAIS' : 'simulação'}</Chip>
         </div>
         <div className="flex flex-col md:flex-row items-end md:items-center gap-3">
           <div className="flex items-center gap-2">
@@ -485,9 +510,33 @@ const ScreenGame = ({ onNavigate }: any) => {
         </div>
       </div>
 
+      {/* Asset Selector */}
+      <div className="mb-4">
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          {availableAssets.map((asset) => (
+            <button
+              key={asset.symbol}
+              onClick={() => setSelectedAsset(asset.symbol)}
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition whitespace-nowrap ${
+                selectedAsset === asset.symbol
+                  ? 'bg-[#c6a86b] text-[#0b1220]'
+                  : 'bg-white/5 text-white/70 hover:bg-white/10'
+              }`}
+            >
+              {asset.symbol} · {asset.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="grid lg:grid-cols-12 gap-4">
         {/* Chart */}
-        <Card title="WINM25" right={<Chip tone={isUp ? "green" : "red"}>R$ {currentPrice.toFixed(0)}</Chip>} className="lg:col-span-8">
+        <Card 
+          title={selectedAsset} 
+          subtitle={currentAsset?.name}
+          right={<Chip tone={isUp ? "green" : "red"}>R$ {currentPrice.toFixed(selectedAsset.includes('USD') ? 4 : 0)}</Chip>} 
+          className="lg:col-span-8"
+        >
           <div className="mb-3 grid grid-cols-4 gap-2 text-xs">
             <div className="rounded-lg bg-white/5 p-2">
               <div className="text-white/50">Máxima (10min)</div>

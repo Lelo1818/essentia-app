@@ -2138,6 +2138,75 @@ Seja direto e prático. Foco em insights acionáveis.`;
     }
   });
 
+  // Thera Funding - Market Data (real or simulated)
+  app.get("/api/thera/market/:symbol", async (req, res) => {
+    try {
+      const { symbol } = req.params;
+      const apiKey = process.env.TWELVE_DATA_API_KEY;
+      
+      // If API key exists, try to fetch real data
+      if (apiKey) {
+        try {
+          const response = await fetch(
+            `https://api.twelvedata.com/quote?symbol=${symbol}&apikey=${apiKey}`
+          );
+          const data = await response.json();
+          
+          if (data.code !== 400 && data.price) {
+            return res.json({
+              symbol: data.symbol,
+              price: parseFloat(data.price),
+              open: parseFloat(data.open),
+              high: parseFloat(data.high),
+              low: parseFloat(data.low),
+              volume: parseInt(data.volume) || 0,
+              change: parseFloat(data.change) || 0,
+              changePercent: parseFloat(data.percent_change) || 0,
+              isRealData: true,
+              timestamp: new Date().toISOString()
+            });
+          }
+        } catch (error) {
+          console.log('Twelve Data API error, falling back to simulation:', error);
+        }
+      }
+      
+      // Fallback: Generate realistic simulated data
+      const basePrice = symbol.includes('USD') ? 5.44 : 127500;
+      const volatility = symbol.includes('USD') ? 0.02 : 50;
+      const price = basePrice + (Math.random() - 0.5) * volatility * 2;
+      const change = (Math.random() - 0.5) * volatility;
+      
+      res.json({
+        symbol: symbol,
+        price: parseFloat(price.toFixed(2)),
+        open: parseFloat((price - change).toFixed(2)),
+        high: parseFloat((price + Math.random() * volatility).toFixed(2)),
+        low: parseFloat((price - Math.random() * volatility).toFixed(2)),
+        volume: Math.floor(Math.random() * 100000) + 50000,
+        change: parseFloat(change.toFixed(2)),
+        changePercent: parseFloat(((change / basePrice) * 100).toFixed(2)),
+        isRealData: false,
+        timestamp: new Date().toISOString()
+      });
+      
+    } catch (error) {
+      console.error('Market data error:', error);
+      res.status(500).json({ error: 'Failed to fetch market data' });
+    }
+  });
+
+  // Thera Funding - Available Assets
+  app.get("/api/thera/assets", (req, res) => {
+    res.json([
+      { symbol: 'WINM25', name: 'Mini Índice', basePrice: 127500, type: 'futuro' },
+      { symbol: 'WDOM25', name: 'Mini Dólar', basePrice: 5440, type: 'futuro' },
+      { symbol: 'USD/BRL', name: 'Dólar/Real', basePrice: 5.44, type: 'forex' },
+      { symbol: 'PETR4', name: 'Petrobras PN', basePrice: 38.50, type: 'acao' },
+      { symbol: 'VALE3', name: 'Vale ON', basePrice: 62.80, type: 'acao' },
+    ]);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
