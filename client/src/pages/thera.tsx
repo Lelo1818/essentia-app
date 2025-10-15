@@ -374,23 +374,30 @@ const ScreenJournal = () => {
 };
 
 const ScreenGame = ({ onNavigate }: any) => {
-  const candleData = useMemo(() => generateCandlesticks(30), []);
+  const candleData = useMemo(() => generateCandlesticks(40), []);
   const [currentPrice, setCurrentPrice] = useState(127500);
   const [position, setPosition] = useState<any>(null);
   const [trades, setTrades] = useState<any[]>([]);
-  const [boleta, setBoleta] = useState({ qty: 1, stop: 0, gain: 0 });
+  const [accountBalance, setAccountBalance] = useState(50000);
+  const [boleta, setBoleta] = useState({ qty: 1, stop: '', gain: '', orderType: 'Mercado' });
+  const [priceHistory, setPriceHistory] = useState<number[]>([127500]);
   
-  // Simulate price updates
-  useMemo(() => {
+  // Simulate real-time price updates (1s interval)
+  useState(() => {
     const interval = setInterval(() => {
-      setCurrentPrice(prev => prev + (Math.random() - 0.5) * 50);
-    }, 2000);
+      setCurrentPrice(prev => {
+        const change = (Math.random() - 0.5) * 30;
+        const newPrice = Math.max(prev + change, 125000);
+        setPriceHistory(h => [...h.slice(-30), newPrice]);
+        return newPrice;
+      });
+    }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  });
   
   // Generate order book
   const orderBook = useMemo(() => {
-    const book = { buy: [], sell: [] };
+    const book: any = { buy: [], sell: [] };
     for (let i = 0; i < 5; i++) {
       book.buy.push({ price: currentPrice - (i + 1) * 25, qty: Math.floor(Math.random() * 50) + 10 });
       book.sell.push({ price: currentPrice + (i + 1) * 25, qty: Math.floor(Math.random() * 50) + 10 });
@@ -399,13 +406,17 @@ const ScreenGame = ({ onNavigate }: any) => {
   }, [currentPrice]);
   
   const executeTrade = (side: 'buy' | 'sell') => {
+    if (position) return; // Already in position
     const entryPrice = currentPrice;
+    const stopPrice = boleta.stop ? parseInt(boleta.stop) : (side === 'buy' ? entryPrice - 200 : entryPrice + 200);
+    const gainPrice = boleta.gain ? parseInt(boleta.gain) : (side === 'buy' ? entryPrice + 300 : entryPrice - 300);
+    
     const newPosition = {
       side,
       qty: boleta.qty,
       entryPrice,
-      stop: boleta.stop || entryPrice - (side === 'buy' ? 200 : -200),
-      gain: boleta.gain || entryPrice + (side === 'buy' ? 300 : -300),
+      stop: stopPrice,
+      gain: gainPrice,
       pnl: 0
     };
     setPosition(newPosition);
@@ -418,30 +429,38 @@ const ScreenGame = ({ onNavigate }: any) => {
       ? (exitPrice - position.entryPrice) * position.qty
       : (position.entryPrice - exitPrice) * position.qty;
     
-    setTrades([...trades, { ...position, exitPrice, pnl, time: new Date().toLocaleTimeString() }]);
+    setTrades(prev => [...prev, { ...position, exitPrice, pnl, time: new Date().toLocaleTimeString() }]);
+    setAccountBalance(prev => prev + pnl);
     setPosition(null);
+    setBoleta({ qty: 1, stop: '', gain: '', orderType: 'Mercado' });
   };
   
-  // Update position P&L
-  useMemo(() => {
-    if (position) {
-      const pnl = position.side === 'buy'
-        ? (currentPrice - position.entryPrice) * position.qty
-        : (position.entryPrice - currentPrice) * position.qty;
-      setPosition({ ...position, pnl });
-      
-      // Auto close on stop/gain
-      if ((position.side === 'buy' && currentPrice <= position.stop) ||
-          (position.side === 'sell' && currentPrice >= position.stop) ||
-          (position.side === 'buy' && currentPrice >= position.gain) ||
-          (position.side === 'sell' && currentPrice <= position.gain)) {
-        closePosition();
-      }
+  // Update position P&L in real-time using useEffect
+  useState(() => {
+    if (!position) return;
+    
+    const pnl = position.side === 'buy'
+      ? (currentPrice - position.entryPrice) * position.qty
+      : (position.entryPrice - currentPrice) * position.qty;
+    
+    setPosition((prev: any) => prev ? { ...prev, pnl } : null);
+    
+    // Auto close on stop/gain
+    if ((position.side === 'buy' && currentPrice <= position.stop) ||
+        (position.side === 'sell' && currentPrice >= position.stop) ||
+        (position.side === 'buy' && currentPrice >= position.gain) ||
+        (position.side === 'sell' && currentPrice <= position.gain)) {
+      setTimeout(closePosition, 100);
     }
-  }, [currentPrice]);
+  });
   
   const sessionPnL = trades.reduce((sum, t) => sum + t.pnl, 0) + (position?.pnl || 0);
-  const isUp = currentPrice > 127500;
+  const totalBalance = accountBalance + (position?.pnl || 0);
+  const isUp = priceHistory.length >= 2 && currentPrice > priceHistory[priceHistory.length - 2];
+  
+  const maxPrice = Math.max(...priceHistory.slice(-10));
+  const minPrice = Math.min(...priceHistory.slice(-10));
+  const spread = orderBook.sell[0]?.price - orderBook.buy[0]?.price;
   
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 md:py-8">
@@ -450,10 +469,18 @@ const ScreenGame = ({ onNavigate }: any) => {
           <h2 className="text-white text-xl md:text-2xl font-semibold">Game Mode – Trader Academy</h2>
           <Chip>live simulation</Chip>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="text-white/60 text-sm">Saldo da Sessão:</div>
-          <div className={`font-bold text-lg ${sessionPnL >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-            R$ {sessionPnL.toFixed(2)}
+        <div className="flex flex-col md:flex-row items-end md:items-center gap-3">
+          <div className="flex items-center gap-2">
+            <div className="text-white/60 text-sm">Saldo Total:</div>
+            <div className={`font-bold text-lg ${totalBalance >= 50000 ? 'text-emerald-400' : 'text-red-400'}`}>
+              R$ {totalBalance.toFixed(2)}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="text-white/60 text-sm">Sessão:</div>
+            <div className={`font-semibold ${sessionPnL >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              {sessionPnL >= 0 ? '+' : ''}{sessionPnL.toFixed(2)}
+            </div>
           </div>
         </div>
       </div>
@@ -461,6 +488,24 @@ const ScreenGame = ({ onNavigate }: any) => {
       <div className="grid lg:grid-cols-12 gap-4">
         {/* Chart */}
         <Card title="WINM25" right={<Chip tone={isUp ? "green" : "red"}>R$ {currentPrice.toFixed(0)}</Chip>} className="lg:col-span-8">
+          <div className="mb-3 grid grid-cols-4 gap-2 text-xs">
+            <div className="rounded-lg bg-white/5 p-2">
+              <div className="text-white/50">Máxima (10min)</div>
+              <div className="text-emerald-400 font-semibold">{maxPrice.toFixed(0)}</div>
+            </div>
+            <div className="rounded-lg bg-white/5 p-2">
+              <div className="text-white/50">Mínima (10min)</div>
+              <div className="text-red-400 font-semibold">{minPrice.toFixed(0)}</div>
+            </div>
+            <div className="rounded-lg bg-white/5 p-2">
+              <div className="text-white/50">Spread</div>
+              <div className="text-white font-semibold">{spread.toFixed(0)} pts</div>
+            </div>
+            <div className="rounded-lg bg-white/5 p-2">
+              <div className="text-white/50">Volume</div>
+              <div className="text-[#c6a86b] font-semibold">High</div>
+            </div>
+          </div>
           <div className="rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 p-3">
             <CandlestickChart data={candleData} height={220} />
           </div>
@@ -517,48 +562,60 @@ const ScreenGame = ({ onNavigate }: any) => {
             </div>
           </Card>
           
-          <Card title="Boleta" subtitle={position ? "posição aberta" : "enviar ordem"}>
+          <Card title="Boleta Rápida" subtitle={position ? "posição aberta" : "mercado"}>
             <div className="space-y-3">
-              <Row label="Quantidade">
+              <Row label="Tipo de Ordem">
+                <Select 
+                  value={boleta.orderType}
+                  onChange={(e: any) => setBoleta({...boleta, orderType: e.target.value})}
+                  options={["Mercado", "Limitada", "Stop"]}
+                  disabled={!!position}
+                />
+              </Row>
+              <Row label="Quantidade (contratos)">
                 <Input 
                   type="number" 
                   value={boleta.qty} 
                   onChange={(e: any) => setBoleta({...boleta, qty: parseInt(e.target.value) || 1})}
                   disabled={!!position}
+                  placeholder="1"
                 />
               </Row>
-              <Row label="Stop Loss">
+              <Row label="Stop Loss (pts)">
                 <Input 
-                  type="number" 
+                  type="text" 
                   value={boleta.stop} 
-                  onChange={(e: any) => setBoleta({...boleta, stop: parseInt(e.target.value) || 0})}
-                  placeholder="Opcional"
+                  onChange={(e: any) => setBoleta({...boleta, stop: e.target.value})}
+                  placeholder="Ex: 127300"
                   disabled={!!position}
                 />
               </Row>
-              <Row label="Take Profit">
+              <Row label="Take Profit (pts)">
                 <Input 
-                  type="number" 
+                  type="text" 
                   value={boleta.gain} 
-                  onChange={(e: any) => setBoleta({...boleta, gain: parseInt(e.target.value) || 0})}
-                  placeholder="Opcional"
+                  onChange={(e: any) => setBoleta({...boleta, gain: e.target.value})}
+                  placeholder="Ex: 127800"
                   disabled={!!position}
                 />
               </Row>
               {!position ? (
                 <div className="grid grid-cols-2 gap-2">
-                  <Button onClick={() => executeTrade('buy')} className="bg-emerald-600 hover:bg-emerald-700">
-                    Comprar
+                  <Button onClick={() => executeTrade('buy')} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold">
+                    COMPRAR
                   </Button>
-                  <Button onClick={() => executeTrade('sell')} className="bg-red-600 hover:bg-red-700">
-                    Vender
+                  <Button onClick={() => executeTrade('sell')} className="bg-red-600 hover:bg-red-700 text-white font-bold">
+                    VENDER
                   </Button>
                 </div>
               ) : (
-                <div className="text-center text-white/60 text-sm py-2">
-                  Feche a posição atual para abrir nova ordem
-                </div>
+                <Button onClick={closePosition} className="w-full bg-[#c6a86b] hover:bg-[#d4b876] text-[#0b1220] font-bold">
+                  ZERAR POSIÇÃO
+                </Button>
               )}
+              <div className="text-white/40 text-xs text-center">
+                Risco: {(boleta.qty * 5).toFixed(0)} BRL por contrato
+              </div>
             </div>
           </Card>
         </div>
