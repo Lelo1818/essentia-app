@@ -30,6 +30,13 @@
 - **Status:** ✅ Operacional
 - **Funcionalidades:** Continuidade da jornada, companions adaptativos
 
+### 📈 Thera Funding - Proprietary Trading
+- **URL:** https://419a61c3-e864-45d3-b12f-7c82749a509b-00-257d51k0bcjei.kirk.replit.dev/thera
+- **Status:** ✅ Operacional
+- **Funcionalidades:** Game Mode simulação real, ordem book + boleta, diário emocional com IA, relatórios instantâneos, pipeline Game→Avaliação
+- **API:** Twelve Data integrada (dados reais de mercado)
+- **Assets:** WINM25, WDOM25, USD/BRL, PETR4, VALE3
+
 ### 🌟 Demo Investidor
 - **URL:** `/investor-demo`
 - **Status:** ✅ Operacional
