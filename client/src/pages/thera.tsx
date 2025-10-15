@@ -443,15 +443,15 @@ const ScreenGame = ({ onNavigate }: any) => {
   const [priceHistory, setPriceHistory] = useState<number[]>([127500]);
   
   // Load available assets on mount
-  useState(() => {
+  useEffect(() => {
     fetch('/api/thera/assets')
       .then(r => r.json())
       .then(data => setAvailableAssets(data))
       .catch(console.error);
-  });
+  }, []);
   
   // Fetch real/simulated market data
-  useState(() => {
+  useEffect(() => {
     const fetchMarketData = async () => {
       try {
         const response = await fetch(`/api/thera/market/${selectedAsset}`);
@@ -466,14 +466,14 @@ const ScreenGame = ({ onNavigate }: any) => {
     fetchMarketData();
     const interval = setInterval(fetchMarketData, 2000); // Update every 2s
     return () => clearInterval(interval);
-  });
+  }, [selectedAsset]);
   
   // Update price history
-  useState(() => {
+  useEffect(() => {
     if (currentPrice) {
       setPriceHistory(h => [...h.slice(-30), currentPrice]);
     }
-  });
+  }, [currentPrice]);
   
   // Generate order book
   const orderBook = useMemo(() => {
