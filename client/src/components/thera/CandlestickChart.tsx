@@ -12,66 +12,87 @@ interface CandleData {
 interface CandlestickChartProps {
   data: CandleData[];
   height?: number;
+  showVolume?: boolean;
 }
 
-export default function CandlestickChart({ data, height = 300 }: CandlestickChartProps) {
-  const { candles, minPrice, maxPrice, priceRange } = useMemo(() => {
-    if (!data || data.length === 0) return { candles: [], minPrice: 0, maxPrice: 0, priceRange: 0 };
+export default function CandlestickChart({ data, height = 300, showVolume = true }: CandlestickChartProps) {
+  const { candles, minPrice, maxPrice, priceRange, maxVolume } = useMemo(() => {
+    if (!data || data.length === 0) return { candles: [], minPrice: 0, maxPrice: 0, priceRange: 0, maxVolume: 0 };
     
     const prices = data.flatMap(d => [d.high, d.low]);
     const min = Math.min(...prices);
     const max = Math.max(...prices);
     const range = max - min;
-    const padding = range * 0.1;
+    const padding = range * 0.08;
+    
+    const volumes = data.map(d => d.volume || 0);
+    const maxVol = Math.max(...volumes);
     
     return {
       candles: data,
       minPrice: min - padding,
       maxPrice: max + padding,
-      priceRange: range + (padding * 2)
+      priceRange: range + (padding * 2) || 1, // Previne divisão por zero
+      maxVolume: maxVol
     };
   }, [data]);
 
+  const chartHeight = showVolume ? height * 0.75 : height;
+  const volumeHeight = showVolume ? height * 0.25 : 0;
+
   const getY = (price: number) => {
-    return ((maxPrice - price) / priceRange) * height;
+    return ((maxPrice - price) / priceRange) * chartHeight;
   };
 
-  const candleWidth = Math.max(8, Math.min(20, (800 / candles.length) - 4));
-  const spacing = candleWidth + 4;
+  // Use viewBox com largura fixa para garantir renderização consistente
+  const viewBoxWidth = 100;
+  const paddingLeft = 8;
+  const paddingRight = 2;
+  const chartWidth = viewBoxWidth - paddingLeft - paddingRight;
+  
+  const candleWidth = Math.max(0.5, Math.min(2, (chartWidth / candles.length) * 0.6));
+  const spacing = chartWidth / candles.length;
 
   return (
-    <div className="relative w-full" style={{ height }}>
-      {/* Grid lines */}
-      <svg className="absolute inset-0 w-full h-full" style={{ height }}>
+    <div className="relative w-full bg-[#0a0f1a]" style={{ height }}>
+      {/* Main chart with candles */}
+      <svg 
+        className="absolute inset-0 w-full" 
+        style={{ height: chartHeight }}
+        viewBox={`0 0 ${viewBoxWidth} ${chartHeight}`}
+        preserveAspectRatio="none"
+      >
         <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
-          </pattern>
+          <linearGradient id="grid-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="rgba(198,168,107,0.05)" />
+            <stop offset="100%" stopColor="rgba(198,168,107,0)" />
+          </linearGradient>
         </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
         
-        {/* Horizontal price lines */}
-        {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
-          const y = height * ratio;
+        {/* Grid lines - horizontal */}
+        {[0, 0.2, 0.4, 0.6, 0.8, 1].map((ratio, i) => {
+          const y = chartHeight * ratio;
           const price = maxPrice - (priceRange * ratio);
           return (
             <g key={i}>
               <line
-                x1="0"
+                x1={paddingLeft}
                 y1={y}
-                x2="100%"
+                x2={viewBoxWidth - paddingRight}
                 y2={y}
-                stroke="rgba(255,255,255,0.1)"
-                strokeWidth="1"
+                stroke="rgba(255,255,255,0.06)"
+                strokeWidth="0.3"
+                strokeDasharray="2,2"
               />
               <text
-                x="8"
-                y={y - 4}
-                fill="rgba(255,255,255,0.5)"
-                fontSize="11"
+                x={paddingLeft - 0.5}
+                y={y + 1}
+                fill="rgba(255,255,255,0.4)"
+                fontSize="3"
                 fontFamily="monospace"
+                textAnchor="end"
               >
-                {price.toFixed(2)}
+                {price.toFixed(0)}
               </text>
             </g>
           );
@@ -79,7 +100,7 @@ export default function CandlestickChart({ data, height = 300 }: CandlestickChar
 
         {/* Candles */}
         {candles.map((candle, i) => {
-          const x = 60 + (i * spacing);
+          const x = paddingLeft + (i * spacing) + (spacing / 2);
           const isGreen = candle.close >= candle.open;
           const color = isGreen ? "#10b981" : "#ef4444";
           
@@ -89,7 +110,7 @@ export default function CandlestickChart({ data, height = 300 }: CandlestickChar
           const lowY = getY(candle.low);
           
           const bodyTop = Math.min(openY, closeY);
-          const bodyHeight = Math.abs(closeY - openY) || 1;
+          const bodyHeight = Math.abs(closeY - openY) || 0.5;
 
           return (
             <g key={i}>
@@ -100,7 +121,8 @@ export default function CandlestickChart({ data, height = 300 }: CandlestickChar
                 x2={x}
                 y2={lowY}
                 stroke={color}
-                strokeWidth="1.5"
+                strokeWidth="0.15"
+                opacity="0.8"
               />
               
               {/* Body */}
@@ -111,19 +133,64 @@ export default function CandlestickChart({ data, height = 300 }: CandlestickChar
                 height={bodyHeight}
                 fill={color}
                 stroke={color}
-                strokeWidth="1"
+                strokeWidth="0.1"
+                opacity="0.9"
               />
             </g>
           );
         })}
       </svg>
 
-      {/* Price labels on right */}
-      <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-between py-2 pr-2 text-xs text-white/50 font-mono">
-        {[maxPrice, maxPrice - priceRange * 0.25, maxPrice - priceRange * 0.5, maxPrice - priceRange * 0.75, minPrice].map((price, i) => (
-          <div key={i}>{price.toFixed(2)}</div>
-        ))}
-      </div>
+      {/* Volume bars */}
+      {showVolume && (
+        <svg 
+          className="absolute bottom-0 w-full" 
+          style={{ height: volumeHeight, top: chartHeight }}
+          viewBox={`0 0 ${viewBoxWidth} ${volumeHeight}`}
+          preserveAspectRatio="none"
+        >
+          {candles.map((candle, i) => {
+            const x = paddingLeft + (i * spacing) + (spacing / 2);
+            const isGreen = candle.close >= candle.open;
+            const color = isGreen ? "#10b981" : "#ef4444";
+            const volume = candle.volume || 0;
+            const barHeight = (volume / maxVolume) * volumeHeight * 0.9;
+            
+            return (
+              <rect
+                key={i}
+                x={x - candleWidth / 2}
+                y={volumeHeight - barHeight}
+                width={candleWidth}
+                height={barHeight}
+                fill={color}
+                opacity="0.3"
+              />
+            );
+          })}
+          
+          {/* Volume axis label */}
+          <text
+            x="2"
+            y={volumeHeight - 2}
+            fill="rgba(255,255,255,0.3)"
+            fontSize="3"
+            fontFamily="monospace"
+          >
+            Vol
+          </text>
+        </svg>
+      )}
+
+      {/* Current price indicator */}
+      {candles.length > 0 && (
+        <div 
+          className="absolute right-2 bg-[#c6a86b] text-[#0f1a2a] px-2 py-0.5 rounded text-xs font-semibold pointer-events-none"
+          style={{ top: getY(candles[candles.length - 1].close) - 10 }}
+        >
+          {candles[candles.length - 1].close.toFixed(0)}
+        </div>
+      )}
     </div>
   );
 }
