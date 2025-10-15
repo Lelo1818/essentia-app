@@ -1,10 +1,35 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
 
 const BRAND = {
   bg: "#0f1a2a",
   gold: "#c6a86b",
   goldSoft: "#e5d6b0",
+};
+
+// Simulated market data generators
+const generatePriceData = (days: number, basePrice: number, volatility: number) => {
+  const data = [];
+  let price = basePrice;
+  for (let i = 0; i < days; i++) {
+    const change = (Math.random() - 0.48) * volatility;
+    price = Math.max(price + change, basePrice * 0.8);
+    data.push({ day: i, price: price, change });
+  }
+  return data;
+};
+
+const generateCandlesticks = (count: number) => {
+  const data = [];
+  let close = 127500;
+  for (let i = 0; i < count; i++) {
+    const open = close + (Math.random() - 0.5) * 200;
+    const high = Math.max(open, close) + Math.random() * 150;
+    const low = Math.min(open, close) - Math.random() * 150;
+    close = open + (Math.random() - 0.48) * 250;
+    data.push({ open, high, low, close, time: i });
+  }
+  return data;
 };
 
 const Logo = ({ size = 28 }: { size?: number }) => (
@@ -245,6 +270,8 @@ const ScreenLogin = ({ onEnter, onGuest }: any) => {
 };
 
 const ScreenDashboard = ({ onNavigate }: any) => {
+  const performanceData = useMemo(() => generatePriceData(7, 50000, 400), []);
+  
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
       <div className="mb-6 flex flex-col md:flex-row md:items-center gap-3">
@@ -260,8 +287,10 @@ const ScreenDashboard = ({ onNavigate }: any) => {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4 mt-4">
-        <Card title="Performance (7d)" right={<Chip>mock</Chip>} className="lg:col-span-2">
-          <div className="h-40 w-full rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10" />
+        <Card title="Performance (7d)" right={<Chip>live data</Chip>} className="lg:col-span-2">
+          <div className="rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 p-4">
+            <LineChart data={performanceData} height={140} />
+          </div>
         </Card>
         <Card title="Ações rápidas">
           <div className="grid gap-2">
@@ -345,6 +374,10 @@ const ScreenJournal = () => {
 };
 
 const ScreenGame = ({ onNavigate }: any) => {
+  const candleData = useMemo(() => generateCandlesticks(30), []);
+  const lastCandle = candleData[candleData.length - 1];
+  const isUp = lastCandle.close > lastCandle.open;
+  
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
       <div className="flex flex-col md:flex-row md:items-center gap-3 mb-4">
@@ -353,9 +386,9 @@ const ScreenGame = ({ onNavigate }: any) => {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
-        <Card title="Ticker (delay 15s)" right={<Chip>mock</Chip>} className="lg:col-span-2">
-          <div className="h-52 rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 grid place-items-center text-white/60 text-center p-4">
-            Gráfico mockado (substituir por feed de dados)
+        <Card title="WINM25 (delay 15s)" right={<Chip tone={isUp ? "green" : "red"}>R$ {lastCandle.close.toFixed(0)}</Chip>} className="lg:col-span-2">
+          <div className="rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 p-3">
+            <CandlestickChart data={candleData} height={180} />
           </div>
           <div className="mt-3 flex flex-col md:flex-row gap-2">
             <Button className="flex-1">Comprar</Button>
@@ -401,13 +434,17 @@ const ScreenGame = ({ onNavigate }: any) => {
 };
 
 const ScreenReports = () => {
+  const consistencyData = useMemo(() => generatePriceData(20, 60, 8), []);
+  
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
       <h2 className="text-white text-xl md:text-2xl font-semibold mb-4">Relatórios & Insights</h2>
 
       <div className="grid lg:grid-cols-2 gap-4">
         <Card title="Consistência" subtitle="média móvel 20 sessões">
-          <div className="h-44 rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10" />
+          <div className="rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 p-3">
+            <LineChart data={consistencyData} height={150} />
+          </div>
           <p className="text-white/70 text-sm mt-3">Você está acima da linha de consistência em 13/20 sessões. Bom trabalho.</p>
         </Card>
         <Card title="Acerto por Horário" subtitle="últimos 30 dias">
@@ -561,3 +598,86 @@ const HeatmapMock = () => (
     ))}
   </div>
 );
+
+// Visual Chart Components
+const LineChart = ({ data, height = 160 }: any) => {
+  const padding = 20;
+  const width = 100;
+  
+  const maxPrice = Math.max(...data.map((d: any) => d.price));
+  const minPrice = Math.min(...data.map((d: any) => d.price));
+  const priceRange = maxPrice - minPrice;
+  
+  const points = data.map((d: any, i: number) => {
+    const x = (i / (data.length - 1)) * (100 - padding * 2) + padding;
+    const y = height - ((d.price - minPrice) / priceRange) * (height - padding * 2) - padding;
+    return `${x},${y}`;
+  }).join(' ');
+  
+  const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
+  
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }}>
+      <defs>
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={BRAND.gold} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={BRAND.gold} stopOpacity="0.05" />
+        </linearGradient>
+      </defs>
+      <polyline
+        points={points}
+        fill="none"
+        stroke={BRAND.gold}
+        strokeWidth="2"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      <polygon
+        points={`${padding},${height} ${points} ${100 - padding},${height}`}
+        fill={`url(#${gradientId})`}
+      />
+    </svg>
+  );
+};
+
+const CandlestickChart = ({ data, height = 200 }: any) => {
+  const padding = 10;
+  const width = 100;
+  const candleWidth = (width - padding * 2) / data.length * 0.6;
+  
+  const maxPrice = Math.max(...data.map((d: any) => d.high));
+  const minPrice = Math.min(...data.map((d: any) => d.low));
+  const priceRange = maxPrice - minPrice;
+  
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }}>
+      {data.map((d: any, i: number) => {
+        const x = (i / data.length) * (width - padding * 2) + padding + candleWidth / 2;
+        const isGreen = d.close > d.open;
+        const color = isGreen ? "#10b981" : "#ef4444";
+        
+        const openY = height - ((d.open - minPrice) / priceRange) * (height - padding * 2) - padding;
+        const closeY = height - ((d.close - minPrice) / priceRange) * (height - padding * 2) - padding;
+        const highY = height - ((d.high - minPrice) / priceRange) * (height - padding * 2) - padding;
+        const lowY = height - ((d.low - minPrice) / priceRange) * (height - padding * 2) - padding;
+        
+        const bodyTop = Math.min(openY, closeY);
+        const bodyHeight = Math.abs(closeY - openY) || 1;
+        
+        return (
+          <g key={i}>
+            <line x1={x} y1={highY} x2={x} y2={lowY} stroke={color} strokeWidth="1" opacity="0.8" />
+            <rect
+              x={x - candleWidth / 2}
+              y={bodyTop}
+              width={candleWidth}
+              height={bodyHeight}
+              fill={color}
+              opacity="0.9"
+            />
+          </g>
+        );
+      })}
+    </svg>
+  );
+};

@@ -21,11 +21,12 @@ The Flow Ecosystem is a comprehensive digital platform consisting of four interc
 - **File Serving**: Express static file serving for assets
 
 ### Application Structure
-The ecosystem consists of four main applications:
+The ecosystem consists of five main applications:
 1. **Flow** - Financial management system
 2. **EduVibe** - Educational platform
 3. **Essentia** - Self-development and wellness
 4. **Flow Kids** - Children's financial education
+5. **Thera Funding** - Proprietary trading desk platform (international)
 
 Each application operates independently while sharing common infrastructure and user data.
 
@@ -62,6 +63,18 @@ Each application operates independently while sharing common infrastructure and 
 - Financial education games and activities
 - Parental control integration
 - Achievement system with rewards
+
+#### Thera Funding Trading Platform (`/thera`)
+- International proprietary trading desk (prop desk) platform
+- Mobile-first design with touch-optimized interface
+- Game Mode → Real progression pipeline (simulated trading to real capital allocation)
+- Emotional + Technical trade diary with AI pattern detection
+- AI consistency reports and risk management suggestions
+- Internal community with rankings and social features
+- 7 main screens: Login, Dashboard, Journal, Game Mode, Reports, Community, Pipeline
+- Visual market data with SVG-based candlestick and line charts
+- Real-time simulated price data for WIN futures contracts
+- Automatic evaluation pipeline for trader qualification
 
 ### Shared Infrastructure
 
