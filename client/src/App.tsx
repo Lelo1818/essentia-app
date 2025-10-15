@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -206,15 +206,21 @@ function Router() {
 }
 
 function App() {
+  const [location] = useLocation();
+  
+  // Rotas que NÃO devem mostrar navegação do Flow
+  const standaloneRoutes = ['/thera', '/purpose', '/essentia-final', '/essentia-mega'];
+  const isStandalone = standaloneRoutes.some(route => location.startsWith(route));
+  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen bg-gray-50">
-          <Navigation />
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
+          {!isStandalone && <Navigation />}
+          <main className={isStandalone ? "" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8"}>
             <Router />
           </main>
-          <MobileNavigation />
+          {!isStandalone && <MobileNavigation />}
           <Toaster />
           
           {/* Mobile Touch Optimization */}
