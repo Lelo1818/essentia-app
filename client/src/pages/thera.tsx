@@ -1,8 +1,8 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
 import Ranking from "@/components/thera/Ranking";
+import CandlestickChart from "@/components/thera/CandlestickChart";
 import { apiRequest } from "@/lib/queryClient";
-import { useAuth } from "@/hooks/useAuth";
 import { LogOut, User, ChevronDown } from "lucide-react";
 
 const BRAND = {
@@ -119,7 +119,6 @@ const Metric = ({ label, value, delta }: any) => (
 type Route = "login" | "dashboard" | "journal" | "game" | "reports" | "community" | "pipeline";
 
 export default function Thera() {
-  const { user } = useAuth();
   const [route, setRoute] = useState<Route>("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -129,7 +128,7 @@ export default function Thera() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const traderName = user?.firstName || user?.name || "Trader";
+  const traderName = "Trader";
 
   return (
     <div className="min-h-screen" style={{ background: BRAND.bg }}>
@@ -327,46 +326,56 @@ const ScreenLogin = ({ onEnter, onGuest }: any) => {
 };
 
 const ScreenDashboard = ({ onNavigate, traderName }: any) => {
-  const [performanceData, setPerformanceData] = useState<any[]>([]);
-  const [isLoadingPerf, setIsLoadingPerf] = useState(true);
+  const [candleData, setCandleData] = useState<any[]>([]);
+  const [isLoadingCandles, setIsLoadingCandles] = useState(true);
   const [perfStats, setPerfStats] = useState({ change: '+0%', changeValue: 0 });
   const [timeframe, setTimeframe] = useState<'7D' | '30D' | '90D'>('30D');
 
   useEffect(() => {
-    const fetchPerformanceData = async () => {
+    const fetchCandleData = async () => {
       try {
-        const response = await fetch('/api/thera/market/WINM25');
-        const data = await response.json();
+        // Gera dados de candles mockados realistas para WINM25
+        const candles = [];
+        let basePrice = 127500;
         
-        if (data.timeSeries && data.timeSeries.length > 0) {
-          const chartData = data.timeSeries.slice(0, 30).reverse().map((point: any, idx: number) => ({
-            day: idx,
-            price: parseFloat(point.close),
-            time: point.datetime
-          }));
+        for (let i = 0; i < 60; i++) {
+          const open = basePrice + (Math.random() - 0.5) * 150;
+          const close = open + (Math.random() - 0.48) * 250;
+          const high = Math.max(open, close) + Math.random() * 100;
+          const low = Math.min(open, close) - Math.random() * 100;
           
-          const firstPrice = chartData[0].price;
-          const lastPrice = chartData[chartData.length - 1].price;
-          const changeValue = lastPrice - firstPrice;
-          const changePercent = ((changeValue / firstPrice) * 100).toFixed(2);
-          
-          setPerformanceData(chartData);
-          setPerfStats({
-            change: `${changeValue >= 0 ? '+' : ''}${changePercent}%`,
-            changeValue
+          candles.push({
+            time: Date.now() - (59 - i) * 300000, // 5 minutos entre candles
+            open,
+            high,
+            low,
+            close,
+            volume: Math.floor(Math.random() * 1000) + 500
           });
-        } else {
-          setPerformanceData(generatePriceData(7, 50000, 400));
+          
+          basePrice = close;
         }
+        
+        setCandleData(candles);
+        
+        const firstPrice = candles[0].close;
+        const lastPrice = candles[candles.length - 1].close;
+        const changeValue = lastPrice - firstPrice;
+        const changePercent = ((changeValue / firstPrice) * 100).toFixed(2);
+        
+        setPerfStats({
+          change: `${changeValue >= 0 ? '+' : ''}${changePercent}%`,
+          changeValue
+        });
+        
+        setIsLoadingCandles(false);
       } catch (error) {
-        setPerformanceData(generatePriceData(7, 50000, 400));
-      } finally {
-        setIsLoadingPerf(false);
+        setIsLoadingCandles(false);
       }
     };
 
-    fetchPerformanceData();
-    const interval = setInterval(fetchPerformanceData, 30000);
+    fetchCandleData();
+    const interval = setInterval(fetchCandleData, 5000); // Atualiza a cada 5 segundos
     return () => clearInterval(interval);
   }, []);
   
@@ -413,13 +422,13 @@ const ScreenDashboard = ({ onNavigate, traderName }: any) => {
               </button>
             ))}
           </div>
-          {isLoadingPerf ? (
-            <div className="rounded-xl bg-[#0a0f1a] border border-white/5 p-4 h-[200px] flex items-center justify-center">
+          {isLoadingCandles ? (
+            <div className="rounded-xl bg-[#0a0f1a] border border-white/5 p-4 h-[300px] flex items-center justify-center">
               <div className="text-white/40 text-sm">Carregando dados...</div>
             </div>
           ) : (
             <div className="rounded-xl bg-[#0a0f1a] border border-white/5 p-4">
-              <LineChart data={performanceData} height={200} />
+              <CandlestickChart data={candleData} height={300} />
             </div>
           )}
         </Card>
@@ -1192,98 +1201,6 @@ const LineChart = ({ data, height = 160 }: any) => {
           />
         );
       })()}
-    </svg>
-  );
-};
-
-const CandlestickChart = ({ data, height = 200 }: any) => {
-  const paddingLeft = 18;
-  const paddingRight = 5;
-  const paddingTop = 8;
-  const paddingBottom = 8;
-  const width = 100;
-  const candleWidth = (width - paddingLeft - paddingRight) / data.length * 0.6;
-  
-  const maxPrice = Math.max(...data.map((d: any) => d.high));
-  const minPrice = Math.min(...data.map((d: any) => d.low));
-  const priceRange = maxPrice - minPrice;
-  
-  // Calculate Y-axis scale with better distribution
-  const scaleSteps = 6;
-  const priceStep = priceRange / scaleSteps;
-  const yAxisLabels = [];
-  for (let i = 0; i <= scaleSteps; i++) {
-    const price = minPrice + (priceStep * i);
-    const y = height - paddingBottom - ((price - minPrice) / priceRange) * (height - paddingTop - paddingBottom);
-    yAxisLabels.push({ price: Math.round(price), y });
-  }
-  
-  return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }} preserveAspectRatio="none">
-      {/* Y-axis grid lines and labels */}
-      {yAxisLabels.map((label, i) => (
-        <g key={`axis-${i}`}>
-          <line
-            x1={paddingLeft}
-            y1={label.y}
-            x2={width - paddingRight}
-            y2={label.y}
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.3"
-            strokeDasharray="2,2"
-          />
-          <text
-            x={paddingLeft - 1.5}
-            y={label.y + 1}
-            fill="rgba(255,255,255,0.5)"
-            fontSize="3.2"
-            fontFamily="monospace"
-            textAnchor="end"
-          >
-            {label.price}
-          </text>
-        </g>
-      ))}
-      
-      {/* Candlesticks */}
-      {data.map((d: any, i: number) => {
-        const x = (i / data.length) * (width - paddingLeft - paddingRight) + paddingLeft + candleWidth / 2;
-        const isGreen = d.close > d.open;
-        const color = isGreen ? "#10b981" : "#ef4444";
-        
-        const chartHeight = height - paddingTop - paddingBottom;
-        const openY = height - paddingBottom - ((d.open - minPrice) / priceRange) * chartHeight;
-        const closeY = height - paddingBottom - ((d.close - minPrice) / priceRange) * chartHeight;
-        const highY = height - paddingBottom - ((d.high - minPrice) / priceRange) * chartHeight;
-        const lowY = height - paddingBottom - ((d.low - minPrice) / priceRange) * chartHeight;
-        
-        const bodyTop = Math.min(openY, closeY);
-        const bodyHeight = Math.abs(closeY - openY) || 0.5;
-        
-        return (
-          <g key={i}>
-            <line 
-              x1={x} 
-              y1={highY} 
-              x2={x} 
-              y2={lowY} 
-              stroke={color} 
-              strokeWidth="0.5" 
-              opacity="0.9" 
-            />
-            <rect
-              x={x - candleWidth / 2}
-              y={bodyTop}
-              width={candleWidth}
-              height={bodyHeight}
-              fill={isGreen ? color : '#0a0f1a'}
-              stroke={color}
-              strokeWidth="0.8"
-              opacity="1"
-            />
-          </g>
-        );
-      })}
     </svg>
   );
 };
