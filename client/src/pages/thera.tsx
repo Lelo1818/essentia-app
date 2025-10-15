@@ -377,10 +377,10 @@ const ScreenDashboard = ({ onNavigate }: any) => {
               onClick={async () => {
                 try {
                   await apiRequest('/api/thera/track-evaluation', 'POST');
-                  window.open('https://checkout.therafunding.com', '_blank');
+                  window.open('https://www.therafunding.com/', '_blank');
                 } catch (error) {
                   console.error('Erro ao rastrear clique:', error);
-                  window.open('https://checkout.therafunding.com', '_blank');
+                  window.open('https://www.therafunding.com/', '_blank');
                 }
               }}
             >
