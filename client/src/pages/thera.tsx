@@ -510,53 +510,72 @@ const ScreenGame = ({ onNavigate }: any) => {
         </div>
       </div>
 
-      {/* Asset Selector */}
-      <div className="mb-4">
-        <div className="flex gap-2 overflow-x-auto pb-2">
+      {/* Asset Selector - Professional Style */}
+      <div className="mb-3">
+        <div className="flex gap-1 overflow-x-auto pb-1">
           {availableAssets.map((asset) => (
             <button
               key={asset.symbol}
               onClick={() => setSelectedAsset(asset.symbol)}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition whitespace-nowrap ${
+              className={`px-3 py-1.5 text-xs font-medium transition whitespace-nowrap border-b-2 ${
                 selectedAsset === asset.symbol
-                  ? 'bg-[#c6a86b] text-[#0b1220]'
-                  : 'bg-white/5 text-white/70 hover:bg-white/10'
+                  ? 'text-[#c6a86b] border-[#c6a86b]'
+                  : 'text-white/50 border-transparent hover:text-white/70'
               }`}
             >
-              {asset.symbol} · {asset.name}
+              {asset.symbol}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-12 gap-4">
-        {/* Chart */}
-        <Card 
-          title={selectedAsset} 
-          subtitle={currentAsset?.name}
-          right={<Chip tone={isUp ? "green" : "red"}>R$ {currentPrice.toFixed(selectedAsset.includes('USD') ? 4 : 0)}</Chip>} 
-          className="lg:col-span-8"
-        >
-          <div className="mb-3 grid grid-cols-4 gap-2 text-xs">
-            <div className="rounded-lg bg-white/5 p-2">
-              <div className="text-white/50">Máxima (10min)</div>
-              <div className="text-emerald-400 font-semibold">{maxPrice.toFixed(0)}</div>
+      <div className="grid lg:grid-cols-3 gap-3">
+        {/* Main Chart - Full Width Professional */}
+        <div className="lg:col-span-2 bg-[#0d1520]/80 rounded-lg border border-white/5 p-4">
+          {/* Chart Header */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div>
+                <div className="text-white font-semibold text-lg">{selectedAsset}</div>
+                <div className="text-white/40 text-xs">{currentAsset?.name}</div>
+              </div>
+              <div className={`text-2xl font-bold ${isUp ? 'text-emerald-400' : 'text-red-400'}`}>
+                {currentPrice.toFixed(selectedAsset.includes('USD') ? 4 : 2)}
+              </div>
+              {marketData && (
+                <div className={`text-sm ${marketData.changePercent >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {marketData.changePercent >= 0 ? '+' : ''}{marketData.changePercent}%
+                </div>
+              )}
             </div>
-            <div className="rounded-lg bg-white/5 p-2">
-              <div className="text-white/50">Mínima (10min)</div>
-              <div className="text-red-400 font-semibold">{minPrice.toFixed(0)}</div>
-            </div>
-            <div className="rounded-lg bg-white/5 p-2">
-              <div className="text-white/50">Spread</div>
-              <div className="text-white font-semibold">{spread.toFixed(0)} pts</div>
-            </div>
-            <div className="rounded-lg bg-white/5 p-2">
-              <div className="text-white/50">Volume</div>
-              <div className="text-[#c6a86b] font-semibold">High</div>
+            <div className="text-[10px] px-2 py-1 rounded bg-white/5 text-white/50">
+              {marketData?.isRealData ? '● LIVE' : 'SIM'}
             </div>
           </div>
-          <div className="rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 p-3">
-            <CandlestickChart data={candleData} height={220} />
+
+          {/* Market Info Bar */}
+          <div className="grid grid-cols-4 gap-3 mb-4 pb-4 border-b border-white/5">
+            <div>
+              <div className="text-[10px] text-white/40 mb-1">ABERTURA</div>
+              <div className="text-sm text-white/90 font-medium">{marketData?.open?.toFixed(2) || currentPrice.toFixed(2)}</div>
+            </div>
+            <div>
+              <div className="text-[10px] text-white/40 mb-1">MÁXIMA</div>
+              <div className="text-sm text-emerald-400 font-medium">{maxPrice.toFixed(2)}</div>
+            </div>
+            <div>
+              <div className="text-[10px] text-white/40 mb-1">MÍNIMA</div>
+              <div className="text-sm text-red-400 font-medium">{minPrice.toFixed(2)}</div>
+            </div>
+            <div>
+              <div className="text-[10px] text-white/40 mb-1">VOLUME</div>
+              <div className="text-sm text-white/70 font-medium">{marketData?.volume ? (marketData.volume / 1000).toFixed(0) + 'K' : 'High'}</div>
+            </div>
+          </div>
+
+          {/* Chart Area */}
+          <div className="bg-[#0a0f1a] rounded-lg p-3 border border-white/5">
+            <CandlestickChart data={candleData} height={280} />
           </div>
           {position && (
             <div className="mt-3 p-3 rounded-xl bg-white/5 border border-white/10">
@@ -587,10 +606,10 @@ const ScreenGame = ({ onNavigate }: any) => {
               </div>
             </div>
           )}
-        </Card>
+        </div>
         
         {/* Order Book & Boleta */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className="lg:col-span-1 space-y-3">
           <Card title="Book de Ofertas" subtitle="níveis 1-5">
             <div className="space-y-1">
               {orderBook.sell.reverse().map((order: any, i: number) => (
