@@ -1,15 +1,19 @@
 import { 
   users, achievements,
-  type User, type InsertUser,
+  type User, type InsertUser, type UpsertUser,
   type Achievement, type InsertAchievement
 } from "@shared/schema";
+import { eq } from "drizzle-orm";
+import { db } from "./db";
 
 export interface IStorage {
-  // Users
+  // Users (Replit Auth compatible)
   getUser(id: number): Promise<User | undefined>;
+  getUserByReplitId(replitId: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: number, updates: Partial<User>): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
   
   // Achievements
   getAchievementsByUserId(userId: number): Promise<Achievement[]>;
@@ -201,6 +205,10 @@ class MemStorage implements IStorage {
     return this.users.get(id);
   }
 
+  async getUserByReplitId(replitId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(user => user.replitId === replitId);
+  }
+
   async getUserByUsername(username: string): Promise<User | undefined> {
     return Array.from(this.users.values()).find(user => user.name === username);
   }
@@ -210,10 +218,15 @@ class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id,
-      name: insertUser.name || insertUser.email.split('@')[0],
-      initials: insertUser.name ? insertUser.name.split(' ').map(n => n[0]).join('') : insertUser.email.substring(0, 2).toUpperCase(),
-      role: 'user',
-      avatar: null,
+      replitId: insertUser.replitId || null,
+      name: insertUser.name || insertUser.email?.split('@')[0] || 'User',
+      email: insertUser.email || null,
+      firstName: insertUser.firstName || null,
+      lastName: insertUser.lastName || null,
+      profileImageUrl: insertUser.profileImageUrl || null,
+      initials: insertUser.name ? insertUser.name.split(' ').map(n => n[0]).join('') : 'U',
+      role: insertUser.role || 'user',
+      avatar: insertUser.avatar || null,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -228,6 +241,51 @@ class MemStorage implements IStorage {
     const updatedUser = { ...user, ...updates, updatedAt: new Date() };
     this.users.set(id, updatedUser);
     return updatedUser;
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    // Try to find existing user by replitId
+    const existing = Array.from(this.users.values()).find(u => u.replitId === userData.replitId);
+    
+    if (existing) {
+      // Update existing user
+      const updatedUser: User = {
+        ...existing,
+        email: userData.email || existing.email,
+        firstName: userData.firstName || existing.firstName,
+        lastName: userData.lastName || existing.lastName,
+        profileImageUrl: userData.profileImageUrl || existing.profileImageUrl,
+        name: userData.firstName && userData.lastName 
+          ? `${userData.firstName} ${userData.lastName}`
+          : existing.name,
+        updatedAt: new Date()
+      };
+      this.users.set(existing.id, updatedUser);
+      return updatedUser;
+    } else {
+      // Create new user
+      const id = this.currentId++;
+      const newUser: User = {
+        id,
+        replitId: userData.replitId,
+        name: userData.firstName && userData.lastName 
+          ? `${userData.firstName} ${userData.lastName}`
+          : userData.email?.split('@')[0] || 'User',
+        email: userData.email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        profileImageUrl: userData.profileImageUrl,
+        initials: userData.firstName && userData.lastName
+          ? `${userData.firstName[0]}${userData.lastName[0]}`
+          : 'U',
+        role: 'user',
+        avatar: null,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.users.set(id, newUser);
+      return newUser;
+    }
   }
 
   async getAchievementsByUserId(userId: number): Promise<Achievement[]> {
