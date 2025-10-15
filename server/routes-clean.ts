@@ -782,21 +782,28 @@ Seja direto e prático. Foco em insights acionáveis.`;
         }
       }
       
-      // Fallback: Generate realistic simulated data
-      const basePrice = symbol.includes('USD') ? 5.44 : 127500;
-      const volatility = symbol.includes('USD') ? 0.02 : 50;
-      const price = basePrice + (Math.random() - 0.5) * volatility * 2;
-      const change = (Math.random() - 0.5) * volatility;
+      // Fallback: Generate realistic simulated data with correct base prices
+      const priceConfig: Record<string, { base: number; volatility: number }> = {
+        'WINM25': { base: 127500, volatility: 50 },
+        'WDOM25': { base: 5440, volatility: 20 },
+        'USD/BRL': { base: 5.44, volatility: 0.02 },
+        'PETR4': { base: 38.50, volatility: 0.30 },
+        'VALE3': { base: 62.80, volatility: 0.50 }
+      };
+      
+      const config = priceConfig[symbol] || { base: 100, volatility: 1 };
+      const price = config.base + (Math.random() - 0.5) * config.volatility * 2;
+      const change = (Math.random() - 0.5) * config.volatility;
       
       res.json({
         symbol: symbol,
-        price: parseFloat(price.toFixed(2)),
-        open: parseFloat((price - change).toFixed(2)),
-        high: parseFloat((price + Math.random() * volatility).toFixed(2)),
-        low: parseFloat((price - Math.random() * volatility).toFixed(2)),
+        price: parseFloat(price.toFixed(symbol.includes('USD') ? 4 : 2)),
+        open: parseFloat((price - change).toFixed(symbol.includes('USD') ? 4 : 2)),
+        high: parseFloat((price + Math.random() * config.volatility).toFixed(symbol.includes('USD') ? 4 : 2)),
+        low: parseFloat((price - Math.random() * config.volatility).toFixed(symbol.includes('USD') ? 4 : 2)),
         volume: Math.floor(Math.random() * 100000) + 50000,
         change: parseFloat(change.toFixed(2)),
-        changePercent: parseFloat(((change / basePrice) * 100).toFixed(2)),
+        changePercent: parseFloat(((change / config.base) * 100).toFixed(2)),
         isRealData: false,
         timestamp: new Date().toISOString()
       });
