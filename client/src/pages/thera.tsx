@@ -632,33 +632,34 @@ const ScreenGame = ({ onNavigate }: any) => {
 
           {/* Chart Area */}
           <div className="bg-[#0a0f1a] rounded-lg p-3 border border-white/5">
-            <CandlestickChart data={candleData} height={280} />
+            <CandlestickChart data={candleData} height={340} />
           </div>
+          
+          {/* Position Display - Highlighted */}
           {position && (
-            <div className="mt-3 p-3 rounded-xl bg-white/5 border border-white/10">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-white/60 text-sm">Posição Aberta</span>
-                <span className={`font-bold ${position.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {position.side === 'buy' ? '🟢 COMPRADO' : '🔴 VENDIDO'} {position.qty}x
-                </span>
+            <div className="mt-3 p-4 rounded-xl bg-gradient-to-r from-[#c6a86b]/10 to-[#c6a86b]/5 border-2 border-[#c6a86b]/30">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-white/80 text-sm font-medium">Posição Aberta</span>
+                  <span className={`px-2 py-1 rounded text-xs font-bold ${position.side === 'buy' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+                    {position.side === 'buy' ? '🟢 COMPRADO' : '🔴 VENDIDO'} {position.qty}x
+                  </span>
+                </div>
+                <div className={`text-xl font-bold ${position.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {position.pnl >= 0 ? '+' : ''}R$ {position.pnl.toFixed(2)}
+                </div>
               </div>
-              <div className="grid grid-cols-4 gap-3 text-xs">
+              <div className="grid grid-cols-3 gap-4 text-sm">
                 <div>
-                  <div className="text-white/50">Entrada</div>
-                  <div className="text-white font-semibold">{position.entryPrice.toFixed(0)}</div>
+                  <div className="text-white/50 text-xs mb-1">Entrada</div>
+                  <div className="text-white font-semibold">{position.entryPrice.toFixed(2)}</div>
                 </div>
                 <div>
-                  <div className="text-white/50">Atual</div>
-                  <div className="text-white font-semibold">{currentPrice.toFixed(0)}</div>
+                  <div className="text-white/50 text-xs mb-1">Preço Atual</div>
+                  <div className="text-white font-semibold">{currentPrice.toFixed(2)}</div>
                 </div>
                 <div>
-                  <div className="text-white/50">P&L</div>
-                  <div className={`font-bold ${position.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                    R$ {position.pnl.toFixed(2)}
-                  </div>
-                </div>
-                <div>
-                  <Button size="sm" variant="dark" onClick={closePosition} className="w-full">Zerar</Button>
+                  <Button size="sm" variant="dark" onClick={closePosition} className="w-full">Zerar Posição</Button>
                 </div>
               </div>
             </div>
@@ -1110,10 +1111,10 @@ const LineChart = ({ data, height = 160 }: any) => {
 };
 
 const CandlestickChart = ({ data, height = 200 }: any) => {
-  const paddingLeft = 15;
+  const paddingLeft = 18;
   const paddingRight = 5;
-  const paddingTop = 5;
-  const paddingBottom = 5;
+  const paddingTop = 8;
+  const paddingBottom = 8;
   const width = 100;
   const candleWidth = (width - paddingLeft - paddingRight) / data.length * 0.6;
   
@@ -1121,18 +1122,18 @@ const CandlestickChart = ({ data, height = 200 }: any) => {
   const minPrice = Math.min(...data.map((d: any) => d.low));
   const priceRange = maxPrice - minPrice;
   
-  // Calculate Y-axis scale
-  const scaleSteps = 5;
+  // Calculate Y-axis scale with better distribution
+  const scaleSteps = 6;
   const priceStep = priceRange / scaleSteps;
   const yAxisLabels = [];
   for (let i = 0; i <= scaleSteps; i++) {
     const price = minPrice + (priceStep * i);
-    const y = height - ((price - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
+    const y = height - paddingBottom - ((price - minPrice) / priceRange) * (height - paddingTop - paddingBottom);
     yAxisLabels.push({ price: Math.round(price), y });
   }
   
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }}>
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }} preserveAspectRatio="none">
       {/* Y-axis grid lines and labels */}
       {yAxisLabels.map((label, i) => (
         <g key={`axis-${i}`}>
@@ -1141,15 +1142,16 @@ const CandlestickChart = ({ data, height = 200 }: any) => {
             y1={label.y}
             x2={width - paddingRight}
             y2={label.y}
-            stroke="rgba(255,255,255,0.05)"
-            strokeWidth="0.5"
+            stroke="rgba(255,255,255,0.08)"
+            strokeWidth="0.3"
             strokeDasharray="2,2"
           />
           <text
-            x={paddingLeft - 2}
-            y={label.y + 1.2}
-            fill="rgba(255,255,255,0.4)"
-            fontSize="3"
+            x={paddingLeft - 1.5}
+            y={label.y + 1}
+            fill="rgba(255,255,255,0.5)"
+            fontSize="3.2"
+            fontFamily="monospace"
             textAnchor="end"
           >
             {label.price}
@@ -1163,10 +1165,11 @@ const CandlestickChart = ({ data, height = 200 }: any) => {
         const isGreen = d.close > d.open;
         const color = isGreen ? "#10b981" : "#ef4444";
         
-        const openY = height - ((d.open - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
-        const closeY = height - ((d.close - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
-        const highY = height - ((d.high - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
-        const lowY = height - ((d.low - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
+        const chartHeight = height - paddingTop - paddingBottom;
+        const openY = height - paddingBottom - ((d.open - minPrice) / priceRange) * chartHeight;
+        const closeY = height - paddingBottom - ((d.close - minPrice) / priceRange) * chartHeight;
+        const highY = height - paddingBottom - ((d.high - minPrice) / priceRange) * chartHeight;
+        const lowY = height - paddingBottom - ((d.low - minPrice) / priceRange) * chartHeight;
         
         const bodyTop = Math.min(openY, closeY);
         const bodyHeight = Math.abs(closeY - openY) || 1;
