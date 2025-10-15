@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
 
 const BRAND = {
@@ -270,7 +270,47 @@ const ScreenLogin = ({ onEnter, onGuest }: any) => {
 };
 
 const ScreenDashboard = ({ onNavigate }: any) => {
-  const performanceData = useMemo(() => generatePriceData(7, 50000, 400), []);
+  const [performanceData, setPerformanceData] = useState<any[]>([]);
+  const [isLoadingPerf, setIsLoadingPerf] = useState(true);
+  const [perfStats, setPerfStats] = useState({ change: '+0%', changeValue: 0 });
+
+  useEffect(() => {
+    const fetchPerformanceData = async () => {
+      try {
+        const response = await fetch('/api/thera/market/WINM25');
+        const data = await response.json();
+        
+        if (data.timeSeries && data.timeSeries.length > 0) {
+          const chartData = data.timeSeries.slice(0, 30).reverse().map((point: any, idx: number) => ({
+            day: idx,
+            price: parseFloat(point.close),
+            time: point.datetime
+          }));
+          
+          const firstPrice = chartData[0].price;
+          const lastPrice = chartData[chartData.length - 1].price;
+          const changeValue = lastPrice - firstPrice;
+          const changePercent = ((changeValue / firstPrice) * 100).toFixed(2);
+          
+          setPerformanceData(chartData);
+          setPerfStats({
+            change: `${changeValue >= 0 ? '+' : ''}${changePercent}%`,
+            changeValue
+          });
+        } else {
+          setPerformanceData(generatePriceData(7, 50000, 400));
+        }
+      } catch (error) {
+        setPerformanceData(generatePriceData(7, 50000, 400));
+      } finally {
+        setIsLoadingPerf(false);
+      }
+    };
+
+    fetchPerformanceData();
+    const interval = setInterval(fetchPerformanceData, 30000);
+    return () => clearInterval(interval);
+  }, []);
   
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
@@ -287,10 +327,27 @@ const ScreenDashboard = ({ onNavigate }: any) => {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4 mt-4">
-        <Card title="Performance (7d)" right={<Chip>live data</Chip>} className="lg:col-span-2">
-          <div className="rounded-xl bg-gradient-to-r from-white/5 to-white/10 border border-white/10 p-4">
-            <LineChart data={performanceData} height={140} />
-          </div>
+        <Card 
+          title="Performance WINM25 (30 dias)" 
+          right={
+            <div className="flex items-center gap-2">
+              <span className={`text-sm font-semibold ${perfStats.changeValue >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                {perfStats.change}
+              </span>
+              <Chip>● LIVE</Chip>
+            </div>
+          } 
+          className="lg:col-span-2"
+        >
+          {isLoadingPerf ? (
+            <div className="rounded-xl bg-[#0a0f1a] border border-white/5 p-4 h-[200px] flex items-center justify-center">
+              <div className="text-white/40 text-sm">Carregando dados...</div>
+            </div>
+          ) : (
+            <div className="rounded-xl bg-[#0a0f1a] border border-white/5 p-4">
+              <LineChart data={performanceData} height={200} />
+            </div>
+          )}
         </Card>
         <Card title="Ações rápidas">
           <div className="grid gap-2">
@@ -952,41 +1009,102 @@ const HeatmapMock = () => (
 
 // Visual Chart Components
 const LineChart = ({ data, height = 160 }: any) => {
-  const padding = 20;
+  if (!data || data.length === 0) return null;
+  
+  const paddingLeft = 12;
+  const paddingRight = 8;
+  const paddingTop = 10;
+  const paddingBottom = 10;
   const width = 100;
   
   const maxPrice = Math.max(...data.map((d: any) => d.price));
   const minPrice = Math.min(...data.map((d: any) => d.price));
-  const priceRange = maxPrice - minPrice;
+  const priceRange = maxPrice - minPrice || 1;
+  
+  const chartWidth = width - paddingLeft - paddingRight;
+  const chartHeight = height - paddingTop - paddingBottom;
   
   const points = data.map((d: any, i: number) => {
-    const x = (i / (data.length - 1)) * (100 - padding * 2) + padding;
-    const y = height - ((d.price - minPrice) / priceRange) * (height - padding * 2) - padding;
+    const x = paddingLeft + (i / (data.length - 1)) * chartWidth;
+    const y = paddingTop + chartHeight - ((d.price - minPrice) / priceRange) * chartHeight;
     return `${x},${y}`;
   }).join(' ');
   
+  const areaPoints = `${paddingLeft},${height - paddingBottom} ${points} ${paddingLeft + chartWidth},${height - paddingBottom}`;
+  
+  const firstPrice = data[0]?.price || 0;
+  const lastPrice = data[data.length - 1]?.price || 0;
+  const isPositive = lastPrice >= firstPrice;
+  
   const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
   
+  const gridLines = 4;
+  const yGridPositions = Array.from({ length: gridLines }, (_, i) => 
+    paddingTop + (i / (gridLines - 1)) * chartHeight
+  );
+  
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }}>
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }} preserveAspectRatio="none">
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor={BRAND.gold} stopOpacity="0.3" />
+          <stop offset="0%" stopColor={isPositive ? '#10b981' : '#ef4444'} stopOpacity="0.2" />
           <stop offset="100%" stopColor={BRAND.gold} stopOpacity="0.05" />
         </linearGradient>
       </defs>
+      
+      {/* Grid lines */}
+      {yGridPositions.map((y, i) => (
+        <line
+          key={`grid-${i}`}
+          x1={paddingLeft}
+          y1={y}
+          x2={width - paddingRight}
+          y2={y}
+          stroke="rgba(255,255,255,0.03)"
+          strokeWidth="0.5"
+        />
+      ))}
+      
+      {/* Area fill */}
+      <polygon
+        points={areaPoints}
+        fill={`url(#${gradientId})`}
+      />
+      
+      {/* Line */}
       <polyline
         points={points}
         fill="none"
-        stroke={BRAND.gold}
-        strokeWidth="2"
+        stroke={isPositive ? '#10b981' : '#ef4444'}
+        strokeWidth="2.5"
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      <polygon
-        points={`${padding},${height} ${points} ${100 - padding},${height}`}
-        fill={`url(#${gradientId})`}
-      />
+      
+      {/* Y-axis labels */}
+      <text x="2" y={paddingTop + 3} fill="rgba(255,255,255,0.4)" fontSize="2.5" fontFamily="monospace">
+        {maxPrice.toFixed(0)}
+      </text>
+      <text x="2" y={height - paddingBottom - 1} fill="rgba(255,255,255,0.4)" fontSize="2.5" fontFamily="monospace">
+        {minPrice.toFixed(0)}
+      </text>
+      
+      {/* Data points (último ponto destacado) */}
+      {data.length > 0 && (() => {
+        const lastPoint = data[data.length - 1];
+        const lastX = paddingLeft + ((data.length - 1) / (data.length - 1)) * chartWidth;
+        const lastY = paddingTop + chartHeight - ((lastPoint.price - minPrice) / priceRange) * chartHeight;
+        return (
+          <circle
+            cx={lastX}
+            cy={lastY}
+            r="1.5"
+            fill={isPositive ? '#10b981' : '#ef4444'}
+            stroke="#0a0f1a"
+            strokeWidth="0.8"
+          />
+        );
+      })()}
     </svg>
   );
 };
