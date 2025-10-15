@@ -870,25 +870,63 @@ const LineChart = ({ data, height = 160 }: any) => {
 };
 
 const CandlestickChart = ({ data, height = 200 }: any) => {
-  const padding = 10;
+  const paddingLeft = 15;
+  const paddingRight = 5;
+  const paddingTop = 5;
+  const paddingBottom = 5;
   const width = 100;
-  const candleWidth = (width - padding * 2) / data.length * 0.6;
+  const candleWidth = (width - paddingLeft - paddingRight) / data.length * 0.6;
   
   const maxPrice = Math.max(...data.map((d: any) => d.high));
   const minPrice = Math.min(...data.map((d: any) => d.low));
   const priceRange = maxPrice - minPrice;
   
+  // Calculate Y-axis scale
+  const scaleSteps = 5;
+  const priceStep = priceRange / scaleSteps;
+  const yAxisLabels = [];
+  for (let i = 0; i <= scaleSteps; i++) {
+    const price = minPrice + (priceStep * i);
+    const y = height - ((price - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
+    yAxisLabels.push({ price: Math.round(price), y });
+  }
+  
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }}>
+      {/* Y-axis grid lines and labels */}
+      {yAxisLabels.map((label, i) => (
+        <g key={`axis-${i}`}>
+          <line
+            x1={paddingLeft}
+            y1={label.y}
+            x2={width - paddingRight}
+            y2={label.y}
+            stroke="rgba(255,255,255,0.05)"
+            strokeWidth="0.5"
+            strokeDasharray="2,2"
+          />
+          <text
+            x={paddingLeft - 2}
+            y={label.y + 1.2}
+            fill="rgba(255,255,255,0.4)"
+            fontSize="3"
+            textAnchor="end"
+          >
+            {label.price}
+          </text>
+        </g>
+      ))}
+      
+      {/* Candlesticks */}
       {data.map((d: any, i: number) => {
-        const x = (i / data.length) * (width - padding * 2) + padding + candleWidth / 2;
+        const x = (i / data.length) * (width - paddingLeft - paddingRight) + paddingLeft + candleWidth / 2;
         const isGreen = d.close > d.open;
         const color = isGreen ? "#10b981" : "#ef4444";
         
-        const openY = height - ((d.open - minPrice) / priceRange) * (height - padding * 2) - padding;
-        const closeY = height - ((d.close - minPrice) / priceRange) * (height - padding * 2) - padding;
-        const highY = height - ((d.high - minPrice) / priceRange) * (height - padding * 2) - padding;
-        const lowY = height - ((d.low - minPrice) / priceRange) * (height - padding * 2) - padding;
+        const openY = height - ((d.open - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
+        const closeY = height - ((d.close - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
+        const highY = height - ((d.high - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
+        const lowY = height - ((d.low - minPrice) / priceRange) * (height - paddingTop - paddingBottom) - paddingBottom;
         
         const bodyTop = Math.min(openY, closeY);
         const bodyHeight = Math.abs(closeY - openY) || 1;
