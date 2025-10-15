@@ -89,6 +89,7 @@ import EssentiaSimples from "@/pages/essentia-simples";
 import EssentiaUnified from "@/pages/essentia-unified";
 import EssentiaMega from "@/pages/essentia-mega";
 import EssentiaDemo90s from "@/pages/essentia-demo-90s";
+import Thera from "@/pages/thera";
 
 
 
@@ -167,6 +168,7 @@ function Router() {
       <Route path="/essentia-unified" component={EssentiaUnified} />
       <Route path="/essentia-mega" component={EssentiaMega} />
       <Route path="/essentia-demo-90s" component={EssentiaDemo90s} />
+      <Route path="/thera" component={Thera} />
       <Route path="/essentia-purpose-style" component={EssentiaPurposeStyle} />
       <Route path="/essentia-purpose-original" component={EssentiaPurposeOriginal} />
       <Route path="/essentia-clean-demo" component={EssentiaCleanDemo} />
