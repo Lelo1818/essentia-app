@@ -138,7 +138,7 @@ export default function Ranking() {
 
       <div className="mt-6 p-4 bg-[#c6a86b]/5 border border-[#c6a86b]/20 rounded-lg">
         <p className="text-sm text-gray-300 text-center">
-          🏆 <span className="text-[#c6a86b] font-medium">Dados em tempo real</span> atualizados a cada 5 minutos
+          🏆 <span className="text-[#c6a86b] font-medium">Dados em tempo real</span> atualizados a cada 30 segundos
         </p>
       </div>
     </Card>

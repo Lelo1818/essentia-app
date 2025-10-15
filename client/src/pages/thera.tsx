@@ -278,6 +278,7 @@ const ScreenDashboard = ({ onNavigate, traderName }: any) => {
   const [performanceData, setPerformanceData] = useState<any[]>([]);
   const [isLoadingPerf, setIsLoadingPerf] = useState(true);
   const [perfStats, setPerfStats] = useState({ change: '+0%', changeValue: 0 });
+  const [timeframe, setTimeframe] = useState<'7D' | '30D' | '90D'>('30D');
 
   useEffect(() => {
     const fetchPerformanceData = async () => {
@@ -333,7 +334,7 @@ const ScreenDashboard = ({ onNavigate, traderName }: any) => {
 
       <div className="grid lg:grid-cols-3 gap-4 mt-4">
         <Card 
-          title="Performance WINM25 (30 dias)" 
+          title={`Performance WINM25 (${timeframe === '7D' ? '7 dias' : timeframe === '30D' ? '30 dias' : '90 dias'})`}
           right={
             <div className="flex items-center gap-2">
               <span className={`text-sm font-semibold ${perfStats.changeValue >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
@@ -344,6 +345,22 @@ const ScreenDashboard = ({ onNavigate, traderName }: any) => {
           } 
           className="lg:col-span-2"
         >
+          <div className="flex gap-1 mb-3">
+            {(['7D', '30D', '90D'] as const).map((tf) => (
+              <button
+                key={tf}
+                onClick={() => setTimeframe(tf)}
+                className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
+                  timeframe === tf 
+                    ? 'bg-[#c6a86b] text-[#0f1a2a]' 
+                    : 'bg-[#1a2332] text-white/60 hover:text-white'
+                }`}
+                data-testid={`button-timeframe-${tf.toLowerCase()}`}
+              >
+                {tf}
+              </button>
+            ))}
+          </div>
           {isLoadingPerf ? (
             <div className="rounded-xl bg-[#0a0f1a] border border-white/5 p-4 h-[200px] flex items-center justify-center">
               <div className="text-white/40 text-sm">Carregando dados...</div>
