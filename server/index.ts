@@ -55,6 +55,9 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Serve static files from client/public (for downloads)
+  app.use(express.static('client/public'));
+  
   // First register all API routes before Vite middleware
   const { registerRoutes } = await import("./routes-clean");
   const server = await registerRoutes(app);
