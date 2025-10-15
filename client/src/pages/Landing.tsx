@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Target, BarChart3, Users } from "lucide-react";
+import { Target, BarChart3, Users } from "lucide-react";
+import logoUrl from "@assets/Logo Thera_1760542286894.jpg";
 
 export default function Landing() {
   return (
@@ -7,13 +8,20 @@ export default function Landing() {
       <div className="max-w-4xl w-full space-y-12 text-center">
         {/* Logo e título */}
         <div className="space-y-4">
-          <div className="flex justify-center items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#c6a86b] to-[#d4b87c] rounded-lg flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-[#0f1a2a]" />
+          <div className="flex justify-center items-center gap-4">
+            <img 
+              src={logoUrl} 
+              alt="Thera Funding" 
+              className="rounded-xl w-20 h-20"
+            />
+            <div className="text-left">
+              <div className="text-3xl tracking-[0.18em] font-semibold text-[#c6a86b]">
+                THERA
+              </div>
+              <div className="text-base tracking-[0.32em] text-[#c6a86b] opacity-80">
+                FUNDING
+              </div>
             </div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-[#c6a86b] to-[#d4b87c] bg-clip-text text-transparent">
-              Thera Funding
-            </h1>
           </div>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Prop Trading Desk Internacional
