@@ -28,6 +28,7 @@ import MagicalInteractions from "@/components/purpose/magical-interactions";
 import LivingReactions from "@/components/purpose/living-reactions";
 import BiometricSensors from "@/components/purpose/biometric-sensors";
 import AITherapist from "@/components/purpose/ai-therapist";
+import { VideoPortal } from "@/components/purpose/video-portal";
 import { 
   Compass, 
   Heart, 
@@ -42,9 +43,12 @@ import {
   Sparkles
 } from "lucide-react";
 
+import despertarInteriorVideo from "@assets/Despertar Interior_1760814881524.mp4";
+
 export default function Purpose() {
   const [activeTab, setActiveTab] = useState("journey");
   const { activeWindow, openWindow, closeWindow } = useEssentiaWindows();
+  const [showVideo, setShowVideo] = useState(false);
   
   const user = {
     id: 1,
@@ -162,13 +166,21 @@ export default function Purpose() {
               {journeyStages.map((stage) => (
                 <div
                   key={stage.id}
+                  onClick={() => {
+                    if (stage.name === "Despertar Interior") {
+                      setShowVideo(true);
+                    }
+                  }}
                   className={`p-3 rounded-lg border-2 text-center transition-all ${
+                    stage.name === "Despertar Interior" ? 'cursor-pointer hover:scale-105 hover:shadow-lg' : ''
+                  } ${
                     stage.completed
                       ? 'border-green-500 bg-green-50'
                       : stage.current
                         ? 'border-blue-500 bg-blue-50'
                         : 'border-gray-300 bg-gray-50'
                   }`}
+                  data-testid={`card-journey-stage-${stage.id}`}
                 >
                   <div className={`w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center ${
                     stage.completed
@@ -180,6 +192,9 @@ export default function Purpose() {
                     {stage.completed ? '✓' : stage.id}
                   </div>
                   <div className="text-sm font-medium">{stage.name}</div>
+                  {stage.name === "Despertar Interior" && (
+                    <div className="text-xs text-purple-600 mt-1">▶ Ver vídeo</div>
+                  )}
                 </div>
               ))}
             </div>
@@ -480,6 +495,15 @@ export default function Purpose() {
           trigger={activeWindow}
           onClose={closeWindow}
           autoClose={true}
+        />
+      )}
+
+      {/* Video Portal - Despertar Interior */}
+      {showVideo && (
+        <VideoPortal
+          videoSrc={despertarInteriorVideo}
+          title="Despertar Interior"
+          onClose={() => setShowVideo(false)}
         />
       )}
       </div>
