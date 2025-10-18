@@ -196,109 +196,109 @@ export default function Purpose() {
         </TabsList>
       </div>
 
-      {/* Journey Progress */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <TrendingUp className="w-5 h-5 mr-2" />
-            Progresso na Jornada
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium">Etapa {journeyStages.findIndex(s => s.current) + 1} de {journeyStages.length}</span>
-              <span className="text-sm text-gray-600">{userJourney.progress}% concluído</span>
-            </div>
-            <Progress value={userJourney.progress} className="h-3" />
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-6">
-              {journeyStages.map((stage) => (
-                <div
-                  key={stage.id}
-                  onClick={() => {
-                    if (stage.name === "Despertar Interior") {
-                      setShowVideo(true);
-                    }
-                  }}
-                  className={`p-3 rounded-lg border-2 text-center transition-all ${
-                    stage.name === "Despertar Interior" ? 'cursor-pointer hover:scale-105 hover:shadow-lg' : ''
-                  } ${
-                    stage.completed
-                      ? 'border-green-500 bg-green-50'
-                      : stage.current
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-300 bg-gray-50'
-                  }`}
-                  data-testid={`card-journey-stage-${stage.id}`}
-                >
-                  <div className={`w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center ${
-                    stage.completed
-                      ? 'bg-green-500 text-white'
-                      : stage.current
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-300 text-gray-600'
-                  }`}>
-                    {stage.completed ? '✓' : stage.id}
-                  </div>
-                  <div className="text-sm font-medium">{stage.name}</div>
-                  {stage.name === "Despertar Interior" && (
-                    <div className="text-xs text-purple-600 mt-1">▶ Ver vídeo</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Weekly Insights */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Lightbulb className="w-5 h-5 mr-2" />
-            Insights da Semana
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {weeklyInsights.map((insight, index) => (
-              <div
-                key={index}
-                className={`p-4 rounded-lg border-l-4 ${
-                  insight.type === 'breakthrough'
-                    ? 'border-green-500 bg-green-50'
-                    : insight.type === 'challenge'
-                      ? 'border-yellow-500 bg-yellow-50'
-                      : 'border-blue-500 bg-blue-50'
-                }`}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h5 className="font-medium text-gray-800">{insight.title}</h5>
-                    <p className="text-sm text-gray-600 mt-1">{insight.description}</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge
-                      className={
-                        insight.impact === 'Alto'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-yellow-100 text-yellow-700'
-                      }
-                    >
-                      {insight.impact}
-                    </Badge>
-                    <span className="text-xs text-gray-500">{insight.date}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
         {/* Tab Contents */}
         <TabsContent value="journey" className="mt-6">
+          {/* Journey Progress */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <TrendingUp className="w-5 h-5 mr-2" />
+                Progresso na Jornada
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-medium">Etapa {journeyStages.findIndex(s => s.current) + 1} de {journeyStages.length}</span>
+                  <span className="text-sm text-gray-600">{userJourney.progress}% concluído</span>
+                </div>
+                <Progress value={userJourney.progress} className="h-3" />
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-6">
+                  {journeyStages.map((stage) => (
+                    <div
+                      key={stage.id}
+                      onClick={() => {
+                        if (stage.name === "Despertar Interior") {
+                          setShowVideo(true);
+                        }
+                      }}
+                      className={`p-3 rounded-lg border-2 text-center transition-all ${
+                        stage.name === "Despertar Interior" ? 'cursor-pointer hover:scale-105 hover:shadow-lg' : ''
+                      } ${
+                        stage.completed
+                          ? 'border-green-500 bg-green-50'
+                          : stage.current
+                            ? 'border-blue-500 bg-blue-50'
+                            : 'border-gray-300 bg-gray-50'
+                      }`}
+                      data-testid={`card-journey-stage-${stage.id}`}
+                    >
+                      <div className={`w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center ${
+                        stage.completed
+                          ? 'bg-green-500 text-white'
+                          : stage.current
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-300 text-gray-600'
+                      }`}>
+                        {stage.completed ? '✓' : stage.id}
+                      </div>
+                      <div className="text-sm font-medium">{stage.name}</div>
+                      {stage.name === "Despertar Interior" && (
+                        <div className="text-xs text-purple-600 mt-1">▶ Ver vídeo</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Weekly Insights */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Lightbulb className="w-5 h-5 mr-2" />
+                Insights da Semana
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {weeklyInsights.map((insight, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 rounded-lg border-l-4 ${
+                      insight.type === 'breakthrough'
+                        ? 'border-green-500 bg-green-50'
+                        : insight.type === 'challenge'
+                          ? 'border-yellow-500 bg-yellow-50'
+                          : 'border-blue-500 bg-blue-50'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h5 className="font-medium text-gray-800">{insight.title}</h5>
+                        <p className="text-sm text-gray-600 mt-1">{insight.description}</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Badge
+                          className={
+                            insight.impact === 'Alto'
+                              ? 'bg-red-100 text-red-700'
+                              : 'bg-yellow-100 text-yellow-700'
+                          }
+                        >
+                          {insight.impact}
+                        </Badge>
+                        <span className="text-xs text-gray-500">{insight.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <JourneyContinuity 
