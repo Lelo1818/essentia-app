@@ -96,9 +96,63 @@ export default function Purpose() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50">
       <QuickNavButton />
-      <div className="max-w-7xl mx-auto space-y-6">
+      
+      {/* Menu fixo no topo - FORA do container */}
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-md">
+          <div className="max-w-7xl mx-auto px-6 py-3">
+            <TabsList className="grid w-full grid-cols-4 lg:grid-cols-11 gap-1 bg-gradient-to-r from-purple-50 to-blue-50 p-2 rounded-xl shadow-sm">
+              <TabsTrigger value="journey" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Compass className="w-5 h-5" />
+                <span className="hidden sm:inline">Jornada</span>
+              </TabsTrigger>
+              <TabsTrigger value="transition" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <TrendingUp className="w-5 h-5" />
+                <span className="hidden sm:inline">Transição</span>
+              </TabsTrigger>
+              <TabsTrigger value="avatar" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <User className="w-5 h-5" />
+                <span className="hidden sm:inline">Avatar 3D</span>
+              </TabsTrigger>
+              <TabsTrigger value="breathing" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Brain className="w-5 h-5" />
+                <span className="hidden sm:inline">Respiração</span>
+              </TabsTrigger>
+              <TabsTrigger value="rituals" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Star className="w-5 h-5" />
+                <span className="hidden sm:inline">Rituais</span>
+              </TabsTrigger>
+              <TabsTrigger value="wheel" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Target className="w-5 h-5" />
+                <span className="hidden sm:inline">Roda</span>
+              </TabsTrigger>
+              <TabsTrigger value="inspiration" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Heart className="w-5 h-5" />
+                <span className="hidden sm:inline">Inspiração</span>
+              </TabsTrigger>
+              <TabsTrigger value="community" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Users className="w-5 h-5" />
+                <span className="hidden sm:inline">Comunidade</span>
+              </TabsTrigger>
+              <TabsTrigger value="biometric" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Brain className="w-5 h-5" />
+                <span className="hidden sm:inline">Biometria</span>
+              </TabsTrigger>
+              <TabsTrigger value="therapist" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <Heart className="w-5 h-5" />
+                <span className="hidden sm:inline">Terapeuta IA</span>
+              </TabsTrigger>
+              <TabsTrigger value="profile" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-2 font-medium transition-all text-xs lg:text-sm">
+                <User className="w-5 h-5" />
+                <span className="hidden sm:inline">Sobre Mim</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </div>
+      
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
       {/* Header */}
       <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
         <CardHeader>
@@ -229,58 +283,8 @@ export default function Purpose() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Main Navigation - DESTACADO */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-md mb-6 -mx-4 px-4 py-3">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-11 gap-1 bg-gradient-to-r from-purple-50 to-blue-50 p-2 rounded-xl shadow-sm">
-            <TabsTrigger value="journey" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Compass className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Jornada</span>
-            </TabsTrigger>
-            <TabsTrigger value="transition" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <TrendingUp className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Transição</span>
-            </TabsTrigger>
-            <TabsTrigger value="avatar" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <User className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Avatar 3D</span>
-            </TabsTrigger>
-            <TabsTrigger value="breathing" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Brain className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Respiração</span>
-            </TabsTrigger>
-            <TabsTrigger value="rituals" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Star className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Rituais</span>
-            </TabsTrigger>
-            <TabsTrigger value="wheel" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Target className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Roda</span>
-            </TabsTrigger>
-            <TabsTrigger value="inspiration" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Heart className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Inspiração</span>
-            </TabsTrigger>
-            <TabsTrigger value="community" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Users className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Comunidade</span>
-            </TabsTrigger>
-            <TabsTrigger value="biometric" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Brain className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Biometria</span>
-            </TabsTrigger>
-            <TabsTrigger value="therapist" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <Heart className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Terapeuta IA</span>
-            </TabsTrigger>
-            <TabsTrigger value="profile" className="flex items-center justify-center space-x-1.5 data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-700 py-3 px-3 font-medium transition-all">
-              <User className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm">Sobre Mim</span>
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
+      
+        {/* Tab Contents */}
         <TabsContent value="journey" className="mt-6">
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
@@ -425,7 +429,6 @@ export default function Purpose() {
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs>
 
       {/* Quick Actions */}
       <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
@@ -482,6 +485,7 @@ export default function Purpose() {
         />
       )}
       </div>
+      </Tabs>
     </div>
   );
 }
