@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { guidedBreathings, type GuidedBreathing } from "@/data/essentia-content";
 import { cn } from "@/lib/utils";
+import { trackBreathing } from "@/lib/analytics";
 import { 
   Play, 
   Pause, 
@@ -77,6 +78,7 @@ export function GuidedBreathingComponent({ breathingId, purpose, onComplete }: G
               const nextCycle = prev + 1;
               if (nextCycle >= selectedBreathing.cycles) {
                 setIsActive(false);
+                trackBreathing('finish', selectedBreathing?.name || 'unknown');
                 onComplete?.();
                 return 0;
               }
@@ -101,6 +103,7 @@ export function GuidedBreathingComponent({ breathingId, purpose, onComplete }: G
     setCurrentPhase("inhale");
     setTimeInPhase(0);
     setPhaseProgress(0);
+    trackBreathing('start', selectedBreathing?.name || 'unknown');
   };
 
   const pauseBreathing = () => {

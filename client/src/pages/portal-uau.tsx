@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { PortalUau } from "@/components/purpose-plus/PortalUau";
 import { useLocation } from "wouter";
+import { trackPortal } from "@/lib/analytics";
 
 interface PortalPrompt {
   question: string;
@@ -12,6 +13,7 @@ export default function PortalUauPage() {
   const [prompt, setPrompt] = useState<PortalPrompt | null>(null);
 
   useEffect(() => {
+    trackPortal('open', 'uau');
     fetch('/data/portal_prompts.json')
       .then(res => res.json())
       .then((prompts: PortalPrompt[]) => {
@@ -43,7 +45,10 @@ export default function PortalUauPage() {
           question={prompt.question}
           answer={prompt.answer}
           cta="Começar ritual"
-          onDone={() => setLocation("/purpose#breathing")}
+          onDone={() => {
+            trackPortal('complete', 'uau');
+            setLocation("/purpose#breathing");
+          }}
         />
       </div>
     </div>

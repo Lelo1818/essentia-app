@@ -1,0 +1,89 @@
+Showtime. Aqui vai o **roteiro de teste em 6 passos** para `…/purpose` — rápido, objetivo e com critérios de aprovação. Se algo falhar, já deixo o **conserto cirúrgico** abaixo.
+
+# Teste Essentia /purpose — 6 passos
+
+1. **Above-the-fold**
+
+* **O que olhar:** Header carrega sem “pulos”, Bússola FEME visível (ou card principal), CTA claro.
+* **Passa se:** nada estoura em mobile (zoom 100%), fontes legíveis, sem layout quebrado.
+* **Falha comum:** spacing colado ou CTA fora da dobra.
+
+2. **Onboarding unificado (perguntas do Mega)**
+
+* **O que olhar:** fluxo pergunta→pergunta *antes* de liberar tudo.
+* **Passa se:** após responder, a UI “abre” (domificação) e a Bússola aparece com valores iniciais + **Selo de Coerência**.
+* **Falha comum:** perguntas em telas separadas sem continuidade, ou FEME sem valores.
+
+3. **Bússola FEME + Selo**
+
+* **O que olhar:** 4 pétalas (F/E/M/E) + selo central (ex.: “Coerência 6x%”) + botão **“Quero harmonizar”**.
+* **Passa se:** feedback muda ao tocar nas pétalas ou após o onboarding; CTA leva a uma prática (Respiração ou MindFlow).
+* **Falha comum:** selo fixo, sem callback; pétalas só “decorativas”.
+
+4. **Respiração Viva 4-4-6**
+
+* **O que olhar:** ao acionar o ritual, vídeo de fundo **autoplay** e **loop**; anel anima em **14s**; áudio toca **após toque**.
+* **Passa se:** `video` está **muted + playsInline + loop**, anel pulsa (4→4→6); botão **Concluir** volta/encaminha.
+* **Falha comum:** autoplay não inicia no iOS (faltou `playsInline` ou `muted`); áudio não toca sem gesto.
+
+5. **Portal UAU (se já estiver linkado)**
+
+* **O que olhar:** transição suave, vídeo “Inner Awakening”/placeholder carrega rápido, texto curto (pergunta+resposta).
+* **Passa se:** CTA final navega (ex.: Diário/SOS) e não há “screen tear” ao voltar.
+* **Falha comum:** vídeo pesado sem `poster`, primeira pintura lenta.
+
+6. **Métricas e login**
+
+* **O que olhar:** fluxo de login simples (mesmo que fake), e *pelo menos* 3 eventos de uso.
+* **Passa se:** eventos aparecem no console/network (ex.: `view_purpose`, `start_breath_446`, `open_portal_uau`).
+* **Falha comum:** sem logs; impossível saber se alguém usou.
+
+---
+
+## Se quebrar: correções de 10 minutos (copie para o dev)
+
+**Vídeo (autoplay iOS):**
+
+```html
+<video src="/assets/inner-awakening.mp4"
+  autoplay muted loop playsinline
+  preload="metadata" poster="/assets/portal-poster.jpg"
+  class="absolute inset-0 w-full h-full object-cover">
+</video>
+```
+
+**Anel 4-4-6 (garantir 14s):**
+
+* keyframes: `0–28.57%` (inspira), `28.57–57.14%` (segura), `57.14–100%` (solta).
+
+**Botão “Quero harmonizar” → Respiração:**
+
+```tsx
+<FEMECompass onHarmonize={() => (window.location.hash = "#/breathing")} />
+```
+
+**Eventos mínimos (sem backend, só pra rastrear hoje):**
+
+```js
+window.esLog = (name, meta={}) =>
+  console.log("[ES_EVENT]", name, { meta, ts: Date.now() });
+
+esLog("view_purpose");
+```
+
+(chamar também em `start_breath_446`, `open_portal_uau`, `finish_breath_446`)
+
+**Poster para primeira pintura rápida:**
+
+* exportar um JPG leve (`/public/assets/portal-poster.jpg`) do primeiro frame do vídeo.
+
+---
+
+## Critério de “quase MVP”
+
+Se **4 de 6** passos acima passarem (especialmente 2, 3, 4 e 6), você tem um **MVP narrativo funcional**:
+
+* Usuário entra → responde → vê FEME+Selo → faz Ritual 4-4-6 com vídeo vivo → registra evento.
+
+Me manda: (1) se o vídeo iniciou sozinho (sem som), (2) se o anel está em 14s, (3) se o CTA “Concluir” retornou certo, (4) print do console com `[ES_EVENT]`.
+Com isso eu te digo **exatamente** onde apertar para ficar investidor-ready.

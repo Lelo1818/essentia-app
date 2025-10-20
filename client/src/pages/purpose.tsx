@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
 import { mockPurposeData } from "@/data/mock-purpose-data";
+import { trackPageView, trackPortal } from "@/lib/analytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -31,6 +32,7 @@ import BiometricSensors from "@/components/purpose/biometric-sensors";
 import AITherapist from "@/components/purpose/ai-therapist";
 import { VideoPortal } from "@/components/purpose/video-portal";
 import { FEMECompass } from "@/components/feme/FEMECompass";
+import { MegaOnboarding, useMegaOnboarding } from "@/components/purpose/mega-onboarding";
 import { 
   Compass, 
   Heart, 
@@ -52,6 +54,22 @@ export default function Purpose() {
   const [, setLocation] = useLocation();
   const { activeWindow, openWindow, closeWindow } = useEssentiaWindows();
   const [showVideo, setShowVideo] = useState(false);
+  const { isCompleted, markCompleted } = useMegaOnboarding();
+  
+  useEffect(() => {
+    trackPageView('/purpose');
+  }, []);
+  
+  // Mostrar onboarding se não foi completado
+  if (isCompleted === null) {
+    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <p className="text-gray-600">Carregando...</p>
+    </div>;
+  }
+  
+  if (!isCompleted) {
+    return <MegaOnboarding onComplete={markCompleted} />;
+  }
   
   const user = {
     id: 1,
@@ -158,13 +176,16 @@ export default function Purpose() {
           espiritual: 7 
         }}
         coherence={68}
-        onHarmonize={() => setActiveTab("breathing")}
+        onHarmonize={() => setLocation('/breathing-446')}
       />
 
       {/* PORTAL UAU - DESTAQUE */}
       <Card 
         className="relative overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-300 group border-2 border-yellow-400"
-        onClick={() => setLocation('/portal-uau')}
+        onClick={() => {
+          trackPortal('open', 'uau');
+          setLocation('/portal-uau');
+        }}
         style={{
           backgroundImage: 'url(/placeholders/portal.svg)',
           backgroundSize: 'cover',

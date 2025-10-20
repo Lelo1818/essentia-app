@@ -93,6 +93,7 @@ import EssentiaMega from "@/pages/essentia-mega";
 import EssentiaDemo90s from "@/pages/essentia-demo-90s";
 import Thera from "@/pages/thera";
 import PortalUauPage from "@/pages/portal-uau";
+import Breathing446Page from "@/pages/breathing-446";
 
 
 
@@ -183,6 +184,7 @@ function Router() {
       <Route path="/essentia-premium" component={EssentiaPremium} />
       <Route path="/essentia-final" component={EssentiaFinal} />
       <Route path="/portal-uau" component={PortalUauPage} />
+      <Route path="/breathing-446" component={Breathing446Page} />
 
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>
@@ -196,7 +198,7 @@ function App() {
   const [location] = useLocation();
   
   // Rotas que NÃO devem mostrar navegação do Flow
-  const standaloneRoutes = ['/thera', '/purpose', '/essentia-final', '/essentia-mega'];
+  const standaloneRoutes = ['/thera', '/purpose', '/essentia-final', '/essentia-mega', '/portal-uau', '/breathing-446'];
   const isStandalone = standaloneRoutes.some(route => location.startsWith(route));
   
   return (
