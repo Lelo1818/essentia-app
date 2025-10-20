@@ -14,6 +14,11 @@ import {
   Mountain,
   CheckCircle
 } from 'lucide-react';
+import BreathingRitual from './activities/BreathingRitual';
+import GuidedReflection from './activities/GuidedReflection';
+import CaptureInsight from './activities/CaptureInsight';
+import LifelineExercise from './activities/LifelineExercise';
+import ValuesAssessment from './activities/ValuesAssessment';
 
 interface JourneyContinuityProps {
   userId: number;
@@ -24,6 +29,7 @@ interface JourneyContinuityProps {
 export default function JourneyContinuity({ userId, currentPhase, progress }: JourneyContinuityProps) {
   const [nextActions, setNextActions] = useState<any[]>([]);
   const [dailyStreak, setDailyStreak] = useState(7);
+  const [activeActivity, setActiveActivity] = useState<{type: string; id: number} | null>(null);
 
   const journeyPhases = {
     "awakening": {
@@ -133,14 +139,25 @@ export default function JourneyContinuity({ userId, currentPhase, progress }: Jo
   const currentPhaseData = journeyPhases[currentPhase as keyof typeof journeyPhases];
   const CurrentIcon = currentPhaseData?.icon || Star;
 
-  const handleActionComplete = (actionId: number) => {
-    setNextActions(prev => 
-      prev.map(action => 
-        action.id === actionId 
-          ? { ...action, completed: true }
-          : action
-      )
-    );
+  const handleStartActivity = (action: any) => {
+    setActiveActivity({ type: action.type, id: action.id });
+  };
+
+  const handleActivityComplete = () => {
+    if (activeActivity) {
+      setNextActions(prev => 
+        prev.map(action => 
+          action.id === activeActivity.id 
+            ? { ...action, completed: true }
+            : action
+        )
+      );
+      setActiveActivity(null);
+    }
+  };
+
+  const handleCloseActivity = () => {
+    setActiveActivity(null);
   };
 
   const getTimeBasedGreeting = () => {
@@ -268,8 +285,9 @@ export default function JourneyContinuity({ userId, currentPhase, progress }: Jo
                     ) : (
                       <Button
                         size="sm"
-                        onClick={() => handleActionComplete(action.id)}
+                        onClick={() => handleStartActivity(action)}
                         className="min-w-[80px]"
+                        data-testid={`button-start-${action.type}-${action.id}`}
                       >
                         <ChevronRight className="w-4 h-4 mr-1" />
                         Iniciar
@@ -303,6 +321,34 @@ export default function JourneyContinuity({ userId, currentPhase, progress }: Jo
           </CardContent>
         </Card>
       )}
+
+      {/* Activity Dialogs */}
+      <BreathingRitual
+        open={activeActivity?.type === 'ritual'}
+        onClose={handleCloseActivity}
+        onComplete={handleActivityComplete}
+      />
+      <GuidedReflection
+        open={activeActivity?.type === 'reflection'}
+        onClose={handleCloseActivity}
+        onComplete={handleActivityComplete}
+        phase={currentPhase}
+      />
+      <CaptureInsight
+        open={activeActivity?.type === 'insight'}
+        onClose={handleCloseActivity}
+        onComplete={handleActivityComplete}
+      />
+      <LifelineExercise
+        open={activeActivity?.type === 'exercise'}
+        onClose={handleCloseActivity}
+        onComplete={handleActivityComplete}
+      />
+      <ValuesAssessment
+        open={activeActivity?.type === 'assessment'}
+        onClose={handleCloseActivity}
+        onComplete={handleActivityComplete}
+      />
     </div>
   );
 }

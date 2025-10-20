@@ -17,7 +17,7 @@ export default function BreathingRitual({ open, onClose, onComplete }: Breathing
   const [cycles, setCycles] = useState(0);
   const [completed, setCompleted] = useState(false);
   
-  const totalCycles = 5;
+  const totalCycles = 18;
   const phaseDurations = {
     inhale: 4,
     hold: 4,
