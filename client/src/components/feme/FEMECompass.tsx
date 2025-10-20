@@ -161,56 +161,91 @@ function Petals({
   getRandomTip: (category: keyof Microcopy) => string;
 }) {
   const petals = [
-    { name: 'fisico', rotation: 0, color: '#10b981' },
-    { name: 'energetico', rotation: 90, color: '#f59e0b' },
-    { name: 'mental', rotation: 180, color: '#3b82f6' },
-    { name: 'espiritual', rotation: 270, color: '#8b5cf6' }
+    { name: 'fisico', rotation: 0, color: '#10b981', label: 'Físico' },
+    { name: 'energetico', rotation: 90, color: '#f59e0b', label: 'Energético' },
+    { name: 'mental', rotation: 180, color: '#3b82f6', label: 'Mental' },
+    { name: 'espiritual', rotation: 270, color: '#8b5cf6', label: 'Espiritual' }
   ];
 
   return (
-    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 600" style={style} aria-hidden>
-      <defs>
-        <radialGradient id="gFisico" cx="50%" cy="50%">
-          <stop offset="0%" stopColor="#10b981" />
-          <stop offset="100%" stopColor="#34d399" />
-        </radialGradient>
-        <radialGradient id="gEnergetico" cx="50%" cy="50%">
-          <stop offset="0%" stopColor="#f59e0b" />
-          <stop offset="100%" stopColor="#fbbf24" />
-        </radialGradient>
-        <radialGradient id="gMental" cx="50%" cy="50%">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#60a5fa" />
-        </radialGradient>
-        <radialGradient id="gEspiritual" cx="50%" cy="50%">
-          <stop offset="0%" stopColor="#8b5cf6" />
-          <stop offset="100%" stopColor="#a78bfa" />
-        </radialGradient>
-      </defs>
-      <g transform="translate(300,300)">
-        <g opacity="0.8">
-          {petals.map((petal, idx) => (
-            <g 
-              key={petal.name} 
-              transform={`rotate(${petal.rotation}) scale(var(--k${petal.name.charAt(0).toUpperCase() + petal.name.slice(1)},1))`}
-              className="cursor-pointer hover:opacity-100 transition-opacity"
-            >
-              <title>{microcopy ? getRandomTip(petal.name as keyof Microcopy) : petal.name}</title>
-              <path
-                d={idx % 2 === 0 
-                  ? "M0,-160 C55,-160 100,-115 100,-62 C100,0 55,34 0,34 C-55,34 -100,0 -100,-62 C-100,-115 -55,-160 0,-160 Z"
-                  : "M160,0 C160,-55 115,-100 62,-100 C0,-100 -34,-55 -34,0 C-34,55 0,100 62,100 C115,100 160,55 160,0 Z"
-                }
-                fill={`url(#g${petal.name.charAt(0).toUpperCase() + petal.name.slice(1)})`}
-                fillOpacity="0.3"
-                stroke={petal.color}
-                strokeOpacity="0.5"
-                strokeWidth="2"
-              />
-            </g>
-          ))}
+    <div className="absolute inset-0 w-full h-full">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 600" style={style} aria-hidden>
+        <defs>
+          <radialGradient id="gFisico" cx="50%" cy="50%">
+            <stop offset="0%" stopColor="#10b981" />
+            <stop offset="100%" stopColor="#34d399" />
+          </radialGradient>
+          <radialGradient id="gEnergetico" cx="50%" cy="50%">
+            <stop offset="0%" stopColor="#f59e0b" />
+            <stop offset="100%" stopColor="#fbbf24" />
+          </radialGradient>
+          <radialGradient id="gMental" cx="50%" cy="50%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#60a5fa" />
+          </radialGradient>
+          <radialGradient id="gEspiritual" cx="50%" cy="50%">
+            <stop offset="0%" stopColor="#8b5cf6" />
+            <stop offset="100%" stopColor="#a78bfa" />
+          </radialGradient>
+        </defs>
+        <g transform="translate(300,300)">
+          <g opacity="0.8">
+            {petals.map((petal, idx) => (
+              <g 
+                key={petal.name} 
+                transform={`rotate(${petal.rotation}) scale(var(--k${petal.name.charAt(0).toUpperCase() + petal.name.slice(1)},1))`}
+              >
+                <path
+                  d={idx % 2 === 0 
+                    ? "M0,-160 C55,-160 100,-115 100,-62 C100,0 55,34 0,34 C-55,34 -100,0 -100,-62 C-100,-115 -55,-160 0,-160 Z"
+                    : "M160,0 C160,-55 115,-100 62,-100 C0,-100 -34,-55 -34,0 C-34,55 0,100 62,100 C115,100 160,55 160,0 Z"
+                  }
+                  fill={`url(#g${petal.name.charAt(0).toUpperCase() + petal.name.slice(1)})`}
+                  fillOpacity="0.3"
+                  stroke={petal.color}
+                  strokeOpacity="0.5"
+                  strokeWidth="2"
+                />
+              </g>
+            ))}
+          </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+      
+      {/* Interactive tooltip areas */}
+      {petals.map((petal) => {
+        const positions = {
+          fisico: { top: '5%', left: '50%', transform: 'translateX(-50%)' },
+          energetico: { top: '50%', right: '5%', transform: 'translateY(-50%)' },
+          mental: { bottom: '5%', left: '50%', transform: 'translateX(-50%)' },
+          espiritual: { top: '50%', left: '5%', transform: 'translateY(-50%)' }
+        };
+        
+        const position = positions[petal.name as keyof typeof positions];
+        
+        return (
+          <Tooltip key={petal.name}>
+            <TooltipTrigger asChild>
+              <div
+                className="absolute w-16 h-16 rounded-full cursor-help hover:bg-white/10 transition-colors flex items-center justify-center"
+                style={position}
+                data-testid={`tooltip-trigger-${petal.name}`}
+              >
+                <div className="w-3 h-3 rounded-full bg-white/20" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent 
+              className="bg-purple-900 text-white border-purple-600 max-w-xs"
+              data-testid={`tooltip-content-${petal.name}`}
+            >
+              <p className="font-medium mb-1">{petal.label}</p>
+              <p className="text-sm text-purple-100">
+                {microcopy ? getRandomTip(petal.name as keyof Microcopy) : `Dica de ${petal.label}`}
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        );
+      })}
+    </div>
   );
 }

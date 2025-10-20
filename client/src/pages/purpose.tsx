@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
@@ -29,6 +30,7 @@ import LivingReactions from "@/components/purpose/living-reactions";
 import BiometricSensors from "@/components/purpose/biometric-sensors";
 import AITherapist from "@/components/purpose/ai-therapist";
 import { VideoPortal } from "@/components/purpose/video-portal";
+import { FEMECompass } from "@/components/feme/FEMECompass";
 import { 
   Compass, 
   Heart, 
@@ -47,6 +49,7 @@ import despertarInteriorVideo from "@assets/Despertar Interior_1760814881524.mp4
 
 export default function Purpose() {
   const [activeTab, setActiveTab] = useState("journey");
+  const [, setLocation] = useLocation();
   const { activeWindow, openWindow, closeWindow } = useEssentiaWindows();
   const [showVideo, setShowVideo] = useState(false);
   
@@ -146,6 +149,51 @@ export default function Purpose() {
         </CardContent>
       </Card>
 
+      {/* FEME COMPASS - BÚSSOLA DE AUTOCONHECIMENTO */}
+      <FEMECompass
+        values={{ 
+          fisico: 7, 
+          energetico: 6, 
+          mental: 5, 
+          espiritual: 7 
+        }}
+        coherence={68}
+        onHarmonize={() => setActiveTab("breathing")}
+      />
+
+      {/* PORTAL UAU - DESTAQUE */}
+      <Card 
+        className="relative overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-300 group border-2 border-yellow-400"
+        onClick={() => setLocation('/portal-uau')}
+        style={{
+          backgroundImage: 'url(/placeholders/portal.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+        data-testid="card-portal-uau"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/90 via-purple-800/85 to-transparent" />
+        <CardContent className="relative z-10 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
+                <h3 className="text-2xl font-bold text-white">Portal UAU</h3>
+              </div>
+              <p className="text-purple-100 text-lg">
+                Uma pergunta profunda te espera hoje. Descubra sua resposta interior.
+              </p>
+            </div>
+            <Button 
+              className="bg-yellow-400 text-purple-900 hover:bg-yellow-300 font-bold px-6 py-3 shadow-lg"
+              data-testid="button-open-portal"
+            >
+              Entrar →
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* MENU NAVEGAÇÃO - LIMPO E DESTACADO */}
       <div className="bg-white rounded-lg shadow-md border-2 border-purple-300 p-4">
         <TabsList className="w-full h-auto flex flex-wrap gap-2 bg-transparent p-0">
@@ -161,13 +209,31 @@ export default function Purpose() {
             <User className="w-5 h-5" />
             <span>Avatar 3D</span>
           </TabsTrigger>
-          <TabsTrigger value="breathing" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
-            <Brain className="w-5 h-5" />
-            <span>Respiração</span>
+          <TabsTrigger 
+            value="breathing" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium relative overflow-hidden group"
+            style={{
+              backgroundImage: 'url(/placeholders/breathing.svg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className="absolute inset-0 bg-white/80 group-data-[state=active]:bg-purple-600/90 transition-colors" />
+            <Brain className="w-5 h-5 relative z-10" />
+            <span className="relative z-10">Respiração</span>
           </TabsTrigger>
-          <TabsTrigger value="rituals" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
-            <Star className="w-5 h-5" />
-            <span>Rituais</span>
+          <TabsTrigger 
+            value="rituals" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium relative overflow-hidden group"
+            style={{
+              backgroundImage: 'url(/placeholders/mindfulness.svg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className="absolute inset-0 bg-white/80 group-data-[state=active]:bg-purple-600/90 transition-colors" />
+            <Star className="w-5 h-5 relative z-10" />
+            <span className="relative z-10">Rituais</span>
           </TabsTrigger>
           <TabsTrigger value="wheel" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
             <Target className="w-5 h-5" />

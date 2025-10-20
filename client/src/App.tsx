@@ -92,6 +92,7 @@ import EssentiaUnified from "@/pages/essentia-unified";
 import EssentiaMega from "@/pages/essentia-mega";
 import EssentiaDemo90s from "@/pages/essentia-demo-90s";
 import Thera from "@/pages/thera";
+import PortalUauPage from "@/pages/portal-uau";
 
 
 
@@ -181,6 +182,7 @@ function Router() {
       <Route path="/essentia-pitch-premium" component={EssentiaPitchPremium} />
       <Route path="/essentia-premium" component={EssentiaPremium} />
       <Route path="/essentia-final" component={EssentiaFinal} />
+      <Route path="/portal-uau" component={PortalUauPage} />
 
       <Route path="/flow-standalone" component={FlowStandalone} />
       <Route>
