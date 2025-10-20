@@ -1,0 +1,57 @@
+Estamos entrando numa nova etapa do Essentia, e quero te passar o norte definitivo pra alinhar tudo antes das próximas mudanças.
+
+O objetivo agora é unir o que há de melhor nas versões “Purpose” e “Mega”, mantendo o visual e a alma do primeiro, mas trazendo a estrutura funcional do segundo.
+
+1️⃣ Estrutura Geral
+
+O app parte do mockup do Purpose (que é o que mais gostamos visualmente).
+
+Vamos incorporar o que o Mega tem de melhor: as perguntas iniciais e a progressão lógica (domificação) — ou seja, o usuário começa respondendo questões curtas e vai vendo a interface se revelar aos poucos.
+
+2️⃣ Mudança Conceitual
+
+A antiga Tríade (Consciência, Energia, Coerência) não aparece mais na interface.
+
+No lugar, entra a Bússola FEME (Físico, Energético, Mental e Espiritual).
+
+No centro, o Selo de Coerência, um índice simples (“Coerência 72%”) que mostra o quanto as respostas e intenções do usuário estão alinhadas.
+
+3️⃣ Visual e Experiência
+
+Cada botão ou aba deve ter uma imagem ou vídeo curto de fundo, substituindo números ou blocos estáticos.
+
+Vamos enviar vídeos e áudios aos poucos — pode ser por link ou upload — e você só precisa integrar no layout (não precisa refatorar código base).
+
+Queremos que a experiência seja mais sensorial e viva, tipo um “mini-filme interativo” com transições suaves.
+
+4️⃣ Prioridades neste momento
+
+Integrar as perguntas iniciais (do Mega) dentro do fluxo do Purpose, como um onboarding interativo.
+
+Atualizar a Home com a nova Bússola FEME + Selo de Coerência no centro.
+
+Deixar a base visual pronta para receber vídeos e sons que vamos mandar.
+
+5️⃣ Coisas que vêm depois
+
+Login, contas e dados salvos — isso fica pra próxima fase.
+
+Outras funções avançadas (IA, recomendações, etc.) também ficam pra depois.
+
+⚙️ Resumo técnico rápido
+
+Mockup base: Purpose
+
+Estrutura funcional: Mega (perguntas + fluxo inicial)
+
+Visual: FEME + selo de coerência no centro
+
+Cada botão: imagem ou vídeo curto
+
+Sem refatorar nada que já funciona
+
+🎯 Objetivo dessa etapa:
+Fazer um mockup completo e coerente, que una o que já existe de bom nas duas versões e sirva de base pro “Portal UAU” — com suporte pra vídeos, sons e uma jornada visual fluida.
+
+Você confirma que dá pra seguir nessa linha?
+Se sim, te envio o layout da Bússola FEME + Selo de Coerência e o vídeo base (Inner Awakening) pra integrar como primeiro teste de Portal UAU.
