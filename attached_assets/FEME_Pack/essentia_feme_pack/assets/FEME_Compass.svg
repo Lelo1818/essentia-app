@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="600" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g1" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#8AA8FF"/>
+      <stop offset="100%" stop-color="#6FD6C3"/>
+    </radialGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0F1220"/>
+      <stop offset="100%" stop-color="#0B0E19"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <g transform="translate(450,300)">
+    <g opacity="0.9">
+      <path d="M0,-180 C60,-180 110,-130 110,-70 C110,0 60,40 0,40 C-60,40 -110,0 -110,-70 C-110,-130 -60,-180 0,-180 Z"
+            fill="url(#g1)" fill-opacity="0.27" stroke="#8AA8FF" stroke-opacity="0.35" stroke-width="1"/>
+      <path d="M180,0 C180,-60 130,-110 70,-110 C0,-110 -40,-60 -40,0 C-40,60 0,110 70,110 C130,110 180,60 180,0 Z"
+            transform="rotate(90)" fill="url(#g1)" fill-opacity="0.27" stroke="#6FD6C3" stroke-opacity="0.35" stroke-width="1"/>
+      <path d="M0,180 C-60,180 -110,130 -110,70 C-110,0 -60,-40 0,-40 C60,-40 110,0 110,70 C110,130 60,180 0,180 Z"
+            transform="rotate(180)" fill="url(#g1)" fill-opacity="0.27" stroke="#8AA8FF" stroke-opacity="0.35" stroke-width="1"/>
+      <path d="M-180,0 C-180,60 -130,110 -70,110 C0,110 40,60 40,0 C40,-60 0,-110 -70,-110 C-130,-110 -180,-60 -180,0 Z"
+            transform="rotate(270)" fill="url(#g1)" fill-opacity="0.27" stroke="#6FD6C3" stroke-opacity="0.35" stroke-width="1"/>
+    </g>
+    <circle cx="0" cy="0" r="58" fill="rgba(255,255,255,0.06)" stroke="white" stroke-opacity="0.2" />
+    <text x="0" y="-4" text-anchor="middle" font-family="Inter, system-ui" font-size="22" fill="#EAEFF6">Coerência</text>
+    <text x="0" y="22" text-anchor="middle" font-family="Inter, system-ui" font-size="18" fill="#9BACD6">68%</text>
+    <g font-family="Inter, system-ui" font-size="16" fill="#EAEFF6" opacity="0.9">
+      <text x="0" y="-210" text-anchor="middle">Físico</text>
+      <text x="210" y="6" text-anchor="middle">Energético</text>
+      <text x="0" y="234" text-anchor="middle">Mental</text>
+      <text x="-210" y="6" text-anchor="middle">Espiritual</text>
+    </g>
+  </g>
+  <text x="24" y="32" font-family="Inter, system-ui" font-size="20" fill="#9BACD6">Bússola FEME (Físico / Energético / Mental / Espiritual)</text>
+  <text x="24" y="56" font-family="Inter, system-ui" font-size="14" fill="#9BACD6" opacity="0.9">Selo de Coerência ao centro. Interface de referência.</text>
+</svg>
