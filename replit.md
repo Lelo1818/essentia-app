@@ -100,14 +100,35 @@ The ecosystem comprises five main applications, sharing common infrastructure:
     -   `/breath` - Respiração 4-4-6 com BreathRing, benefícios listados, 20 pontos por sessão
     -   `/points` - Dashboard de pontos com histórico, stats, FEME summary, exportação JSON
 
+**Pilar 5: Correções de Persistência e Routing (Oct 21 - noite) ✅**
+-   ✅ **Schema actionPlans completo**:
+    -   Tabela `actionPlans` com id serial, userId, title, goal, firstStep, status, timestamps
+    -   Schema Zod validado: `insertActionPlanSchema`
+-   ✅ **Storage CRUD real implementado**:
+    -   `getUserProgress(userId)` - busca progresso com defaults sensíveis
+    -   `updateUserProgress(userId, delta, activity)` - cálculo de níveis (500pts = 1 nível), clamp em zero
+    -   `createActionPlan(plan)` - persiste planos com timestamps
+    -   `listActionPlansByUserId(userId)` - filtra planos por usuário
+    -   `getHistory(userId, limit)` - agrega events, FEME, breath sessions
+-   ✅ **Endpoints Backend corrigidos**:
+    -   POST `/api/progress` - atualiza storage real, retorna {points, level}
+    -   GET `/api/progress` - retorna pontos/níveis atuais
+    -   POST `/api/plans` - cria plano real em storage
+    -   GET `/api/history` - retorna histórico agregado + progress
+-   ✅ **Routing corrigido**:
+    -   `/purpose` → botão "Portal UAU" agora redireciona para `/journey` (antes era `/portal-uau`)
+    -   MediaPlayer em `/journey` funcional com tracking completo
+-   ✅ **Validação Architect**: Persistência end-to-end confirmada, lógica de níveis correta
+
 **Em Desenvolvimento (Backlog)**
 -   🔄 **Toggle de Som no Header**: Botão 🔊/🔇 persistente em todas as páginas
 -   🔄 **Modal "Criar Plano"**: Formulário completo com validação Zod
 -   🔄 **Painel "Focar Aqui"**: 3 sugestões IA + próximos passos (com fallback estático)
--   🔄 **Conectar Botões Restantes**: "Atualizar Pontuação", "Criar Plano", "Focar Aqui" no dashboard Purpose
+-   🔄 **Conectar Botões Restantes**: "Conversar", "Insight", "Exportar Dados" no dashboard Purpose
 -   🔄 **Animações Lottie/CSS**: Feedback visual em ganhos de pontos (badge flutuante +10)
 -   🔄 **Migração DatabaseStorage**: Trocar MemStorage por PostgreSQL real
 -   🔄 **Rate Limiting**: Adicionar throttle nos endpoints de IA e eventos (25KB body limit)
+-   🔄 **Som Nature Palette**: Substituir frequências por sons naturais (água, vento, pássaros, fogo, terra)
 
 ### URLs Principais
 -   **Essentia (Purpose)**: `/purpose` - Dashboard completo com FEME Compass, AI Coach, atividades
