@@ -302,40 +302,70 @@ export default function Purpose() {
                 <Progress value={userJourney.progress} className="h-3" />
                 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-6">
-                  {journeyStages.map((stage) => (
-                    <div
-                      key={stage.id}
-                      onClick={() => {
-                        if (stage.name === "Despertar Interior") {
-                          setShowVideo(true);
-                        }
-                      }}
-                      className={`p-3 rounded-lg border-2 text-center transition-all ${
-                        stage.name === "Despertar Interior" ? 'cursor-pointer hover:scale-105 hover:shadow-lg' : ''
-                      } ${
-                        stage.completed
-                          ? 'border-green-500 bg-green-50'
-                          : stage.current
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-300 bg-gray-50'
-                      }`}
-                      data-testid={`card-journey-stage-${stage.id}`}
-                    >
-                      <div className={`w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center ${
-                        stage.completed
-                          ? 'bg-green-500 text-white'
-                          : stage.current
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-300 text-gray-600'
-                      }`}>
-                        {stage.completed ? '✓' : stage.id}
+                  {journeyStages.map((stage) => {
+                    const getStageAction = () => {
+                      switch(stage.name) {
+                        case "Despertar Interior":
+                          return () => setShowVideo(true);
+                        case "Autoconhecimento Profundo":
+                          return () => setLocation('/journey');
+                        case "Descoberta de Paixões":
+                          return () => openWindow('companion');
+                        case "Relacionamentos Significativos":
+                          return () => setLocation('/breath');
+                        case "Missão e Contribuição":
+                          return () => setActiveTab('wheel');
+                        case "Vida com Propósito":
+                          return () => setLocation('/points');
+                        default:
+                          return () => {};
+                      }
+                    };
+
+                    const getStageLabel = () => {
+                      switch(stage.name) {
+                        case "Despertar Interior":
+                          return "▶ Ver vídeo";
+                        case "Autoconhecimento Profundo":
+                          return "📊 Portal UAU";
+                        case "Descoberta de Paixões":
+                          return "💬 IA Coach";
+                        case "Relacionamentos Significativos":
+                          return "🧘 Respiração";
+                        case "Missão e Contribuição":
+                          return "🎯 Roda da Vida";
+                        case "Vida com Propósito":
+                          return "⭐ Ver Pontos";
+                        default:
+                          return "";
+                      }
+                    };
+
+                    return (
+                      <div
+                        key={stage.id}
+                        onClick={getStageAction()}
+                        className="p-3 rounded-lg border-2 text-center transition-all cursor-pointer hover:scale-105 hover:shadow-lg"
+                        style={{
+                          borderColor: stage.completed ? '#10b981' : stage.current ? '#3b82f6' : '#d1d5db',
+                          backgroundColor: stage.completed ? '#f0fdf4' : stage.current ? '#eff6ff' : '#f9fafb'
+                        }}
+                        data-testid={`card-journey-stage-${stage.id}`}
+                      >
+                        <div className={`w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center ${
+                          stage.completed
+                            ? 'bg-green-500 text-white'
+                            : stage.current
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-gray-300 text-gray-600'
+                        }`}>
+                          {stage.completed ? '✓' : stage.id}
+                        </div>
+                        <div className="text-sm font-medium">{stage.name}</div>
+                        <div className="text-xs text-purple-600 mt-1">{getStageLabel()}</div>
                       </div>
-                      <div className="text-sm font-medium">{stage.name}</div>
-                      {stage.name === "Despertar Interior" && (
-                        <div className="text-xs text-purple-600 mt-1">▶ Ver vídeo</div>
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </CardContent>
