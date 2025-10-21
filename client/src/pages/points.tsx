@@ -5,18 +5,61 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 
+// Types for API responses
+interface ProgressData {
+  points: number;
+  level: number;
+  breathSessionsCompleted: number;
+  femeCheckinsCompleted: number;
+  aiSessionsCompleted: number;
+}
+
+interface HistoryData {
+  summary: {
+    totalEvents: number;
+    totalFemeCheckins: number;
+    totalBreathSessions: number;
+    avgFemeFisico?: number;
+    avgFemeEnergetico?: number;
+    avgFemeMental?: number;
+    avgFemeEspiritual?: number;
+  };
+  events: Array<{
+    id: number;
+    eventName: string;
+    eventProps?: { delta?: number; [key: string]: unknown };
+    createdAt: string;
+  }>;
+  femeCheckins: Array<{
+    id: number;
+    fisico: number;
+    energetico: number;
+    mental: number;
+    espiritual: number;
+    coerencia: number;
+    createdAt: string;
+  }>;
+  breathSessions: Array<{
+    id: number;
+    cycles: number;
+    durationSec: number;
+    createdAt: string;
+  }>;
+  progress: ProgressData;
+}
+
 export default function PointsPage() {
   const { user } = useAuth();
   const [pointsBadge, setPointsBadge] = useState<number | null>(null);
 
   // Fetch history
-  const { data: history, isLoading } = useQuery({
+  const { data: history, isLoading } = useQuery<HistoryData>({
     queryKey: ['/api/history'],
     enabled: true,
   });
 
   // Fetch progress (points and level)
-  const { data: progress } = useQuery({
+  const { data: progress } = useQuery<ProgressData>({
     queryKey: ['/api/progress'],
     enabled: true,
   });
@@ -128,7 +171,7 @@ export default function PointsPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {history.events.slice(0, 10).map((event: any, idx: number) => (
+              {history.events.slice(0, 10).map((event, idx: number) => (
                 <div 
                   key={idx}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
@@ -156,7 +199,7 @@ export default function PointsPage() {
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Check-ins FEME</h2>
             <div className="space-y-3">
-              {history.femeCheckins.map((checkin: any, idx: number) => (
+              {history.femeCheckins.map((checkin, idx: number) => (
                 <div key={idx} className="p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
                     <div className="text-sm text-gray-600">

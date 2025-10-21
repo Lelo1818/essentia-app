@@ -85,26 +85,39 @@ export default function LifeWheel() {
       currentScore: number; 
       desiredScore: number;
     }) => {
+      console.log("[PLAN] 1. Gerando plano com IA para:", areaData);
+      
       // Step 1: Generate plan with AI
       const aiResponse = await fetch("/api/ai/generateplan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(areaData),
       });
-      if (!aiResponse.ok) throw new Error("Erro ao gerar plano com IA");
-      const { plan } = await aiResponse.json();
+      if (!aiResponse.ok) {
+        const errorText = await aiResponse.text();
+        console.error("[PLAN] Erro ao gerar plano:", errorText);
+        throw new Error("Erro ao gerar plano com IA");
+      }
+      const aiData = await aiResponse.json();
+      console.log("[PLAN] 2. Plano gerado:", aiData.plan);
       
       // Step 2: Save the AI-generated plan
       const saveResponse = await fetch("/api/plans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(plan),
+        body: JSON.stringify(aiData.plan),
       });
-      if (!saveResponse.ok) throw new Error("Erro ao salvar plano");
-      return saveResponse.json();
+      if (!saveResponse.ok) {
+        const errorText = await saveResponse.text();
+        console.error("[PLAN] Erro ao salvar plano:", errorText);
+        throw new Error("Erro ao salvar plano");
+      }
+      const savedData = await saveResponse.json();
+      console.log("[PLAN] 3. Plano salvo:", savedData);
+      return savedData;
     },
     onSuccess: (data: any) => {
-      console.log("Plano criado com IA:", data.plan);
+      console.log("[PLAN] 4. SUCCESS - Plano criado:", data.plan);
       refetchPlans(); // Atualiza lista de planos
       toast({
         title: "✨ Plano Criado com IA!",
@@ -112,10 +125,11 @@ export default function LifeWheel() {
         duration: 8000,
       });
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.error("[PLAN] ERROR:", error);
       toast({
         title: "Erro",
-        description: "Não foi possível criar plano",
+        description: error.message || "Não foi possível criar plano",
         variant: "destructive",
       });
     },
