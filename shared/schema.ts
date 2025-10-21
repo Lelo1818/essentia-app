@@ -495,3 +495,21 @@ export const insertActionPlanSchema = createInsertSchema(actionPlans).omit({
   createdAt: true,
   updatedAt: true,
 });
+
+// AI Suggestions Table - Para salvar todas sugestões/insights da IA
+export const aiSuggestions = pgTable("ai_suggestions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  suggestionType: varchar("suggestion_type", { length: 50 }).notNull(), // biometric_insight, therapist_advice, plan_recommendation
+  content: text("content").notNull(), // O texto da sugestão
+  source: varchar("source", { length: 50 }).notNull(), // biometric, sofia, marcus, luna, leo, system
+  metadata: jsonb("metadata"), // Dados extras (contexto biométrico, etc)
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type AiSuggestion = typeof aiSuggestions.$inferSelect;
+export type InsertAiSuggestion = typeof aiSuggestions.$inferInsert;
+export const insertAiSuggestionSchema = createInsertSchema(aiSuggestions).omit({
+  id: true,
+  createdAt: true,
+});
