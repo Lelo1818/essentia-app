@@ -40,11 +40,11 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 
 ## Recent Changes (Oct 21, 2025)
 
-### Essentia MVP - Pilares 1 e 2 Implementados
+### Essentia MVP - Pilares 1-3 Implementados ✅
 
 **Pilar 1: Autenticação e Persistência**
 -   ✅ Replit Auth integrado (OpenID Connect) com sessões PostgreSQL
--   ✅ 3 novas tabelas criadas: `feme_checkins`, `breath_sessions`, `user_events`
+-   ✅ 4 tabelas criadas: `feme_checkins`, `breath_sessions`, `user_events`, `user_progress`
 -   ✅ Frontend: hook `useAuth` para gerenciar estado de autenticação
 -   ✅ Storage: Interface `IStorage` estendida com 6 novos métodos FEME
 -   ✅ Implementação atual: MemStorage (in-memory) para desenvolvimento
@@ -58,9 +58,33 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   ✅ Validação Zod em todos endpoints (ranges: FEME 0-10, coerência 0-1)
 -   ✅ Limite de 5KB para eventProps no endpoint `/api/events`
 
-**Próximas Melhorias (Backlog)**
--   🔄 Rate limiting no endpoint `/api/events` (prevenir abuso)
--   🔄 Adicionar índices (user_id, created_at) nas tabelas FEME para performance
--   🔄 Migração de MemStorage → DatabaseStorage (Drizzle + PostgreSQL)
--   🔄 Pilar 3: Fluxo narrativo Mega → FEME → Respiração → Portal UAU
--   🔄 Pilar 4: Portal UAU cinematográfico (vídeos, narração, transições)
+**Pilar 3: IA Real + Onboarding Express + Gamificação (NOVO - Oct 21)**
+-   ✅ **Integração IA Anthropic Claude 3.5 Sonnet**:
+    -   POST `/api/ai/selfsession` - Conversas de autoconhecimento (prompt até 2000 chars)
+    -   POST `/api/ai/insight` - Insights personalizados (validação Zod, max 500 chars de contexto)
+    -   AI Coach agora usa IA real ao invés de respostas mockadas
+    -   Sistema de loading e error handling robusto
+-   ✅ **Modo Express no Mega Onboarding**:
+    -   4 sliders (0-10) para avaliação rápida FEME (Físico, Energético, Mental, Espiritual)
+    -   Opção de modo Reflexivo (4 perguntas profundas) mantido
+    -   Dados salvos automaticamente em `/api/feme/checkin` ao completar
+    -   Analytics trackando cada resposta (esLog)
+-   ✅ **Sensores Biométricos Simulados**:
+    -   Variação dinâmica realista: batimentos (60-90bpm), pressão arterial, voz, emoções
+    -   Simulação em tempo real sem API externa
+-   ✅ **Sistema de Gamificação (schema)**:
+    -   Tabela `user_progress` com pontos, níveis, streak, contadores de atividades
+    -   Schema Zod validado: `insertUserProgressSchema`
+
+**Em Desenvolvimento (Backlog)**
+-   🔄 **Endpoints de Gamificação**: POST/GET `/api/progress` para atualizar pontos
+-   🔄 **Lógica de Pontos Automática**: Atribuir pontos ao completar FEME, respiração, IA
+-   🔄 **Botões Faltantes**: Conectar "Atualizar Pontuação", "Criar Plano", "Ver Histórico", "Exportar Dados"
+-   🔄 **Migração DatabaseStorage**: Trocar MemStorage por PostgreSQL real
+-   🔄 **Rate Limiting**: Adicionar throttle nos endpoints de IA e eventos
+-   🔄 **Portal UAU**: Fluxo cinematográfico Mega → FEME → Respiração → Portal
+
+### URLs Principais
+-   **Essentia (Purpose)**: `/purpose` - Dashboard completo com FEME Compass, AI Coach, atividades
+-   **Onboarding**: Aparece automaticamente na primeira visita ao `/purpose`
+-   **API Docs**: Ver `server/routes-clean.ts` para todos endpoints
