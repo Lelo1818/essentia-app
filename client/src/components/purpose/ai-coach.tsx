@@ -23,9 +23,17 @@ import {
   Loader2
 } from "lucide-react";
 
+interface Message {
+  id: number;
+  type: string;
+  content: string;
+  timestamp: string;
+  suggestions?: string[];
+}
+
 export default function AICoach() {
   const { toast } = useToast();
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       type: "ai",
@@ -38,14 +46,16 @@ export default function AICoach() {
 
   const aiMutation = useMutation({
     mutationFn: async (prompt: string) => {
-      const response = await apiRequest("/api/ai/selfsession", {
+      const response = await fetch("/api/ai/selfsession", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prompt,
           context: "Sessão de autoconhecimento com foco em desenvolvimento pessoal e espiritual"
         }),
       });
-      return response;
+      if (!response.ok) throw new Error("Falha na comunicação com IA");
+      return response.json();
     },
     onSuccess: (data: any) => {
       const aiResponse = {
