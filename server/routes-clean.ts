@@ -309,6 +309,91 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
     }
   });
 
+  app.post('/api/ai/generateplan', async (req: any, res) => {
+    try {
+      // Validate input
+      const schema = z.object({
+        areaName: z.string().max(100),
+        description: z.string().max(500),
+        currentScore: z.number().min(0).max(10),
+        desiredScore: z.number().min(0).max(10),
+      });
+      
+      const { areaName, description, currentScore, desiredScore } = schema.parse(req.body);
+
+      const systemPrompt = `Você é um coach de vida experiente especializado em criar planos de ação realistas e personalizados.
+
+IMPORTANTE: Gere APENAS o JSON, sem texto adicional antes ou depois. O JSON deve conter:
+- title: Título curto e específico (máx. 60 chars)
+- goal: Meta clara e mensurável (máx. 150 chars)
+- firstStep: Primeiro passo micro-concreto e realizável (máx. 200 chars)
+
+Área de vida: ${areaName}
+Contexto: ${description}
+Pontuação atual: ${currentScore}/10
+Meta desejada: ${desiredScore}/10
+
+Crie um plano REALISTA e ESPECÍFICO para esta pessoa. Evite:
+- Generalidades como "fazer mais exercícios"
+- Metas vagas como "melhorar"
+- Passos grandes demais
+
+Prefira:
+- Ações específicas com números e frequências
+- Micro-hábitos que podem começar HOJE
+- Passos que levam 5-15 minutos
+
+Exemplos BONS:
+- "Caminhada matinal de 15min, 3x/semana + alongamento antes de dormir"
+- "Ligar para 1 amigo por semana às quintas-feiras após o almoço"
+- "5 minutos de gratidão ao acordar: escrever 3 coisas boas do dia anterior"
+
+Exemplos RUINS:
+- "Academia 3x por semana"
+- "Melhorar relacionamentos"
+- "Decorar escritório"`;
+
+      const message = await anthropic.messages.create({
+        max_tokens: 300,
+        messages: [
+          { role: 'user', content: 'Gere o plano de ação em formato JSON' }
+        ],
+        model: DEFAULT_MODEL_STR,
+        system: systemPrompt,
+      });
+
+      const responseText = message.content[0].text.trim();
+      
+      // Extract JSON from response (remove markdown code blocks if present)
+      let jsonText = responseText;
+      if (responseText.includes('```')) {
+        const match = responseText.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+        jsonText = match ? match[1] : responseText;
+      }
+      
+      const plan = JSON.parse(jsonText);
+
+      res.json({ 
+        plan: {
+          title: plan.title || `Melhorar ${areaName}`,
+          goal: plan.goal || `Aumentar de ${currentScore} para ${desiredScore}`,
+          firstStep: plan.firstStep || 'Definir próximos passos'
+        },
+        usage: message.usage
+      });
+    } catch (error) {
+      console.error("Error generating plan:", error);
+      // Fallback: gerar plano simples sem IA
+      res.json({ 
+        plan: {
+          title: `Melhorar ${req.body.areaName}`,
+          goal: `Aumentar pontuação de ${req.body.currentScore} para ${req.body.desiredScore}`,
+          firstStep: 'Começar com pequenas mudanças diárias'
+        }
+      });
+    }
+  });
+
   // Progress / Gamification Endpoints
   app.post('/api/progress', async (req: any, res) => {
     try {
