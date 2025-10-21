@@ -79,20 +79,35 @@ export default function LifeWheel() {
   });
 
   const createPlanMutation = useMutation({
-    mutationFn: async (plan: { title: string; goal: string; firstStep: string }) => {
-      const response = await fetch("/api/plans", {
+    mutationFn: async (areaData: { 
+      areaName: string; 
+      description: string; 
+      currentScore: number; 
+      desiredScore: number;
+    }) => {
+      // Step 1: Generate plan with AI
+      const aiResponse = await fetch("/api/ai/generateplan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(areaData),
+      });
+      if (!aiResponse.ok) throw new Error("Erro ao gerar plano com IA");
+      const { plan } = await aiResponse.json();
+      
+      // Step 2: Save the AI-generated plan
+      const saveResponse = await fetch("/api/plans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(plan),
       });
-      if (!response.ok) throw new Error("Erro ao criar plano");
-      return response.json();
+      if (!saveResponse.ok) throw new Error("Erro ao salvar plano");
+      return saveResponse.json();
     },
     onSuccess: (data: any) => {
-      console.log("Plano criado:", data.plan);
+      console.log("Plano criado com IA:", data.plan);
       refetchPlans(); // Atualiza lista de planos
       toast({
-        title: "✅ Plano Criado!",
+        title: "✨ Plano Criado com IA!",
         description: `"${data.plan.title}" - Veja na seção "Meus Planos de Ação" abaixo`,
         duration: 8000,
       });
@@ -517,14 +532,15 @@ export default function LifeWheel() {
                         size="sm" 
                         variant="outline"
                         onClick={() => createPlanMutation.mutate({
-                          title: `Melhorar ${area.name}`,
-                          goal: `Aumentar de ${area.currentScore} para ${area.desiredScore}`,
-                          firstStep: area.actions[0]
+                          areaName: area.name,
+                          description: area.description,
+                          currentScore: area.currentScore,
+                          desiredScore: area.desiredScore
                         })}
                         disabled={createPlanMutation.isPending}
                         data-testid="button-create-plan"
                       >
-                        Criar Plano de Ação
+                        {createPlanMutation.isPending ? '🤖 Gerando...' : 'Criar Plano de Ação'}
                       </Button>
                       <Button 
                         size="sm" 
