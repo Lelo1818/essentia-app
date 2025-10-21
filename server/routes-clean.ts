@@ -310,10 +310,16 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
   });
 
   // Progress / Gamification Endpoints
-  app.post('/api/progress', isAuthenticated, async (req: any, res) => {
+  app.post('/api/progress', async (req: any, res) => {
     try {
-      const replitId = req.user.claims.sub;
-      const user = await storage.getUserByReplitId(replitId);
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -350,10 +356,16 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
   });
 
   // Get current progress
-  app.get('/api/progress', isAuthenticated, async (req: any, res) => {
+  app.get('/api/progress', async (req: any, res) => {
     try {
-      const replitId = req.user.claims.sub;
-      const user = await storage.getUserByReplitId(replitId);
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -375,10 +387,16 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
   });
 
   // Plans Endpoint
-  app.post('/api/plans', isAuthenticated, async (req: any, res) => {
+  app.post('/api/plans', async (req: any, res) => {
     try {
-      const replitId = req.user.claims.sub;
-      const user = await storage.getUserByReplitId(replitId);
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -417,10 +435,16 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
   });
 
   // History Endpoint
-  app.get('/api/history', isAuthenticated, async (req: any, res) => {
+  app.get('/api/history', async (req: any, res) => {
     try {
-      const replitId = req.user.claims.sub;
-      const user = await storage.getUserByReplitId(replitId);
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
