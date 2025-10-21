@@ -308,11 +308,14 @@ export default function Purpose() {
                         case "Despertar Interior":
                           return () => setLocation('/journey');
                         case "Autoconhecimento Profundo":
-                          return () => openWindow('feme');
+                          return () => setActiveTab('feme');
                         case "Descoberta de Paixões":
-                          return () => openWindow('companion');
+                          return () => setActiveTab('therapist');
                         case "Relacionamentos Significativos":
-                          return () => setLocation('/breath');
+                          return () => {
+                            setActiveTab('therapist');
+                            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+                          };
                         case "Missão e Contribuição":
                           return () => setActiveTab('wheel');
                         case "Vida com Propósito":
@@ -327,15 +330,15 @@ export default function Purpose() {
                         case "Despertar Interior":
                           return "📊 Portal UAU";
                         case "Autoconhecimento Profundo":
-                          return "🔮 Check-in FEME";
+                          return "🔮 FEME Compass";
                         case "Descoberta de Paixões":
-                          return "💬 IA Coach";
+                          return "💬 Terapeuta IA";
                         case "Relacionamentos Significativos":
-                          return "🧘 Respiração";
+                          return "💝 Conexões";
                         case "Missão e Contribuição":
                           return "🎯 Roda da Vida";
                         case "Vida com Propósito":
-                          return "⭐ Ver Pontos";
+                          return "⭐ Conquistas";
                         default:
                           return "";
                       }
