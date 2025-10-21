@@ -1,10 +1,12 @@
 import { 
-  users, achievements,
+  users, achievements, userProgress, actionPlans,
   type User, type InsertUser, type UpsertUser,
   type Achievement, type InsertAchievement,
   type FemeCheckin, type InsertFemeCheckin,
   type BreathSession, type InsertBreathSession,
-  type UserEvent, type InsertUserEvent
+  type UserEvent, type InsertUserEvent,
+  type UserProgress, type InsertUserProgress,
+  type ActionPlan, type InsertActionPlan
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -55,6 +57,26 @@ export interface IStorage {
   // Thera evaluation tracking
   trackEvaluationClick(userId: number, email: string | null, whatsapp: string | null): Promise<any>;
   getEvaluationClicks(): Promise<any[]>;
+  
+  // Gamification / Progress methods
+  getUserProgress(userId: number): Promise<UserProgress | undefined>;
+  updateUserProgress(userId: number, delta: number, activity?: string): Promise<UserProgress>;
+  
+  // Action Plans methods
+  createActionPlan(plan: InsertActionPlan): Promise<ActionPlan>;
+  listActionPlansByUserId(userId: number): Promise<ActionPlan[]>;
+  
+  // Aggregated history
+  getHistory(userId: number, limit?: number): Promise<{
+    events: UserEvent[];
+    femeCheckins: FemeCheckin[];
+    breathSessions: BreathSession[];
+    summary: {
+      totalEvents: number;
+      totalFemeCheckins: number;
+      totalBreathSessions: number;
+    };
+  }>;
 }
 
 class MemStorage implements IStorage {
@@ -63,6 +85,8 @@ class MemStorage implements IStorage {
   private femeCheckins = new Map<number, FemeCheckin>();
   private breathSessions = new Map<number, BreathSession>();
   private userEvents = new Map<number, UserEvent>();
+  private userProgressMap = new Map<number, UserProgress>(); // key: userId
+  private actionPlansMap = new Map<number, ActionPlan>();
   private incomes = new Map<number, any>();
   private expenses = new Map<number, any>();
   private budgets = new Map<number, any>();
@@ -544,6 +568,104 @@ class MemStorage implements IStorage {
       return Array.from(this.userEvents.values()).filter(e => e.userId === null);
     }
     return Array.from(this.userEvents.values()).filter(e => e.userId === userId);
+  }
+
+  // Gamification / Progress methods
+  async getUserProgress(userId: number): Promise<UserProgress | undefined> {
+    return this.userProgressMap.get(userId);
+  }
+
+  async updateUserProgress(userId: number, delta: number, activity?: string): Promise<UserProgress> {
+    let progress = this.userProgressMap.get(userId);
+    
+    if (!progress) {
+      // Create new progress if doesn't exist
+      progress = {
+        id: this.currentId++,
+        userId,
+        points: 0,
+        level: 1,
+        breathSessionsCompleted: 0,
+        femeCheckinsCompleted: 0,
+        aiSessionsCompleted: 0,
+        dailyStreak: 0,
+        lastActivityAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      this.userProgressMap.set(userId, progress);
+    }
+
+    // Update points and recalculate level
+    const newPoints = Math.max(0, (progress.points || 0) + delta);
+    const newLevel = Math.floor(newPoints / 500) + 1; // 500 points per level
+
+    // Update activity counters
+    if (activity === 'breath_session') {
+      progress.breathSessionsCompleted = (progress.breathSessionsCompleted || 0) + 1;
+    } else if (activity === 'feme_checkin') {
+      progress.femeCheckinsCompleted = (progress.femeCheckinsCompleted || 0) + 1;
+    } else if (activity === 'ai_session') {
+      progress.aiSessionsCompleted = (progress.aiSessionsCompleted || 0) + 1;
+    }
+
+    const updatedProgress: UserProgress = {
+      ...progress,
+      points: newPoints,
+      level: newLevel,
+      lastActivityAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.userProgressMap.set(userId, updatedProgress);
+    return updatedProgress;
+  }
+
+  // Action Plans methods
+  async createActionPlan(plan: InsertActionPlan): Promise<ActionPlan> {
+    const id = this.currentId++;
+    const newPlan: ActionPlan = {
+      ...plan,
+      id,
+      goal: plan.goal || null,
+      firstStep: plan.firstStep || null,
+      status: plan.status || 'active',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.actionPlansMap.set(id, newPlan);
+    return newPlan;
+  }
+
+  async listActionPlansByUserId(userId: number): Promise<ActionPlan[]> {
+    return Array.from(this.actionPlansMap.values()).filter(p => p.userId === userId);
+  }
+
+  // Aggregated history
+  async getHistory(userId: number, limit: number = 20): Promise<{
+    events: UserEvent[];
+    femeCheckins: FemeCheckin[];
+    breathSessions: BreathSession[];
+    summary: {
+      totalEvents: number;
+      totalFemeCheckins: number;
+      totalBreathSessions: number;
+    };
+  }> {
+    const events = await this.getUserEventsByUserId(userId);
+    const femeCheckins = await this.getFemeCheckinsByUserId(userId);
+    const breathSessions = await this.getBreathSessionsByUserId(userId);
+
+    return {
+      events: events.slice(0, limit),
+      femeCheckins: femeCheckins.slice(0, 5),
+      breathSessions: breathSessions.slice(0, 5),
+      summary: {
+        totalEvents: events.length,
+        totalFemeCheckins: femeCheckins.length,
+        totalBreathSessions: breathSessions.length,
+      },
+    };
   }
 }
 

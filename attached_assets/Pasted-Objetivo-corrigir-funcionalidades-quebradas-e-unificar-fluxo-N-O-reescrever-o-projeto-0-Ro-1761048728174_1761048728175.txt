@@ -1,0 +1,81 @@
+Objetivo: corrigir funcionalidades quebradas e unificar fluxo. NÃO reescrever o projeto.
+
+## 0) Rotas e navegação
+- /purpose = dashboard principal (mantém).
+- Criar /journey como a página oficial do “Portal UAU” (vídeo + CTA).
+- /portal-uau: redirecionar 301 para /journey.
+- Âncora /purpose#breathing continua válida.
+
+## 1) Persistência REAL (Postgres + Drizzle)
+Crie/ajuste modelos e storage:
+- user_progress(user_id pk, points int default 0, level int default 1, updated_at)
+- action_plan(id uuid pk, user_id, title text, goal text, first_step text, created_at)
+- history_view (consulta agregada: últimos eventos relevantes FEME, media, pontos)
+
+Implemente em server/storage.ts:
+- getUserProgress(userId)
+- updateUserProgress(userId, delta) → soma pontos, recalcula level (ex.: 500 pts por nível)
+- createPlan(userId, {title, goal, first_step})
+- listPlans(userId)
+- listHistory(userId) → junta FEME checkins, media_complete, points_updated
+
+## 2) Endpoints funcionais
+- POST /api/progress {delta:int} → atualiza pontos (storage real) e retorna {points, level}
+- POST /api/plans {title,goal,first_step} → cria plano e retorna o plano
+- GET  /api/history → retorna últimos N eventos e última pontuação
+- (Manter IA já existente) /api/ai/selfsession e /api/ai/insight
+
+## 3) Vídeo unificado + métricas
+- Componente único <MediaPlayer assetKey="portal_uau"> em /journey.
+- Enviar eventos para /api/media/events: play, pause, quartile_25/50/75/complete, error.
+- Ao 'complete': 
+  - disparar POST /api/progress {delta: 25}
+  - render CTA “Fazer Check-in FEME” (navegar para /purpose#breathing)
+- Ajustar botão “Ver Vídeo” em /purpose para abrir /journey.
+
+## 4) Botões ligados de verdade (frontend)
+- “Conversar” → abre chat usando /api/ai/selfsession (Claude real).
+- “Insight” → chama /api/ai/insight e exibe resposta (<= 280 chars).
+- “Atualizar pontuação” → POST /api/progress {delta:10} e atualiza UI.
+- “Criar plano de ação” → modal (title/goal/first_step) → POST /api/plans → feedback.
+- “Ver histórico” → GET /api/history → lista FEME recentes, media_complete e pontos.
+- “Focar aqui” → painel com 3 sugestões; se IA falhar, fallback estático.
+- “Exportar dados” → gerar download JSON: {feme, points, media_events, plans (resumo)}.
+
+## 5) Som (tema natureza) com autoplay policy
+- client/src/lib/sound.ts:
+  - Tema default “nature” (wooden_click, soft_drum_tap, bamboo_chime, breath_tick, forest_bed_loop).
+  - Toggle Som 🔊/🔇, Toggle Ambiência, Select Tema (nature|frequency) → persistir em localStorage.
+  - Respeitar autoplay policy (inicializar AudioContext no primeiro gesto).
+  - Pausar ambiência durante vídeo e retomar com fade-in 600ms.
+- Métricas em /api/events:
+  - sound_theme_set, sound_toggle, ambience_toggle, ui_click_played, breath_tick_played.
+
+## 6) Métricas de produto (prontas para dashboard simples)
+- Registrar:
+  - video_complete (assetKey), cta_after_video
+  - points_updated (delta, total)
+  - plan_created
+  - onboarding_mode (express|reflexivo)
+- Deixar query utilitária (server/metrics.ts) para:
+  - video_completion_rate(assetKey)
+  - cta_after_video_rate(assetKey, withinSeconds=90)
+  - time_to_first_relief (primeira sessão de respiração concluída)
+  - evolução de points por usuário (7 dias)
+
+## 7) Integração com /purpose
+- Substituir qualquer link/rota antiga “/portal-uau” por “/journey”.
+- Em /purpose, o botão “Ver Vídeo” chama /journey.
+- Em /purpose#breathing, usar BreathRing com tick sonoro e animação 4-4-6.
+
+## 8) Entregas
+- Publicar e confirmar:
+  a) /purpose (com botões funcionando)
+  b) /journey (vídeo + CTA + progress)
+  c) /purpose#breathing (ring + som)
+- Exibir no console os diffs principais:
+  - server/storage.ts (métodos reais)
+  - server/routes (novos endpoints)
+  - client/src/components/MediaPlayer.tsx
+  - client/src/pages/journey.tsx (ou equivalente)
+  - client/src/lib/sound.ts

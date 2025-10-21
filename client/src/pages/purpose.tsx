@@ -184,7 +184,7 @@ export default function Purpose() {
         className="relative overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-300 group border-2 border-yellow-400"
         onClick={() => {
           trackPortal('open', 'uau');
-          setLocation('/portal-uau');
+          setLocation('/journey');
         }}
         style={{
           backgroundImage: 'url(/placeholders/portal.svg)',

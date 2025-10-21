@@ -475,3 +475,23 @@ export const insertUserProgressSchema = createInsertSchema(userProgress).omit({
   createdAt: true,
   updatedAt: true,
 });
+
+// Action Plans Table
+export const actionPlans = pgTable("action_plans", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  goal: text("goal"),
+  firstStep: text("first_step"),
+  status: varchar("status", { length: 20 }).default("active"), // active, completed, cancelled
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export type ActionPlan = typeof actionPlans.$inferSelect;
+export type InsertActionPlan = typeof actionPlans.$inferInsert;
+export const insertActionPlanSchema = createInsertSchema(actionPlans).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});

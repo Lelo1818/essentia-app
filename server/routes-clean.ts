@@ -335,21 +335,51 @@ Contexto FEME atual: ${femeContext}`;
 
       const { delta, activity } = schema.parse(req.body);
 
-      // Track event
+      // Update progress in storage (REAL persistence)
+      const updatedProgress = await storage.updateUserProgress(user.id, delta, activity);
+
+      // Track event for analytics
       await storage.createUserEvent({
         userId: user.id,
         eventName: 'points_updated',
-        eventProps: { delta, activity },
+        eventProps: { delta, activity, newTotal: updatedProgress.points, newLevel: updatedProgress.level },
       });
 
       res.json({ 
         success: true,
         delta,
+        points: updatedProgress.points,
+        level: updatedProgress.level,
         message: `${delta > 0 ? 'Ganhou' : 'Perdeu'} ${Math.abs(delta)} pontos!`
       });
     } catch (error) {
       console.error("Error updating progress:", error);
       res.status(500).json({ message: "Failed to update progress" });
+    }
+  });
+
+  // Get current progress
+  app.get('/api/progress', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const progress = await storage.getUserProgress(user.id);
+      
+      res.json(progress || { 
+        points: 0, 
+        level: 1,
+        breathSessionsCompleted: 0,
+        femeCheckinsCompleted: 0,
+        aiSessionsCompleted: 0
+      });
+    } catch (error) {
+      console.error("Error fetching progress:", error);
+      res.status(500).json({ message: "Failed to fetch progress" });
     }
   });
 
@@ -371,16 +401,22 @@ Contexto FEME atual: ${femeContext}`;
 
       const planData = schema.parse(req.body);
 
-      // Track event
+      // Create plan in storage (REAL persistence)
+      const createdPlan = await storage.createActionPlan({
+        userId: user.id,
+        ...planData,
+      });
+
+      // Track event for analytics
       await storage.createUserEvent({
         userId: user.id,
         eventName: 'plan_created',
-        eventProps: planData,
+        eventProps: { planId: createdPlan.id, title: createdPlan.title },
       });
 
       res.json({ 
         success: true,
-        plan: planData,
+        plan: createdPlan,
         message: 'Plano criado com sucesso!'
       });
     } catch (error) {
@@ -401,27 +437,15 @@ Contexto FEME atual: ${femeContext}`;
 
       const limit = Math.min(Number(req.query.limit) || 20, 100);
 
-      // Get recent events
-      const events = await storage.getUserEventsByUserId(user.id);
-      const recentEvents = events.slice(0, limit);
-
-      // Get FEME checkins
-      const femeCheckins = await storage.getFemeCheckinsByUserId(user.id);
-      const recentFeme = femeCheckins.slice(0, 5);
-
-      // Get breath sessions
-      const breathSessions = await storage.getBreathSessionsByUserId(user.id);
-      const recentBreath = breathSessions.slice(0, 5);
+      // Get aggregated history from storage (uses new method)
+      const history = await storage.getHistory(user.id, limit);
+      
+      // Get current progress
+      const progress = await storage.getUserProgress(user.id);
 
       res.json({
-        events: recentEvents,
-        femeCheckins: recentFeme,
-        breathSessions: recentBreath,
-        summary: {
-          totalEvents: events.length,
-          totalFemeCheckins: femeCheckins.length,
-          totalBreathSessions: breathSessions.length,
-        },
+        ...history,
+        progress: progress || { points: 0, level: 1 },
       });
     } catch (error) {
       console.error("Error fetching history:", error);
