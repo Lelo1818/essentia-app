@@ -139,6 +139,33 @@ The ecosystem comprises five main applications, sharing common infrastructure:
     -   Erro `latestCheckin is not defined` no endpoint insight
 -   ✅ **Testes confirmados**: Usuário validou todas as IAs funcionando perfeitamente
 
+**Pilar 7: Sistema de Histórico de Sugestões IA (Oct 21 - noite) ✅**
+-   ✅ **Problema resolvido**: Sugestões da IA agora são salvas permanentemente (antes ficavam perdidas)
+-   ✅ **Schema aiSuggestions**:
+    -   Tabela `aiSuggestions` com id, userId, suggestionType, content, source, metadata, createdAt
+    -   Types: biometric_insight, therapist_advice, plan_recommendation
+    -   Sources: biometric, sofia, marcus, luna, leo, system
+-   ✅ **Storage methods implementados**:
+    -   `createAiSuggestion(suggestion)` - salva sugestão com metadata
+    -   `getAiSuggestionsByUserId(userId, limit)` - busca últimas 50 sugestões ordenadas por data
+-   ✅ **Endpoints funcionais**:
+    -   POST `/api/suggestions` - Salva sugestão com validação Zod (max 5000 chars)
+    -   GET `/api/suggestions?limit=50` - Retorna todas sugestões do usuário
+-   ✅ **Integração biométrico**:
+    -   Análise IA salva automaticamente com contexto (BPM, estresse, energia, estado emocional)
+    -   Verifica response.ok - se falhar, mostra toast de erro e NÃO indica "salvo"
+    -   Só mostra "✓ Salva no Histórico!" se realmente persistiu
+-   ✅ **Componente SuggestionsHistory**:
+    -   Dialog com histórico completo de sugestões
+    -   Cards coloridos por fonte (biométrico=vermelho, terapeutas=roxo/azul/rosa/verde)
+    -   Mostra metadata (BPM, estresse, energia, estado emocional)
+    -   Stats agregados (total, biométrico, terapeutas)
+    -   Exportação JSON das sugestões
+-   ✅ **Dashboard integration**:
+    -   Card "Arquivo IA" visível no dashboard Purpose (tab Jornada)
+    -   Botão "Histórico de Sugestões IA" sempre acessível
+-   ✅ **Validação Architect**: Sistema robusto, sem falsos positivos, erro handling correto
+
 **Em Desenvolvimento (Backlog)**
 -   🔄 **Toggle de Som no Header**: Botão 🔊/🔇 persistente em todas as páginas
 -   🔄 **Modal "Criar Plano"**: Formulário completo com validação Zod

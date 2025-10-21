@@ -20,7 +20,7 @@ interface AiSuggestion {
 export function SuggestionsHistory() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<{suggestions: AiSuggestion[]}>({
     queryKey: ['/api/suggestions'],
     enabled: isOpen,
   });
