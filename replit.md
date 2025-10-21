@@ -120,6 +120,25 @@ The ecosystem comprises five main applications, sharing common infrastructure:
     -   MediaPlayer em `/journey` funcional com tracking completo
 -   ✅ **Validação Architect**: Persistência end-to-end confirmada, lógica de níveis correta
 
+**Pilar 6: IAs Funcionando - AdaptiveCompanion (Oct 21 - noite) ✅**
+-   ✅ **Sofia, Marcus, Luna, Leo - 100% funcionais**:
+    -   Botão "Conversar" conectado ao `/api/ai/selfsession` (Anthropic Claude)
+    -   Campo de input para mensagens do usuário
+    -   Respostas limitadas a 2 parágrafos (mais curtas e objetivas)
+    -   Resposta exibida em card azul fixo
+-   ✅ **Botão "Insight" conectado e melhorado**:
+    -   Conectado ao `/api/ai/insight` (Anthropic Claude)
+    -   Insights curtos (máximo 280 chars) tipo tweet filosófico
+    -   Duração de toast aumentada para 20 segundos
+    -   Card amarelo/laranja fixo permanente com emoji 💡
+-   ✅ **Autenticação removida temporariamente**:
+    -   Endpoints de IA sem proteção `isAuthenticated` para facilitar testes
+    -   Todo usuário pode testar as IAs sem login
+-   ✅ **Bugs corrigidos**:
+    -   Erro TypeScript no ai-coach.tsx (apiRequest, Message type)
+    -   Erro `latestCheckin is not defined` no endpoint insight
+-   ✅ **Testes confirmados**: Usuário validou todas as IAs funcionando perfeitamente
+
 **Em Desenvolvimento (Backlog)**
 -   🔄 **Toggle de Som no Header**: Botão 🔊/🔇 persistente em todas as páginas
 -   🔄 **Modal "Criar Plano"**: Formulário completo com validação Zod
