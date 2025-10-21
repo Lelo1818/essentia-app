@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useMutation } from '@tanstack/react-query';
+import { useToast } from '@/hooks/use-toast';
 import { 
   MessageCircle, 
   Brain, 
@@ -10,7 +12,8 @@ import {
   Calendar,
   TrendingUp,
   User,
-  Lightbulb
+  Lightbulb,
+  Loader2
 } from 'lucide-react';
 
 interface AdaptiveCompanionProps {
@@ -26,9 +29,68 @@ export default function AdaptiveCompanion({
   mood, 
   timeOfDay 
 }: AdaptiveCompanionProps) {
+  const { toast } = useToast();
   const [currentMessage, setCurrentMessage] = useState('');
   const [companionPersonality, setCompanionPersonality] = useState('supportive');
   const [conversationHistory, setConversationHistory] = useState<string[]>([]);
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
+
+  const conversarMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/ai/selfsession", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt: currentMessage,
+          context: `Personalidade: ${companionPersonality}, Humor: ${mood}, Hora: ${timeOfDay}`
+        }),
+      });
+      if (!response.ok) throw new Error("Erro ao conversar com IA");
+      return response.json();
+    },
+    onSuccess: (data: any) => {
+      setAiResponse(data.response);
+      toast({
+        title: "Resposta da IA",
+        description: data.response.substring(0, 100) + "...",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível conversar com a IA",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const insightMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/ai/insight", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          context: `Usuário: ${userName}, Atividades recentes: ${recentActivity.join(", ")}, Humor: ${mood}`
+        }),
+      });
+      if (!response.ok) throw new Error("Erro ao gerar insight");
+      return response.json();
+    },
+    onSuccess: (data: any) => {
+      toast({
+        title: "💡 Insight Gerado",
+        description: data.insight,
+        duration: 8000,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível gerar insight",
+        variant: "destructive",
+      });
+    },
+  });
 
   const companionPersonalities = {
     supportive: {
@@ -201,15 +263,44 @@ export default function AdaptiveCompanion({
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-3">
-        <Button variant="outline" className="flex items-center space-x-2">
-          <MessageCircle className="w-4 h-4" />
+        <Button 
+          variant="outline" 
+          className="flex items-center space-x-2"
+          onClick={() => conversarMutation.mutate()}
+          disabled={conversarMutation.isPending}
+          data-testid="button-conversar"
+        >
+          {conversarMutation.isPending ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <MessageCircle className="w-4 h-4" />
+          )}
           <span>Conversar</span>
         </Button>
-        <Button variant="outline" className="flex items-center space-x-2">
-          <Lightbulb className="w-4 h-4" />
+        <Button 
+          variant="outline" 
+          className="flex items-center space-x-2"
+          onClick={() => insightMutation.mutate()}
+          disabled={insightMutation.isPending}
+          data-testid="button-insight"
+        >
+          {insightMutation.isPending ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Lightbulb className="w-4 h-4" />
+          )}
           <span>Insight</span>
         </Button>
       </div>
+      
+      {/* AI Response Display */}
+      {aiResponse && (
+        <Card className="bg-blue-50 border-blue-200">
+          <CardContent className="pt-4">
+            <p className="text-sm text-gray-700">{aiResponse}</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
