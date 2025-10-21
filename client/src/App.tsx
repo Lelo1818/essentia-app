@@ -204,7 +204,7 @@ function App() {
   const [location] = useLocation();
   
   // Rotas que NÃO devem mostrar navegação do Flow
-  const standaloneRoutes = ['/thera', '/purpose', '/essentia-final', '/essentia-mega', '/portal-uau', '/breathing-446'];
+  const standaloneRoutes = ['/thera', '/purpose', '/journey', '/breath', '/points', '/essentia-final', '/essentia-mega', '/portal-uau', '/breathing-446'];
   const isStandalone = standaloneRoutes.some(route => location.startsWith(route));
   
   return (

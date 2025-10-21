@@ -306,9 +306,9 @@ export default function Purpose() {
                     const getStageAction = () => {
                       switch(stage.name) {
                         case "Despertar Interior":
-                          return () => setShowVideo(true);
-                        case "Autoconhecimento Profundo":
                           return () => setLocation('/journey');
+                        case "Autoconhecimento Profundo":
+                          return () => openWindow('feme');
                         case "Descoberta de Paixões":
                           return () => openWindow('companion');
                         case "Relacionamentos Significativos":
@@ -325,9 +325,9 @@ export default function Purpose() {
                     const getStageLabel = () => {
                       switch(stage.name) {
                         case "Despertar Interior":
-                          return "▶ Ver vídeo";
-                        case "Autoconhecimento Profundo":
                           return "📊 Portal UAU";
+                        case "Autoconhecimento Profundo":
+                          return "🔮 Check-in FEME";
                         case "Descoberta de Paixões":
                           return "💬 IA Coach";
                         case "Relacionamentos Significativos":
