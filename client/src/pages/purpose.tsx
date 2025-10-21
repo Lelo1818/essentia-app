@@ -33,6 +33,7 @@ import AITherapist from "@/components/purpose/ai-therapist";
 import { VideoPortal } from "@/components/purpose/video-portal";
 import { FEMECompass } from "@/components/feme/FEMECompass";
 import { MegaOnboarding, useMegaOnboarding } from "@/components/purpose/mega-onboarding";
+import { SuggestionsHistory } from "@/components/purpose/suggestions-history";
 import { 
   Compass, 
   Heart, 
@@ -424,7 +425,7 @@ export default function Purpose() {
                 progress={75}
               />
             </div>
-            <div>
+            <div className="space-y-4">
               <AdaptiveCompanion
                 userName={user?.name || "Explorer"}
                 recentActivity={["meditation", "reflection", "insight"]}
@@ -435,6 +436,22 @@ export default function Purpose() {
                   new Date().getHours() < 22 ? 'evening' : 'night'
                 }
               />
+              
+              {/* Histórico de Sugestões IA */}
+              <Card className="border-l-4 border-l-purple-500">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg flex items-center">
+                    <Sparkles className="w-5 h-5 mr-2 text-purple-600" />
+                    Arquivo IA
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Todas as sugestões e insights gerados pela IA
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <SuggestionsHistory />
+                </CardContent>
+              </Card>
             </div>
           </div>
         </TabsContent>
