@@ -59,10 +59,12 @@ export default function LifeWheel() {
       if (!response.ok) throw new Error("Erro ao criar plano");
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data: any) => {
+      console.log("Plano criado:", data.plan);
       toast({
-        title: "Plano Criado!",
-        description: "Seu plano de ação foi salvo com sucesso",
+        title: "✅ Plano Criado!",
+        description: `"${data.plan.title}" - Primeiro passo: ${data.plan.firstStep?.substring(0, 60)}...`,
+        duration: 8000,
       });
     },
     onError: () => {
@@ -81,10 +83,17 @@ export default function LifeWheel() {
       return response.json();
     },
     onSuccess: (data: any) => {
-      console.log("Histórico:", data);
+      console.log("📊 Histórico Completo:", data);
+      
+      const eventsCount = data.events?.length || 0;
+      const femeCount = data.femeCheckins?.length || 0;
+      const breathCount = data.breathSessions?.length || 0;
+      const points = data.progress?.points || 0;
+      
       toast({
-        title: "Histórico Carregado",
-        description: `${data.events?.length || 0} eventos encontrados`,
+        title: "📊 Histórico Carregado",
+        description: `${eventsCount} eventos, ${femeCount} FEME, ${breathCount} respirações. Total: ${points} pontos. Veja o console (F12)`,
+        duration: 10000,
       });
     },
     onError: () => {
@@ -458,7 +467,10 @@ export default function LifeWheel() {
                       <Button 
                         size="sm" 
                         className="bg-purple-600 hover:bg-purple-700"
-                        onClick={() => updateProgressMutation.mutate(area.gap * 2)}
+                        onClick={() => {
+                          const gap = area.desiredScore - area.currentScore;
+                          updateProgressMutation.mutate(Math.max(1, gap * 2));
+                        }}
                         disabled={updateProgressMutation.isPending}
                         data-testid="button-update-score"
                       >
