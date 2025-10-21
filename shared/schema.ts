@@ -238,11 +238,20 @@ export const goals = pgTable("goals", {
 export const achievements = pgTable("achievements", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
-  appType: varchar("app_type", { length: 20 }).notNull(), // flow, edu, purpose
-  achievementType: varchar("achievement_type", { length: 100 }).notNull(),
+  appType: varchar("app_type", { length: 20 }).notNull(), // flow, edu, purpose, essentia
+  achievementType: varchar("achievement_type", { length: 100 }).notNull(), // primeiro_checkin, meditador_bronze, etc
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
   earnedAt: timestamp("earned_at").defaultNow(),
+  progress: integer("progress").default(0), // Para conquistas com progresso (ex: 5/10)
+  metadata: jsonb("metadata"), // Dados extras (pontos ganhos, etc)
+});
+
+export type Achievement = typeof achievements.$inferSelect;
+export type InsertAchievement = typeof achievements.$inferInsert;
+export const insertAchievementSchema = createInsertSchema(achievements).omit({
+  id: true,
+  earnedAt: true,
 });
 
 // Thera Funding - Trades table
@@ -329,9 +338,6 @@ export type InsertPurposeInsight = typeof purposeInsights.$inferInsert;
 export type Transaction = typeof transactions.$inferSelect;
 export type InsertTransaction = typeof transactions.$inferInsert;
 
-export type Achievement = typeof achievements.$inferSelect;
-export type InsertAchievement = typeof achievements.$inferInsert;
-
 export type Income = typeof incomes.$inferSelect;
 export type InsertIncome = typeof incomes.$inferInsert;
 
@@ -370,7 +376,6 @@ export const insertPurposeDataSchema = createInsertSchema(purposeData);
 export const insertLearningSessionSchema = createInsertSchema(learningSessions);
 export const insertPurposeInsightSchema = createInsertSchema(purposeInsights);
 export const insertTransactionSchema = createInsertSchema(transactions);
-export const insertAchievementSchema = createInsertSchema(achievements);
 
 // NEW FINANCIAL SCHEMAS
 export type CreditCard = typeof creditCards.$inferSelect;
@@ -513,3 +518,4 @@ export const insertAiSuggestionSchema = createInsertSchema(aiSuggestions).omit({
   id: true,
   createdAt: true,
 });
+

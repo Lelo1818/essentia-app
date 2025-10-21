@@ -217,67 +217,82 @@ export default function Purpose() {
       </Card>
 
       {/* MENU NAVEGAÇÃO - LIMPO E DESTACADO */}
-      <div className="bg-white rounded-lg shadow-md border-2 border-purple-300 p-4">
-        <TabsList className="w-full h-auto flex flex-wrap gap-2 bg-transparent p-0">
-          <TabsTrigger value="journey" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-5">
+        <TabsList className="w-full h-auto flex flex-wrap gap-3 bg-transparent p-0">
+          <TabsTrigger 
+            value="journey" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <Compass className="w-5 h-5" />
             <span>Jornada</span>
           </TabsTrigger>
-          <TabsTrigger value="transition" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="transition" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <TrendingUp className="w-5 h-5" />
             <span>Transição</span>
           </TabsTrigger>
-          <TabsTrigger value="avatar" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="avatar" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <User className="w-5 h-5" />
             <span>Avatar 3D</span>
           </TabsTrigger>
           <TabsTrigger 
             value="breathing" 
-            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium relative overflow-hidden group"
-            style={{
-              backgroundImage: 'url(/placeholders/breathing.svg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-green-100 border-2 border-green-300 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
           >
-            <div className="absolute inset-0 bg-white/80 group-data-[state=active]:bg-purple-600/90 transition-colors" />
-            <Brain className="w-5 h-5 relative z-10" />
-            <span className="relative z-10">Respiração</span>
+            <Brain className="w-5 h-5" />
+            <span>Respiração</span>
           </TabsTrigger>
           <TabsTrigger 
             value="rituals" 
-            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium relative overflow-hidden group"
-            style={{
-              backgroundImage: 'url(/placeholders/mindfulness.svg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-yellow-100 border-2 border-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
           >
-            <div className="absolute inset-0 bg-white/80 group-data-[state=active]:bg-purple-600/90 transition-colors" />
-            <Star className="w-5 h-5 relative z-10" />
-            <span className="relative z-10">Rituais</span>
+            <Star className="w-5 h-5" />
+            <span>Rituais</span>
           </TabsTrigger>
-          <TabsTrigger value="wheel" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="wheel" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <Target className="w-5 h-5" />
             <span>Roda</span>
           </TabsTrigger>
-          <TabsTrigger value="inspiration" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="inspiration" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-pink-100 border-2 border-pink-200 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <Heart className="w-5 h-5" />
             <span>Inspiração</span>
           </TabsTrigger>
-          <TabsTrigger value="community" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="community" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-blue-100 border-2 border-blue-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <Users className="w-5 h-5" />
             <span>Comunidade</span>
           </TabsTrigger>
-          <TabsTrigger value="biometric" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="biometric" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-red-100 border-2 border-red-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <Brain className="w-5 h-5" />
             <span>Biometria</span>
           </TabsTrigger>
-          <TabsTrigger value="therapist" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="therapist" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <Heart className="w-5 h-5" />
             <span>Terapeuta IA</span>
           </TabsTrigger>
-          <TabsTrigger value="profile" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg data-[state=active]:bg-purple-600 data-[state=active]:text-white font-medium">
+          <TabsTrigger 
+            value="profile" 
+            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-gray-100 border-2 border-gray-300 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+          >
             <User className="w-5 h-5" />
             <span>Sobre Mim</span>
           </TabsTrigger>
