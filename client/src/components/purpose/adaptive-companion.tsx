@@ -31,18 +31,20 @@ export default function AdaptiveCompanion({
 }: AdaptiveCompanionProps) {
   const { toast } = useToast();
   const [currentMessage, setCurrentMessage] = useState('');
+  const [userInput, setUserInput] = useState('');
   const [companionPersonality, setCompanionPersonality] = useState('supportive');
   const [conversationHistory, setConversationHistory] = useState<string[]>([]);
   const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [insightText, setInsightText] = useState<string | null>(null);
 
   const conversarMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (userMessage: string) => {
       const response = await fetch("/api/ai/selfsession", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prompt: currentMessage,
-          context: `Personalidade: ${companionPersonality}, Humor: ${mood}, Hora: ${timeOfDay}`
+          prompt: userMessage,
+          context: `Responda em no máximo 2 parágrafos curtos. Personalidade: ${companionPersonality}, Humor: ${mood}, Hora: ${timeOfDay}`
         }),
       });
       if (!response.ok) throw new Error("Erro ao conversar com IA");
@@ -77,10 +79,11 @@ export default function AdaptiveCompanion({
       return response.json();
     },
     onSuccess: (data: any) => {
+      setInsightText(data.insight);
       toast({
         title: "💡 Insight Gerado",
         description: data.insight,
-        duration: 8000,
+        duration: 20000,
       });
     },
     onError: () => {
@@ -261,13 +264,27 @@ export default function AdaptiveCompanion({
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Input para conversar */}
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && userInput.trim() && conversarMutation.mutate(userInput)}
+          placeholder="Digite sua mensagem..."
+          className="flex-1 px-3 py-2 border rounded-md text-sm"
+          data-testid="input-conversar"
+        />
         <Button 
           variant="outline" 
           className="flex items-center space-x-2"
-          onClick={() => conversarMutation.mutate()}
-          disabled={conversarMutation.isPending}
+          onClick={() => {
+            if (userInput.trim()) {
+              conversarMutation.mutate(userInput);
+              setUserInput('');
+            }
+          }}
+          disabled={conversarMutation.isPending || !userInput.trim()}
           data-testid="button-conversar"
         >
           {conversarMutation.isPending ? (
@@ -275,11 +292,15 @@ export default function AdaptiveCompanion({
           ) : (
             <MessageCircle className="w-4 h-4" />
           )}
-          <span>Conversar</span>
+          <span>Enviar</span>
         </Button>
+      </div>
+
+      {/* Insight Button */}
+      <div className="mt-2">
         <Button 
           variant="outline" 
-          className="flex items-center space-x-2"
+          className="w-full flex items-center justify-center space-x-2"
           onClick={() => insightMutation.mutate()}
           disabled={insightMutation.isPending}
           data-testid="button-insight"
@@ -289,10 +310,22 @@ export default function AdaptiveCompanion({
           ) : (
             <Lightbulb className="w-4 h-4" />
           )}
-          <span>Insight</span>
+          <span>Gerar Insight</span>
         </Button>
       </div>
-      
+
+      {/* Insight Display (permanente) */}
+      {insightText && (
+        <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
+          <CardContent className="pt-4">
+            <div className="flex items-start gap-2">
+              <span className="text-2xl">💡</span>
+              <p className="text-sm text-gray-800 font-medium italic">{insightText}</p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* AI Response Display */}
       {aiResponse && (
         <Card className="bg-blue-50 border-blue-200">
