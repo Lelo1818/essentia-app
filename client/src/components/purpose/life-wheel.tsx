@@ -23,6 +23,7 @@ import {
 export default function LifeWheel() {
   const { toast } = useToast();
   const [selectedArea, setSelectedArea] = useState(null);
+  const [floatingPoints, setFloatingPoints] = useState<Array<{id: number, points: number, x: number, y: number}>>([]);
 
   const updateProgressMutation = useMutation({
     mutationFn: async (delta: number) => {
@@ -35,9 +36,24 @@ export default function LifeWheel() {
       return response.json();
     },
     onSuccess: (data: any) => {
+      // Show floating points animation
+      const newFloatingPoint = {
+        id: Date.now(),
+        points: data.delta || 0,
+        x: Math.random() * 80 + 10, // 10% to 90% from left
+        y: 50
+      };
+      setFloatingPoints(prev => [...prev, newFloatingPoint]);
+      
+      // Remove after animation
+      setTimeout(() => {
+        setFloatingPoints(prev => prev.filter(p => p.id !== newFloatingPoint.id));
+      }, 2000);
+      
       toast({
-        title: "Pontuação Atualizada!",
+        title: "🎉 Pontuação Atualizada!",
         description: `${data.message} Total: ${data.points} pontos (Nível ${data.level})`,
+        duration: 5000,
       });
     },
     onError: () => {
@@ -311,7 +327,23 @@ export default function LifeWheel() {
   const topGaps = getGapAnalysis();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {/* Floating Points Animation */}
+      {floatingPoints.map(fp => (
+        <div
+          key={fp.id}
+          className="fixed z-50 pointer-events-none animate-float-up"
+          style={{
+            left: `${fp.x}%`,
+            top: `${fp.y}%`,
+            animation: 'float-up 2s ease-out forwards'
+          }}
+        >
+          <div className="text-4xl font-bold text-green-500 drop-shadow-lg">
+            +{fp.points} 🌟
+          </div>
+        </div>
+      ))}
       {/* Overview */}
       <Card className="border-l-4 border-l-purple-500">
         <CardHeader>

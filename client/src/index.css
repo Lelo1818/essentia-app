@@ -29,6 +29,21 @@
   animation: float 6s ease-in-out infinite;
 }
 
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.2);
+  }
+}
+
+.animate-float-up {
+  animation: float-up 2s ease-out forwards;
+}
+
 @keyframes fadeInScale {
   from {
     opacity: 0;
