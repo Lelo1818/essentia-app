@@ -301,7 +301,7 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
 
       res.json({ 
         insight,
-        femeContext: latestCheckin || null
+        usage: message.usage
       });
     } catch (error) {
       console.error("Error generating insight:", error);
