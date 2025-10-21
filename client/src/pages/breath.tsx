@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { BreathRing } from '@/components/BreathRing';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
 export default function BreathPage() {

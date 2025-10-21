@@ -3,7 +3,7 @@ import { ArrowLeft, Sparkles, Heart, Brain, Zap } from 'lucide-react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { MediaPlayer } from '@/components/MediaPlayer';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function JourneyPage() {
   const { user } = useAuth();

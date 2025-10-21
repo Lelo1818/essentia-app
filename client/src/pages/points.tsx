@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ArrowLeft, TrendingUp, Award, Calendar, Download } from 'lucide-react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 
 export default function PointsPage() {

@@ -76,15 +76,43 @@ The ecosystem comprises five main applications, sharing common infrastructure:
     -   Tabela `user_progress` com pontos, níveis, streak, contadores de atividades
     -   Schema Zod validado: `insertUserProgressSchema`
 
+**Pilar 4: Sound Design + Animações + Portal UAU (NOVO - Oct 21 - tarde)**
+-   ✅ **Sound System Completo**:
+    -   Módulo `client/src/lib/sound.ts` com preload, rate-limiting (80ms), autoplay policy
+    -   5 sons placeholder em `/public/audio`: ui_click, ui_success, ui_open, ui_close, breath_tick
+    -   Toggle global de som (localStorage) com tracking via `/api/events`
+-   ✅ **BreathRing Component**:
+    -   Animação sincronizada 4-4-6 (inspire 4s, segure 4s, expire 6s)
+    -   Tick sonoro em cada transição de fase
+    -   3 ciclos completados = 20 pontos + backend tracking
+-   ✅ **MediaPlayer Component**:
+    -   Suporte para HLS + fallback nativo
+    -   Tracking automático: play, pause, quartile_25/50/75, complete, error
+    -   CTA pós-complete: "Fazer Check-in FEME" (aciona pontos + navega)
+    -   Evento `media_cta_clicked` trackeado
+-   ✅ **Novos Endpoints Backend**:
+    -   POST `/api/progress` - Atualizar pontos (delta -1000 a +1000, activity tracking)
+    -   POST `/api/plans` - Criar plano de ação (title, goal, firstStep)
+    -   GET `/api/history` - Histórico agregado (events, FEME, breath sessions)
+    -   POST `/api/media/events` - Tracking de eventos de mídia (assetKey, eventType, meta)
+-   ✅ **3 Novas Páginas Funcionais**:
+    -   `/journey` - Portal UAU com vídeo, FEME dimensions, 50 pontos ao completar
+    -   `/breath` - Respiração 4-4-6 com BreathRing, benefícios listados, 20 pontos por sessão
+    -   `/points` - Dashboard de pontos com histórico, stats, FEME summary, exportação JSON
+
 **Em Desenvolvimento (Backlog)**
--   🔄 **Endpoints de Gamificação**: POST/GET `/api/progress` para atualizar pontos
--   🔄 **Lógica de Pontos Automática**: Atribuir pontos ao completar FEME, respiração, IA
--   🔄 **Botões Faltantes**: Conectar "Atualizar Pontuação", "Criar Plano", "Ver Histórico", "Exportar Dados"
+-   🔄 **Toggle de Som no Header**: Botão 🔊/🔇 persistente em todas as páginas
+-   🔄 **Modal "Criar Plano"**: Formulário completo com validação Zod
+-   🔄 **Painel "Focar Aqui"**: 3 sugestões IA + próximos passos (com fallback estático)
+-   🔄 **Conectar Botões Restantes**: "Atualizar Pontuação", "Criar Plano", "Focar Aqui" no dashboard Purpose
+-   🔄 **Animações Lottie/CSS**: Feedback visual em ganhos de pontos (badge flutuante +10)
 -   🔄 **Migração DatabaseStorage**: Trocar MemStorage por PostgreSQL real
--   🔄 **Rate Limiting**: Adicionar throttle nos endpoints de IA e eventos
--   🔄 **Portal UAU**: Fluxo cinematográfico Mega → FEME → Respiração → Portal
+-   🔄 **Rate Limiting**: Adicionar throttle nos endpoints de IA e eventos (25KB body limit)
 
 ### URLs Principais
 -   **Essentia (Purpose)**: `/purpose` - Dashboard completo com FEME Compass, AI Coach, atividades
+-   **Journey (Portal UAU)**: `/journey` - Vídeo transformador + 4 dimensões FEME
+-   **Breath (Respiração)**: `/breath` - Técnica 4-4-6 com BreathRing animado
+-   **Points (Pontuação)**: `/points` - Histórico, stats, FEME summary, exportação JSON
 -   **Onboarding**: Aparece automaticamente na primeira visita ao `/purpose`
 -   **API Docs**: Ver `server/routes-clean.ts` para todos endpoints
