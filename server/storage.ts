@@ -1,12 +1,13 @@
 import { 
-  users, achievements, userProgress, actionPlans,
+  users, achievements, userProgress, actionPlans, aiSuggestions,
   type User, type InsertUser, type UpsertUser,
   type Achievement, type InsertAchievement,
   type FemeCheckin, type InsertFemeCheckin,
   type BreathSession, type InsertBreathSession,
   type UserEvent, type InsertUserEvent,
   type UserProgress, type InsertUserProgress,
-  type ActionPlan, type InsertActionPlan
+  type ActionPlan, type InsertActionPlan,
+  type AiSuggestion, type InsertAiSuggestion
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -66,6 +67,10 @@ export interface IStorage {
   createActionPlan(plan: InsertActionPlan): Promise<ActionPlan>;
   listActionPlansByUserId(userId: number): Promise<ActionPlan[]>;
   
+  // AI Suggestions methods
+  createAiSuggestion(suggestion: InsertAiSuggestion): Promise<AiSuggestion>;
+  getAiSuggestionsByUserId(userId: number, limit?: number): Promise<AiSuggestion[]>;
+  
   // Aggregated history
   getHistory(userId: number, limit?: number): Promise<{
     events: UserEvent[];
@@ -87,6 +92,7 @@ class MemStorage implements IStorage {
   private userEvents = new Map<number, UserEvent>();
   private userProgressMap = new Map<number, UserProgress>(); // key: userId
   private actionPlansMap = new Map<number, ActionPlan>();
+  private aiSuggestionsMap = new Map<number, AiSuggestion>();
   private incomes = new Map<number, any>();
   private expenses = new Map<number, any>();
   private budgets = new Map<number, any>();
@@ -639,6 +645,26 @@ class MemStorage implements IStorage {
 
   async listActionPlansByUserId(userId: number): Promise<ActionPlan[]> {
     return Array.from(this.actionPlansMap.values()).filter(p => p.userId === userId);
+  }
+
+  // AI Suggestions methods
+  async createAiSuggestion(suggestion: InsertAiSuggestion): Promise<AiSuggestion> {
+    const id = this.currentId++;
+    const newSuggestion: AiSuggestion = {
+      ...suggestion,
+      id,
+      metadata: suggestion.metadata || null,
+      createdAt: new Date(),
+    };
+    this.aiSuggestionsMap.set(id, newSuggestion);
+    return newSuggestion;
+  }
+
+  async getAiSuggestionsByUserId(userId: number, limit: number = 50): Promise<AiSuggestion[]> {
+    const suggestions = Array.from(this.aiSuggestionsMap.values())
+      .filter(s => s.userId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return suggestions.slice(0, limit);
   }
 
   // Aggregated history
