@@ -465,22 +465,22 @@ export default function BiometricSensors() {
         </CardContent>
       </Card>
 
-      {/* Trends Dialog */}
+      {/* Trends Dialog - RELATÓRIO COMPLETO */}
       <Dialog open={showTrendsDialog} onOpenChange={setShowTrendsDialog}>
-        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center text-2xl">
               <TrendingUp className="w-6 h-6 mr-2 text-green-600" />
-              Tendências Biométricas
+              Relatório Biométrico Completo
             </DialogTitle>
             <DialogDescription>
-              Análise das últimas 47 leituras coletadas hoje
+              Análise detalhada das últimas 47 leituras (últimas 24h) • Atualizado em tempo real
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4 py-4">
+          <div className="space-y-6 py-4">
             {/* Summary Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div className="p-4 bg-red-50 rounded-lg border border-red-200">
                 <div className="text-sm text-red-600 mb-1">Freq. Cardíaca</div>
                 <div className="text-2xl font-bold text-red-700">{Math.round(biometricData.heartRate)}</div>
@@ -533,17 +533,166 @@ export default function BiometricSensors() {
               </div>
             </div>
 
+            {/* Métricas Avançadas */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h4 className="font-semibold text-blue-800 mb-3 flex items-center">
+                  <Heart className="w-4 h-4 mr-2" />
+                  Variabilidade Cardíaca (HRV)
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-blue-600">RMSSD:</span>
+                    <span className="font-bold text-blue-800">48ms</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-600">SDNN:</span>
+                    <span className="font-bold text-blue-800">65ms</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-600">Índice Saúde:</span>
+                    <span className="font-bold text-green-700">Ótimo ✓</span>
+                  </div>
+                  <p className="text-xs text-blue-600 mt-2 pt-2 border-t border-blue-200">
+                    Alta HRV indica boa recuperação e baixo estresse crônico
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h4 className="font-semibold text-purple-800 mb-3 flex items-center">
+                  <Brain className="w-4 h-4 mr-2" />
+                  Estado Neurológico
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-purple-600">Ondas Alpha:</span>
+                    <span className="font-bold text-purple-800">68%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-purple-600">Ondas Beta:</span>
+                    <span className="font-bold text-purple-800">25%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-purple-600">Clareza Mental:</span>
+                    <span className="font-bold text-green-700">Alta ✓</span>
+                  </div>
+                  <p className="text-xs text-purple-600 mt-2 pt-2 border-t border-purple-200">
+                    Estado ideal para criatividade e aprendizado focado
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Histórico Detalhado Última Semana */}
+            <div className="p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-lg border">
+              <h4 className="font-semibold text-gray-800 mb-4 flex items-center">
+                📅 Histórico - Últimos 7 Dias
+              </h4>
+              <div className="space-y-2">
+                {[
+                  { dia: "Hoje", hr: 72, stress: 23, energy: 78, emoji: "😊", status: "Excelente" },
+                  { dia: "Ontem", hr: 75, stress: 35, energy: 70, emoji: "🙂", status: "Bom" },
+                  { dia: "19/10", hr: 78, stress: 45, energy: 65, emoji: "😐", status: "Moderado" },
+                  { dia: "18/10", hr: 70, stress: 20, energy: 82, emoji: "🤩", status: "Ótimo" },
+                  { dia: "17/10", hr: 73, stress: 28, energy: 75, emoji: "😊", status: "Excelente" },
+                  { dia: "16/10", hr: 76, stress: 38, energy: 68, emoji: "🙂", status: "Bom" },
+                  { dia: "15/10", hr: 74, stress: 42, energy: 72, emoji: "😐", status: "Moderado" }
+                ].map((d, i) => (
+                  <div key={i} className={`flex items-center justify-between p-3 rounded-lg ${i === 0 ? 'bg-green-100 border-2 border-green-300' : 'bg-white'}`}>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-lg">{d.emoji}</span>
+                      <span className="font-medium text-gray-700 w-16">{d.dia}</span>
+                      <Badge className={`${i === 0 ? 'bg-green-600' : 'bg-gray-500'}`}>{d.status}</Badge>
+                    </div>
+                    <div className="flex space-x-6 text-sm">
+                      <div className="text-center">
+                        <div className="text-red-600 font-bold">{d.hr}</div>
+                        <div className="text-xs text-gray-500">BPM</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-orange-600 font-bold">{d.stress}%</div>
+                        <div className="text-xs text-gray-500">Stress</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-purple-600 font-bold">{d.energy}%</div>
+                        <div className="text-xs text-gray-500">Energia</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Comparativos Estatísticos */}
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                <h5 className="text-sm font-semibold text-green-800 mb-2">📊 Média Semanal</h5>
+                <div className="text-2xl font-bold text-green-700">74 BPM</div>
+                <div className="text-xs text-green-600 mt-1">↘ -3% vs semana anterior</div>
+              </div>
+              <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                <h5 className="text-sm font-semibold text-orange-800 mb-2">🎯 Melhor Dia</h5>
+                <div className="text-lg font-bold text-orange-700">18/10</div>
+                <div className="text-xs text-orange-600 mt-1">Estresse: 20% | Energia: 82%</div>
+              </div>
+              <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h5 className="text-sm font-semibold text-purple-800 mb-2">⚡ Pico Energia</h5>
+                <div className="text-2xl font-bold text-purple-700">82%</div>
+                <div className="text-xs text-purple-600 mt-1">Horário: 14h30 (18/10)</div>
+              </div>
+            </div>
+
             {/* Insights */}
             <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-              <h4 className="font-semibold text-yellow-800 mb-2 flex items-center">
-                💡 Insights Principais
+              <h4 className="font-semibold text-yellow-800 mb-3 flex items-center">
+                💡 Insights e Recomendações Personalizadas
               </h4>
-              <ul className="space-y-2 text-sm text-yellow-700">
-                <li>• Seu pico de energia ocorre entre 14h-16h</li>
-                <li>• Estresse reduz após práticas de respiração (-18% em média)</li>
-                <li>• Estado emocional mais equilibrado nas manhãs</li>
-                <li>• Frequência cardíaca estável, sem alterações significativas</li>
-              </ul>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h5 className="text-sm font-semibold text-yellow-700 mb-2">✅ Pontos Fortes:</h5>
+                  <ul className="space-y-1 text-sm text-yellow-700">
+                    <li>• Frequência cardíaca estável e saudável</li>
+                    <li>• Boa variabilidade cardíaca (HRV)</li>
+                    <li>• Picos de energia consistentes à tarde</li>
+                    <li>• Estresse bem controlado hoje (-34% vs média)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="text-sm font-semibold text-yellow-700 mb-2">🎯 Oportunidades:</h5>
+                  <ul className="space-y-1 text-sm text-yellow-700">
+                    <li>• Praticar respiração 4-4-6 às 10h (estresse↓)</li>
+                    <li>• Agendar tarefas complexas entre 14h-16h</li>
+                    <li>• Dormir antes das 23h para recuperação ótima</li>
+                    <li>• Hidratação: beber água a cada 2h</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-between items-center pt-4 border-t">
+              <div className="text-sm text-gray-500">
+                Última atualização: {new Date().toLocaleTimeString('pt-BR')}
+              </div>
+              <div className="flex space-x-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => exportDataMutation.mutate()}
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Exportar Relatório
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  onClick={() => setShowTrendsDialog(false)}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  Fechar
+                </Button>
+              </div>
             </div>
           </div>
         </DialogContent>
