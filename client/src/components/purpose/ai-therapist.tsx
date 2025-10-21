@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Brain, 
   MessageCircle, 
@@ -16,7 +18,8 @@ import {
   Shield,
   Clock,
   TrendingUp,
-  Zap
+  Zap,
+  Loader2
 } from "lucide-react";
 
 interface TherapyMessage {
@@ -30,6 +33,7 @@ interface TherapyMessage {
 }
 
 export default function AITherapist() {
+  const { toast } = useToast();
   const [messages, setMessages] = useState<TherapyMessage[]>([
     {
       id: 1,
@@ -42,12 +46,48 @@ export default function AITherapist() {
   ]);
 
   const [inputMessage, setInputMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [sessionData, setSessionData] = useState({
     duration: 0,
     insights: 3,
     breakthroughs: 1,
     emotionalState: "equilibrado"
+  });
+
+  const aiMutation = useMutation({
+    mutationFn: async (userMessage: string) => {
+      const response = await fetch("/api/ai/selfsession", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt: userMessage,
+          context: "Responda em no máximo 2 parágrafos. Você é Sofia, terapeuta especializada em autoconhecimento."
+        }),
+      });
+      if (!response.ok) throw new Error("Erro ao conversar com IA");
+      return response.json();
+    },
+    onSuccess: (data: any) => {
+      const newMessage: TherapyMessage = {
+        id: messages.length + 1,
+        type: "therapist",
+        content: data.response,
+        timestamp: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        mood: "supportive",
+      };
+      setMessages(prev => [...prev, newMessage]);
+      setSessionData(prev => ({
+        ...prev,
+        insights: prev.insights + 1,
+        duration: prev.duration + 1
+      }));
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível obter resposta da IA",
+        variant: "destructive",
+      });
+    },
   });
 
   const therapyTechniques = [
@@ -93,46 +133,8 @@ export default function AITherapist() {
     }
   };
 
-  const generateAIResponse = (userInput: string) => {
-    setIsTyping(true);
-    
-    setTimeout(() => {
-      let response = aiResponses.padrões; // default
-      
-      if (userInput.toLowerCase().includes("ansio") || userInput.toLowerCase().includes("medo")) {
-        response = aiResponses.ansioso;
-      } else if (userInput.toLowerCase().includes("padr") || userInput.toLowerCase().includes("comport")) {
-        response = aiResponses.padrões;
-      } else if (userInput.toLowerCase().includes("autoestima") || userInput.toLowerCase().includes("valor")) {
-        response = aiResponses.autoestima;
-      } else if (userInput.toLowerCase().includes("relacionamento") || userInput.toLowerCase().includes("amor")) {
-        response = aiResponses.relacionamentos;
-      }
-
-      const newMessage: TherapyMessage = {
-        id: messages.length + 1,
-        type: "therapist",
-        content: response.content,
-        timestamp: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-        mood: response.mood,
-        techniques: response.techniques,
-        insights: response.insights
-      };
-
-      setMessages(prev => [...prev, newMessage]);
-      setIsTyping(false);
-      
-      // Update session data
-      setSessionData(prev => ({
-        ...prev,
-        insights: prev.insights + 1,
-        duration: prev.duration + 1
-      }));
-    }, 2000);
-  };
-
   const sendMessage = () => {
-    if (!inputMessage.trim()) return;
+    if (!inputMessage.trim() || aiMutation.isPending) return;
 
     const userMessage: TherapyMessage = {
       id: messages.length + 1,
@@ -142,8 +144,9 @@ export default function AITherapist() {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    generateAIResponse(inputMessage);
+    const currentInput = inputMessage;
     setInputMessage("");
+    aiMutation.mutate(currentInput);
   };
 
   const useQuickResponse = (response: string) => {
@@ -264,9 +267,10 @@ export default function AITherapist() {
               </div>
             ))}
             
-            {isTyping && (
+            {aiMutation.isPending && (
               <div className="flex justify-start">
-                <div className="bg-purple-50 border border-purple-200 px-4 py-2 rounded-lg">
+                <div className="bg-purple-50 border border-purple-200 px-4 py-2 rounded-lg flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-purple-600" />
                   <div className="flex items-center space-x-2">
                     <Avatar className="w-6 h-6">
                       <AvatarFallback className="bg-purple-600 text-white text-xs">S</AvatarFallback>

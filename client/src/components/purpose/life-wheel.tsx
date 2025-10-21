@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 import { 
   PieChart, 
   TrendingUp, 
@@ -19,7 +21,80 @@ import {
 } from "lucide-react";
 
 export default function LifeWheel() {
+  const { toast } = useToast();
   const [selectedArea, setSelectedArea] = useState(null);
+
+  const updateProgressMutation = useMutation({
+    mutationFn: async (delta: number) => {
+      const response = await fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ delta, activity: "life_wheel_update" }),
+      });
+      if (!response.ok) throw new Error("Erro ao atualizar pontuação");
+      return response.json();
+    },
+    onSuccess: (data: any) => {
+      toast({
+        title: "Pontuação Atualizada!",
+        description: `${data.message} Total: ${data.points} pontos (Nível ${data.level})`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível atualizar pontuação",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const createPlanMutation = useMutation({
+    mutationFn: async (plan: { title: string; goal: string; firstStep: string }) => {
+      const response = await fetch("/api/plans", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(plan),
+      });
+      if (!response.ok) throw new Error("Erro ao criar plano");
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Plano Criado!",
+        description: "Seu plano de ação foi salvo com sucesso",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível criar plano",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const getHistoryMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/history");
+      if (!response.ok) throw new Error("Erro ao buscar histórico");
+      return response.json();
+    },
+    onSuccess: (data: any) => {
+      console.log("Histórico:", data);
+      toast({
+        title: "Histórico Carregado",
+        description: `${data.events?.length || 0} eventos encontrados`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível carregar histórico",
+        variant: "destructive",
+      });
+    },
+  });
 
   const lifeAreas = [
     {
@@ -380,13 +455,35 @@ export default function LifeWheel() {
                     </div>
 
                     <div className="flex space-x-3">
-                      <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+                      <Button 
+                        size="sm" 
+                        className="bg-purple-600 hover:bg-purple-700"
+                        onClick={() => updateProgressMutation.mutate(area.gap * 2)}
+                        disabled={updateProgressMutation.isPending}
+                        data-testid="button-update-score"
+                      >
                         Atualizar Pontuação
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => createPlanMutation.mutate({
+                          title: `Melhorar ${area.name}`,
+                          goal: `Aumentar de ${area.currentScore} para ${area.desiredScore}`,
+                          firstStep: area.actions[0]
+                        })}
+                        disabled={createPlanMutation.isPending}
+                        data-testid="button-create-plan"
+                      >
                         Criar Plano de Ação
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => getHistoryMutation.mutate()}
+                        disabled={getHistoryMutation.isPending}
+                        data-testid="button-view-history"
+                      >
                         Ver Histórico
                       </Button>
                     </div>
