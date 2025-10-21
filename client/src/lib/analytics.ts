@@ -30,6 +30,25 @@ export const esLog = (name: string, meta: EventMeta = {}) => {
   } catch (error) {
     console.error('Erro ao armazenar evento:', error);
   }
+
+  // Enviar evento ao backend
+  fetch('/api/events', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      eventName: name,
+      eventProps: {
+        ...meta,
+        url: window.location.href,
+        ts: event.ts,
+      },
+    }),
+  }).catch((error) => {
+    // Falha silenciosa - não interromper UX
+    console.warn('Failed to send event to backend:', error);
+  });
 };
 
 // Expor globalmente para debug

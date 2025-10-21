@@ -398,3 +398,57 @@ export const insertTheraTradeSchema = createInsertSchema(theraTrades);
 export type TheraEvaluationClick = typeof theraEvaluationClicks.$inferSelect;
 export type InsertTheraEvaluationClick = typeof theraEvaluationClicks.$inferInsert;
 export const insertTheraEvaluationClickSchema = createInsertSchema(theraEvaluationClicks);
+
+// ESSENTIA / PURPOSE - FEME Tables
+export const femeCheckins = pgTable("feme_checkins", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  fisico: integer("fisico").notNull(), // 0-10
+  energetico: integer("energetico").notNull(), // 0-10
+  mental: integer("mental").notNull(), // 0-10
+  espiritual: integer("espiritual").notNull(), // 0-10
+  coerencia: decimal("coerencia", { precision: 3, scale: 2 }), // 0.00-1.00
+  intention: text("intention"),
+  meta: jsonb("meta").default({}),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const breathSessions = pgTable("breath_sessions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  cycles: integer("cycles").notNull(), // 3, 6, 18, etc
+  durationSec: integer("duration_sec").notNull(), // cycles * 14
+  videoUsed: varchar("video_used", { length: 255 }),
+  audioUsed: varchar("audio_used", { length: 255 }),
+  completedAt: timestamp("completed_at").defaultNow(),
+});
+
+export const userEvents = pgTable("user_events", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id), // nullable for pre-login events
+  eventName: varchar("event_name", { length: 100 }).notNull(),
+  eventProps: jsonb("event_props").default({}),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// FEME Types
+export type FemeCheckin = typeof femeCheckins.$inferSelect;
+export type InsertFemeCheckin = typeof femeCheckins.$inferInsert;
+export const insertFemeCheckinSchema = createInsertSchema(femeCheckins).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type BreathSession = typeof breathSessions.$inferSelect;
+export type InsertBreathSession = typeof breathSessions.$inferInsert;
+export const insertBreathSessionSchema = createInsertSchema(breathSessions).omit({
+  id: true,
+  completedAt: true,
+});
+
+export type UserEvent = typeof userEvents.$inferSelect;
+export type InsertUserEvent = typeof userEvents.$inferInsert;
+export const insertUserEventSchema = createInsertSchema(userEvents).omit({
+  id: true,
+  createdAt: true,
+});

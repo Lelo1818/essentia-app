@@ -8,7 +8,8 @@ import fs from "fs";
 import { fileURLToPath } from 'url';
 import { 
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
-  insertGoalSchema, insertAchievementSchema
+  insertGoalSchema, insertAchievementSchema,
+  insertFemeCheckinSchema, insertBreathSessionSchema, insertUserEventSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
@@ -72,6 +73,155 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching evaluation clicks:", error);
       res.status(500).json({ message: "Failed to fetch clicks" });
+    }
+  });
+
+  // FEME / Essentia endpoints
+  app.post('/api/feme/checkin', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Validate with Zod
+      const validatedData = insertFemeCheckinSchema.parse({
+        userId: user.id,
+        ...req.body,
+      });
+
+      const checkin = await storage.createFemeCheckin(validatedData);
+      
+      res.status(201).json(checkin);
+    } catch (error) {
+      console.error("Error creating FEME checkin:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create FEME checkin" });
+    }
+  });
+
+  app.get('/api/feme/checkins', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const checkins = await storage.getFemeCheckinsByUserId(user.id);
+      res.json(checkins);
+    } catch (error) {
+      console.error("Error fetching FEME checkins:", error);
+      res.status(500).json({ message: "Failed to fetch checkins" });
+    }
+  });
+
+  app.post('/api/breath/session', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const cycles = req.body.cycles || 3;
+      const durationSec = cycles * 14;
+
+      // Validate with Zod
+      const validatedData = insertBreathSessionSchema.parse({
+        userId: user.id,
+        cycles,
+        durationSec,
+        videoUsed: req.body.videoUsed,
+        audioUsed: req.body.audioUsed,
+      });
+      
+      const session = await storage.createBreathSession(validatedData);
+      
+      res.status(201).json(session);
+    } catch (error) {
+      console.error("Error creating breath session:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create breath session" });
+    }
+  });
+
+  app.get('/api/breath/sessions', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const sessions = await storage.getBreathSessionsByUserId(user.id);
+      res.json(sessions);
+    } catch (error) {
+      console.error("Error fetching breath sessions:", error);
+      res.status(500).json({ message: "Failed to fetch sessions" });
+    }
+  });
+
+  app.post('/api/events', async (req: any, res) => {
+    try {
+      // Optional authentication - allow pre-login events
+      let userId: number | null = null;
+      
+      if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
+        const replitId = req.user.claims.sub;
+        const user = await storage.getUserByReplitId(replitId);
+        if (user) {
+          userId = user.id;
+        }
+      }
+
+      // Validate with Zod - limit eventProps size
+      const eventPropsSize = JSON.stringify(req.body.eventProps || {}).length;
+      if (eventPropsSize > 5000) {
+        return res.status(400).json({ message: "eventProps too large (max 5KB)" });
+      }
+
+      const validatedData = insertUserEventSchema.parse({
+        userId,
+        eventName: req.body.eventName,
+        eventProps: req.body.eventProps || {},
+      });
+
+      const event = await storage.createUserEvent(validatedData);
+      
+      res.status(201).json({ ok: true, event });
+    } catch (error) {
+      console.error("Error creating event:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create event" });
+    }
+  });
+
+  app.get('/api/events', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const events = await storage.getUserEventsByUserId(user.id);
+      res.json(events);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      res.status(500).json({ message: "Failed to fetch events" });
     }
   });
   

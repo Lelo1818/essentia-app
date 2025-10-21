@@ -1,7 +1,10 @@
 import { 
   users, achievements,
   type User, type InsertUser, type UpsertUser,
-  type Achievement, type InsertAchievement
+  type Achievement, type InsertAchievement,
+  type FemeCheckin, type InsertFemeCheckin,
+  type BreathSession, type InsertBreathSession,
+  type UserEvent, type InsertUserEvent
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -18,6 +21,14 @@ export interface IStorage {
   // Achievements
   getAchievementsByUserId(userId: number): Promise<Achievement[]>;
   createAchievement(achievement: InsertAchievement): Promise<Achievement>;
+  
+  // FEME / Essentia methods
+  createFemeCheckin(checkin: InsertFemeCheckin): Promise<FemeCheckin>;
+  getFemeCheckinsByUserId(userId: number): Promise<FemeCheckin[]>;
+  createBreathSession(session: InsertBreathSession): Promise<BreathSession>;
+  getBreathSessionsByUserId(userId: number): Promise<BreathSession[]>;
+  createUserEvent(event: InsertUserEvent): Promise<UserEvent>;
+  getUserEventsByUserId(userId: number | null): Promise<UserEvent[]>;
   
   // Financial data methods
   getIncomesByUserId(userId: number): Promise<any[]>;
@@ -49,6 +60,9 @@ export interface IStorage {
 class MemStorage implements IStorage {
   private users = new Map<number, User>();
   private achievements = new Map<number, Achievement>();
+  private femeCheckins = new Map<number, FemeCheckin>();
+  private breathSessions = new Map<number, BreathSession>();
+  private userEvents = new Map<number, UserEvent>();
   private incomes = new Map<number, any>();
   private expenses = new Map<number, any>();
   private budgets = new Map<number, any>();
@@ -474,6 +488,62 @@ class MemStorage implements IStorage {
 
   async getEvaluationClicks(): Promise<any[]> {
     return Array.from(this.evaluationClicks.values());
+  }
+
+  // FEME / Essentia methods
+  async createFemeCheckin(checkin: InsertFemeCheckin): Promise<FemeCheckin> {
+    const id = this.currentId++;
+    const newCheckin: FemeCheckin = {
+      ...checkin,
+      id,
+      coerencia: checkin.coerencia || null,
+      intention: checkin.intention || null,
+      meta: checkin.meta || {},
+      createdAt: new Date(),
+    };
+    this.femeCheckins.set(id, newCheckin);
+    return newCheckin;
+  }
+
+  async getFemeCheckinsByUserId(userId: number): Promise<FemeCheckin[]> {
+    return Array.from(this.femeCheckins.values()).filter(c => c.userId === userId);
+  }
+
+  async createBreathSession(session: InsertBreathSession): Promise<BreathSession> {
+    const id = this.currentId++;
+    const newSession: BreathSession = {
+      ...session,
+      id,
+      videoUsed: session.videoUsed || null,
+      audioUsed: session.audioUsed || null,
+      completedAt: new Date(),
+    };
+    this.breathSessions.set(id, newSession);
+    return newSession;
+  }
+
+  async getBreathSessionsByUserId(userId: number): Promise<BreathSession[]> {
+    return Array.from(this.breathSessions.values()).filter(s => s.userId === userId);
+  }
+
+  async createUserEvent(event: InsertUserEvent): Promise<UserEvent> {
+    const id = this.currentId++;
+    const newEvent: UserEvent = {
+      ...event,
+      id,
+      userId: event.userId || null,
+      eventProps: event.eventProps || {},
+      createdAt: new Date(),
+    };
+    this.userEvents.set(id, newEvent);
+    return newEvent;
+  }
+
+  async getUserEventsByUserId(userId: number | null): Promise<UserEvent[]> {
+    if (userId === null) {
+      return Array.from(this.userEvents.values()).filter(e => e.userId === null);
+    }
+    return Array.from(this.userEvents.values()).filter(e => e.userId === userId);
   }
 }
 

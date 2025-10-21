@@ -1,0 +1,217 @@
+Perfeito, Lelão. Vamos começar limpo e direto.
+Cole no Agent do Replit o prompt abaixo — ele já sobe o **MVP funcional** com autenticação JWT, persistência, métricas e endpoints básicos. Projeto: `essentia-mvp`.
+
+---
+
+# PRIMEIRO PROMPT (cole no Agent do Replit)
+
+Crie um projeto Node 20 + TypeScript chamado `essentia-mvp` com **Express**, **Prisma** e **SQLite** (para simplicidade no Replit; deixaremos pronto para migrar a Postgres depois). Objetivo: MVP navegável com autenticação, persistência de estado e captura de métricas.
+
+## Requisitos de Arquitetura
+
+* **Stack**: Node 20, TypeScript, Express, Prisma (SQLite), Zod, JWT (jsonwebtoken), bcrypt, CORS, Helmet, morgan.
+* **Padrões**: ESLint + Prettier; scripts NPM para dev/build/start; variáveis via `.env`.
+* **Segurança**: Helmet, CORS aberto só para `http://localhost:3000` e `https://*.replit.dev` (ajuste automático do host), validações com Zod.
+* **Logs**: morgan em formato `combined`; middleware de `requestId` (uuid).
+* **Persistência**: Prisma com **SQLite** (arquivo `db/dev.db`).
+* **Autenticação**: cadastro/login por e-mail e senha (hash com bcrypt), emissão de JWT com expiração de 7 dias.
+* **Métricas**: endpoint `/api/analytics` que recebe eventos genéricos (userId opcional, eventName, payload JSON, ts).
+* **Estado do usuário**: endpoint `/api/state` para salvar e recuperar “estado” (JSON) por usuário (ex.: FEME, progresso, coerência).
+* **Saúde**: `/healthz` retorna `{ status:"ok", version }`.
+
+## Estrutura de pastas
+
+```
+.
+├─ .replit
+├─ replit.nix
+├─ .env.example
+├─ package.json
+├─ tsconfig.json
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ seed.ts
+├─ src/
+│  ├─ server.ts
+│  ├─ config/env.ts
+│  ├─ config/cors.ts
+│  ├─ middlewares/auth.ts
+│  ├─ middlewares/requestId.ts
+│  ├─ routes/auth.ts
+│  ├─ routes/analytics.ts
+│  ├─ routes/state.ts
+│  ├─ routes/health.ts
+│  ├─ lib/prisma.ts
+│  ├─ schemas/auth.ts
+│  ├─ schemas/analytics.ts
+│  └─ schemas/state.ts
+```
+
+## Dependências
+
+Instale:
+
+* Prod: `express cors helmet morgan zod jsonwebtoken bcrypt uuid`
+* Dev: `typescript ts-node @types/node @types/express @types/cors @types/jsonwebtoken @types/bcrypt @types/morgan prisma @prisma/client`
+
+## Arquivos — conteúdo essencial
+
+### `.replit`
+
+* Defina run = `npm run dev`
+* Habilite Nix e watch.
+
+### `replit.nix`
+
+* Inclua nodejs-20_x, openssl, sqlite, bash.
+
+### `package.json` (scripts)
+
+```json
+{
+  "name": "essentia-mvp",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "prisma:gen": "prisma generate",
+    "prisma:mig": "prisma migrate dev --name init",
+    "prisma:studio": "prisma studio",
+    "seed": "tsx prisma/seed.ts"
+  }
+}
+```
+
+### `.env.example`
+
+```
+JWT_SECRET=change_me
+PORT=3000
+NODE_ENV=development
+```
+
+### `prisma/schema.prisma`
+
+* Modelo `User` (id, email unique, passwordHash, createdAt).
+* Modelo `UserState` (id, userId fk, data Json, updatedAt).
+* Modelo `Event` (id, userId nullable, eventName, payload Json, ts).
+* SQLite datasource default; generator client.
+
+### `src/lib/prisma.ts`
+
+* Exporta `prisma` singleton.
+
+### `src/config/env.ts`
+
+* Lê `process.env` e valida (Zod).
+
+### `src/middlewares/requestId.ts`
+
+* Gera `req.id` com `uuid()`.
+
+### `src/middlewares/auth.ts`
+
+* Verifica `Authorization: Bearer <token>`; coloca `req.userId`.
+
+### `src/schemas/*.ts`
+
+* Auth: `register/login` com email e senha (mín. 8).
+* Analytics: `eventName` string 1..64, `payload` any, `ts` opcional.
+* State: `data` any (JSON object).
+
+### `src/routes/health.ts`
+
+* GET `/healthz` → `{ status:"ok", version }`.
+
+### `src/routes/auth.ts`
+
+* POST `/api/auth/register` (email, password) → cria usuário e retorna token.
+* POST `/api/auth/login` → valida e retorna token.
+* GET `/api/auth/me` (autenticado) → dados básicos do usuário.
+
+### `src/routes/analytics.ts`
+
+* POST `/api/analytics` (autenticado opcional) → grava evento.
+* GET `/api/analytics` (autenticado) → lista últimos 100 eventos do usuário.
+
+### `src/routes/state.ts`
+
+* GET `/api/state` (autenticado) → retorna estado JSON do usuário (ou `{}`).
+* PUT `/api/state` (autenticado, body `{ data: {...} }`) → upsert.
+
+### `src/server.ts`
+
+* Sobe Express com Helmet, CORS, morgan, JSON, requestId.
+* Usa rotas acima; inicia em `PORT` e loga URL do Replit.
+
+### `prisma/seed.ts`
+
+* Cria um usuário de teste (`test@essentia.app`, senha `essentia123`) e um estado inicial `{ feme: { F:50,E:50,M:50,E2:50 }, coherence: 0.72 }`.
+
+## Ações do Agent
+
+1. Inicialize Nix/Node 20.
+2. Crie todos os arquivos conforme especificado.
+3. Rode:
+
+   * `npm i`
+   * `npx prisma generate`
+   * `npx prisma migrate dev --name init`
+   * `npm run seed`
+   * `npm run dev`
+4. Mostre no console a URL pública para testes.
+
+## Testes manuais (curl)
+
+1. Health:
+
+```
+curl -sS https://<sua-url>/healthz
+```
+
+2. Login:
+
+```
+curl -sS -X POST https://<sua-url>/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@essentia.app","password":"essentia123"}'
+```
+
+Copie o `token` da resposta.
+
+3. Salvar estado:
+
+```
+curl -sS -X PUT https://<sua-url>/api/state \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"data":{"feme":{"F":62,"E":58,"M":70,"E2":66},"coherence":0.81}}'
+```
+
+4. Enviar métrica:
+
+```
+curl -sS -X POST https://<sua-url>/api/analytics \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"eventName":"portal_opened","payload":{"portal":"Coragem"}}'
+```
+
+5. Listar métricas do usuário:
+
+```
+curl -sS -H "Authorization: Bearer <TOKEN>" https://<sua-url>/api/analytics
+```
+
+## Observações de engenharia (decisões fortes)
+
+* **SQLite agora, Postgres depois**: no Replit é mais estável e rápido para o MVP. O Prisma permite migrar para Postgres sem reescrever domínio.
+* **JWT stateless**: simples e suficiente para demo investidor-ready.
+* **Zod em tudo que é borda**: reduz bug bobo e protege endpoints.
+* **Métricas mínimas, mas reais**: `/api/analytics` grava eventos com payload livre — já dá para mostrar um mini dashboard depois.
+
+---
+
+Se quiser, já posso te mandar **o segundo prompt** para o Agent gerar um **front React mínimo** (Vite + Tailwind) com login, painel FEME e ping a `/healthz`. Quer que eu já inclua isso também?

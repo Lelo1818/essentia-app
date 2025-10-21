@@ -1,0 +1,213 @@
+Perfeito. Vamos fechar o *gap* para **MVP investidor-ready** em **duas frentes** (Pilar 1 e 2) com entregáveis cirúrgicos. Abaixo estão **schema**, **endpoints** e **snippets** prontos pra ele colar. Sem teorias.
+
+# Decisão
+
+* **Auth**: Replit Auth (mais simples). Se indisponível, **anônimo + UUID** em `localStorage`, migrável depois.
+* **DB**: PostgreSQL já citado pelo agente.
+* **Eventos**: tudo vai para `user_events` com JSONB.
+
+---
+
+# 1) SQL — schema mínimo (cole no psql / migration)
+
+```sql
+-- users
+create table if not exists app_user (
+  id text primary key,            -- replit user id ou uuid v4
+  email text,
+  name text,
+  created_at timestamptz default now()
+);
+
+-- onboarding + FEME
+create table if not exists feme_checkin (
+  id uuid primary key default gen_random_uuid(),
+  user_id text references app_user(id) on delete cascade,
+  fisico int check (fisico between 0 and 10),
+  energetico int check (energetico between 0 and 10),
+  mental int check (mental between 0 and 10),
+  espiritual int check (espiritual between 0 and 10),
+  coerencia numeric,                     -- 0..1 (selo)
+  intention text,
+  meta jsonb default '{}'::jsonb,        -- qualquer extra
+  created_at timestamptz default now()
+);
+
+-- sessões de respiração (4-4-6)
+create table if not exists breath_session (
+  id uuid primary key default gen_random_uuid(),
+  user_id text references app_user(id) on delete cascade,
+  cycles int not null,                   -- ex.: 3, 6, 18
+  duration_sec int not null,             -- cycles * 14
+  video_used text,                       -- inner-awakening.mp4
+  audio_used text,
+  created_at timestamptz default now()
+);
+
+-- eventos genéricos (telemetria leve)
+create table if not exists user_event (
+  id bigserial primary key,
+  user_id text,
+  name text not null,                    -- "view_purpose", "start_breath_446"...
+  props jsonb default '{}'::jsonb,
+  ts timestamptz default now()
+);
+
+create index if not exists idx_user_event_user_ts on user_event(user_id, ts desc);
+```
+
+---
+
+# 2) Backend — endpoints mínimos (Express)
+
+```ts
+// auth: Replit Auth (fallback anônimo)
+import express from "express";
+import bodyParser from "body-parser";
+const app = express();
+app.use(bodyParser.json());
+
+function getUserId(req: any) {
+  // 1) Tenta header do Replit Auth
+  const rid = req.headers["x-replit-user-id"] as string | undefined;
+  if (rid) return rid;
+  // 2) Fallback: header x-anon-id vindo do client (uuid)
+  return (req.headers["x-anon-id"] as string) || null;
+}
+
+app.get("/api/auth/me", async (req,res)=>{
+  const uid = getUserId(req);
+  if(!uid) return res.status(401).json({error:"no_user"});
+  // upsert básico
+  await db.query(`
+    insert into app_user(id) values($1)
+    on conflict (id) do nothing
+  `,[uid]);
+  res.json({ id: uid });
+});
+
+// FEME check-in
+app.post("/api/feme/checkin", async (req,res)=>{
+  const uid = getUserId(req);
+  if(!uid) return res.status(401).json({error:"no_user"});
+  const { fisico, energetico, mental, espiritual, coerencia, intention, meta } = req.body;
+  const q = `
+    insert into feme_checkin(user_id,fisico,energetico,mental,espiritual,coerencia,intention,meta)
+    values($1,$2,$3,$4,$5,$6,$7,$8)
+    returning id, created_at
+  `;
+  const r = await db.query(q,[uid,fisico,energetico,mental,espiritual,coerencia,intention,meta||{}]);
+  res.json(r.rows[0]);
+});
+
+// Respiração (start/finish)
+app.post("/api/breath/start", async (req,res)=>{
+  const uid = getUserId(req); if(!uid) return res.status(401).json({error:"no_user"});
+  const { cycles, video_used, audio_used } = req.body;
+  const duration_sec = (cycles||3)*14;
+  const r = await db.query(`
+    insert into breath_session(user_id,cycles,duration_sec,video_used,audio_used)
+    values($1,$2,$3,$4,$5) returning id
+  `,[uid, cycles||3, duration_sec, video_used||null, audio_used||null]);
+  res.json(r.rows[0]);
+});
+
+app.post("/api/events", async (req,res)=>{
+  const uid = getUserId(req); // pode ser null (pré-login)
+  const { name, props } = req.body;
+  await db.query(`insert into user_event(user_id,name,props) values($1,$2,$3)`,
+    [uid, name, props||{}]);
+  res.json({ ok:true });
+});
+```
+
+> **Obs.**: se o Agent preferir **Supabase**, é só mapear as mesmas tabelas; as rotas acima não mudam do ponto de vista do front.
+
+---
+
+# 3) Client — integração rápida
+
+**Bootstrap (logger + auth):**
+
+```ts
+// logger leve
+(window as any).esLog = (name:string, props:any={}) => {
+  console.log("[ES_EVENT]", name, props);
+  fetch("/api/events", {
+    method:"POST", headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ name, props })
+  }).catch(()=>{});
+};
+
+// auth
+async function ensureUser(){
+  const r = await fetch("/api/auth/me");
+  if(r.status===401){
+    // fallback anônimo
+    const anon = localStorage.getItem("anon_id") || crypto.randomUUID();
+    localStorage.setItem("anon_id", anon);
+    return { id: anon };
+  }
+  return r.json();
+}
+ensureUser().then(u=> esLog("auth_ready",{uid:u.id}));
+```
+
+**Check-in FEME:**
+
+```ts
+await fetch("/api/feme/checkin", {
+  method:"POST", headers:{ "Content-Type":"application/json" },
+  body: JSON.stringify({
+    fisico, energetico, mental, espiritual, coerencia, intention
+  })
+});
+esLog("feme_checkin_submitted", { fisico, energetico, mental, espiritual, coerencia });
+```
+
+**Respiração 4-4-6 (3 ciclos por padrão):**
+
+```ts
+esLog("start_breath_446",{cycles});
+await fetch("/api/breath/start",{
+  method:"POST", headers:{ "Content-Type":"application/json" },
+  body: JSON.stringify({ cycles, video_used:"/assets/inner-awakening.mp4" })
+});
+```
+
+---
+
+# 4) UI — ciclos configuráveis (padrão curto para demo)
+
+```tsx
+<BreathRitual
+  cycles={3}                         // Curta: ~42s   (6=~84s | 18=~4m12s)
+  onCycle={(i)=> esLog("cycle_tick",{i})}
+  onDone={()=> { esLog("finish_breath_446"); window.location.hash="#/portal-uau"; }}
+/>
+```
+
+---
+
+# 5) Critério de “MVP investidor-ready”
+
+Passa se:
+
+1. **Login real** (Replit Auth ou anônimo/UUID) + **persistência** no Postgres.
+2. **Eventos** chegando em `user_event` (pelo menos: `view_purpose`, `feme_checkin_submitted`, `start_breath_446`, `finish_breath_446`, `open_portal_uau`).
+3. **Fluxo** Mega → FEME → Respiração (3 ciclos) → Portal UAU, sem buracos.
+4. **Portal UAU** com vídeo real (o seu `inner-awakening.mp4`) ou loop Kaiber + texto/voz IA.
+
+---
+
+# 6) Mensagem curta pro Agent (cole agora)
+
+```
+Implement Pillar 1–2 for MVP:
+- Replit Auth (fallback anon UUID) + Postgres schema (app_user, feme_checkin, breath_session, user_event).
+- Endpoints: GET /api/auth/me; POST /api/feme/checkin; POST /api/breath/start; POST /api/events.
+- Front: wire esLog() to /api/events; set BreathRitual cycles=3 by default; call /api/breath/start.
+Report when tables + routes are live.
+```
+
+Isso fecha o que faltava. Se ele der *ok* nas migrations e rotas, você já tem **MVP de verdade** (com dados). Quer que eu te mande um **SELECT** de validação para cada tabela (pra ele colar e te retornar amostras)?
