@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { AppLogo, AppName } from "@/components/ui/app-logo";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { getCurrentUser } from "@/data/mock-users";
@@ -10,6 +11,9 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AchievementsGallery } from "@/components/purpose/achievements-gallery";
+import { ACHIEVEMENTS, getNextAchievement } from "@shared/achievements-config";
+import type { Achievement } from "@shared/schema";
 import LifeWheel from "@/components/purpose/life-wheel";
 import InspirationHub from "@/components/purpose/inspiration-hub";
 import ActionPlanner from "@/components/purpose/action-planner";
@@ -49,6 +53,135 @@ import {
 } from "lucide-react";
 
 import despertarInteriorVideo from "@assets/Despertar Interior_1760814881524.mp4";
+
+// Componente dinâmico de conquistas
+function AchievementsSection() {
+  // Buscar conquistas do usuário
+  const { data: userAchievements = [], isLoading } = useQuery<Achievement[]>({
+    queryKey: ['/api/achievements'],
+  });
+
+  // Buscar dados para calcular próximas conquistas
+  const { data: femeCheckins = [] } = useQuery<any[]>({
+    queryKey: ['/api/feme/checkins'],
+  });
+
+  const { data: breathSessions = [] } = useQuery<any[]>({
+    queryKey: ['/api/breath/sessions'],
+  });
+
+  const { data: userProgress } = useQuery<{ points?: number; dailyStreak?: number }>({
+    queryKey: ['/api/progress'],
+  });
+
+  // Últimas 4 conquistas desbloqueadas
+  const recentAchievements = [...userAchievements]
+    .sort((a, b) => new Date(b.earnedAt || 0).getTime() - new Date(a.earnedAt || 0).getTime())
+    .slice(0, 4);
+
+  // Calcular próxima conquista
+  const nextCheckinAchievement = getNextAchievement('checkin', femeCheckins.length);
+  const nextBreathAchievement = getNextAchievement('breath', breathSessions.length);
+  const nextPointsAchievement = getNextAchievement('points', userProgress?.points || 0);
+
+  const nextAchievements = [nextCheckinAchievement, nextBreathAchievement, nextPointsAchievement].filter(Boolean);
+
+  if (isLoading) {
+    return (
+      <div className="text-center text-gray-500 py-4">
+        Carregando conquistas...
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-semibold text-lg">🏆 Conquistas</h3>
+        <AchievementsGallery
+          trigger={
+            <Button variant="outline" size="sm" data-testid="button-view-all-achievements">
+              Ver Todas ({userAchievements.length})
+            </Button>
+          }
+        />
+      </div>
+
+      {/* Últimas conquistas desbloqueadas */}
+      {recentAchievements.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {recentAchievements.map((achievement) => {
+            const config = ACHIEVEMENTS[achievement.achievementKey || ''];
+            return (
+              <div
+                key={achievement.id}
+                className="text-center p-3 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border-2 border-yellow-200"
+                data-testid={`achievement-badge-${achievement.achievementKey}`}
+              >
+                <div className="text-2xl mb-2">{config?.icon || '🏆'}</div>
+                <div className="text-xs font-medium">{achievement.title}</div>
+                {achievement.pointsEarned && (
+                  <Badge className="mt-1 bg-green-100 text-green-700 text-xs">
+                    +{achievement.pointsEarned}pts
+                  </Badge>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <Award className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+          <p className="text-sm text-gray-600">Nenhuma conquista desbloqueada ainda</p>
+          <p className="text-xs text-gray-500 mt-1">Complete atividades para desbloquear conquistas!</p>
+        </div>
+      )}
+
+      {/* CTAs para próximas conquistas */}
+      {nextAchievements.length > 0 && (
+        <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+          <h4 className="text-sm font-semibold text-purple-800 mb-2">🎯 Próximas Conquistas</h4>
+          <div className="space-y-2">
+            {nextAchievements.slice(0, 2).map((achievement) => {
+              if (!achievement) return null;
+              
+              let currentValue = 0;
+              let actionText = '';
+              
+              if (achievement.category === 'checkin') {
+                currentValue = femeCheckins.length;
+                actionText = 'check-ins FEME';
+              } else if (achievement.category === 'breath') {
+                currentValue = breathSessions.length;
+                actionText = 'sessões de respiração';
+              } else if (achievement.category === 'points') {
+                currentValue = userProgress?.points || 0;
+                actionText = 'pontos';
+              }
+              
+              const remaining = achievement.target - currentValue;
+              
+              return (
+                <div
+                  key={achievement.key}
+                  className="flex items-center justify-between text-sm"
+                  data-testid={`next-achievement-${achievement.key}`}
+                >
+                  <span className="text-gray-700">
+                    {achievement.icon} Falta{remaining > 1 ? 'm' : ''} {remaining} {actionText} para <strong>{achievement.title}</strong>
+                  </span>
+                  <Badge variant="outline" className="text-xs">
+                    +{achievement.points}pts
+                  </Badge>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Purpose() {
   const [activeTab, setActiveTab] = useState("journey");
@@ -567,27 +700,7 @@ export default function Purpose() {
                 </div>
               </div>
               
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Conquistas Recentes</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-3 bg-purple-50 rounded-lg">
-                    <Award className="w-6 h-6 mx-auto mb-2 text-purple-600" />
-                    <div className="text-sm font-medium">Meditador</div>
-                  </div>
-                  <div className="text-center p-3 bg-blue-50 rounded-lg">
-                    <Star className="w-6 h-6 mx-auto mb-2 text-blue-600" />
-                    <div className="text-sm font-medium">Explorador</div>
-                  </div>
-                  <div className="text-center p-3 bg-green-50 rounded-lg">
-                    <Heart className="w-6 h-6 mx-auto mb-2 text-green-600" />
-                    <div className="text-sm font-medium">Conectado</div>
-                  </div>
-                  <div className="text-center p-3 bg-indigo-50 rounded-lg">
-                    <Sparkles className="w-6 h-6 mx-auto mb-2 text-indigo-600" />
-                    <div className="text-sm font-medium">Iluminado</div>
-                  </div>
-                </div>
-              </div>
+              <AchievementsSection />
             </CardContent>
           </Card>
         </TabsContent>

@@ -24,6 +24,8 @@ export interface IStorage {
   // Achievements
   getAchievementsByUserId(userId: number): Promise<Achievement[]>;
   createAchievement(achievement: InsertAchievement): Promise<Achievement>;
+  unlockAchievement(userId: number, achievementKey: string): Promise<{ unlocked: boolean; achievement?: Achievement; alreadyUnlocked?: boolean }>;
+  checkAndUnlockAchievements(userId: number): Promise<Achievement[]>;
   
   // FEME / Essentia methods
   createFemeCheckin(checkin: InsertFemeCheckin): Promise<FemeCheckin>;
@@ -127,9 +129,14 @@ class MemStorage implements IStorage {
 
     usersData.forEach(userData => {
       const user: User = { 
-        id: this.currentId++, 
+        id: this.currentId++,
+        replitId: null,
         name: userData.name,
         email: userData.email,
+        whatsapp: null,
+        firstName: null,
+        lastName: null,
+        profileImageUrl: null,
         initials: userData.name.split(' ').map(n => n[0]).join(''),
         role: 'user',
         avatar: null,
@@ -141,9 +148,9 @@ class MemStorage implements IStorage {
 
     // Sample achievements
     const achievementsData = [
-      { userId: 1, title: "Primeiro Login", description: "Bem-vindo ao Flow Ecosystem!", appType: "flow", achievementType: "milestone", earnedAt: new Date() },
-      { userId: 2, title: "Explorador", description: "Visitou todos os apps", appType: "ecosystem", achievementType: "exploration", earnedAt: new Date() },
-      { userId: 3, title: "Mestre do Flow", description: "Usou o Flow por 30 dias", appType: "flow", achievementType: "streak", earnedAt: new Date() }
+      { userId: 1, achievementKey: 'primeiro_login', title: "Primeiro Login", description: "Bem-vindo ao Flow Ecosystem!", appType: "flow", achievementType: "milestone", pointsEarned: 10, earnedAt: new Date(), progress: 100, metadata: {} },
+      { userId: 2, achievementKey: 'explorador', title: "Explorador", description: "Visitou todos os apps", appType: "ecosystem", achievementType: "exploration", pointsEarned: 25, earnedAt: new Date(), progress: 100, metadata: {} },
+      { userId: 3, achievementKey: 'mestre_flow', title: "Mestre do Flow", description: "Usou o Flow por 30 dias", appType: "flow", achievementType: "streak", pointsEarned: 50, earnedAt: new Date(), progress: 100, metadata: {} }
     ];
 
     achievementsData.forEach(achievementData => {
@@ -269,6 +276,7 @@ class MemStorage implements IStorage {
       replitId: insertUser.replitId || null,
       name: insertUser.name || insertUser.email?.split('@')[0] || 'User',
       email: insertUser.email || null,
+      whatsapp: insertUser.whatsapp || null,
       firstName: insertUser.firstName || null,
       lastName: insertUser.lastName || null,
       profileImageUrl: insertUser.profileImageUrl || null,
@@ -320,6 +328,7 @@ class MemStorage implements IStorage {
           ? `${userData.firstName} ${userData.lastName}`
           : userData.email?.split('@')[0] || 'User',
         email: userData.email,
+        whatsapp: null,
         firstName: userData.firstName,
         lastName: userData.lastName,
         profileImageUrl: userData.profileImageUrl,
@@ -345,11 +354,141 @@ class MemStorage implements IStorage {
     const achievement: Achievement = { 
       ...insertAchievement, 
       id,
+      achievementKey: insertAchievement.achievementKey || null,
       description: insertAchievement.description || null,
-      earnedAt: insertAchievement.earnedAt || null
+      pointsEarned: insertAchievement.pointsEarned || null,
+      earnedAt: insertAchievement.earnedAt || null,
+      progress: insertAchievement.progress || null,
+      metadata: insertAchievement.metadata || {}
     };
     this.achievements.set(id, achievement);
     return achievement;
+  }
+
+  async unlockAchievement(userId: number, achievementKey: string): Promise<{ unlocked: boolean; achievement?: Achievement; alreadyUnlocked?: boolean }> {
+    // Import the achievements config dynamically
+    const { ACHIEVEMENTS } = await import("@shared/achievements-config");
+    
+    const achievementConfig = ACHIEVEMENTS[achievementKey];
+    if (!achievementConfig) {
+      return { unlocked: false };
+    }
+
+    // Check if already unlocked
+    const existing = Array.from(this.achievements.values()).find(
+      a => a.userId === userId && a.achievementKey === achievementKey
+    );
+
+    if (existing) {
+      return { unlocked: false, alreadyUnlocked: true };
+    }
+
+    // Create the achievement
+    const achievement: Achievement = {
+      id: this.currentId++,
+      userId,
+      achievementKey,
+      title: achievementConfig.title,
+      description: achievementConfig.description,
+      appType: 'essentia',
+      achievementType: achievementConfig.category,
+      pointsEarned: achievementConfig.points,
+      earnedAt: new Date(),
+      progress: 100,
+      metadata: {}
+    };
+
+    this.achievements.set(achievement.id, achievement);
+
+    // Update user progress with bonus points
+    await this.updateUserProgress(userId, achievementConfig.points);
+
+    return { unlocked: true, achievement };
+  }
+
+  async checkAndUnlockAchievements(userId: number): Promise<Achievement[]> {
+    const { ACHIEVEMENTS, checkAchievement } = await import("@shared/achievements-config");
+    
+    const newAchievements: Achievement[] = [];
+
+    // Get user statistics
+    const femeCheckins = await this.getFemeCheckinsByUserId(userId);
+    const breathSessions = await this.getBreathSessionsByUserId(userId);
+    const userProgress = await this.getUserProgress(userId);
+    const actionPlans = await this.listActionPlansByUserId(userId);
+    const aiSuggestions = await this.getAiSuggestionsByUserId(userId);
+    
+    // Calculate streak (simplified - would need date checking in production)
+    const allDates = [
+      ...femeCheckins.map(c => c.createdAt),
+      ...breathSessions.map(s => s.completedAt),
+    ].filter((d): d is Date => d !== null).sort((a, b) => b.getTime() - a.getTime());
+    
+    const currentStreak = this.calculateStreak(allDates);
+    const totalPoints = userProgress?.points || 0;
+
+    // Check each achievement
+    for (const [key, config] of Object.entries(ACHIEVEMENTS)) {
+      let currentValue = 0;
+
+      switch (config.category) {
+        case 'checkin':
+          currentValue = femeCheckins.length;
+          break;
+        case 'breath':
+          currentValue = breathSessions.length;
+          break;
+        case 'points':
+          currentValue = totalPoints;
+          break;
+        case 'streak':
+          currentValue = currentStreak;
+          break;
+        case 'journey':
+          if (key === 'plano_criado') currentValue = actionPlans.length;
+          if (key === 'ia_terapeuta') currentValue = aiSuggestions.length;
+          if (key === 'portal_uau') {
+            const portalEvents = await this.getUserEventsByUserId(userId);
+            currentValue = portalEvents.filter(e => e.eventName === 'portal_uau_completed').length;
+          }
+          break;
+      }
+
+      if (checkAchievement(key, currentValue)) {
+        const result = await this.unlockAchievement(userId, key);
+        if (result.unlocked && result.achievement) {
+          newAchievements.push(result.achievement);
+        }
+      }
+    }
+
+    return newAchievements;
+  }
+
+  private calculateStreak(dates: Date[]): number {
+    if (dates.length === 0) return 0;
+    
+    let streak = 1;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    for (let i = 0; i < dates.length - 1; i++) {
+      const current = new Date(dates[i]);
+      current.setHours(0, 0, 0, 0);
+      
+      const next = new Date(dates[i + 1]);
+      next.setHours(0, 0, 0, 0);
+      
+      const diffDays = Math.floor((current.getTime() - next.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (diffDays === 1) {
+        streak++;
+      } else if (diffDays > 1) {
+        break;
+      }
+    }
+    
+    return streak;
   }
 
   // Financial data methods

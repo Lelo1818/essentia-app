@@ -225,6 +225,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Achievements endpoints
+  app.get('/api/achievements', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const achievements = await storage.getAchievementsByUserId(user.id);
+      res.json(achievements);
+    } catch (error) {
+      console.error("Error fetching achievements:", error);
+      res.status(500).json({ message: "Failed to fetch achievements" });
+    }
+  });
+
+  app.post('/api/achievements/check', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const newAchievements = await storage.checkAndUnlockAchievements(user.id);
+      
+      res.json({ 
+        newAchievements,
+        count: newAchievements.length,
+        message: newAchievements.length > 0 
+          ? `${newAchievements.length} nova(s) conquista(s) desbloqueada(s)!`
+          : 'Nenhuma nova conquista no momento.'
+      });
+    } catch (error) {
+      console.error("Error checking achievements:", error);
+      res.status(500).json({ message: "Failed to check achievements" });
+    }
+  });
+
   // AI Endpoints - Anthropic Claude 3
   app.post('/api/ai/selfsession', async (req: any, res) => {
     try {

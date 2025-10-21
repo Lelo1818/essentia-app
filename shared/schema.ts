@@ -238,10 +238,12 @@ export const goals = pgTable("goals", {
 export const achievements = pgTable("achievements", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
+  achievementKey: varchar("achievement_key", { length: 100 }), // Key único da conquista (ex: primeiro_checkin, checkin_bronze)
   appType: varchar("app_type", { length: 20 }).notNull(), // flow, edu, purpose, essentia
   achievementType: varchar("achievement_type", { length: 100 }).notNull(), // primeiro_checkin, meditador_bronze, etc
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
+  pointsEarned: integer("points_earned").default(0), // Pontos ganhos com esta conquista
   earnedAt: timestamp("earned_at").defaultNow(),
   progress: integer("progress").default(0), // Para conquistas com progresso (ex: 5/10)
   metadata: jsonb("metadata"), // Dados extras (pontos ganhos, etc)
