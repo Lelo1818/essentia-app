@@ -83,9 +83,30 @@ export default function BiometricSensors() {
       if (!response.ok) throw new Error("Erro ao gerar análise");
       return response.json();
     },
-    onSuccess: (data: any) => {
+    onSuccess: async (data: any) => {
+      // Salvar sugestão no histórico para não perder
+      try {
+        await fetch("/api/suggestions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            suggestionType: "biometric_insight",
+            content: data.insight,
+            source: "biometric",
+            metadata: {
+              heartRate: Math.round(biometricData.heartRate),
+              stressLevel: Math.round(biometricData.stressLevel),
+              energyLevel: Math.round(biometricData.energyLevel),
+              emotionalState: biometricData.emotionalState,
+            },
+          }),
+        });
+      } catch (error) {
+        console.error("Erro ao salvar sugestão:", error);
+      }
+
       toast({
-        title: "🤖 Análise IA Concluída",
+        title: "🤖 Análise IA Concluída (Salva no Histórico!)",
         description: data.insight,
         duration: 15000,
       });
