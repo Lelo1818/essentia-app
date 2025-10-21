@@ -85,8 +85,9 @@ export default function BiometricSensors() {
     },
     onSuccess: async (data: any) => {
       // Salvar sugestão no histórico para não perder
+      let savedSuccessfully = false;
       try {
-        await fetch("/api/suggestions", {
+        const saveResponse = await fetch("/api/suggestions", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -101,12 +102,27 @@ export default function BiometricSensors() {
             },
           }),
         });
+        
+        if (!saveResponse.ok) {
+          throw new Error(`Falha ao salvar: ${saveResponse.status}`);
+        }
+        
+        savedSuccessfully = true;
       } catch (error) {
-        console.error("Erro ao salvar sugestão:", error);
+        console.error("❌ ERRO CRÍTICO: Sugestão NÃO foi salva:", error);
+        toast({
+          title: "⚠️ Aviso: Sugestão não salva",
+          description: "A análise foi gerada mas não foi salva no histórico. Por favor, anote manualmente.",
+          variant: "destructive",
+          duration: 10000,
+        });
       }
 
+      // Só mostra "Salva" se realmente salvou
       toast({
-        title: "🤖 Análise IA Concluída (Salva no Histórico!)",
+        title: savedSuccessfully 
+          ? "🤖 Análise IA Concluída ✓ Salva no Histórico!" 
+          : "🤖 Análise IA Concluída",
         description: data.insight,
         duration: 15000,
       });
