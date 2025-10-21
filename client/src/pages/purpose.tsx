@@ -312,10 +312,7 @@ export default function Purpose() {
                         case "Descoberta de Paixões":
                           return () => setActiveTab('therapist');
                         case "Relacionamentos Significativos":
-                          return () => {
-                            setActiveTab('therapist');
-                            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
-                          };
+                          return () => setActiveTab('community');
                         case "Missão e Contribuição":
                           return () => setActiveTab('wheel');
                         case "Vida com Propósito":
@@ -334,7 +331,7 @@ export default function Purpose() {
                         case "Descoberta de Paixões":
                           return "💬 Terapeuta IA";
                         case "Relacionamentos Significativos":
-                          return "💝 Conexões";
+                          return "💝 Comunidade";
                         case "Missão e Contribuição":
                           return "🎯 Roda da Vida";
                         case "Vida com Propósito":
