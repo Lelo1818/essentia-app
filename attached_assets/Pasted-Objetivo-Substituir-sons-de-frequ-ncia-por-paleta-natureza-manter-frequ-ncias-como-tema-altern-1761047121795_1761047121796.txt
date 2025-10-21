@@ -1,0 +1,54 @@
+Objetivo: Substituir “sons de frequência” por “paleta natureza”, manter frequências como tema alternativo (off por default), e instrumentar métricas. Não reescrever o projeto.
+
+1) Assets:
+- Criar /public/audio/nature/ com:
+  - wooden_click.mp3 (50–120ms)
+  - soft_drum_tap.mp3 (120–180ms)
+  - bamboo_chime.mp3 (150–250ms)
+  - breath_tick.mp3 (80–120ms)
+  - forest_bed_loop.mp3 (10–30s, loop seamless)
+- Manter /public/audio/frequency/ existente (tema alternativo).
+
+2) Módulo de som:
+- client/src/lib/sound.ts:
+  - Carregar “nature” como tema padrão; “frequency” como opção.
+  - API: init(theme='nature'), play(name), setTheme(theme), setEnabled(bool), setAmbience(bool).
+  - Mixagem: volumes fixos (UI −12 dB, ambience −18 dB), rate-limit 80ms para play().
+  - Ambiência: loop com fade-in/out de 600ms; pausar automaticamente durante vídeos/áudios.
+
+3) UI de controle:
+- Adicionar no header/config:
+  - Toggle Som (🔊/🔇) → localStorage sound_enabled.
+  - Select Tema de Som: nature | frequency → localStorage sound_theme.
+  - Toggle Ambiência: on/off → localStorage ambience_enabled (default on).
+
+4) Integrações:
+- Botões padrão: tocar wooden_click em onClick.
+- Ações de sucesso (pontos/planos): soft_drum_tap.
+- Abrir/Fechar modais: bamboo_chime.
+- Respiração 4-4-6: no componente BreathRing, tocar breath_tick nos marcadores (início/segurar/soltar).
+- Vídeo (MediaPlayer): ao iniciar play, setAmbience(false); ao encerrar, setAmbience(true) com fade.
+
+5) Métricas:
+- POST /api/events para:
+  - {event:'sound_theme_set', value:'nature'|'frequency'}
+  - {event:'sound_toggle', value:true|false}
+  - {event:'ambience_toggle', value:true|false}
+  - {event:'ui_click_played'}
+  - {event:'breath_tick_played'}
+- Garantir também já existente: video quartiles + video_complete + cta_after_video.
+
+6) Performance & A11y:
+- Lazy-load do loop de ambiência somente após primeiro gesto do usuário.
+- Respeitar autoplay policy (inicializar AudioContext após interação).
+- Adicionar aria-live 'polite' para feedback de pontos.
+
+7) Entregas:
+- Atualizar /purpose e /breath com a nova paleta:
+  - /purpose: tocar ambiência ao entrar; pausar quando vídeo tocar; retomar ao finalizar.
+  - /breath: breath_tick sincronizado nos tempos 4-4-6.
+- Imprimir no console trechos alterados:
+  - client/src/lib/sound.ts
+  - client/src/components/BreathRing.tsx (onde toca tick)
+  - client/src/components/MediaPlayer.tsx (onde pausa/retoma ambiência)
+- Não remover a opção “frequency”; apenas manter off por default.
