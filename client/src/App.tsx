@@ -94,6 +94,9 @@ import EssentiaDemo90s from "@/pages/essentia-demo-90s";
 import Thera from "@/pages/thera";
 import PortalUauPage from "@/pages/portal-uau";
 import Breathing446Page from "@/pages/breathing-446";
+import JourneyPage from "@/pages/journey";
+import BreathPage from "@/pages/breath";
+import PointsPage from "@/pages/points";
 
 
 
@@ -120,6 +123,9 @@ function Router() {
       <Route path="/eduvibe-willingham" component={EduVibeWillingham} />
       <Route path="/eduvibe-universal" component={EduVibeUniversal} />
       <Route path="/purpose" component={PurposeApp} />
+      <Route path="/journey" component={JourneyPage} />
+      <Route path="/breath" component={BreathPage} />
+      <Route path="/points" component={PointsPage} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />
       <Route path="/flow-dashboard" component={Dashboard} />

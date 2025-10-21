@@ -1,0 +1,71 @@
+Objetivo: Dar vida à UI com SOM + ANIMAÇÕES e ligar todos os botões do fluxo de Portal/Jornada, mantendo o tracking para MVP mensurável.
+
+## 1) SOUND DESIGN (UI Kit)
+- Adicionar micro-sons (volume baixo) para: click, success, open/close, tick de respiração.
+- Criar /public/audio com placeholders (ogg/mp3 curtos: 50–200ms).
+  - ui_click, ui_success, ui_open, ui_close, breath_tick.
+- Implementar módulo client/src/lib/sound.ts com:
+  - preload dos sons (AudioContext ou Howler)
+  - função play(name: 'ui_click'|'ui_success'|'ui_open'|'ui_close'|'breath_tick')
+  - rate-limit (min 80ms entre plays) para evitar “cacofonia”
+  - respeitar autoplay policy: só habilitar após primeiro gesto do usuário
+- Toggle Global:
+  - Botão “🔊/🔇 Som” no header/config
+  - Persistir em localStorage (sound_enabled=true/false)
+- Instrumentar eventos:
+  - POST /api/events {event:'sound_toggle', value:true|false}
+  - Contar clicks com {event:'ui_click_played'}
+
+## 2) ANIMAÇÕES (leve e responsivo)
+- Adicionar Lottie (ou CSS keyframes se preferir) para:
+  - feedback de botão (scale/opacity 120–150ms)
+  - “ring” de respiração sincronizado (expand/contração 4-4-6)
+- Criar componente <BreathRing mode="446"> com tempos configuráveis e tick sonoro (breath_tick) no start/hold/expire.
+- Microfeedback ao ganhar pontos: badge flutuante “+10” com fade/scale.
+
+## 3) VÍDEO “PORTAL UAU” + BOTÕES FUNCIONANDO
+- Garantir que o botão **“Ver Vídeo”** na Jornada abra o mesmo player do Portal (componente único <MediaPlayer assetKey="portal_uau">).
+- <MediaPlayer>:
+  - HLS (hls.js) + poster; fallback para <video> nativo.
+  - Eventos enviados a /api/media/events: play, pause, quartile_25/50/75/complete, error.
+  - Ao complete → mostrar CTA: “Fazer Check-in FEME” (aciona pontos e navega).
+- Conectar botões do fluxo:
+  - **Conversar**: abre chat IA real (já existente /api/ai/selfsession). Se ainda não existir, criar endpoint simples que retorna resposta do Claude 3 com base no contexto do portal atual.
+  - **Insight**: chama /api/ai/insight e exibe texto curto (<=280 chars).
+  - **Atualizar Pontuação**: POST /api/progress {delta: number} e atualizar UI em tempo real.
+  - **Criar Plano de Ação**: abrir modal (título, meta, primeiro passo) e salvar via POST /api/plans.
+  - **Ver Histórico**: listar últimos eventos relevantes (FEME, vídeo complete, pontos) consumindo /api/history (se não existir, criar agregando das tabelas já existentes).
+  - **Focar Aqui**: painel com 3 sugestões (IA) + próximos passos; se a IA estiver indisponível, fallback para sugestões estáticas.
+  - **Exportar Dados**: gerar JSON (FEME, pontos, eventos media) e fazer download.
+
+## 4) MÉTRICAS (MVP mensurável)
+- Registrar:
+  - event:'video_complete', assetKey
+  - event:'cta_clicked', cta:'feme_checkin' | 'open_chat' | 'insight'
+  - event:'points_updated', delta
+  - event:'plan_created'
+  - event:'onboarding_mode', value:'express'|'reflexivo'
+  - event:'sound_toggle', value:true|false
+- Calcular no backend (ou preparar query) KPIs:
+  - time_to_first_relief (tempo até concluir 1 ciclo 4-4-6)
+  - video_completion_rate por assetKey
+  - cta_after_video_rate (clique até 90s pós-complete)
+  - D1/D7 retorno (se já armazenamos user/login)
+
+## 5) QUALIDADE & PERF
+- Debounce de cliques (150ms) em botões principais.
+- Body limit 25KB em /api/media/events e /api/events.
+- Lazy-load do Lottie/player somente quando a seção estiver visível.
+- Acessibilidade mínima: role/button, aria-live para ganhos de pontos.
+
+## 6) ENTREGAS (URLs e código)
+- Publicar e retornar 3 rotas prontas:
+  a) /journey (com “Ver Vídeo” funcionando e CTA pós-complete)
+  b) /breath (ring 4-4-6 com tick e animação)
+  c) /points (pontuação em tempo real + badge + histórico)
+- Ao final, imprimir no console os trechos de código criados/alterados:
+  - client/src/lib/sound.ts
+  - client/src/components/MediaPlayer.tsx
+  - client/src/components/BreathRing.tsx
+  - Integrações dos botões citados
+- Manter todo o resto do projeto como está. Não reescrever do zero.

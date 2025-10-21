@@ -317,6 +317,152 @@ Contexto FEME atual: ${femeContext}`;
       res.status(500).json({ message: "Failed to generate insight" });
     }
   });
+
+  // Progress / Gamification Endpoints
+  app.post('/api/progress', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const schema = z.object({
+        delta: z.number().int().min(-1000).max(1000),
+        activity: z.string().max(100).optional(),
+      });
+
+      const { delta, activity } = schema.parse(req.body);
+
+      // Track event
+      await storage.createUserEvent({
+        userId: user.id,
+        eventName: 'points_updated',
+        eventProps: { delta, activity },
+      });
+
+      res.json({ 
+        success: true,
+        delta,
+        message: `${delta > 0 ? 'Ganhou' : 'Perdeu'} ${Math.abs(delta)} pontos!`
+      });
+    } catch (error) {
+      console.error("Error updating progress:", error);
+      res.status(500).json({ message: "Failed to update progress" });
+    }
+  });
+
+  // Plans Endpoint
+  app.post('/api/plans', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const schema = z.object({
+        title: z.string().min(3).max(255),
+        goal: z.string().max(1000).optional(),
+        firstStep: z.string().max(500).optional(),
+      });
+
+      const planData = schema.parse(req.body);
+
+      // Track event
+      await storage.createUserEvent({
+        userId: user.id,
+        eventName: 'plan_created',
+        eventProps: planData,
+      });
+
+      res.json({ 
+        success: true,
+        plan: planData,
+        message: 'Plano criado com sucesso!'
+      });
+    } catch (error) {
+      console.error("Error creating plan:", error);
+      res.status(500).json({ message: "Failed to create plan" });
+    }
+  });
+
+  // History Endpoint
+  app.get('/api/history', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const limit = Math.min(Number(req.query.limit) || 20, 100);
+
+      // Get recent events
+      const events = await storage.getUserEventsByUserId(user.id);
+      const recentEvents = events.slice(0, limit);
+
+      // Get FEME checkins
+      const femeCheckins = await storage.getFemeCheckinsByUserId(user.id);
+      const recentFeme = femeCheckins.slice(0, 5);
+
+      // Get breath sessions
+      const breathSessions = await storage.getBreathSessionsByUserId(user.id);
+      const recentBreath = breathSessions.slice(0, 5);
+
+      res.json({
+        events: recentEvents,
+        femeCheckins: recentFeme,
+        breathSessions: recentBreath,
+        summary: {
+          totalEvents: events.length,
+          totalFemeCheckins: femeCheckins.length,
+          totalBreathSessions: breathSessions.length,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching history:", error);
+      res.status(500).json({ message: "Failed to fetch history" });
+    }
+  });
+
+  // Media Events Endpoint
+  app.post('/api/media/events', async (req: any, res) => {
+    try {
+      const schema = z.object({
+        assetKey: z.string().max(100),
+        eventType: z.enum(['play', 'pause', 'quartile_25', 'quartile_50', 'quartile_75', 'complete', 'error', 'cta_clicked']),
+        meta: z.record(z.any()).optional(),
+      });
+
+      const eventData = schema.parse(req.body);
+
+      // Get user if authenticated (optional for media tracking)
+      let userId = null;
+      if (req.user?.claims?.sub) {
+        const user = await storage.getUserByReplitId(req.user.claims.sub);
+        userId = user?.id || null;
+      }
+
+      // Track event
+      await storage.createUserEvent({
+        userId,
+        eventName: `media_${eventData.eventType}`,
+        eventProps: {
+          assetKey: eventData.assetKey,
+          ...eventData.meta,
+        },
+      });
+
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error tracking media event:", error);
+      res.status(500).json({ message: "Failed to track media event" });
+    }
+  });
   
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));
