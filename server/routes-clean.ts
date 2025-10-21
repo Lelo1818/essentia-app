@@ -226,7 +226,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // AI Endpoints - Anthropic Claude 3
-  app.post('/api/ai/selfsession', isAuthenticated, async (req: any, res) => {
+  app.post('/api/ai/selfsession', async (req: any, res) => {
     try {
       // Validate input
       const schema = z.object({
@@ -268,25 +268,16 @@ Contexto do usuário: ${context || 'Não fornecido'}`;
     }
   });
 
-  app.post('/api/ai/insight', isAuthenticated, async (req: any, res) => {
+  app.post('/api/ai/insight', async (req: any, res) => {
     try {
-      const replitId = req.user.claims.sub;
-      const user = await storage.getUserByReplitId(replitId);
+      // Validate input
+      const schema = z.object({
+        context: z.string().max(500).optional(),
+      });
       
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
+      const { context } = schema.parse(req.body);
 
-      // Get latest FEME checkin for context
-      const checkins = await storage.getFemeCheckinsByUserId(user.id);
-      const latestCheckin = checkins[0];
-
-      let femeContext = "Sem check-in FEME recente";
-      if (latestCheckin) {
-        femeContext = `Último check-in FEME: Físico ${latestCheckin.fisico}/10, Energético ${latestCheckin.energetico}/10, Mental ${latestCheckin.mental}/10, Espiritual ${latestCheckin.espiritual}/10, Coerência ${(latestCheckin.coerencia * 100).toFixed(0)}%`;
-      }
-
-      const systemPrompt = `Você é um oráculo de sabedoria que gera insights profundos e simbólicos baseados no estado FEME do usuário.
+      const systemPrompt = `Você é um oráculo de sabedoria que gera insights profundos e simbólicos baseados no contexto do usuário.
 
 Suas mensagens devem ser:
 - Máximo 280 caracteres (como um tweet)
@@ -295,7 +286,7 @@ Suas mensagens devem ser:
 - Inspiradoras e transformadoras
 - Em português brasileiro
 
-Contexto FEME atual: ${femeContext}`;
+Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
 
       const message = await anthropic.messages.create({
         max_tokens: 150,
