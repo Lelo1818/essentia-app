@@ -37,3 +37,30 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Runtime**: Node.js 20.
 -   **Build Tools**: Vite.
 -   **Deployment**: Replit infrastructure.
+
+## Recent Changes (Oct 21, 2025)
+
+### Essentia MVP - Pilares 1 e 2 Implementados
+
+**Pilar 1: Autenticação e Persistência**
+-   ✅ Replit Auth integrado (OpenID Connect) com sessões PostgreSQL
+-   ✅ 3 novas tabelas criadas: `feme_checkins`, `breath_sessions`, `user_events`
+-   ✅ Frontend: hook `useAuth` para gerenciar estado de autenticação
+-   ✅ Storage: Interface `IStorage` estendida com 6 novos métodos FEME
+-   ✅ Implementação atual: MemStorage (in-memory) para desenvolvimento
+
+**Pilar 2: Backend Metrics & Analytics**
+-   ✅ Sistema `esLog` conectado ao backend via `/api/events`
+-   ✅ 6 endpoints autenticados criados:
+    -   POST/GET `/api/feme/checkin` - Check-ins FEME (Físico, Energético, Mental, Espiritual)
+    -   POST/GET `/api/breath/session` - Sessões de respiração 4-4-6
+    -   POST/GET `/api/events` - Analytics genéricos (POST aberto para pré-login)
+-   ✅ Validação Zod em todos endpoints (ranges: FEME 0-10, coerência 0-1)
+-   ✅ Limite de 5KB para eventProps no endpoint `/api/events`
+
+**Próximas Melhorias (Backlog)**
+-   🔄 Rate limiting no endpoint `/api/events` (prevenir abuso)
+-   🔄 Adicionar índices (user_id, created_at) nas tabelas FEME para performance
+-   🔄 Migração de MemStorage → DatabaseStorage (Drizzle + PostgreSQL)
+-   🔄 Pilar 3: Fluxo narrativo Mega → FEME → Respiração → Portal UAU
+-   🔄 Pilar 4: Portal UAU cinematográfico (vídeos, narração, transições)
