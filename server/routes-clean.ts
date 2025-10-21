@@ -549,6 +549,80 @@ Exemplos RUINS:
     }
   });
 
+  // AI Suggestions Endpoint - Salvar sugestões/insights da IA
+  app.post('/api/suggestions', async (req: any, res) => {
+    try {
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const schema = z.object({
+        suggestionType: z.string().max(50), // biometric_insight, therapist_advice, plan_recommendation
+        content: z.string().min(1).max(5000),
+        source: z.string().max(50), // biometric, sofia, marcus, luna, leo, system
+        metadata: z.any().optional(),
+      });
+
+      const suggestionData = schema.parse(req.body);
+
+      // Create suggestion in storage
+      const createdSuggestion = await storage.createAiSuggestion({
+        userId: user.id,
+        ...suggestionData,
+      });
+
+      res.json({ 
+        success: true,
+        suggestion: createdSuggestion,
+        message: 'Sugestão salva com sucesso!'
+      });
+    } catch (error) {
+      console.error("Error creating suggestion:", error);
+      res.status(500).json({ message: "Failed to create suggestion" });
+    }
+  });
+
+  // Get AI Suggestions Endpoint
+  app.get('/api/suggestions', async (req: any, res) => {
+    try {
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const limit = parseInt(req.query.limit as string) || 50;
+
+      // Get all suggestions for this user
+      const suggestions = await storage.getAiSuggestionsByUserId(user.id, limit);
+
+      res.json({ 
+        success: true,
+        suggestions,
+        count: suggestions.length
+      });
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+      res.status(500).json({ message: "Failed to fetch suggestions" });
+    }
+  });
+
   // History Endpoint
   app.get('/api/history', async (req: any, res) => {
     try {
