@@ -434,6 +434,36 @@ Contexto do usuário: ${context || 'Momento de reflexão e autoconhecimento'}`;
     }
   });
 
+  // Get Plans Endpoint
+  app.get('/api/plans', async (req: any, res) => {
+    try {
+      // TODO: Re-enable authentication for production
+      const replitId = req.user?.claims?.sub || 'test-user';
+      let user = await storage.getUserByReplitId(replitId);
+      
+      // Create test user if not exists (for testing without auth)
+      if (!user && replitId === 'test-user') {
+        user = await storage.createUser({ replitId, displayName: 'Test User' });
+      }
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Get all plans for this user
+      const plans = await storage.listActionPlansByUserId(user.id);
+
+      res.json({ 
+        success: true,
+        plans,
+        count: plans.length
+      });
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+      res.status(500).json({ message: "Failed to fetch plans" });
+    }
+  });
+
   // History Endpoint
   app.get('/api/history', async (req: any, res) => {
     try {

@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { useMutation } from "@tanstack/react-query";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { 
   PieChart, 
@@ -17,13 +18,25 @@ import {
   Briefcase,
   Home,
   Star,
-  RotateCcw
+  RotateCcw,
+  CheckCircle,
+  Clock,
+  ListChecks,
+  Calendar
 } from "lucide-react";
 
 export default function LifeWheel() {
   const { toast } = useToast();
   const [selectedArea, setSelectedArea] = useState(null);
   const [floatingPoints, setFloatingPoints] = useState<Array<{id: number, points: number, x: number, y: number}>>([]);
+  const [showHistoryDialog, setShowHistoryDialog] = useState(false);
+  const [historyData, setHistoryData] = useState<any>(null);
+
+  // Query para buscar planos
+  const { data: plansData, refetch: refetchPlans } = useQuery({
+    queryKey: ['/api/plans'],
+    enabled: true,
+  });
 
   const updateProgressMutation = useMutation({
     mutationFn: async (delta: number) => {
@@ -77,9 +90,10 @@ export default function LifeWheel() {
     },
     onSuccess: (data: any) => {
       console.log("Plano criado:", data.plan);
+      refetchPlans(); // Atualiza lista de planos
       toast({
         title: "✅ Plano Criado!",
-        description: `"${data.plan.title}" - Primeiro passo: ${data.plan.firstStep?.substring(0, 60)}...`,
+        description: `"${data.plan.title}" - Veja na seção "Meus Planos de Ação" abaixo`,
         duration: 8000,
       });
     },
@@ -100,17 +114,8 @@ export default function LifeWheel() {
     },
     onSuccess: (data: any) => {
       console.log("📊 Histórico Completo:", data);
-      
-      const eventsCount = data.events?.length || 0;
-      const femeCount = data.femeCheckins?.length || 0;
-      const breathCount = data.breathSessions?.length || 0;
-      const points = data.progress?.points || 0;
-      
-      toast({
-        title: "📊 Histórico Carregado",
-        description: `${eventsCount} eventos, ${femeCount} FEME, ${breathCount} respirações. Total: ${points} pontos. Veja o console (F12)`,
-        duration: 10000,
-      });
+      setHistoryData(data);
+      setShowHistoryDialog(true);
     },
     onError: () => {
       toast({
@@ -637,6 +642,153 @@ export default function LifeWheel() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Meus Planos de Ação */}
+      <Card className="border-l-4 border-l-green-500">
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <ListChecks className="w-5 h-5 mr-2 text-green-600" />
+            Meus Planos de Ação
+          </CardTitle>
+          <p className="text-sm text-gray-600">
+            Planos criados para melhorar suas áreas prioritárias
+          </p>
+        </CardHeader>
+        <CardContent>
+          {plansData && plansData.plans && plansData.plans.length > 0 ? (
+            <div className="space-y-4">
+              {plansData.plans.map((plan: any, index: number) => (
+                <div key={plan.id} className="p-4 border-2 border-green-200 rounded-lg bg-green-50 hover:bg-green-100 transition-all">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <h4 className="font-bold text-green-900 flex items-center">
+                        <CheckCircle className="w-4 h-4 mr-2 text-green-600" />
+                        {plan.title}
+                      </h4>
+                      {plan.goal && (
+                        <p className="text-sm text-green-700 mt-1">
+                          🎯 Meta: {plan.goal}
+                        </p>
+                      )}
+                      {plan.firstStep && (
+                        <p className="text-sm text-green-600 mt-2 flex items-start">
+                          <span className="font-semibold mr-2">Primeiro passo:</span>
+                          {plan.firstStep}
+                        </p>
+                      )}
+                    </div>
+                    <Badge className="bg-green-600 text-white ml-4">
+                      #{index + 1}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2 mt-3 text-xs text-green-600">
+                    <Calendar className="w-3 h-3" />
+                    <span>Criado em {new Date(plan.createdAt).toLocaleDateString('pt-BR')}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <ListChecks className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+              <p>Nenhum plano criado ainda.</p>
+              <p className="text-sm mt-1">Clique em "Criar Plano de Ação" em qualquer medidor acima!</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* History Dialog */}
+      <Dialog open={showHistoryDialog} onOpenChange={setShowHistoryDialog}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center text-2xl">
+              <Clock className="w-6 h-6 mr-2 text-purple-600" />
+              Histórico Completo
+            </DialogTitle>
+            <DialogDescription>
+              Todas as suas atividades e progressos registrados
+            </DialogDescription>
+          </DialogHeader>
+          
+          {historyData && (
+            <div className="space-y-6 py-4">
+              {/* Summary Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <div className="text-sm text-blue-600 mb-1">Eventos</div>
+                  <div className="text-3xl font-bold text-blue-700">{historyData.events?.length || 0}</div>
+                </div>
+                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                  <div className="text-sm text-purple-600 mb-1">FEME</div>
+                  <div className="text-3xl font-bold text-purple-700">{historyData.femeCheckins?.length || 0}</div>
+                </div>
+                <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                  <div className="text-sm text-green-600 mb-1">Respirações</div>
+                  <div className="text-3xl font-bold text-green-700">{historyData.breathSessions?.length || 0}</div>
+                </div>
+                <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <div className="text-sm text-yellow-600 mb-1">Pontos</div>
+                  <div className="text-3xl font-bold text-yellow-700">{historyData.progress?.points || 0}</div>
+                </div>
+              </div>
+
+              {/* Events Table */}
+              {historyData.events && historyData.events.length > 0 && (
+                <div className="bg-white rounded-lg border">
+                  <div className="p-4 border-b bg-gray-50">
+                    <h4 className="font-semibold text-gray-800">Últimos Eventos</h4>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    <table className="w-full text-sm">
+                      <thead className="bg-gray-50 sticky top-0">
+                        <tr>
+                          <th className="px-4 py-2 text-left">Evento</th>
+                          <th className="px-4 py-2 text-left">Data</th>
+                          <th className="px-4 py-2 text-left">Detalhes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {historyData.events.slice(0, 20).map((event: any, i: number) => (
+                          <tr key={i} className="border-t hover:bg-gray-50">
+                            <td className="px-4 py-2 font-medium">{event.eventName}</td>
+                            <td className="px-4 py-2 text-gray-600">
+                              {new Date(event.createdAt).toLocaleString('pt-BR')}
+                            </td>
+                            <td className="px-4 py-2 text-gray-500 text-xs">
+                              {event.eventProps ? JSON.stringify(event.eventProps).substring(0, 50) : '-'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* FEME Checkins */}
+              {historyData.femeCheckins && historyData.femeCheckins.length > 0 && (
+                <div className="bg-purple-50 rounded-lg border border-purple-200 p-4">
+                  <h4 className="font-semibold text-purple-800 mb-3">Últimos Check-ins FEME</h4>
+                  <div className="space-y-2">
+                    {historyData.femeCheckins.slice(0, 5).map((checkin: any, i: number) => (
+                      <div key={i} className="flex items-center justify-between text-sm bg-white p-3 rounded">
+                        <div className="grid grid-cols-4 gap-4">
+                          <div><span className="text-gray-600">Físico:</span> <strong>{checkin.fisico}/10</strong></div>
+                          <div><span className="text-gray-600">Energético:</span> <strong>{checkin.energetico}/10</strong></div>
+                          <div><span className="text-gray-600">Mental:</span> <strong>{checkin.mental}/10</strong></div>
+                          <div><span className="text-gray-600">Espiritual:</span> <strong>{checkin.espiritual}/10</strong></div>
+                        </div>
+                        <span className="text-xs text-gray-500">{new Date(checkin.createdAt).toLocaleDateString('pt-BR')}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
