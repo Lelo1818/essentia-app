@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { Slider } from '@/components/ui/slider';
 import { trackOnboarding } from '@/lib/analytics';
-import { Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle, Zap, MessageCircle } from 'lucide-react';
 
 interface MegaQuestion {
   id: number;
@@ -45,11 +46,22 @@ interface MegaOnboardingProps {
   onComplete: () => void;
 }
 
+type OnboardingMode = 'express' | 'reflexivo' | null;
+
 export function MegaOnboarding({ onComplete }: MegaOnboardingProps) {
+  const [mode, setMode] = useState<OnboardingMode>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [isCompleting, setIsCompleting] = useState(false);
+  
+  // Express mode state
+  const [expressScores, setExpressScores] = useState({
+    fisico: 5,
+    energetico: 5,
+    mental: 5,
+    espiritual: 5,
+  });
 
   useEffect(() => {
     trackOnboarding('start', { totalQuestions: MEGA_QUESTIONS.length });
@@ -58,6 +70,40 @@ export function MegaOnboarding({ onComplete }: MegaOnboardingProps) {
   const currentQuestion = MEGA_QUESTIONS[currentIndex];
   const progress = ((currentIndex + 1) / MEGA_QUESTIONS.length) * 100;
   const isLastQuestion = currentIndex === MEGA_QUESTIONS.length - 1;
+
+  const handleExpressComplete = async () => {
+    setIsCompleting(true);
+    trackOnboarding('complete_express', { 
+      mode: 'express',
+      scores: expressScores
+    });
+    
+    // Save FEME checkin to backend
+    try {
+      await fetch('/api/feme/checkin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fisico: expressScores.fisico,
+          energetico: expressScores.energetico,
+          mental: expressScores.mental,
+          espiritual: expressScores.espiritual,
+          coerencia: 0.7, // Initial coherence estimate
+          intention: 'Onboarding inicial - Modo Express',
+          meta: { mode: 'express', source: 'mega_onboarding' },
+        }),
+      });
+    } catch (error) {
+      console.error('Error saving FEME checkin:', error);
+    }
+    
+    setTimeout(() => {
+      localStorage.setItem('mega_onboarding_completed', 'true');
+      localStorage.setItem('mega_mode', 'express');
+      localStorage.setItem('mega_scores', JSON.stringify(expressScores));
+      onComplete();
+    }, 2000);
+  };
 
   const handleNext = () => {
     if (currentAnswer.trim().length < 10) {
@@ -83,6 +129,7 @@ export function MegaOnboarding({ onComplete }: MegaOnboardingProps) {
           totalChars: Object.values(updatedAnswers).reduce((sum, a) => sum + a.length, 0)
         });
         localStorage.setItem('mega_onboarding_completed', 'true');
+        localStorage.setItem('mega_mode', 'reflexivo');
         localStorage.setItem('mega_answers', JSON.stringify(updatedAnswers));
         onComplete();
       }, 2000);
@@ -91,6 +138,76 @@ export function MegaOnboarding({ onComplete }: MegaOnboardingProps) {
       setCurrentAnswer('');
     }
   };
+
+  // Mode selection screen
+  if (!mode) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex items-center justify-center p-6">
+        <Card className="max-w-4xl w-full border-2 border-purple-300 shadow-2xl">
+          <CardHeader className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8">
+            <CardTitle className="flex items-center gap-2 text-3xl">
+              <Sparkles className="w-8 h-8" />
+              Bem-vindo ao Mega - Avaliação Funcional
+            </CardTitle>
+            <p className="text-white/90 mt-2">Escolha como prefere começar sua jornada</p>
+          </CardHeader>
+          <CardContent className="p-8">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Express Mode */}
+              <div 
+                onClick={() => {
+                  setMode('express');
+                  trackOnboarding('mode_selected', { mode: 'express' });
+                }}
+                className="group cursor-pointer border-2 border-purple-300 rounded-xl p-6 hover:border-purple-500 hover:shadow-xl transition-all bg-gradient-to-br from-purple-50 to-blue-50"
+                data-testid="button-mode-express"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 bg-purple-500 rounded-lg group-hover:scale-110 transition-transform">
+                    <Zap className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-purple-900">Modo Express</h3>
+                </div>
+                <p className="text-gray-700 mb-4">
+                  Avaliação rápida com sliders numéricos de 0 a 10 para cada dimensão FEME.
+                </p>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>⚡ Apenas 2 minutos</li>
+                  <li>🎯 Resultado visual imediato</li>
+                  <li>📊 Ideal para check-ins diários</li>
+                </ul>
+              </div>
+
+              {/* Reflexivo Mode */}
+              <div 
+                onClick={() => {
+                  setMode('reflexivo');
+                  trackOnboarding('mode_selected', { mode: 'reflexivo' });
+                }}
+                className="group cursor-pointer border-2 border-blue-300 rounded-xl p-6 hover:border-blue-500 hover:shadow-xl transition-all bg-gradient-to-br from-blue-50 to-indigo-50"
+                data-testid="button-mode-reflexivo"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 bg-blue-500 rounded-lg group-hover:scale-110 transition-transform">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-blue-900">Modo Reflexivo</h3>
+                </div>
+                <p className="text-gray-700 mb-4">
+                  Jornada profunda com perguntas abertas para autoconhecimento.
+                </p>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>🌟 Exploração profunda</li>
+                  <li>💭 Respostas escritas livres</li>
+                  <li>🎭 Ideal para primeira avaliação</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (isCompleting) {
     return (
@@ -108,6 +225,84 @@ export function MegaOnboarding({ onComplete }: MegaOnboardingProps) {
               <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
               <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
               <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Express Mode UI
+  if (mode === 'express') {
+    const dimensionLabels = {
+      fisico: { label: 'Físico', color: 'from-red-500 to-orange-500', description: 'Como está seu corpo hoje?' },
+      energetico: { label: 'Energético', color: 'from-yellow-500 to-amber-500', description: 'Qual seu nível de vitalidade?' },
+      mental: { label: 'Mental', color: 'from-blue-500 to-cyan-500', description: 'Como está sua mente?' },
+      espiritual: { label: 'Espiritual', color: 'from-purple-500 to-violet-500', description: 'Como está sua conexão interior?' },
+    };
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 flex items-center justify-center p-6">
+        <Card className="max-w-3xl w-full border-2 border-purple-300 shadow-2xl">
+          <CardHeader className="bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <Zap className="w-6 h-6" />
+              Mega Express - Avaliação Rápida
+            </CardTitle>
+            <p className="text-white/90 mt-2">Avalie cada dimensão de 0 a 10</p>
+          </CardHeader>
+
+          <CardContent className="p-8 space-y-8">
+            {(Object.keys(expressScores) as Array<keyof typeof expressScores>).map((dimension) => {
+              const config = dimensionLabels[dimension];
+              return (
+                <div key={dimension} className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 capitalize">{config.label}</h3>
+                      <p className="text-sm text-gray-600">{config.description}</p>
+                    </div>
+                    <Badge className={`bg-gradient-to-r ${config.color} text-white text-xl px-4 py-2`}>
+                      {expressScores[dimension]}
+                    </Badge>
+                  </div>
+                  <Slider
+                    value={[expressScores[dimension]]}
+                    onValueChange={(value) => {
+                      setExpressScores(prev => ({ ...prev, [dimension]: value[0] }));
+                    }}
+                    min={0}
+                    max={10}
+                    step={1}
+                    className="w-full"
+                    data-testid={`slider-${dimension}`}
+                  />
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>0 - Muito Baixo</span>
+                    <span>5 - Médio</span>
+                    <span>10 - Excelente</span>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div className="flex items-center justify-between pt-6 border-t">
+              <Button
+                variant="outline"
+                onClick={() => setMode(null)}
+                data-testid="button-change-mode"
+              >
+                Trocar Modo
+              </Button>
+              <Button
+                onClick={handleExpressComplete}
+                size="lg"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 px-8"
+                data-testid="button-complete-express"
+              >
+                Finalizar e Ver Bússola
+                <CheckCircle className="ml-2 w-5 h-5" />
+              </Button>
             </div>
           </CardContent>
         </Card>

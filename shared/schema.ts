@@ -452,3 +452,26 @@ export const insertUserEventSchema = createInsertSchema(userEvents).omit({
   id: true,
   createdAt: true,
 });
+
+// Gamification / Progress Table
+export const userProgress = pgTable("user_progress", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull().unique(),
+  points: integer("points").default(0),
+  level: integer("level").default(1),
+  breathSessionsCompleted: integer("breath_sessions_completed").default(0),
+  femeCheckinsCompleted: integer("feme_checkins_completed").default(0),
+  aiSessionsCompleted: integer("ai_sessions_completed").default(0),
+  dailyStreak: integer("daily_streak").default(0),
+  lastActivityAt: timestamp("last_activity_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export type UserProgress = typeof userProgress.$inferSelect;
+export type InsertUserProgress = typeof userProgress.$inferInsert;
+export const insertUserProgressSchema = createInsertSchema(userProgress).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});

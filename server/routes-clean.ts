@@ -224,6 +224,99 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to fetch events" });
     }
   });
+
+  // AI Endpoints - Anthropic Claude 3
+  app.post('/api/ai/selfsession', isAuthenticated, async (req: any, res) => {
+    try {
+      // Validate input
+      const schema = z.object({
+        prompt: z.string().min(1).max(2000),
+        context: z.string().max(500).optional(),
+      });
+      
+      const { prompt, context } = schema.parse(req.body);
+
+      const systemPrompt = `Você é um guia de autoconhecimento compassivo e sábio, especializado em ajudar pessoas em sua jornada de desenvolvimento pessoal e espiritual. 
+
+Suas respostas devem ser:
+- Empáticas e acolhedoras
+- Práticas e aplicáveis
+- Conectadas às dimensões FEME (Físico, Energético, Mental, Espiritual)
+- Curtas e diretas (máximo 300 palavras)
+- Em português brasileiro
+
+Contexto do usuário: ${context || 'Não fornecido'}`;
+
+      const message = await anthropic.messages.create({
+        max_tokens: 500,
+        messages: [
+          { role: 'user', content: prompt }
+        ],
+        model: DEFAULT_MODEL_STR,
+        system: systemPrompt,
+      });
+
+      const responseText = message.content[0].text;
+
+      res.json({ 
+        response: responseText,
+        usage: message.usage
+      });
+    } catch (error) {
+      console.error("Error in AI self-session:", error);
+      res.status(500).json({ message: "Failed to generate AI response" });
+    }
+  });
+
+  app.post('/api/ai/insight', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Get latest FEME checkin for context
+      const checkins = await storage.getFemeCheckinsByUserId(user.id);
+      const latestCheckin = checkins[0];
+
+      let femeContext = "Sem check-in FEME recente";
+      if (latestCheckin) {
+        femeContext = `Último check-in FEME: Físico ${latestCheckin.fisico}/10, Energético ${latestCheckin.energetico}/10, Mental ${latestCheckin.mental}/10, Espiritual ${latestCheckin.espiritual}/10, Coerência ${(latestCheckin.coerencia * 100).toFixed(0)}%`;
+      }
+
+      const systemPrompt = `Você é um oráculo de sabedoria que gera insights profundos e simbólicos baseados no estado FEME do usuário.
+
+Suas mensagens devem ser:
+- Máximo 280 caracteres (como um tweet)
+- Profundas e poéticas
+- Conectadas ao estado emocional/espiritual
+- Inspiradoras e transformadoras
+- Em português brasileiro
+
+Contexto FEME atual: ${femeContext}`;
+
+      const message = await anthropic.messages.create({
+        max_tokens: 150,
+        messages: [
+          { role: 'user', content: 'Gere um insight breve e profundo sobre meu estado atual' }
+        ],
+        model: DEFAULT_MODEL_STR,
+        system: systemPrompt,
+      });
+
+      const insight = message.content[0].text;
+
+      res.json({ 
+        insight,
+        femeContext: latestCheckin || null
+      });
+    } catch (error) {
+      console.error("Error generating insight:", error);
+      res.status(500).json({ message: "Failed to generate insight" });
+    }
+  });
   
   // Servir arquivo HTML estático para EduVie
   app.use('/public', express.static(path.join(__dirname, 'public')));

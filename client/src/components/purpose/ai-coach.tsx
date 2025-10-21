@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Brain, 
   MessageCircle, 
@@ -16,45 +19,51 @@ import {
   Mic,
   Camera,
   RefreshCw,
-  Zap
+  Zap,
+  Loader2
 } from "lucide-react";
 
 export default function AICoach() {
+  const { toast } = useToast();
   const [messages, setMessages] = useState([
     {
       id: 1,
       type: "ai",
-      content: "Olá, Rafael! Analisei suas reflexões dos últimos dias e percebi um padrão interessante. Você tem mencionado 'medo de não ser levado a sério' várias vezes. Que tal explorarmos isso?",
-      timestamp: "9:30",
-      insights: ["padrão-comportamental", "medo-reconhecido"],
-      suggestions: [
-        "Explorar origem deste medo",
-        "Listar evidências contrárias",
-        "Praticar autocompaixão"
-      ]
-    },
-    {
-      id: 2,
-      type: "user",
-      content: "É verdade, esse medo aparece muito. Principalmente quando penso em conversar com meu pai sobre meus projetos.",
-      timestamp: "9:32"
-    },
-    {
-      id: 3,
-      type: "ai",
-      content: "Entendo. Esse medo pode ser uma proteção, mas também pode estar limitando conexões importantes. Baseado no seu perfil, você valoriza muito autenticidade e conexão genuína. Como seria se você abordasse essa conversa a partir desses valores?",
-      timestamp: "9:33",
-      insights: ["valores-identificados", "conflito-interno"],
-      suggestions: [
-        "Preparar conversa baseada em valores",
-        "Praticar vulnerabilidade graduada",
-        "Redefinir 'ser levado a sério'"
-      ]
+      content: "Olá! Sou sua guia de autoconhecimento. Como posso ajudá-lo hoje em sua jornada de desenvolvimento pessoal?",
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
   ]);
 
   const [newMessage, setNewMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+
+  const aiMutation = useMutation({
+    mutationFn: async (prompt: string) => {
+      const response = await apiRequest("/api/ai/selfsession", {
+        method: "POST",
+        body: JSON.stringify({
+          prompt,
+          context: "Sessão de autoconhecimento com foco em desenvolvimento pessoal e espiritual"
+        }),
+      });
+      return response;
+    },
+    onSuccess: (data: any) => {
+      const aiResponse = {
+        id: messages.length + 1,
+        type: "ai",
+        content: data.response,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages(prev => [...prev, aiResponse]);
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Não foi possível obter resposta da IA. Tente novamente.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const insights = [
     {
@@ -119,7 +128,7 @@ export default function AICoach() {
   ];
 
   const handleSendMessage = () => {
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || aiMutation.isPending) return;
 
     // Add user message
     const userMessage = {
@@ -130,35 +139,11 @@ export default function AICoach() {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentMessage = newMessage;
     setNewMessage("");
-    setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse = {
-        id: messages.length + 2,
-        type: "ai",
-        content: generateAIResponse(newMessage),
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        insights: ["personalizado"],
-        suggestions: [
-          "Próximo passo sugerido",
-          "Reflexão complementar",
-          "Ação prática"
-        ]
-      };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
-    }, 2000);
-  };
-
-  const generateAIResponse = (message: string) => {
-    const responses = [
-      "Interessante perspectiva. Baseado no que você compartilhou e suas reflexões anteriores, vejo uma conexão com seu valor de autenticidade. Como isso se relaciona com suas ações recentes?",
-      "Percebo que essa questão toca em algo profundo para você. Nas suas reflexões, você mencionou situações similares. Que padrão você consegue identificar?",
-      "Sua resposta revela muito autoconhecimento. Isso está alinhado com seu crescimento nas últimas semanas. Como você pode aplicar essa percepção em situações práticas?"
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
+    // Call real AI endpoint
+    aiMutation.mutate(currentMessage);
   };
 
   const getInsightColor = (type: string) => {
@@ -255,13 +240,12 @@ export default function AICoach() {
                   </div>
                 ))}
                 
-                {isTyping && (
+                {aiMutation.isPending && (
                   <div className="flex justify-start">
                     <div className="bg-gray-100 rounded-lg p-3">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="flex items-center space-x-2">
+                        <Loader2 className="w-4 h-4 animate-spin text-purple-600" />
+                        <span className="text-sm text-gray-600">IA está pensando...</span>
                       </div>
                     </div>
                   </div>

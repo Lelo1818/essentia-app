@@ -1,0 +1,59 @@
+Quero que você evolua o projeto atual sem recomeçar do zero.
+
+Objetivo: dar vida real ao MVP Essentia com três entregas concretas.
+
+## 1. ONBOARDING EXPRESS + SENSORES SIMULADOS
+
+- Adicione modo "Express" de onboarding:
+  - 4 sliders numéricos (0 a 10) representando Físico, Energético, Mental e Espiritual (FEME).
+  - Mostre resultado visual rápido (gráfico, barra ou círculo).
+  - Deixe o modo narrativo atual como opcional (“Modo Reflexivo”).
+- Simule sensores biométricos:
+  - Gere variações dinâmicas (ex: frequência, respiração, energia).
+  - Mostre números mudando levemente, com texto “Leitura em tempo real”.
+  - Permita alternar entre dados simulados e estáticos.
+
+## 2. IA REAL NA SESSÃO DE AUTOCONHECIMENTO
+
+- Conecte de verdade com a Anthropic (chave já configurada: ANTHROPIC_API_KEY).
+- Use modelo Claude 3.
+- Endpoints:
+  - POST /api/ai/selfsession → recebe {prompt, context} e retorna resposta da IA.
+  - POST /api/ai/insight → gera insight curto com base no estado FEME atual.
+- Front-end:
+  - Ative botões “Conversar” e “Insight”.
+  - “Conversar” abre um chat com IA real (Claude 3).
+  - “Insight” mostra um texto de até 280 caracteres com resposta simbólica e coerente.
+- Logs de conversa devem ser enviados ao backend (userId, input, output, ts).
+
+## 3. GAMIFICAÇÃO FUNCIONAL
+
+- Conecte sistema de pontos ao backend.
+- Pontos acumulam ao completar:
+  - Sessão de respiração,
+  - Check-in FEME,
+  - Sessão de Autoconhecimento,
+  - Ritual (quando disponível).
+- Crie endpoint: POST /api/progress → atualiza pontos do usuário.
+- Mostre nível e progresso em tempo real (ex: “Nível 3 – 240/500 pts”).
+- Faça os botões “Atualizar Pontuação”, “Criar Plano de Ação” e “Ver Histórico” funcionarem:
+  - Atualizar → incrementa pontos.
+  - Criar Plano → abre modal simples (texto e meta simbólica).
+  - Ver Histórico → puxa últimos registros do backend.
+
+## 4. AJUSTES GERAIS
+
+- Corrija botões “Focar Aqui” e “Exportar Dados”:
+  - Focar Aqui → mostra objetivos do usuário e sugestões IA.
+  - Exportar Dados → baixa JSON com histórico FEME e pontos.
+- Melhore UX: feedbacks visuais (loading, confirmação, animações leves).
+- Tudo deve estar integrado à base Postgres existente.
+
+## 5. TESTES E ENTREGA
+
+- Teste tudo localmente e logue os eventos (console + /api/events).
+- Me mostre URLs atualizadas para:
+  a) Onboarding Express
+  b) Sessão de Autoconhecimento com IA
+  c) Tela de Pontuação/Gamificação
+- Mostre o código completo dessas três áreas no final para revisão manual.
