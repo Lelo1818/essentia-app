@@ -12,7 +12,13 @@ export default function PointsPage() {
   // Fetch history
   const { data: history, isLoading } = useQuery({
     queryKey: ['/api/history'],
-    enabled: !!user,
+    enabled: true,
+  });
+
+  // Fetch progress (points and level)
+  const { data: progress } = useQuery({
+    queryKey: ['/api/progress'],
+    enabled: true,
   });
 
   const handleExportData = async () => {
@@ -44,8 +50,9 @@ export default function PointsPage() {
     setTimeout(() => setPointsBadge(null), 2000);
   };
 
-  const mockTotalPoints = 180; // In real app, would come from backend
-  const mockLevel = 3;
+  // Real data from backend
+  const totalPoints = progress?.points || 0;
+  const currentLevel = progress?.level || 1;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-yellow-50">
@@ -87,7 +94,7 @@ export default function PointsPage() {
               <div className="text-sm text-gray-600">Total de Pontos</div>
               <TrendingUp className="w-5 h-5 text-purple-500" />
             </div>
-            <div className="text-3xl font-bold text-purple-600">{mockTotalPoints}</div>
+            <div className="text-3xl font-bold text-purple-600">{totalPoints}</div>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg">
@@ -95,7 +102,7 @@ export default function PointsPage() {
               <div className="text-sm text-gray-600">Nível Atual</div>
               <Award className="w-5 h-5 text-yellow-500" />
             </div>
-            <div className="text-3xl font-bold text-yellow-600">{mockLevel}</div>
+            <div className="text-3xl font-bold text-yellow-600">{currentLevel}</div>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg">
