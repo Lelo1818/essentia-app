@@ -93,7 +93,8 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
       <div className="relative w-full h-screen overflow-hidden bg-black">
         <MediaPlayer
           assetKey="desperte-sua-coragem"
-          title="Desperte Sua Coragem"
+          title="Ritual de Coragem"
+          posterUrl="https://placehold.co/1280x720/8b5cf6/white?text=Desperte+Sua+Coragem"
           videoUrl={desperteCoragemVideo}
           onComplete={() => setVideoWatched(true)}
         />
