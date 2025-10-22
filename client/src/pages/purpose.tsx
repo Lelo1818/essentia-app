@@ -111,18 +111,19 @@ function AchievementsSection() {
       {recentAchievements.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {recentAchievements.map((achievement) => {
-            const config = ACHIEVEMENTS[achievement.achievementKey || ''];
+            const config = ACHIEVEMENTS[achievement.achievementType || ''];
+            const metadata = achievement.metadata as any;
             return (
               <div
                 key={achievement.id}
                 className="text-center p-3 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border-2 border-yellow-200"
-                data-testid={`achievement-badge-${achievement.achievementKey}`}
+                data-testid={`achievement-badge-${achievement.achievementType}`}
               >
                 <div className="text-2xl mb-2">{config?.icon || '🏆'}</div>
                 <div className="text-xs font-medium">{achievement.title}</div>
-                {achievement.pointsEarned && (
+                {metadata?.pointsEarned && (
                   <Badge className="mt-1 bg-green-100 text-green-700 text-xs">
-                    +{achievement.pointsEarned}pts
+                    +{metadata.pointsEarned}pts
                   </Badge>
                 )}
               </div>
