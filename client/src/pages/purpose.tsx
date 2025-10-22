@@ -253,6 +253,20 @@ export default function Purpose() {
       {/* Audit Overlay - só em desenvolvimento */}
       {import.meta.env.DEV && <AuditOverlay />}
       
+      {/* Botão DEV - Resetar Onboarding */}
+      {import.meta.env.DEV && (
+        <button
+          onClick={() => {
+            localStorage.removeItem('mega_onboarding_completed');
+            window.location.reload();
+          }}
+          className="fixed bottom-4 right-4 z-50 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg shadow-xl text-sm font-semibold"
+          data-testid="button-reset-onboarding"
+        >
+          🔄 Ver Onboarding
+        </button>
+      )}
+      
       <QuickNavButton />
       
       <Tabs value={activeTab} onValueChange={setActiveTab}>
