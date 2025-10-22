@@ -97,10 +97,10 @@ export function VideoPortal({ videoSrc, title, onClose }: VideoPortalProps) {
   return (
     <div 
       ref={containerRef}
-      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 md:p-4"
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 lg:p-4"
       data-testid="video-portal-overlay"
     >
-      <div className="relative w-full md:max-w-6xl aspect-video bg-black rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative w-full lg:max-w-6xl aspect-video bg-black rounded-lg lg:rounded-2xl overflow-hidden shadow-2xl">
         {/* Video */}
         <video
           ref={videoRef}

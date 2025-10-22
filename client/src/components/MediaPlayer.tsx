@@ -140,7 +140,7 @@ export function MediaPlayer({
   };
 
   return (
-    <div className="relative w-full md:max-w-4xl mx-auto bg-black rounded-lg overflow-hidden shadow-2xl">
+    <div className="relative w-full lg:max-w-4xl mx-auto bg-black rounded-lg overflow-hidden shadow-2xl">
       {/* Video Element */}
       <video
         ref={videoRef}
