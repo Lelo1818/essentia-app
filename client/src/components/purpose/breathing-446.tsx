@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { trackBreathing } from '@/lib/analytics';
 import { Play, Pause, X, Volume2 } from 'lucide-react';
 import { MediaPlayer } from '@/components/MediaPlayer';
+import { AruanGuidance } from './aruan-guidance';
 import desperteCoragemVideo from "@assets/Desperte Sua Coragem_1761138039346.mp4";
 
 interface Breathing446Props {
@@ -16,6 +17,7 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
   const [isActive, setIsActive] = useState(false);
   const [cycles, setCycles] = useState(0);
   const [audioEnabled, setAudioEnabled] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const oscillatorRef = useRef<OscillatorNode | null>(null);
@@ -84,8 +86,8 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
       toggleAudio();
     }
     
-    // Navegar para o Guru IA (AI Therapist) após completar
-    window.location.href = '/purpose#therapist';
+    // Mostrar Aruan sugerindo próximo passo
+    setShowGuidance(true);
   };
 
   // Mostrar vídeo introdutório primeiro
@@ -306,6 +308,16 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
           animation: breathe-instruction-3 14s ease-in-out infinite;
         }
       `}</style>
+
+      {/* Aruan Guidance - aparece após completar */}
+      {showGuidance && (
+        <AruanGuidance
+          message="Sua respiração trouxe clareza. Agora que sua mente está serena, converse com o Guru para aprofundar sua jornada de autoconhecimento."
+          nextStepLabel="Falar com o Guru IA"
+          nextStepPath="/purpose#therapist"
+          onClose={onClose}
+        />
+      )}
     </div>
   );
 }

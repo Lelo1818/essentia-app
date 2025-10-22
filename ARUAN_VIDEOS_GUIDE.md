@@ -173,14 +173,17 @@ Para **TODOS** os vídeos, mantenha:
 ✓ Despertar Interior_1760814881524.mp4         (Onboarding - 9:16)
 ✓ Portal da Clareza_1761132977385.mp4          (Portal do Despertar - 16:9)
 ✓ Portal da Gratidão_1761137810586.mp4         (Ritual de Gratidão - 16:9)
-✓ Desperte Sua Coragem_1761138039346.mp4       (Respiração 4-4-6 Intro - 16:9) ✅ NOVO
+✓ Desperte Sua Coragem_1761138039346.mp4       (Respiração 4-4-6 Intro - 16:9)
 ```
 
-### 🔄 Próximos Vídeos
+### 🔄 Próximos Vídeos (Para Integrar)
 
 ```
-⏳ aruan_achievement.mp4      (Conquista - 3s - 1:1) [opcional]
+⏳ Paz Interior Agora_1761141385712.mp4        (Respiração Rápida - 15-20s - 16:9 ou 1:1)
+⏳ aruan_achievement.mp4                        (Conquista - 3s - 1:1) [opcional]
 ```
+
+**Nota:** O "Paz Interior Agora" é um vídeo curto HeyGen para respirações rápidas (3-3-3, 4-4, etc). Integrar em GuidedBreathing component.
 
 **Localização:** `attached_assets/`
 
