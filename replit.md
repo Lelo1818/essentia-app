@@ -27,6 +27,27 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Dashboard Hub**: Unified navigation, aggregated statistics, cross-application activity feed.
 -   **System Design**: Data flow managed via PostgreSQL schema and RESTful API endpoints. Mobile-first responsive design with PWA capabilities.
 
+## Recent Changes (October 2025)
+
+### Aruan Avatar System - MVP Completo
+-   **AruanGuidance Component**: Sistema de guia pós-exercício onde Aruan aparece após completar rituais/respirações sugerindo próximo passo. Este é o "motor" do app - conecta experiências e guia o usuário na jornada.
+-   **4 Vídeos HeyGen Integrados**:
+    -   Despertar Interior (9:16) - Onboarding principal
+    -   Portal da Clareza (16:9) - Portal do Despertar (/journey)
+    -   Portal da Gratidão (16:9) - Ritual de Gratidão
+    -   Desperte Sua Coragem (16:9) - Intro Respiração 4-4-6 (/breathing-446)
+-   **1 Vídeo Documentado**: Paz Interior Agora (15-20s) - Preparado para respirações rápidas
+-   **Fluxo Completo**: Vídeo intro → Exercício/Ritual → AruanGuidance aparece → Sugere próximo passo → Navega para próxima feature
+
+### UX Improvements
+-   **Renomeação "Terapeuta IA" → "Seu Guru"**: Nome mais quente e pessoal, sem mencionar "IA". Aplicado em: aba do dashboard, journey stages, mensagens do Aruan.
+-   **Bug Fix - Respiração 4-4-6**: Corrigido círculo de respiração que estava parado (substituído SVG por div com transform:scale, animação 14s sincronizada com ciclo 4-4-6).
+-   **MediaPlayer com botão X**: Vídeos agora podem ser fechados/pulados pelo usuário.
+-   **Hash Navigation**: Suporte a /purpose#therapist para abrir tabs diretamente via URL.
+
+### Documentation
+-   **ARUAN_VIDEOS_GUIDE.md**: Guia completo de todos os vídeos Aruan com especificações técnicas, uso no app, e status de integração.
+
 ## External Dependencies
 -   **Brazilian Market Integrations**: Pelando, Méliuz, Americanas, and readiness for Open Banking APIs.
 -   **Database**: PostgreSQL 16.
