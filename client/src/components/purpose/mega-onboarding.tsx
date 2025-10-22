@@ -9,7 +9,7 @@ import { trackOnboarding } from '@/lib/analytics';
 import { Sparkles, ArrowRight, CheckCircle, Zap, MessageCircle } from 'lucide-react';
 import { WelcomeAvatar } from '@/components/avatars/video-avatar';
 import shamanAvatar from '@assets/Captura de tela 2025-10-21 212327_1761092690319.png';
-import shamanVideo from '@assets/Despertar Interior (1)_1761098943524.mp4';
+import shamanVideo from '@assets/Aruan Despertar Interior_1761130897934.mp4';
 
 interface MegaQuestion {
   id: number;
