@@ -122,7 +122,7 @@ function Router() {
       <Route path="/eduvibe-v2-complete" component={EduVibeV2Complete} />
       <Route path="/eduvibe-willingham" component={EduVibeWillingham} />
       <Route path="/eduvibe-universal" component={EduVibeUniversal} />
-      <Route path="/purpose" component={PurposeApp} />
+      <Route path="/purpose" component={Purpose} />
       <Route path="/journey" component={JourneyPage} />
       <Route path="/breath" component={BreathPage} />
       <Route path="/points" component={PointsPage} />
