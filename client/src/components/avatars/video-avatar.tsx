@@ -109,7 +109,7 @@ export function VideoAvatar({
         muted={muted}
         playsInline
         controls={controls}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain bg-black"
         data-testid="video-avatar"
       />
 
@@ -134,8 +134,8 @@ export function WelcomeAvatar({
       loop={false}
       muted={false}
       controls={true}
-      aspectRatio="16:9"
-      className="w-full max-w-lg mx-auto shadow-2xl border-4 border-purple-500 rounded-xl overflow-hidden"
+      aspectRatio="9:16"
+      className="w-full max-w-md mx-auto shadow-2xl border-4 border-purple-500 rounded-xl overflow-hidden bg-gradient-to-br from-purple-900 to-black"
     />
   );
 }
