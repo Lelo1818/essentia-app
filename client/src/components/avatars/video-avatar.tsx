@@ -135,7 +135,7 @@ export function WelcomeAvatar({
       muted={false}
       controls={true}
       aspectRatio="9:16"
-      className="w-full max-w-md mx-auto shadow-2xl border-4 border-purple-500 rounded-xl overflow-hidden bg-gradient-to-br from-purple-900 to-black"
+      className="w-full md:max-w-md mx-auto shadow-2xl border-2 md:border-4 border-purple-500 rounded-lg md:rounded-xl overflow-hidden bg-gradient-to-br from-purple-900 to-black"
     />
   );
 }
@@ -183,7 +183,7 @@ export function PortalIntroAvatar({
       muted={false}
       controls={true}
       aspectRatio="16:9"
-      className="w-full max-w-2xl mx-auto shadow-2xl border-4 border-purple-500 rounded-xl overflow-hidden"
+      className="w-full md:max-w-2xl mx-auto shadow-2xl border-2 md:border-4 border-purple-500 rounded-lg md:rounded-xl overflow-hidden"
       onComplete={onComplete}
     />
   );
