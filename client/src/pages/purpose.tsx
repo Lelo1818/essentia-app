@@ -474,88 +474,90 @@ export default function Purpose() {
         </TabsList>
       </div>
 
-      {/* MENU NAVEGAÇÃO - MOBILE (GRID 2 LINHAS) */}
-      <div className="md:hidden bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-3">
-        <TabsList className="w-full grid grid-cols-6 gap-1.5 bg-transparent p-0">
-          {/* Linha 1 - 6 itens */}
+      {/* MENU NAVEGAÇÃO - MOBILE (GRID 3 COLUNAS FIXO) */}
+      <div className="md:hidden sticky top-0 z-40 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-b-xl shadow-xl border-2 border-purple-400 p-3 mb-4">
+        <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0">
+          {/* Principais */}
           <TabsTrigger 
             value="journey" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Compass className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Jornada</span>
+            <Compass className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Jornada</span>
           </TabsTrigger>
           <TabsTrigger 
             value="breathing" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-green-300 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-green-400 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Brain className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Respiração</span>
+            <Brain className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Respiração</span>
           </TabsTrigger>
           <TabsTrigger 
             value="rituals" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-yellow-400 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Star className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Rituais</span>
+            <Star className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Rituais</span>
           </TabsTrigger>
+          
           <TabsTrigger 
             value="therapist" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Heart className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Guru</span>
+            <Heart className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Seu Guru</span>
           </TabsTrigger>
           <TabsTrigger 
             value="wheel" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Target className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Roda</span>
+            <Target className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Roda</span>
           </TabsTrigger>
           <TabsTrigger 
             value="avatar" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <User className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Avatar</span>
+            <User className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Avatar</span>
           </TabsTrigger>
           
-          {/* Linha 2 - 5 itens */}
+          {/* Secundários */}
           <TabsTrigger 
             value="transition" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <TrendingUp className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Transição</span>
+            <TrendingUp className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Transição</span>
           </TabsTrigger>
           <TabsTrigger 
             value="inspiration" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-pink-200 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-pink-300 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Heart className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Inspiração</span>
+            <Heart className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Inspiração</span>
           </TabsTrigger>
           <TabsTrigger 
             value="community" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-blue-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-blue-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Users className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Comunidade</span>
+            <Users className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Comunidade</span>
           </TabsTrigger>
+          
           <TabsTrigger 
             value="biometric" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-red-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-red-300 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <Brain className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Biometria</span>
+            <Brain className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Biometria</span>
           </TabsTrigger>
           <TabsTrigger 
             value="profile" 
-            className="flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg bg-white/80 border border-gray-300 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 text-gray-800"
+            className="flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg bg-white border-2 border-gray-400 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 data-[state=active]:shadow-lg text-gray-800 font-medium"
           >
-            <User className="w-4 h-4" />
-            <span className="text-[9px] font-medium leading-tight">Perfil</span>
+            <User className="w-5 h-5" />
+            <span className="text-[10px] leading-tight">Perfil</span>
           </TabsTrigger>
         </TabsList>
       </div>
