@@ -310,43 +310,43 @@ export default function Purpose() {
       <QuickNavButton />
       
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 py-4 md:p-6 space-y-4 md:space-y-6">
       {/* Header */}
       <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center text-2xl">
-                <Compass className="w-6 h-6 mr-3 text-purple-600" />
-                Jornada de Propósito
+        <CardHeader className="p-4 md:p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div className="flex-1">
+              <CardTitle className="flex items-center text-xl md:text-2xl">
+                <Compass className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3 text-purple-600 shrink-0" />
+                <span className="break-words">Jornada de Propósito</span>
               </CardTitle>
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-600 mt-2 text-sm md:text-base">
                 Bem-vindo de volta, Lelão. Sua clareza sobre propósito cresceu {userJourney.clarity}% em {userJourney.daysActive} dias.
               </p>
             </div>
-            <Badge className="bg-purple-100 text-purple-700 px-4 py-2">
+            <Badge className="bg-purple-100 text-purple-700 px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm shrink-0 self-start md:self-auto">
               {userJourney.stage}
             </Badge>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <CardContent className="p-4 md:p-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">{userJourney.clarity}%</div>
-              <div className="text-sm text-gray-600">Clareza de Propósito</div>
+              <div className="text-2xl md:text-3xl font-bold text-purple-600">{userJourney.clarity}%</div>
+              <div className="text-xs md:text-sm text-gray-600">Clareza</div>
               <Progress value={userJourney.clarity} className="h-2 mt-2" />
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">{userJourney.daysActive}</div>
-              <div className="text-sm text-gray-600">Dias na Jornada</div>
+              <div className="text-2xl md:text-3xl font-bold text-blue-600">{userJourney.daysActive}</div>
+              <div className="text-xs md:text-sm text-gray-600">Dias</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">{userJourney.achievements}</div>
-              <div className="text-sm text-gray-600">Conquistas</div>
+              <div className="text-2xl md:text-3xl font-bold text-green-600">{userJourney.achievements}</div>
+              <div className="text-xs md:text-sm text-gray-600">Conquistas</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl">🎯</div>
-              <div className="text-sm text-gray-600">{userJourney.nextMilestone}</div>
+              <div className="text-2xl md:text-3xl">🎯</div>
+              <div className="text-xs md:text-sm text-gray-600 break-words">{userJourney.nextMilestone}</div>
             </div>
           </div>
         </CardContent>
@@ -369,20 +369,20 @@ export default function Purpose() {
         }}
         data-testid="card-portal-uau"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/90 via-purple-800/85 to-transparent" />
-        <CardContent className="relative z-10 p-6">
-          <div className="flex items-center justify-between">
-            <div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/95 via-purple-800/90 to-purple-900/60" />
+        <CardContent className="relative z-10 p-4 md:p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
-                <h3 className="text-2xl font-bold text-white">Portal do Despertar</h3>
+                <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-yellow-300 animate-pulse shrink-0" />
+                <h3 className="text-xl md:text-2xl font-bold text-white">Portal do Despertar</h3>
               </div>
-              <p className="text-purple-100 text-lg">
+              <p className="text-purple-100 text-sm md:text-lg">
                 Uma pergunta profunda te espera hoje. Descubra sua resposta interior.
               </p>
             </div>
             <Button 
-              className="bg-yellow-400 text-purple-900 hover:bg-yellow-300 font-bold px-6 py-3 shadow-lg"
+              className="bg-yellow-400 text-purple-900 hover:bg-yellow-300 font-bold px-4 py-2 md:px-6 md:py-3 shadow-lg text-sm md:text-base shrink-0 self-start md:self-auto"
               data-testid="button-open-portal"
             >
               Entrar →
@@ -476,83 +476,83 @@ export default function Purpose() {
 
       {/* MENU NAVEGAÇÃO - MOBILE (SCROLL HORIZONTAL) */}
       <div className="md:hidden bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-3">
-        <TabsList className="w-full overflow-x-auto flex gap-2 bg-transparent p-0 scrollbar-hide">
+        <TabsList className="w-full overflow-x-auto flex gap-2 bg-transparent p-0 scrollbar-hide snap-x">
           <TabsTrigger 
             value="journey" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 snap-center"
           >
             <Compass className="w-5 h-5" />
-            <span className="text-xs font-medium">Jornada</span>
+            <span className="text-[10px] font-medium leading-tight">Jornada</span>
           </TabsTrigger>
           <TabsTrigger 
             value="transition" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 snap-center"
           >
             <TrendingUp className="w-5 h-5" />
-            <span className="text-xs font-medium">Transição</span>
+            <span className="text-[10px] font-medium leading-tight">Transição</span>
           </TabsTrigger>
           <TabsTrigger 
             value="avatar" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 snap-center"
           >
             <User className="w-5 h-5" />
-            <span className="text-xs font-medium">Avatar</span>
+            <span className="text-[10px] font-medium leading-tight">Avatar</span>
           </TabsTrigger>
           <TabsTrigger 
             value="breathing" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-green-300 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-green-300 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 text-gray-800 snap-center"
           >
             <Brain className="w-5 h-5" />
-            <span className="text-xs font-medium">Respiração</span>
+            <span className="text-[10px] font-medium leading-tight">Respiração</span>
           </TabsTrigger>
           <TabsTrigger 
             value="rituals" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 text-gray-800 snap-center"
           >
             <Star className="w-5 h-5" />
-            <span className="text-xs font-medium">Rituais</span>
+            <span className="text-[10px] font-medium leading-tight">Rituais</span>
           </TabsTrigger>
           <TabsTrigger 
             value="wheel" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 snap-center"
           >
             <Target className="w-5 h-5" />
-            <span className="text-xs font-medium">Roda</span>
+            <span className="text-[10px] font-medium leading-tight">Roda</span>
           </TabsTrigger>
           <TabsTrigger 
             value="inspiration" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-pink-200 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-pink-200 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 text-gray-800 snap-center"
           >
             <Heart className="w-5 h-5" />
-            <span className="text-xs font-medium">Inspiração</span>
+            <span className="text-[10px] font-medium leading-tight">Inspiração</span>
           </TabsTrigger>
           <TabsTrigger 
             value="community" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-blue-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-blue-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 text-gray-800 snap-center"
           >
             <Users className="w-5 h-5" />
-            <span className="text-xs font-medium">Comunidade</span>
+            <span className="text-[10px] font-medium leading-tight">Comunidade</span>
           </TabsTrigger>
           <TabsTrigger 
             value="biometric" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-red-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-red-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 text-gray-800 snap-center"
           >
             <Brain className="w-5 h-5" />
-            <span className="text-xs font-medium">Biometria</span>
+            <span className="text-[10px] font-medium leading-tight">Biometria</span>
           </TabsTrigger>
           <TabsTrigger 
             value="therapist" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 snap-center"
           >
             <Heart className="w-5 h-5" />
-            <span className="text-xs font-medium">Guru</span>
+            <span className="text-[10px] font-medium leading-tight">Guru</span>
           </TabsTrigger>
           <TabsTrigger 
             value="profile" 
-            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-gray-300 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 text-gray-800 transition-all"
+            className="shrink-0 min-w-[72px] w-[72px] flex flex-col items-center gap-1 px-2 py-2 rounded-lg bg-white/80 border-2 border-gray-300 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 text-gray-800 snap-center"
           >
             <User className="w-5 h-5" />
-            <span className="text-xs font-medium">Perfil</span>
+            <span className="text-[10px] font-medium leading-tight">Perfil</span>
           </TabsTrigger>
         </TabsList>
       </div>

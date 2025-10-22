@@ -56,36 +56,36 @@ export function FEMECompass({
   } as React.CSSProperties;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50 p-4 shadow-lg">
-      <div className="relative grid md:grid-cols-2 gap-6 items-stretch">
-        <div className="relative min-h-[320px]">
+    <div className="relative overflow-hidden rounded-xl md:rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50 p-3 md:p-4 shadow-lg">
+      <div className="relative grid md:grid-cols-2 gap-4 md:gap-6 items-stretch">
+        <div className="relative min-h-[280px] md:min-h-[320px]">
           <TooltipProvider>
             <Petals style={s} microcopy={microcopy} getRandomTip={getRandomTip} />
           </TooltipProvider>
           <CenterSeal value={coherence} onHarmonize={onHarmonize} />
           <Labels />
         </div>
-        <div className="p-4 md:p-6 flex flex-col justify-center gap-4">
-          <h3 className="text-2xl md:text-3xl font-bold text-purple-900">
+        <div className="p-3 md:p-6 flex flex-col justify-center gap-3 md:gap-4">
+          <h3 className="text-xl md:text-3xl font-bold text-purple-900">
             Minha Bússola Hoje
           </h3>
-          <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="grid grid-cols-2 gap-2 md:gap-3 text-sm">
             <Meter label="Físico" value={values.fisico} color="emerald" />
             <Meter label="Energético" value={values.energetico} color="amber" />
             <Meter label="Mental" value={values.mental} color="blue" />
             <Meter label="Espiritual" value={values.espiritual} color="purple" />
           </div>
-          <div className="text-sm text-gray-700 bg-white/60 p-3 rounded-lg">
+          <div className="text-xs md:text-sm text-gray-700 bg-white/60 p-2 md:p-3 rounded-lg">
             <span className="font-semibold">Selo de Coerência: </span>
             <span className="text-purple-600 font-bold">{coherence}%</span>
             {coherence < 70 && (
-              <span className="italic text-gray-600"> — a emoção ainda não acompanhou a intenção</span>
+              <span className="italic text-gray-600 block md:inline"> — a emoção ainda não acompanhou a intenção</span>
             )}
             {coherence >= 70 && coherence < 85 && (
-              <span className="italic text-gray-600"> — você está no caminho do alinhamento</span>
+              <span className="italic text-gray-600 block md:inline"> — você está no caminho do alinhamento</span>
             )}
             {coherence >= 85 && (
-              <span className="italic text-gray-600"> — harmonia profunda alcançada</span>
+              <span className="italic text-gray-600 block md:inline"> — harmonia profunda alcançada</span>
             )}
           </div>
         </div>
@@ -103,14 +103,14 @@ function Meter({ label, value, color }: { label: string; value: number; color: s
   };
 
   return (
-    <div className="p-3 rounded-lg border border-gray-200 bg-white/80 shadow-sm" data-testid={`meter-${label.toLowerCase()}`}>
-      <div className="flex justify-between mb-2">
-        <span className="font-medium text-gray-700">{label}</span>
-        <span className="font-bold text-gray-900">{value}/10</span>
+    <div className="p-2 md:p-3 rounded-lg border border-gray-200 bg-white/80 shadow-sm" data-testid={`meter-${label.toLowerCase()}`}>
+      <div className="flex justify-between mb-1 md:mb-2">
+        <span className="font-medium text-gray-700 text-xs md:text-sm">{label}</span>
+        <span className="font-bold text-gray-900 text-xs md:text-sm">{value}/10</span>
       </div>
-      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div className="h-1.5 md:h-2 bg-gray-200 rounded-full overflow-hidden">
         <div
-          className={`h-2 ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-500`}
+          className={`h-1.5 md:h-2 ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-500`}
           style={{ width: `${Math.max(0, Math.min(10, value)) * 10}%` }}
         />
       </div>
@@ -132,15 +132,15 @@ function Labels() {
 function CenterSeal({ value, onHarmonize }: { value: number; onHarmonize?: () => void }) {
   return (
     <div 
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border-2 border-purple-300 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center shadow-xl"
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-purple-300 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center shadow-xl"
       data-testid="feme-center-seal"
     >
-      <div className="text-sm text-gray-600 font-medium">Coerência</div>
-      <div className="text-3xl font-bold text-purple-600">{value}%</div>
+      <div className="text-xs md:text-sm text-gray-600 font-medium">Coerência</div>
+      <div className="text-2xl md:text-3xl font-bold text-purple-600">{value}%</div>
       {onHarmonize && (
         <Button
           onClick={onHarmonize}
-          className="mt-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-xs px-4 py-2 shadow-md"
+          className="mt-1 md:mt-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-[10px] md:text-xs px-2 py-1 md:px-4 md:py-2 shadow-md"
           size="sm"
           data-testid="button-harmonize"
         >
