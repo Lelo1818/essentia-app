@@ -391,8 +391,8 @@ export default function Purpose() {
         </CardContent>
       </Card>
 
-      {/* MENU NAVEGAÇÃO - LIMPO E DESTACADO */}
-      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-5">
+      {/* MENU NAVEGAÇÃO - DESKTOP */}
+      <div className="hidden md:block bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-5">
         <TabsList className="w-full h-auto flex flex-wrap gap-3 bg-transparent p-0">
           <TabsTrigger 
             value="journey" 
@@ -470,6 +470,89 @@ export default function Purpose() {
           >
             <User className="w-5 h-5" />
             <span>Sobre Mim</span>
+          </TabsTrigger>
+        </TabsList>
+      </div>
+
+      {/* MENU NAVEGAÇÃO - MOBILE (SCROLL HORIZONTAL) */}
+      <div className="md:hidden bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-3">
+        <TabsList className="w-full overflow-x-auto flex gap-2 bg-transparent p-0 scrollbar-hide">
+          <TabsTrigger 
+            value="journey" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+          >
+            <Compass className="w-5 h-5" />
+            <span className="text-xs font-medium">Jornada</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="transition" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+          >
+            <TrendingUp className="w-5 h-5" />
+            <span className="text-xs font-medium">Transição</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="avatar" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+          >
+            <User className="w-5 h-5" />
+            <span className="text-xs font-medium">Avatar</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="breathing" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-green-300 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 text-gray-800 transition-all"
+          >
+            <Brain className="w-5 h-5" />
+            <span className="text-xs font-medium">Respiração</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="rituals" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 text-gray-800 transition-all"
+          >
+            <Star className="w-5 h-5" />
+            <span className="text-xs font-medium">Rituais</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="wheel" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+          >
+            <Target className="w-5 h-5" />
+            <span className="text-xs font-medium">Roda</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="inspiration" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-pink-200 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 text-gray-800 transition-all"
+          >
+            <Heart className="w-5 h-5" />
+            <span className="text-xs font-medium">Inspiração</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="community" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-blue-200 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 text-gray-800 transition-all"
+          >
+            <Users className="w-5 h-5" />
+            <span className="text-xs font-medium">Comunidade</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="biometric" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-red-200 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 text-gray-800 transition-all"
+          >
+            <Brain className="w-5 h-5" />
+            <span className="text-xs font-medium">Biometria</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="therapist" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 text-gray-800 transition-all"
+          >
+            <Heart className="w-5 h-5" />
+            <span className="text-xs font-medium">Guru</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="profile" 
+            className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-white/80 border-2 border-gray-300 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 text-gray-800 transition-all"
+          >
+            <User className="w-5 h-5" />
+            <span className="text-xs font-medium">Perfil</span>
           </TabsTrigger>
         </TabsList>
       </div>
