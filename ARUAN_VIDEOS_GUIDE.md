@@ -170,15 +170,15 @@ Para **TODOS** os vídeos, mantenha:
 ### ✅ Vídeos Integrados
 
 ```
-✓ Despertar Interior_1760814881524.mp4    (Onboarding - 9:16)
-✓ Portal da Clareza_1761132977385.mp4     (Portal do Despertar - 16:9)
-✓ Portal da Gratidão_1761137810586.mp4    (Ritual de Gratidão - 16:9) ✅ CORRETO
+✓ Despertar Interior_1760814881524.mp4         (Onboarding - 9:16)
+✓ Portal da Clareza_1761132977385.mp4          (Portal do Despertar - 16:9)
+✓ Portal da Gratidão_1761137810586.mp4         (Ritual de Gratidão - 16:9)
+✓ Desperte Sua Coragem_1761138039346.mp4       (Respiração 4-4-6 Intro - 16:9) ✅ NOVO
 ```
 
 ### 🔄 Próximos Vídeos
 
 ```
-⏳ aruan_breath_intro.mp4     (Respiração - 3-5s - 1:1 ou 16:9)
 ⏳ aruan_achievement.mp4      (Conquista - 3s - 1:1) [opcional]
 ```
 
