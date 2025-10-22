@@ -45,6 +45,13 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **MediaPlayer com botão X**: Vídeos agora podem ser fechados/pulados pelo usuário.
 -   **Hash Navigation**: Suporte a /purpose#therapist para abrir tabs diretamente via URL.
 
+### Mobile Responsiveness Fix (October 22, 2025)
+-   **Breakpoint Change**: Trocado `md:` (768px) para `lg:` (1024px) em toda página /purpose e componentes relacionados. Celulares e tablets com tela grande agora veem versão mobile otimizada.
+-   **Auto-scroll Menu**: Menu mobile agora scrolla automaticamente para conteúdo da aba quando usuário clica (useEffect com scrollIntoView).
+-   **Layout "100% Confidencial"**: Badges do AI Therapist agora empilham verticalmente no mobile, sem sobreposição.
+-   **Vídeos Maiores**: MediaPlayer e VideoPortal usam breakpoint lg: para vídeos full-width em celulares.
+-   **Arquivos modificados**: purpose.tsx, App-purpose.tsx, ai-therapist.tsx, MediaPlayer.tsx, video-portal.tsx.
+
 ### Documentation
 -   **ARUAN_VIDEOS_GUIDE.md**: Guia completo de todos os vídeos Aruan com especificações técnicas, uso no app, e status de integração.
 
