@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { trackBreathing } from '@/lib/analytics';
 import { Play, Pause, X, Volume2 } from 'lucide-react';
 import { MediaPlayer } from '@/components/MediaPlayer';
+import desperteCoragemVideo from "@assets/Desperte Sua Coragem_1761138039346.mp4";
 
 interface Breathing446Props {
   onClose?: () => void;
@@ -93,7 +94,7 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
         <MediaPlayer
           assetKey="desperte-sua-coragem"
           title="Desperte Sua Coragem"
-          videoUrl="/assets/Desperte Sua Coragem_1761138039346.mp4"
+          videoUrl={desperteCoragemVideo}
           onComplete={() => setVideoWatched(true)}
         />
       </div>
