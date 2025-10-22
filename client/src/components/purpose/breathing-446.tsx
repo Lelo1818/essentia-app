@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { trackBreathing } from '@/lib/analytics';
 import { Play, Pause, X, Volume2 } from 'lucide-react';
+import { MediaPlayer } from '@/components/MediaPlayer';
 
 interface Breathing446Props {
   onClose?: () => void;
@@ -10,6 +11,7 @@ interface Breathing446Props {
 }
 
 export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4" }: Breathing446Props) {
+  const [videoWatched, setVideoWatched] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [cycles, setCycles] = useState(0);
   const [audioEnabled, setAudioEnabled] = useState(false);
@@ -83,6 +85,20 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
     
     onClose?.();
   };
+
+  // Mostrar vídeo introdutório primeiro
+  if (!videoWatched) {
+    return (
+      <div className="relative w-full h-screen overflow-hidden bg-black">
+        <MediaPlayer
+          assetKey="desperte-sua-coragem"
+          title="Desperte Sua Coragem"
+          videoUrl="/assets/Desperte Sua Coragem_1761138039346.mp4"
+          onComplete={() => setVideoWatched(true)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
