@@ -353,7 +353,7 @@ export default function Purpose() {
       </Card>
 
       {/* MENU NAVEGAÇÃO - MOBILE (FIXO NO TOPO) */}
-      <div className="md:hidden sticky top-0 z-40 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-b-xl shadow-xl border-2 border-purple-400 p-3 mb-4">
+      <div className="md:hidden sticky top-0 z-40 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-b-xl shadow-xl border-8 border-red-600 p-3 mb-4">
         <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0">
           <TabsTrigger 
             value="journey" 
