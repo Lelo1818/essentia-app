@@ -39,7 +39,7 @@ export default function JourneyPage() {
               Voltar
             </Button>
           </Link>
-          <h1 className="text-xl font-bold text-purple-900">Jornada do Propósito</h1>
+          <h1 className="text-xl font-bold text-purple-900">Portal do Despertar</h1>
           <div className="w-20" />
         </div>
       </header>
@@ -81,10 +81,10 @@ export default function JourneyPage() {
                 <Sparkles className="w-10 h-10 text-white" />
               </div>
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Portal UAU
+                Portal do Despertar
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Uma experiência transformadora que conecta você às 4 dimensões do ser: 
+                Uma jornada transformadora que desperta as 4 dimensões do seu ser: 
                 Físico, Energético, Mental e Espiritual.
               </p>
             </div>
@@ -141,7 +141,7 @@ export default function JourneyPage() {
                 data-testid="button-watch-video"
               >
                 <Sparkles className="w-5 h-5 mr-2" />
-                Assistir Portal UAU
+                Iniciar Despertar
               </Button>
               <p className="text-sm text-gray-500 mt-3">
                 🎁 Ganhe 50 pontos ao completar
@@ -151,8 +151,8 @@ export default function JourneyPage() {
         ) : (
           <div className="space-y-6">
             <MediaPlayer
-              assetKey="portal_uau"
-              title="Portal UAU - Jornada do Propósito"
+              assetKey="portal_despertar"
+              title="Portal do Despertar"
               onComplete={handleVideoComplete}
             />
             

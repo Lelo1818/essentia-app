@@ -344,7 +344,7 @@ export default function Purpose() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
-                <h3 className="text-2xl font-bold text-white">Portal UAU</h3>
+                <h3 className="text-2xl font-bold text-white">Portal do Despertar</h3>
               </div>
               <p className="text-purple-100 text-lg">
                 Uma pergunta profunda te espera hoje. Descubra sua resposta interior.
@@ -485,7 +485,7 @@ export default function Purpose() {
                     const getStageLabel = () => {
                       switch(stage.name) {
                         case "Despertar Interior":
-                          return "📊 Portal UAU";
+                          return "📊 Portal do Despertar";
                         case "Autoconhecimento Profundo":
                           return "🔮 FEME Compass";
                         case "Descoberta de Paixões":

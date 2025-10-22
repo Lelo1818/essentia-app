@@ -187,10 +187,10 @@ export const ACHIEVEMENTS: Record<string, AchievementConfig> = {
   },
   
   // Journey (Jornada)
-  portal_uau: {
-    key: 'portal_uau',
-    title: '🌌 Portal UAU',
-    description: 'Completou o Portal UAU transformador',
+  portal_despertar: {
+    key: 'portal_despertar',
+    title: '🌌 Portal do Despertar',
+    description: 'Completou o Portal do Despertar',
     icon: '🌌',
     category: 'journey',
     tier: 'special',

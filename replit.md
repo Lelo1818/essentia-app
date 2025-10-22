@@ -178,8 +178,8 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 
 ### URLs Principais
 -   **Essentia (Purpose)**: `/purpose` - Dashboard completo com FEME Compass, AI Coach, atividades
--   **Journey (Portal UAU)**: `/journey` - Vídeo transformador + 4 dimensões FEME
+-   **Journey (Portal do Despertar)**: `/journey` - Vídeo transformador do xamã + 4 dimensões FEME
 -   **Breath (Respiração)**: `/breath` - Técnica 4-4-6 com BreathRing animado
 -   **Points (Pontuação)**: `/points` - Histórico, stats, FEME summary, exportação JSON
--   **Onboarding**: Aparece automaticamente na primeira visita ao `/purpose`
+-   **Onboarding**: Xamã de boas-vindas (vídeo 9:16) + modo Express/Reflexivo - aparece na primeira visita ao `/purpose`
 -   **API Docs**: Ver `server/routes-clean.ts` para todos endpoints
