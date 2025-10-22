@@ -3,10 +3,11 @@
 ## 🎬 Vídeos para Gravar no HeyGen
 
 ### 📋 Checklist Rápido
-- [ ] Vídeo 1: Onboarding (20s)
-- [ ] Vídeo 2: Portal do Despertar - Intro (5s)
-- [ ] Vídeo 3: Respiração - Abertura (3-5s)
-- [ ] Vídeo 4: Conquista (3s) - opcional
+- [x] Vídeo 1: Onboarding (20s) ✅ INTEGRADO
+- [x] Vídeo 2: Portal do Despertar - Intro (30s) ✅ INTEGRADO
+- [x] Vídeo 3: Portal da Gratidão (ritual diário) ✅ INTEGRADO
+- [ ] Vídeo 4: Respiração - Abertura (3-5s)
+- [ ] Vídeo 5: Conquista (3s) - opcional
 
 ---
 
@@ -59,7 +60,35 @@ Toca no Portal do Despertar (/journey) - apresentação formal do Aruan
 
 ---
 
-## 🧘 Vídeo 3: Respiração - Abertura (3-5s)
+## 🌿 Vídeo 3: Portal da Gratidão - Ritual Diário (30s) ✅ INTEGRADO
+
+**Arquivo:** `Portal da Gratidão_1761135798495.mp4`
+
+**Script:**
+```
+[Texto do vídeo - gravado e integrado]
+Pausa, presença e reconhecimento das bençãos do dia
+```
+
+**Especificações:**
+- **Duração:** ~30 segundos
+- **Formato:** Landscape 16:9 (1920x1080)
+- **Fundo:** Natural com luz quente
+- **Voz:** Tom calmo, presença, fechamento emocional
+- **Expressão:** Serenidade, gratidão, momento de integração
+- **Energia:** Fechamento de ciclo, não transição
+
+**Uso no app:** 
+- Toca no **Ritual da Gratidão** dentro de Rituais Diários
+- Após o vídeo, aparece mensagem: "Respira e agradece. A cada pequeno passo, a vida floresce contigo."
+- Usuário escreve 1 frase de gratidão
+- Salvo como `ritual_completed: true` no banco
+
+**Status:** ✅ **INTEGRADO** - Funcionando em `/purpose` → aba "Rituais"
+
+---
+
+## 🧘 Vídeo 4: Respiração - Abertura (3-5s)
 
 **Arquivo:** `aruan_breath_intro.mp4`
 
@@ -81,7 +110,7 @@ Abre a tela de respiração 4-4-6 (/breath)
 
 ---
 
-## 🏆 Vídeo 4: Conquista - Parabéns (3s) [OPCIONAL]
+## 🏆 Vídeo 5: Conquista - Parabéns (3s) [OPCIONAL]
 
 **Arquivo:** `aruan_achievement.mp4`
 
@@ -136,20 +165,24 @@ Para **TODOS** os vídeos, mantenha:
 
 ---
 
-## 📦 Entrega dos Arquivos
+## 📦 Status de Integração
 
-Após gravar no HeyGen, baixe os vídeos com estes nomes:
+### ✅ Vídeos Integrados
 
 ```
-aruan_onboarding.mp4       (20s - 9:16)
-aruan_portal_intro.mp4     (5s - 16:9)
-aruan_breath_intro.mp4     (3-5s - 1:1 ou 16:9)
-aruan_achievement.mp4      (3s - 1:1) [opcional]
+✓ Despertar Interior_1760814881524.mp4    (Onboarding - 9:16)
+✓ Portal da Clareza_1761091155155.mp4     (Portal do Despertar - 16:9)
+✓ Portal da Gratidão_1761135798495.mp4    (Ritual de Gratidão - 16:9)
 ```
 
-**Coloque em:** `attached_assets/` 
+### 🔄 Próximos Vídeos
 
-Quando estiver pronto, me avise e eu integro tudo de uma vez! 🚀
+```
+⏳ aruan_breath_intro.mp4     (Respiração - 3-5s - 1:1 ou 16:9)
+⏳ aruan_achievement.mp4      (Conquista - 3s - 1:1) [opcional]
+```
+
+**Localização:** `attached_assets/`
 
 ---
 
