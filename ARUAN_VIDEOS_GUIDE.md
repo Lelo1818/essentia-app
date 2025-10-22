@@ -10,9 +10,34 @@
 
 ---
 
-## 🎥 Vídeo 1: Onboarding Principal (20s)
+## 🎥 Vídeo 1: Onboarding Principal (20s) - DESPERTAR
 
 **Arquivo:** `aruan_onboarding.mp4`
+
+**Script:**
+```
+Respire... e sinta o poder de seguir mesmo com medo.
+A jornada de despertar começa agora.
+```
+
+**Especificações:**
+- **Duração:** 20 segundos (expanda o texto acima com pausas dramáticas)
+- **Formato:** Vertical 9:16 (1080x1920)
+- **Fundo:** Natureza com fogo suave ou luz dourada (mais dramático)
+- **Trilha:** Tambor heartbeat 72 bpm + vento leve
+- **Voz:** Masculina grave, tom ENCORAJADOR, presença firme
+- **Expressão:** Olhar penetrante, energia de coragem, chamado à ação
+- **Iluminação:** Luz quente lateral (fogo mais evidente)
+- **Figurino:** Trajes simbólicos, tecidos naturais, metais/adornos
+
+**Uso no app:** 
+Aparece no onboarding, antes de escolher modo Express/Reflexivo - IMPACTO EMOCIONAL MÁXIMO
+
+---
+
+## 🌌 Vídeo 2: Portal do Despertar - Apresentação (20s)
+
+**Arquivo:** `aruan_portal_intro.mp4`
 
 **Script:**
 ```
@@ -24,37 +49,13 @@ A sabedoria que você procura já vive em você.
 
 **Especificações:**
 - **Duração:** 20 segundos
-- **Formato:** Vertical 9:16 (1080x1920)
-- **Fundo:** Natureza com fogo suave ou luz dourada
-- **Trilha:** Tambor heartbeat 72 bpm + vento leve
-- **Voz:** Masculina grave, tom calmo, presença firme
-- **Expressão:** Serena, acolhedora, firme (nunca agressiva)
-- **Iluminação:** Luz quente lateral
-- **Figurino:** Trajes simbólicos, tecidos naturais, metais/adornos
-
-**Uso no app:** 
-Aparece no onboarding, antes de escolher modo Express/Reflexivo
-
----
-
-## 🌌 Vídeo 2: Portal do Despertar - Intro (5s)
-
-**Arquivo:** `aruan_portal_intro.mp4`
-
-**Script:**
-```
-Respire... e sinta o poder de seguir mesmo com medo.
-```
-
-**Especificações:**
-- **Duração:** 5 segundos
 - **Formato:** Landscape 16:9 (1920x1080)
 - **Fundo:** Mesmo estilo do vídeo 1 (consistência visual)
-- **Voz:** Mesma voz, tom mais encorajador
-- **Expressão:** Olhar penetrante, sutil sorriso de encorajamento
+- **Voz:** Mesma voz, tom mais ACOLHEDOR e introdutório
+- **Expressão:** Serena, acolhedora, apresentação do guia
 
 **Uso no app:** 
-Toca antes do vídeo principal do Portal do Despertar (/journey)
+Toca no Portal do Despertar (/journey) - apresentação formal do Aruan
 
 ---
 
