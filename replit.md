@@ -51,6 +51,12 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Layout "100% Confidencial"**: Badges do AI Therapist agora empilham verticalmente no mobile, sem sobreposição.
 -   **Vídeos Maiores**: MediaPlayer e VideoPortal usam breakpoint lg: para vídeos full-width em celulares.
 -   **Arquivos modificados**: purpose.tsx, App-purpose.tsx, ai-therapist.tsx, MediaPlayer.tsx, video-portal.tsx.
+-   **⚠️ PENDENTE - Cache Mobile**: Código funcionando em desktop, mas iPhone do usuário com cache persistente/PWA impedindo atualizações. Aguardando teste em outro device para confirmar correções.
+
+### Known Issues (Outubro 22, 2025)
+-   **Mobile Cache Blocker**: iPhone específico do usuário com cache extremamente persistente. Tentativas: limpar Safari, modo privado, remover dados. Desktop funciona perfeitamente. Código mobile correto, aguardando validação em outro device.
+-   **Menu Scroll Mobile**: Implementado com offset, mas não visível no device do usuário (cache issue).
+-   **Vídeos Tamanho Mobile**: Aumentados para lg:max-w-5xl (MediaPlayer) e lg:max-w-7xl (VideoPortal), mas não visível no device do usuário (cache issue).
 
 ### Documentation
 -   **ARUAN_VIDEOS_GUIDE.md**: Guia completo de todos os vídeos Aruan com especificações técnicas, uso no app, e status de integração.

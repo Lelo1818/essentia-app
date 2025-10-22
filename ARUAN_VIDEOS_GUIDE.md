@@ -123,7 +123,33 @@ Liberação, renascimento, novo começo
 
 ---
 
-## 🧘 Vídeo 5: Respiração - Abertura (3-5s)
+## 🔮 Vídeo 5: Portal da Intuição (30s) 🆕
+
+**Arquivo:** `Portal da Intuição_1761165744262.mp4`
+
+**Script:**
+```
+[Aguardando definição de uso no app]
+```
+
+**Especificações:**
+- **Duração:** ~30 segundos (estimado)
+- **Formato:** Landscape 16:9 (1920x1080)
+- **Tamanho:** 12MB
+- **Energia:** Intuição, clareza interior, percepção sutil
+
+**Uso no app:** 
+**⏳ AGUARDANDO DEFINIÇÃO** - Onde e como usar este portal?
+- Novo ritual diário?
+- Portal da jornada (/journey)?
+- Feature específica de intuição?
+- Outro uso?
+
+**Status:** 📥 **RECEBIDO** - Aguardando instruções de integração
+
+---
+
+## 🧘 Vídeo 6: Respiração - Abertura (3-5s)
 
 **Arquivo:** `aruan_breath_intro.mp4`
 
@@ -145,7 +171,7 @@ Abre a tela de respiração 4-4-6 (/breath)
 
 ---
 
-## 🏆 Vídeo 6: Conquista - Parabéns (3s) [OPCIONAL]
+## 🏆 Vídeo 7: Conquista - Parabéns (3s) [OPCIONAL]
 
 **Arquivo:** `aruan_achievement.mp4`
 
@@ -215,6 +241,7 @@ Para **TODOS** os vídeos, mantenha:
 ### 🔄 Próximos Vídeos (Para Integrar)
 
 ```
+⏳ Portal da Intuição_1761165744262.mp4        (Novo portal - ~30s - 16:9) [AGUARDANDO USO]
 ⏳ Paz Interior Agora_1761141385712.mp4        (Respiração Rápida - 15-20s - 16:9 ou 1:1)
 ⏳ aruan_achievement.mp4                        (Conquista - 3s - 1:1) [opcional]
 ```
