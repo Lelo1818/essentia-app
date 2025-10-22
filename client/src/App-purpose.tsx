@@ -11,7 +11,7 @@ export default function PurposeApp() {
       <TooltipProvider>
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100">
           {/* Mobile Header */}
-          <div className="md:hidden sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b">
+          <div className="lg:hidden sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-8 border-green-500">
             <div className="flex items-center justify-between p-4">
               <a 
                 href="/" 
