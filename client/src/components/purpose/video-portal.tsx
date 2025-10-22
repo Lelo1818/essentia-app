@@ -28,11 +28,22 @@ export function VideoPortal({ videoSrc, title, onClose }: VideoPortalProps) {
     const handleEnded = () => {
       setIsPlaying(false);
     };
+    
+    const handleCanPlay = () => {
+      // Tenta dar play automaticamente quando carregar
+      video.play().then(() => {
+        setIsPlaying(true);
+      }).catch(err => {
+        console.log('Autoplay bloqueado:', err);
+      });
+    };
 
+    video.addEventListener("canplay", handleCanPlay);
     video.addEventListener("timeupdate", handleTimeUpdate);
     video.addEventListener("ended", handleEnded);
 
     return () => {
+      video.removeEventListener("canplay", handleCanPlay);
       video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("ended", handleEnded);
     };

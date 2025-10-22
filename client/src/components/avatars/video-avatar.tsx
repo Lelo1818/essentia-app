@@ -44,6 +44,13 @@ export function VideoAvatar({
       setIsLoading(false);
       // Toca tambor tribal quando avatar carrega
       soundManager.play('tribal_drum');
+      
+      // Autoplay: se autoplay está ativado, tenta tocar
+      if (autoplay) {
+        video.play().catch(err => {
+          console.log('Autoplay bloqueado:', err);
+        });
+      }
     };
     
     const handleEnded = () => {
@@ -58,7 +65,7 @@ export function VideoAvatar({
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('ended', handleEnded);
     };
-  }, [onComplete]);
+  }, [onComplete, autoplay]);
 
   const togglePlay = () => {
     const video = videoRef.current;

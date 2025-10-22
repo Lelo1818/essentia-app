@@ -46,7 +46,7 @@ export default function JourneyPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-5xl">
+      <main className="container mx-auto px-4 py-8 md:max-w-5xl">
         {showIntro ? (
           <div className="space-y-6">
             <div className="text-center mb-6">
