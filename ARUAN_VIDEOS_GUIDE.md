@@ -6,8 +6,10 @@
 - [x] Vídeo 1: Onboarding (20s) ✅ INTEGRADO
 - [x] Vídeo 2: Portal do Despertar - Intro (30s) ✅ INTEGRADO
 - [x] Vídeo 3: Portal da Gratidão (ritual diário) ✅ INTEGRADO
-- [ ] Vídeo 4: Respiração - Abertura (3-5s)
-- [ ] Vídeo 5: Conquista (3s) - opcional
+- [x] Vídeo 4: Respiração 4-4-6 - Intro ✅ INTEGRADO
+- [x] Vídeo 5: Portal do Recomeço (ritual diário) ✅ INTEGRADO
+- [ ] Vídeo 6: Respiração - Abertura Rápida (3-5s)
+- [ ] Vídeo 7: Conquista (3s) - opcional
 
 ---
 
@@ -88,7 +90,40 @@ Pausa, presença e reconhecimento das bençãos do dia
 
 ---
 
-## 🧘 Vídeo 4: Respiração - Abertura (3-5s)
+## 🔱 Vídeo 4: Portal do Recomeço - Ritual Diário (30s) ✅ INTEGRADO
+
+**Arquivo:** `Portal do Recomeço_1761159818471.mp4`
+
+**Script:**
+```
+[Texto do vídeo - gravado e integrado]
+Liberação, renascimento, novo começo
+```
+
+**Especificações:**
+- **Duração:** ~30 segundos
+- **Formato:** Landscape 16:9 (1920x1080)
+- **Fundo:** Natural com luz transformadora
+- **Voz:** Tom firme, energia de renovação
+- **Expressão:** Determinação, recomeço, transformação
+- **Energia:** Libertação e novo início
+
+**Uso no app:** 
+- Toca no **Ritual do Recomeço** dentro de Rituais Diários
+- Após o vídeo, aparece mensagem: "Todo fim é um início disfarçado. Respire fundo. Você está pronto para recomeçar."
+- Usuário escreve o que quer deixar pra trás
+- Salvo como `ritual_completed: true` no banco
+
+**Simbologia:**
+- **Gratidão** = aceitação do presente (passivo, receptivo)
+- **Recomeço** = ação para o futuro (ativo, transformador)
+- Juntos formam o ciclo completo: acolher + liberar
+
+**Status:** ✅ **INTEGRADO** - Funcionando em `/purpose` → aba "Rituais"
+
+---
+
+## 🧘 Vídeo 5: Respiração - Abertura (3-5s)
 
 **Arquivo:** `aruan_breath_intro.mp4`
 
@@ -110,7 +145,7 @@ Abre a tela de respiração 4-4-6 (/breath)
 
 ---
 
-## 🏆 Vídeo 5: Conquista - Parabéns (3s) [OPCIONAL]
+## 🏆 Vídeo 6: Conquista - Parabéns (3s) [OPCIONAL]
 
 **Arquivo:** `aruan_achievement.mp4`
 
@@ -174,6 +209,7 @@ Para **TODOS** os vídeos, mantenha:
 ✓ Portal da Clareza_1761132977385.mp4          (Portal do Despertar - 16:9)
 ✓ Portal da Gratidão_1761137810586.mp4         (Ritual de Gratidão - 16:9)
 ✓ Desperte Sua Coragem_1761138039346.mp4       (Respiração 4-4-6 Intro - 16:9)
+✓ Portal do Recomeço_1761159818471.mp4         (Ritual do Recomeço - 16:9)
 ```
 
 ### 🔄 Próximos Vídeos (Para Integrar)

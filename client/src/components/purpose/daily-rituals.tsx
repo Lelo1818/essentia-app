@@ -12,10 +12,12 @@ import {
   Heart, 
   Edit3,
   CheckCircle,
-  Sparkles
+  Sparkles,
+  RefreshCw
 } from "lucide-react";
 
 import portalGratidaoVideo from "@assets/Portal da Gratidão_1761137810586.mp4";
+import portalRecomecoVideo from "@assets/Portal do Recomeço_1761159818471.mp4";
 
 interface DailyRitualsProps {
   onRitualComplete?: (ritual: DailyRitual, response: string) => void;
@@ -33,6 +35,12 @@ export function DailyRitualsComponent({ onRitualComplete }: DailyRitualsProps) {
   const [gratitudeText, setGratitudeText] = useState("");
   const [gratitudeCompleted, setGratitudeCompleted] = useState(false);
 
+  // Estado para Ritual do Recomeço com vídeo
+  const [restartRitualActive, setRestartRitualActive] = useState(false);
+  const [restartVideoComplete, setRestartVideoComplete] = useState(false);
+  const [restartText, setRestartText] = useState("");
+  const [restartCompleted, setRestartCompleted] = useState(false);
+
   useEffect(() => {
     // Load completed rituals from localStorage
     const saved = localStorage.getItem('daily-rituals-completed');
@@ -45,6 +53,12 @@ export function DailyRitualsComponent({ onRitualComplete }: DailyRitualsProps) {
     const today = new Date().toDateString();
     if (gratitudeData === today) {
       setGratitudeCompleted(true);
+    }
+
+    // Check if restart ritual was completed today
+    const restartData = localStorage.getItem('restart-ritual-date');
+    if (restartData === today) {
+      setRestartCompleted(true);
     }
   }, []);
 
@@ -87,7 +101,9 @@ export function DailyRitualsComponent({ onRitualComplete }: DailyRitualsProps) {
     localStorage.removeItem('daily-rituals-completed');
     localStorage.removeItem('daily-ritual-responses');
     localStorage.removeItem('gratitude-ritual-date');
+    localStorage.removeItem('restart-ritual-date');
     setGratitudeCompleted(false);
+    setRestartCompleted(false);
   };
 
   const openGratitudeRitual = () => {
@@ -123,6 +139,47 @@ export function DailyRitualsComponent({ onRitualComplete }: DailyRitualsProps) {
         body: JSON.stringify({
           ritualType: 'gratitude',
           response: gratitudeText,
+          ritual_completed: true
+        })
+      });
+    } catch (error) {
+      console.debug('Ritual save failed (offline mode):', error);
+    }
+  };
+
+  const openRestartRitual = () => {
+    setRestartRitualActive(true);
+    setRestartVideoComplete(false);
+    setRestartText("");
+  };
+
+  const completeRestartRitual = async () => {
+    if (!restartText.trim()) return;
+
+    // Salvar no localStorage
+    const today = new Date().toDateString();
+    localStorage.setItem('restart-ritual-date', today);
+    
+    const restartResponses = JSON.parse(localStorage.getItem('restart-responses') || '[]');
+    restartResponses.push({
+      text: restartText,
+      timestamp: new Date().toISOString(),
+      date: today
+    });
+    localStorage.setItem('restart-responses', JSON.stringify(restartResponses));
+
+    // Marcar como concluído
+    setRestartCompleted(true);
+    setRestartRitualActive(false);
+    
+    // Opcional: salvar no banco
+    try {
+      await fetch('/api/rituals/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ritualType: 'restart',
+          response: restartText,
           ritual_completed: true
         })
       });
@@ -426,6 +483,136 @@ export function DailyRitualsComponent({ onRitualComplete }: DailyRitualsProps) {
                   </Badge>
                 )}
                 <Badge className="bg-pink-100 text-pink-700">
+                  🎬 Com vídeo
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Ritual do Recomeço - Com vídeo do Aruan */}
+      {restartRitualActive ? (
+        <Card className="border-2 border-cyan-400 bg-gradient-to-br from-cyan-50 to-blue-50">
+          <CardContent className="p-6">
+            {!restartVideoComplete ? (
+              <div className="space-y-4">
+                <div className="text-center mb-4">
+                  <h3 className="text-2xl font-bold text-cyan-800 mb-2">
+                    🔱 Portal do Recomeço
+                  </h3>
+                  <p className="text-cyan-700">
+                    Aruan te convida para um momento de liberação e renascimento
+                  </p>
+                </div>
+                
+                <MediaPlayer
+                  assetKey="portal_recomeco"
+                  title="Portal do Recomeço"
+                  videoUrl={portalRecomecoVideo}
+                  onComplete={() => setRestartVideoComplete(true)}
+                />
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {/* Mensagem pós-vídeo */}
+                <div className="text-center p-6 bg-white/70 rounded-xl border-2 border-cyan-300">
+                  <RefreshCw className="w-12 h-12 mx-auto mb-4 text-cyan-500" />
+                  <p className="text-xl font-medium text-cyan-900 italic">
+                    "Todo fim é um início disfarçado.
+                  </p>
+                  <p className="text-xl font-medium text-cyan-900 italic mt-2">
+                    Respire fundo.
+                  </p>
+                  <p className="text-xl font-medium text-cyan-900 italic mt-2">
+                    Você está pronto para recomeçar."
+                  </p>
+                </div>
+
+                {/* Campo de recomeço */}
+                <div className="space-y-3">
+                  <h4 className="font-medium text-cyan-800">
+                    O que você quer deixar pra trás hoje?
+                  </h4>
+                  <Textarea
+                    value={restartText}
+                    onChange={(e) => setRestartText(e.target.value)}
+                    placeholder="Pode ser um medo, uma crença, um padrão... libere o que não serve mais."
+                    className="min-h-[100px] resize-none border-cyan-300 focus:border-cyan-500 bg-white/80"
+                    data-testid="input-restart-text"
+                  />
+                </div>
+
+                {/* Ações */}
+                <div className="flex space-x-3">
+                  <Button
+                    onClick={completeRestartRitual}
+                    disabled={!restartText.trim()}
+                    className="bg-cyan-600 hover:bg-cyan-700 text-white flex-1"
+                    data-testid="button-complete-restart"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Concluir Ritual
+                  </Button>
+                  
+                  <Button
+                    onClick={() => setRestartRitualActive(false)}
+                    variant="outline"
+                    className="border-cyan-300 text-cyan-700"
+                    data-testid="button-close-restart"
+                  >
+                    Fechar
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : (
+        <Card 
+          className={cn(
+            "cursor-pointer hover:shadow-lg transition-all border-2",
+            restartCompleted 
+              ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-300"
+              : "bg-gradient-to-r from-cyan-50 to-blue-50 border-cyan-300"
+          )}
+          onClick={() => !restartCompleted && openRestartRitual()}
+          data-testid="card-restart-ritual"
+        >
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className={cn(
+                  "w-14 h-14 rounded-full flex items-center justify-center",
+                  restartCompleted ? "bg-green-100" : "bg-cyan-100"
+                )}>
+                  {restartCompleted ? (
+                    <CheckCircle className="w-7 h-7 text-green-600" />
+                  ) : (
+                    <RefreshCw className="w-7 h-7 text-cyan-600" />
+                  )}
+                </div>
+                
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-1">
+                    🔱 Ritual do Recomeço
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {restartCompleted 
+                      ? "Ritual concluído hoje. Volte amanhã para um novo recomeço."
+                      : "Libere o que não serve mais e renasça com Aruan"
+                    }
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col items-end space-y-2">
+                {restartCompleted && (
+                  <Badge className="bg-green-100 text-green-700">
+                    ✓ Concluído
+                  </Badge>
+                )}
+                <Badge className="bg-cyan-100 text-cyan-700">
                   🎬 Com vídeo
                 </Badge>
               </div>
