@@ -38,6 +38,7 @@ import { VideoPortal } from "@/components/purpose/video-portal";
 import { FEMECompass } from "@/components/feme/FEMECompass";
 import { MegaOnboarding, useMegaOnboarding } from "@/components/purpose/mega-onboarding";
 import { SuggestionsHistory } from "@/components/purpose/suggestions-history";
+import { AuditOverlay } from "@/components/purpose/audit-overlay";
 import { 
   Compass, 
   Heart, 
@@ -249,6 +250,9 @@ export default function Purpose() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Audit Overlay - só em desenvolvimento */}
+      {import.meta.env.DEV && <AuditOverlay />}
+      
       <QuickNavButton />
       
       <Tabs value={activeTab} onValueChange={setActiveTab}>
