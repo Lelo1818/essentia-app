@@ -145,32 +145,19 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
 
         {/* Círculo de respiração animado */}
         <div className="relative w-80 h-80 flex items-center justify-center mb-8">
-          <svg 
-            viewBox="0 0 200 200" 
-            className="absolute inset-0 w-full h-full"
-            data-testid="breathing-circle"
-          >
-            <circle
-              cx="100"
-              cy="100"
-              r="70"
-              fill="none"
-              stroke="rgba(255, 255, 255, 0.3)"
-              strokeWidth="2"
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Círculo externo fixo */}
+            <div className="absolute w-56 h-56 rounded-full border-2 border-white/30" />
+            
+            {/* Círculo interno animado */}
+            <div 
+              className={`absolute w-40 h-40 rounded-full bg-purple-600/20 border-3 border-purple-500/60 transition-transform duration-1000 ${isActive ? 'breathing-circle-active' : ''}`}
+              data-testid="breathing-circle"
             />
-            <circle
-              cx="100"
-              cy="100"
-              r="50"
-              fill="rgba(139, 92, 246, 0.2)"
-              stroke="rgba(139, 92, 246, 0.6)"
-              strokeWidth="3"
-              className={isActive ? 'breathing-circle-active' : ''}
-            />
-          </svg>
+          </div>
           
           {/* Texto central */}
-          <div className="text-center text-white">
+          <div className="relative z-10 text-center text-white">
             <h2 className="text-3xl font-bold mb-2">Respiração Viva</h2>
             <p className="text-lg opacity-80">4 - 4 - 6</p>
           </div>
@@ -242,19 +229,19 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
       <style>{`
         @keyframes breathe {
           0% {
-            r: 50;
+            transform: scale(1);
             opacity: 0.6;
           }
           28.57% {
-            r: 85;
+            transform: scale(1.7);
             opacity: 1;
           }
           57.14% {
-            r: 85;
+            transform: scale(1.7);
             opacity: 1;
           }
           100% {
-            r: 50;
+            transform: scale(1);
             opacity: 0.6;
           }
         }
