@@ -15,6 +15,7 @@ import {
   Lightbulb,
   Loader2
 } from 'lucide-react';
+import { CoachAvatar } from '@/components/avatars/video-avatar';
 
 interface AdaptiveCompanionProps {
   userName: string;
@@ -226,13 +227,23 @@ export default function AdaptiveCompanion({
       {/* Companion Card */}
       <Card className={`bg-gradient-to-r ${currentPersonality.color} text-white`}>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <PersonalityIcon className="w-6 h-6 mr-3" />
-            {currentPersonality.name}
-          </CardTitle>
-          <p className="text-sm opacity-90">
-            {currentPersonality.style}
-          </p>
+          <div className="flex items-center gap-4">
+            {/* Avatar do Coach - será substituído por vídeo Heygen */}
+            <CoachAvatar 
+              videoUrl={undefined}
+              fallbackImage={undefined}
+              isCompact={false}
+            />
+            <div className="flex-1">
+              <CardTitle className="flex items-center">
+                <PersonalityIcon className="w-6 h-6 mr-3" />
+                {currentPersonality.name}
+              </CardTitle>
+              <p className="text-sm opacity-90 mt-1">
+                {currentPersonality.style}
+              </p>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
