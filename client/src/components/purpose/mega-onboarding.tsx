@@ -9,6 +9,7 @@ import { trackOnboarding } from '@/lib/analytics';
 import { Sparkles, ArrowRight, CheckCircle, Zap, MessageCircle } from 'lucide-react';
 import { WelcomeAvatar } from '@/components/avatars/video-avatar';
 import shamanAvatar from '@assets/Captura de tela 2025-10-21 212327_1761092690319.png';
+import shamanVideo from '@assets/xama força vive em vc_1761096457901.mp4';
 
 interface MegaQuestion {
   id: number;
@@ -154,16 +155,16 @@ export function MegaOnboarding({ onComplete }: MegaOnboardingProps) {
             <p className="text-white/90 mt-2">Escolha como prefere começar sua jornada</p>
           </CardHeader>
           <CardContent className="p-8">
-            {/* Avatar de Boas-vindas */}
+            {/* Avatar de Boas-vindas - Xamã com vídeo */}
             <div className="flex flex-col items-center mb-8">
               <WelcomeAvatar 
-                videoUrl={undefined} 
+                videoUrl={shamanVideo}
                 fallbackImage={shamanAvatar}
               />
               <div className="mt-4 text-center">
-                <p className="text-lg font-semibold text-purple-900">Olá, sou seu Guia</p>
+                <p className="text-lg font-semibold text-purple-900">🔥 A força vive em você</p>
                 <p className="text-sm text-gray-600 max-w-md">
-                  Vou te acompanhar nessa jornada de autoconhecimento e transformação
+                  Clique no vídeo para ouvir a mensagem do seu guia xamânico
                 </p>
               </div>
             </div>

@@ -1,4 +1,4 @@
-type SoundName = 'ui_click' | 'ui_success' | 'ui_open' | 'ui_close' | 'breath_tick';
+type SoundName = 'ui_click' | 'ui_success' | 'ui_open' | 'ui_close' | 'breath_tick' | 'tribal_drum' | 'ceremonial_drum' | 'avatar_appear';
 
 class SoundManager {
   private sounds: Map<SoundName, HTMLAudioElement> = new Map();
@@ -25,6 +25,9 @@ class SoundManager {
       ui_open: '/audio/ui_open.mp3',
       ui_close: '/audio/ui_close.mp3',
       breath_tick: '/audio/breath_tick.mp3',
+      tribal_drum: '/audio/tribal_drum.mp3',
+      ceremonial_drum: '/audio/ceremonial_drum.mp3',
+      avatar_appear: '/audio/avatar_appear.mp3',
     };
 
     for (const [name, path] of Object.entries(soundFiles) as [SoundName, string][]) {

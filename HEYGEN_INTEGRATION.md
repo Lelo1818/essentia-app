@@ -16,10 +16,14 @@ Este guia mostra onde adicionar os vídeos gerados pelo Heygen nos componentes d
 **Como adicionar:**
 ```tsx
 <WelcomeAvatar 
-  videoUrl="https://resource.heygen.com/seu-video-id.mp4"  // ← ADICIONAR URL AQUI
+  videoUrl={shamanVideo}  // ✅ JÁ INTEGRADO! Vídeo do xamã funcionando
   fallbackImage={shamanAvatar}
 />
 ```
+
+**✅ STATUS: IMPLEMENTADO**  
+O vídeo do xamã "A força vive em você" já está integrado e funcionando!  
+Quando o vídeo carrega, toca um som de tambor tribal automático.
 
 ---
 

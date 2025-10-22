@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
+import { soundManager } from "@/lib/sound";
 
 interface VideoAvatarProps {
   videoUrl?: string;
@@ -39,7 +40,12 @@ export function VideoAvatar({
     const video = videoRef.current;
     if (!video) return;
 
-    const handleCanPlay = () => setIsLoading(false);
+    const handleCanPlay = () => {
+      setIsLoading(false);
+      // Toca tambor tribal quando avatar carrega
+      soundManager.play('tribal_drum');
+    };
+    
     const handleEnded = () => {
       setIsPlaying(false);
       onComplete?.();
