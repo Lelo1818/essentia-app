@@ -4,10 +4,17 @@ import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { MediaPlayer } from '@/components/MediaPlayer';
 import { useAuth } from '@/hooks/useAuth';
+import { PortalIntroAvatar } from '@/components/avatars/video-avatar';
 
 export default function JourneyPage() {
   const { user } = useAuth();
   const [showVideo, setShowVideo] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    setShowVideo(true);
+  };
 
   const handleVideoComplete = () => {
     // Track completion and award points
@@ -38,7 +45,35 @@ export default function JourneyPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
-        {!showVideo ? (
+        {showIntro ? (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Mensagem do seu Guia
+              </h2>
+              <p className="text-gray-600">
+                Prepare-se para uma experiência transformadora
+              </p>
+            </div>
+            
+            {/* Avatar Intro Video - quando adicionar vídeo Heygen, substituir videoUrl */}
+            <PortalIntroAvatar
+              videoUrl={undefined}
+              fallbackImage={undefined}
+              onComplete={handleIntroComplete}
+            />
+            
+            <div className="text-center">
+              <Button
+                variant="outline"
+                onClick={handleIntroComplete}
+                data-testid="button-skip-intro"
+              >
+                Pular Introdução →
+              </Button>
+            </div>
+          </div>
+        ) : !showVideo ? (
           <>
             {/* Hero Section */}
             <div className="text-center mb-12">
