@@ -62,7 +62,7 @@ Toca no Portal do Despertar (/journey) - apresentação formal do Aruan
 
 ## 🌿 Vídeo 3: Portal da Gratidão - Ritual Diário (30s) ✅ INTEGRADO
 
-**Arquivo:** `Portal da Gratidão_1761135798495.mp4`
+**Arquivo:** `Portal da Gratidão_1761137810586.mp4`
 
 **Script:**
 ```
@@ -171,8 +171,8 @@ Para **TODOS** os vídeos, mantenha:
 
 ```
 ✓ Despertar Interior_1760814881524.mp4    (Onboarding - 9:16)
-✓ Portal da Clareza_1761091155155.mp4     (Portal do Despertar - 16:9)
-✓ Portal da Gratidão_1761135798495.mp4    (Ritual de Gratidão - 16:9)
+✓ Portal da Clareza_1761132977385.mp4     (Portal do Despertar - 16:9)
+✓ Portal da Gratidão_1761137810586.mp4    (Ritual de Gratidão - 16:9) ✅ CORRETO
 ```
 
 ### 🔄 Próximos Vídeos

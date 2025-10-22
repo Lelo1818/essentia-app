@@ -15,7 +15,7 @@ import {
   Sparkles
 } from "lucide-react";
 
-import portalGratidaoVideo from "@assets/Portal da Gratidão_1761135798495.mp4";
+import portalGratidaoVideo from "@assets/Portal da Gratidão_1761137810586.mp4";
 
 interface DailyRitualsProps {
   onRitualComplete?: (ritual: DailyRitual, response: string) => void;
