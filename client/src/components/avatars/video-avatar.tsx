@@ -113,22 +113,7 @@ export function VideoAvatar({
         data-testid="video-avatar"
       />
 
-      {/* Play/Pause overlay (se não tem controls nativos) */}
-      {!controls && (
-        <button
-          onClick={togglePlay}
-          className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors group"
-          data-testid="button-toggle-play"
-        >
-          <div className="bg-white/90 rounded-full p-4 group-hover:scale-110 transition-transform">
-            {isPlaying ? (
-              <Pause className="w-6 h-6 text-gray-900" />
-            ) : (
-              <Play className="w-6 h-6 text-gray-900" />
-            )}
-          </div>
-        </button>
-      )}
+      {/* Play/Pause overlay - DESABILITADO para não ficar na cara */}
     </div>
   );
 }
@@ -148,9 +133,9 @@ export function WelcomeAvatar({
       autoplay={false}
       loop={false}
       muted={false}
-      controls={false}
-      aspectRatio="1:1"
-      className="w-32 h-32 mx-auto shadow-2xl border-4 border-purple-500"
+      controls={true}
+      aspectRatio="16:9"
+      className="w-full max-w-lg mx-auto shadow-2xl border-4 border-purple-500 rounded-xl overflow-hidden"
     />
   );
 }
