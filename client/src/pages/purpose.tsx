@@ -86,22 +86,14 @@ function AchievementsSection() {
 
   const nextAchievements = [nextCheckinAchievement, nextBreathAchievement, nextPointsAchievement].filter(Boolean);
 
-  if (isLoading) {
-    return (
-      <div className="text-center text-gray-500 py-4">
-        Carregando conquistas...
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-lg">🏆 Conquistas</h3>
+        <h3 className="font-semibold text-lg">🏆 Conquistas Recentes</h3>
         <AchievementsGallery
           trigger={
             <Button variant="outline" size="sm" data-testid="button-view-all-achievements">
-              Ver Todas ({userAchievements.length})
+              {isLoading ? 'Carregando...' : `Ver Todas (${userAchievements.length})`}
             </Button>
           }
         />
