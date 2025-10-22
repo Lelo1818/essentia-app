@@ -182,20 +182,20 @@ export default function JourneyContinuity({ userId, currentPhase, progress }: Jo
     <div className="space-y-6">
       {/* Header de Continuidade */}
       <Card className={`bg-gradient-to-r ${currentPhaseData?.color} text-white`}>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <CurrentIcon className="w-8 h-8" />
-              <div>
-                <CardTitle className="text-xl">
+        <CardHeader className="p-3 md:p-6">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center space-x-2 md:space-x-3 min-w-0 flex-1">
+              <CurrentIcon className="w-6 h-6 md:w-8 md:h-8 shrink-0" />
+              <div className="min-w-0">
+                <CardTitle className="text-base md:text-xl truncate">
                   {getTimeBasedGreeting()}! Continue sua jornada
                 </CardTitle>
-                <p className="text-sm opacity-90">
+                <p className="text-xs md:text-sm opacity-90 line-clamp-1">
                   {getMotivationalMessage()}
                 </p>
               </div>
             </div>
-            <Badge variant="outline" className="text-white border-white">
+            <Badge variant="outline" className="text-white border-white text-[10px] md:text-sm px-2 py-1 shrink-0">
               {dailyStreak} dias seguidos
             </Badge>
           </div>
