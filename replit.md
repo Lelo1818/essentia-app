@@ -52,6 +52,25 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Arquivos**: client/src/pages/portals.tsx, client/src/components/portals/intuition-portal.tsx
 -   **Backend**: Tabela `portal_reflections` adicionada ao schema, endpoints GET/POST `/api/reflections`
 
+### Sistema de Coerência Científica FEME (Outubro 22, 2025)
+-   **Camada Científica**: Implementada lógica matemática baseada em princípios de coerência biológica e física quântica aplicada ao comportamento humano
+-   **Análise de Relações**: Não mede apenas níveis individuais, mas as RELAÇÕES entre as 4 dimensões (Físico ↔ Energético ↔ Mental ↔ Espiritual)
+-   **Motor de Coerência** (server/feme-coherence.ts):
+    -   Calcula índice de coerência entre pares de dimensões adjacentes
+    -   Detecta 5 padrões: balanced, ascending, descending, chaotic, polarized
+    -   Gera insights científicos baseados em desequilíbrios detectados
+    -   Calcula campo de ressonância (força total = média × coerência)
+    -   Recomendações personalizadas baseadas no estado atual
+-   **Endpoint**: GET `/api/feme/coherence` - retorna análise completa do último check-in FEME
+-   **Bússola de Coerência** (client/src/components/coherence-compass.tsx):
+    -   Visualização circular do índice de coerência (0-100)
+    -   Progress bars para equilíbrio dimensional entre pares
+    -   Campo de ressonância em destaque
+    -   Insights científicos e recomendações práticas
+    -   Timestamp do check-in analisado
+-   **Página**: `/coherence` - experiência completa com hero section, informações educacionais sobre coerência e campo de ressonância
+-   **Arquivos**: server/feme-coherence.ts, client/src/components/coherence-compass.tsx, client/src/pages/coherence.tsx
+
 ### UX Improvements
 -   **Renomeação "Terapeuta IA" → "Seu Guru"**: Nome mais quente e pessoal, sem mencionar "IA". Aplicado em: aba do dashboard, journey stages, mensagens do Aruan.
 -   **Bug Fix - Respiração 4-4-6**: Corrigido círculo de respiração que estava parado (substituído SVG por div com transform:scale, animação 14s sincronizada com ciclo 4-4-6).
