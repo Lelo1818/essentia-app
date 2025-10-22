@@ -1,5 +1,5 @@
 import { 
-  users, achievements, userProgress, actionPlans, aiSuggestions,
+  users, achievements, userProgress, actionPlans, aiSuggestions, portalReflections,
   type User, type InsertUser, type UpsertUser,
   type Achievement, type InsertAchievement,
   type FemeCheckin, type InsertFemeCheckin,
@@ -7,7 +7,8 @@ import {
   type UserEvent, type InsertUserEvent,
   type UserProgress, type InsertUserProgress,
   type ActionPlan, type InsertActionPlan,
-  type AiSuggestion, type InsertAiSuggestion
+  type AiSuggestion, type InsertAiSuggestion,
+  type PortalReflection, type InsertPortalReflection
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -73,6 +74,10 @@ export interface IStorage {
   createAiSuggestion(suggestion: InsertAiSuggestion): Promise<AiSuggestion>;
   getAiSuggestionsByUserId(userId: number, limit?: number): Promise<AiSuggestion[]>;
   
+  // Portal Reflections methods
+  createPortalReflection(reflection: InsertPortalReflection): Promise<PortalReflection>;
+  getPortalReflectionsByUserId(userId: number): Promise<PortalReflection[]>;
+  
   // Aggregated history
   getHistory(userId: number, limit?: number): Promise<{
     events: UserEvent[];
@@ -95,6 +100,7 @@ class MemStorage implements IStorage {
   private userProgressMap = new Map<number, UserProgress>(); // key: userId
   private actionPlansMap = new Map<number, ActionPlan>();
   private aiSuggestionsMap = new Map<number, AiSuggestion>();
+  private portalReflectionsMap = new Map<number, PortalReflection>();
   private incomes = new Map<number, any>();
   private expenses = new Map<number, any>();
   private budgets = new Map<number, any>();
@@ -804,6 +810,25 @@ class MemStorage implements IStorage {
       .filter(s => s.userId === userId)
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     return suggestions.slice(0, limit);
+  }
+
+  // Portal Reflections methods
+  async createPortalReflection(reflection: InsertPortalReflection): Promise<PortalReflection> {
+    const id = this.currentId++;
+    const newReflection: PortalReflection = {
+      ...reflection,
+      id,
+      userId: reflection.userId || null,
+      createdAt: new Date(),
+    };
+    this.portalReflectionsMap.set(id, newReflection);
+    return newReflection;
+  }
+
+  async getPortalReflectionsByUserId(userId: number): Promise<PortalReflection[]> {
+    return Array.from(this.portalReflectionsMap.values())
+      .filter(r => r.userId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
   // Aggregated history

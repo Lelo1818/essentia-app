@@ -9,7 +9,8 @@ import { fileURLToPath } from 'url';
 import { 
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
   insertGoalSchema, insertAchievementSchema,
-  insertFemeCheckinSchema, insertBreathSessionSchema, insertUserEventSchema
+  insertFemeCheckinSchema, insertBreathSessionSchema, insertUserEventSchema,
+  insertPortalReflectionSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
@@ -168,6 +169,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching breath sessions:", error);
       res.status(500).json({ message: "Failed to fetch sessions" });
+    }
+  });
+
+  // Portal Reflections endpoints
+  app.post('/api/reflections', async (req: any, res) => {
+    try {
+      // Optional authentication - allow pre-login reflections
+      let userId: number | null = null;
+      
+      if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
+        const replitId = req.user.claims.sub;
+        const user = await storage.getUserByReplitId(replitId);
+        if (user) {
+          userId = user.id;
+        }
+      }
+
+      // Validate with Zod
+      const validatedData = insertPortalReflectionSchema.parse({
+        userId,
+        portalType: req.body.portalType,
+        content: req.body.content,
+      });
+
+      const reflection = await storage.createPortalReflection(validatedData);
+      
+      res.status(201).json(reflection);
+    } catch (error) {
+      console.error("Error creating portal reflection:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create reflection" });
+    }
+  });
+
+  app.get('/api/reflections', async (req: any, res) => {
+    try {
+      // Optional authentication
+      let userId: number | null = null;
+      
+      if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
+        const replitId = req.user.claims.sub;
+        const user = await storage.getUserByReplitId(replitId);
+        if (user) {
+          userId = user.id;
+        }
+      }
+
+      if (!userId) {
+        return res.json([]);
+      }
+
+      const reflections = await storage.getPortalReflectionsByUserId(userId);
+      res.json(reflections);
+    } catch (error) {
+      console.error("Error fetching reflections:", error);
+      res.status(500).json({ message: "Failed to fetch reflections" });
     }
   });
 

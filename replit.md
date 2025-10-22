@@ -31,13 +31,26 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 
 ### Aruan Avatar System - MVP Completo
 -   **AruanGuidance Component**: Sistema de guia pós-exercício onde Aruan aparece após completar rituais/respirações sugerindo próximo passo. Este é o "motor" do app - conecta experiências e guia o usuário na jornada.
--   **4 Vídeos HeyGen Integrados**:
+-   **6 Vídeos HeyGen Integrados**:
     -   Despertar Interior (9:16) - Onboarding principal
     -   Portal da Clareza (16:9) - Portal do Despertar (/journey)
     -   Portal da Gratidão (16:9) - Ritual de Gratidão
+    -   Portal do Recomeço (16:9) - Ritual do Recomeço
     -   Desperte Sua Coragem (16:9) - Intro Respiração 4-4-6 (/breathing-446)
+    -   **Portal da Intuição (16:9) - Portal da Intuição (/portals) - NOVO ✨**
 -   **1 Vídeo Documentado**: Paz Interior Agora (15-20s) - Preparado para respirações rápidas
 -   **Fluxo Completo**: Vídeo intro → Exercício/Ritual → AruanGuidance aparece → Sugere próximo passo → Navega para próxima feature
+
+### Portal da Intuição - Nova Feature (Outubro 22, 2025)
+-   **Página de Portais**: Nova página `/portals` com grid de 4 portais: Clareza, Gratidão, Recomeço, e Intuição
+-   **Experiência Portal da Intuição**: 
+    -   Fade branco de entrada → Vídeo HeyGen → Mensagem reflexiva → Campo de reflexão
+    -   Mensagem: "Feche os olhos. O que você sente quando o caminho não é claro, mas o coração sabe?"
+    -   Reflexões salvas em banco via endpoint `/api/reflections`
+    -   +75 pontos ao completar portal
+-   **Progressão Narrativa**: Portal da Intuição equilibra ciclo masculino/feminino, conectando todos os portais anteriores
+-   **Arquivos**: client/src/pages/portals.tsx, client/src/components/portals/intuition-portal.tsx
+-   **Backend**: Tabela `portal_reflections` adicionada ao schema, endpoints GET/POST `/api/reflections`
 
 ### UX Improvements
 -   **Renomeação "Terapeuta IA" → "Seu Guru"**: Nome mais quente e pessoal, sem mencionar "IA". Aplicado em: aba do dashboard, journey stages, mensagens do Aruan.

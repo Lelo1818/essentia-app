@@ -521,3 +521,19 @@ export const insertAiSuggestionSchema = createInsertSchema(aiSuggestions).omit({
   createdAt: true,
 });
 
+// Portal Reflections Table - Para salvar reflexões dos portais
+export const portalReflections = pgTable("portal_reflections", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id),
+  portalType: varchar("portal_type", { length: 50 }).notNull(), // intuicao, clareza, gratidao, recomeco
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type PortalReflection = typeof portalReflections.$inferSelect;
+export type InsertPortalReflection = typeof portalReflections.$inferInsert;
+export const insertPortalReflectionSchema = createInsertSchema(portalReflections).omit({
+  id: true,
+  createdAt: true,
+});
+

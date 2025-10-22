@@ -123,29 +123,40 @@ Liberação, renascimento, novo começo
 
 ---
 
-## 🔮 Vídeo 5: Portal da Intuição (30s) 🆕
+## 🔮 Vídeo 5: Portal da Intuição (30s) ✅ INTEGRADO
 
 **Arquivo:** `Portal da Intuição_1761165744262.mp4`
 
 **Script:**
 ```
-[Aguardando definição de uso no app]
+[Vídeo HeyGen gravado - Intui\u00e7\u00e3o e sabedoria interior]
 ```
 
 **Especificações:**
-- **Duração:** ~30 segundos (estimado)
+- **Duração:** ~30 segundos
 - **Formato:** Landscape 16:9 (1920x1080)
 - **Tamanho:** 12MB
 - **Energia:** Intuição, clareza interior, percepção sutil
 
 **Uso no app:** 
-**⏳ AGUARDANDO DEFINIÇÃO** - Onde e como usar este portal?
-- Novo ritual diário?
-- Portal da jornada (/journey)?
-- Feature específica de intuição?
-- Outro uso?
+**✅ INTEGRADO** - Portal da Intuição em `/portals`
 
-**Status:** 📥 **RECEBIDO** - Aguardando instruções de integração
+**Fluxo completo:**
+1. Usuário clica em "Portal da Intuição" na página de portais
+2. Fade branco de entrada (2s)
+3. Vídeo Portal da Intuição toca (16:9)
+4. Após vídeo: mensagem reflexiva aparece
+   - "Feche os olhos. O que você sente quando o caminho não é claro, mas o coração sabe?"
+5. Campo de texto para reflex\u00e3o
+6. Salva reflexão no diário (endpoint /api/reflections)
+7. +75 pontos ao completar
+
+**Progressão narrativa dos portais:**
+Portal da Clareza → Portal da Gratidão → Portal do Recomeço → **Portal da Intuição**
+
+A intuição é o eixo que liga e equilibra todos os portais anteriores (ciclo masculino/feminino).
+
+**Status:** ✅ **INTEGRADO** - Funcionando em `/portals` → Portal da Intuição
 
 ---
 
@@ -236,12 +247,12 @@ Para **TODOS** os vídeos, mantenha:
 ✓ Portal da Gratidão_1761137810586.mp4         (Ritual de Gratidão - 16:9)
 ✓ Desperte Sua Coragem_1761138039346.mp4       (Respiração 4-4-6 Intro - 16:9)
 ✓ Portal do Recomeço_1761159818471.mp4         (Ritual do Recomeço - 16:9)
+✓ Portal da Intuição_1761165744262.mp4         (Portal da Intuição - 16:9)
 ```
 
 ### 🔄 Próximos Vídeos (Para Integrar)
 
 ```
-⏳ Portal da Intuição_1761165744262.mp4        (Novo portal - ~30s - 16:9) [AGUARDANDO USO]
 ⏳ Paz Interior Agora_1761141385712.mp4        (Respiração Rápida - 15-20s - 16:9 ou 1:1)
 ⏳ aruan_achievement.mp4                        (Conquista - 3s - 1:1) [opcional]
 ```

@@ -97,6 +97,7 @@ import Breathing446Page from "@/pages/breathing-446";
 import JourneyPage from "@/pages/journey";
 import BreathPage from "@/pages/breath";
 import PointsPage from "@/pages/points";
+import PortalsPage from "@/pages/portals";
 
 
 
@@ -126,6 +127,7 @@ function Router() {
       <Route path="/journey" component={JourneyPage} />
       <Route path="/breath" component={BreathPage} />
       <Route path="/points" component={PointsPage} />
+      <Route path="/portals" component={PortalsPage} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />
       <Route path="/flow-dashboard" component={Dashboard} />
