@@ -220,11 +220,16 @@ export default function Purpose() {
   
   // Scroll automático para conteúdo da aba quando muda (mobile)
   useEffect(() => {
-    const contentElement = document.getElementById(`tab-content-${activeTab}`);
-    if (contentElement && window.innerWidth < 1024) {
-      setTimeout(() => {
-        contentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+    if (window.innerWidth < 1024) {
+      const contentElement = document.getElementById(`tab-content-${activeTab}`);
+      if (contentElement) {
+        setTimeout(() => {
+          // Scroll com offset para compensar menu fixo (altura ~100px)
+          const yOffset = -120;
+          const y = contentElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }, 150);
+      }
     }
   }, [activeTab]);
   
