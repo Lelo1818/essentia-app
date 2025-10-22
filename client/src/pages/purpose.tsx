@@ -513,6 +513,19 @@ export default function Purpose() {
             </CardContent>
           </Card>
 
+          {/* CONQUISTAS - SEÇÃO DESTACADA */}
+          <Card className="mb-6 border-4 border-yellow-400 bg-gradient-to-br from-yellow-50 to-orange-50">
+            <CardHeader className="bg-gradient-to-r from-yellow-100 to-orange-100">
+              <CardTitle className="flex items-center text-yellow-900">
+                <Award className="w-6 h-6 mr-2" />
+                🏆 Conquistas Recentes
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <AchievementsSection />
+            </CardContent>
+          </Card>
+
           {/* Weekly Insights */}
           <Card className="mb-6">
             <CardHeader>
@@ -692,8 +705,6 @@ export default function Purpose() {
                   </div>
                 </div>
               </div>
-              
-              <AchievementsSection />
             </CardContent>
           </Card>
         </TabsContent>
