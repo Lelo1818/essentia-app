@@ -71,6 +71,19 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Página**: `/coherence` - experiência completa com hero section, informações educacionais sobre coerência e campo de ressonância
 -   **Arquivos**: server/feme-coherence.ts, client/src/components/coherence-compass.tsx, client/src/pages/coherence.tsx
 
+### Sistema de Histórico do Guru (Outubro 22, 2025)
+-   **Tabela chat_messages**: Armazena todo histórico de conversas com o Guru (AI Therapist)
+-   **Campos**: userId, role (user/assistant), content, sessionId (para agrupar conversas), createdAt
+-   **Endpoints**:
+    -   POST `/api/guru/messages` - salva mensagem (user ou assistant)
+    -   GET `/api/guru/messages?sessionId=X` - busca mensagens de uma sessão específica ou todas do usuário
+    -   GET `/api/guru/sessions` - lista 5 sessões mais recentes ordenadas por última atividade
+-   **Storage Methods**:
+    -   createChatMessage - salva mensagem no banco
+    -   getChatMessagesByUserId - busca mensagens com filtro opcional por sessionId
+    -   getRecentSessions - retorna IDs das sessões mais recentes
+-   **Arquivos**: shared/schema.ts, server/storage.ts, server/routes-clean.ts
+
 ### UX Improvements
 -   **Renomeação "Terapeuta IA" → "Seu Guru"**: Nome mais quente e pessoal, sem mencionar "IA". Aplicado em: aba do dashboard, journey stages, mensagens do Aruan.
 -   **Bug Fix - Respiração 4-4-6**: Corrigido círculo de respiração que estava parado (substituído SVG por div com transform:scale, animação 14s sincronizada com ciclo 4-4-6).

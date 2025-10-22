@@ -10,7 +10,7 @@ import {
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
   insertGoalSchema, insertAchievementSchema,
   insertFemeCheckinSchema, insertBreathSessionSchema, insertUserEventSchema,
-  insertPortalReflectionSchema
+  insertPortalReflectionSchema, insertChatMessageSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
@@ -273,6 +273,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching reflections:", error);
       res.status(500).json({ message: "Failed to fetch reflections" });
+    }
+  });
+
+  // Guru Chat History endpoints
+  app.post('/api/guru/messages', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const validatedData = insertChatMessageSchema.parse({
+        userId: user.id,
+        role: req.body.role,
+        content: req.body.content,
+        sessionId: req.body.sessionId || null,
+      });
+
+      const message = await storage.createChatMessage(validatedData);
+      res.status(201).json(message);
+    } catch (error) {
+      console.error("Error creating chat message:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create message" });
+    }
+  });
+
+  app.get('/api/guru/messages', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const sessionId = req.query.sessionId as string | undefined;
+      const messages = await storage.getChatMessagesByUserId(user.id, sessionId);
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching chat messages:", error);
+      res.status(500).json({ message: "Failed to fetch messages" });
+    }
+  });
+
+  app.get('/api/guru/sessions', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const sessions = await storage.getRecentSessions(user.id);
+      res.json(sessions);
+    } catch (error) {
+      console.error("Error fetching sessions:", error);
+      res.status(500).json({ message: "Failed to fetch sessions" });
     }
   });
 

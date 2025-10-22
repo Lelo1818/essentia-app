@@ -1,5 +1,5 @@
 import { 
-  users, achievements, userProgress, actionPlans, aiSuggestions, portalReflections,
+  users, achievements, userProgress, actionPlans, aiSuggestions, portalReflections, chatMessages,
   type User, type InsertUser, type UpsertUser,
   type Achievement, type InsertAchievement,
   type FemeCheckin, type InsertFemeCheckin,
@@ -8,7 +8,8 @@ import {
   type UserProgress, type InsertUserProgress,
   type ActionPlan, type InsertActionPlan,
   type AiSuggestion, type InsertAiSuggestion,
-  type PortalReflection, type InsertPortalReflection
+  type PortalReflection, type InsertPortalReflection,
+  type ChatMessage, type InsertChatMessage
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -78,6 +79,11 @@ export interface IStorage {
   createPortalReflection(reflection: InsertPortalReflection): Promise<PortalReflection>;
   getPortalReflectionsByUserId(userId: number): Promise<PortalReflection[]>;
   
+  // Chat Messages methods (Guru history)
+  createChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
+  getChatMessagesByUserId(userId: number, sessionId?: string): Promise<ChatMessage[]>;
+  getRecentSessions(userId: number, limit?: number): Promise<string[]>;
+  
   // Aggregated history
   getHistory(userId: number, limit?: number): Promise<{
     events: UserEvent[];
@@ -101,6 +107,7 @@ class MemStorage implements IStorage {
   private actionPlansMap = new Map<number, ActionPlan>();
   private aiSuggestionsMap = new Map<number, AiSuggestion>();
   private portalReflectionsMap = new Map<number, PortalReflection>();
+  private chatMessagesMap = new Map<number, ChatMessage>();
   private incomes = new Map<number, any>();
   private expenses = new Map<number, any>();
   private budgets = new Map<number, any>();
@@ -829,6 +836,51 @@ class MemStorage implements IStorage {
     return Array.from(this.portalReflectionsMap.values())
       .filter(r => r.userId === userId)
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  // Chat Messages methods
+  async createChatMessage(message: InsertChatMessage): Promise<ChatMessage> {
+    const id = this.currentId++;
+    const newMessage: ChatMessage = {
+      ...message,
+      id,
+      sessionId: message.sessionId || null,
+      createdAt: new Date(),
+    };
+    this.chatMessagesMap.set(id, newMessage);
+    return newMessage;
+  }
+
+  async getChatMessagesByUserId(userId: number, sessionId?: string): Promise<ChatMessage[]> {
+    let messages = Array.from(this.chatMessagesMap.values())
+      .filter(m => m.userId === userId);
+    
+    if (sessionId) {
+      messages = messages.filter(m => m.sessionId === sessionId);
+    }
+    
+    return messages.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+  }
+
+  async getRecentSessions(userId: number, limit: number = 5): Promise<string[]> {
+    const messages = Array.from(this.chatMessagesMap.values())
+      .filter(m => m.userId === userId && m.sessionId);
+    
+    const sessionIds = [...new Set(messages.map(m => m.sessionId!))];
+    
+    // Pega a última mensagem de cada sessão para ordenar por data
+    const sessionsWithDates = sessionIds.map(sessionId => {
+      const sessionMessages = messages.filter(m => m.sessionId === sessionId);
+      const lastMessage = sessionMessages.sort((a, b) => 
+        b.createdAt.getTime() - a.createdAt.getTime()
+      )[0];
+      return { sessionId, lastMessageDate: lastMessage.createdAt };
+    });
+    
+    return sessionsWithDates
+      .sort((a, b) => b.lastMessageDate.getTime() - a.lastMessageDate.getTime())
+      .slice(0, limit)
+      .map(s => s.sessionId);
   }
 
   // Aggregated history

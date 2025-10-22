@@ -537,3 +537,20 @@ export const insertPortalReflectionSchema = createInsertSchema(portalReflections
   createdAt: true,
 });
 
+// Chat Messages Table - Histórico de conversas com o Guru (AI Therapist)
+export const chatMessages = pgTable("chat_messages", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  role: varchar("role", { length: 20 }).notNull(), // 'user' ou 'assistant'
+  content: text("content").notNull(),
+  sessionId: varchar("session_id", { length: 100 }), // Para agrupar conversas
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type ChatMessage = typeof chatMessages.$inferSelect;
+export type InsertChatMessage = typeof chatMessages.$inferInsert;
+export const insertChatMessageSchema = createInsertSchema(chatMessages).omit({
+  id: true,
+  createdAt: true,
+});
+
