@@ -462,7 +462,7 @@ export default function Purpose() {
             className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
           >
             <Heart className="w-5 h-5" />
-            <span>Terapeuta IA</span>
+            <span>Seu Guru</span>
           </TabsTrigger>
           <TabsTrigger 
             value="profile" 
@@ -520,7 +520,7 @@ export default function Purpose() {
                         case "Autoconhecimento Profundo":
                           return "🔮 FEME Compass";
                         case "Descoberta de Paixões":
-                          return "💬 Terapeuta IA";
+                          return "💬 Seu Guru";
                         case "Relacionamentos Significativos":
                           return "💝 Comunidade";
                         case "Missão e Contribuição":

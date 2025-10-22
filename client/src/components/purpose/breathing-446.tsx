@@ -299,8 +299,8 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
       {/* Aruan Guidance - aparece após completar */}
       {showGuidance && (
         <AruanGuidance
-          message="Sua respiração trouxe clareza. Agora que sua mente está serena, converse com o Guru para aprofundar sua jornada de autoconhecimento."
-          nextStepLabel="Falar com o Guru IA"
+          message="Sua respiração trouxe clareza. Agora que sua mente está serena, converse com seu Guru para aprofundar sua jornada de autoconhecimento."
+          nextStepLabel="Falar com Seu Guru"
           nextStepPath="/purpose#therapist"
           onClose={onClose}
         />
