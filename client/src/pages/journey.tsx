@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { MediaPlayer } from '@/components/MediaPlayer';
 import { useAuth } from '@/hooks/useAuth';
 import { PortalIntroAvatar } from '@/components/avatars/video-avatar';
+import portalClarezaVideo from '@assets/Portal da Clareza_1761132977385.mp4';
+import shamanAvatar from '@assets/Captura de tela 2025-10-21 212327_1761092690319.png';
 
 export default function JourneyPage() {
   const { user } = useAuth();
@@ -56,10 +58,10 @@ export default function JourneyPage() {
               </p>
             </div>
             
-            {/* Avatar Intro Video - quando adicionar vídeo Heygen, substituir videoUrl */}
+            {/* Avatar Intro Video - Portal da Clareza */}
             <PortalIntroAvatar
-              videoUrl={undefined}
-              fallbackImage={undefined}
+              videoUrl={portalClarezaVideo}
+              fallbackImage={shamanAvatar}
               onComplete={handleIntroComplete}
             />
             

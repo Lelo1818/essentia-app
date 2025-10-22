@@ -130,7 +130,7 @@ export function WelcomeAvatar({
     <VideoAvatar
       videoUrl={videoUrl}
       fallbackImage={fallbackImage}
-      autoplay={false}
+      autoplay={true}
       loop={false}
       muted={false}
       controls={true}
@@ -164,7 +164,7 @@ export function CoachAvatar({
   );
 }
 
-// Componente específico para introdução do Portal UAU
+// Componente específico para introdução do Portal do Despertar
 export function PortalIntroAvatar({ 
   videoUrl, 
   fallbackImage,
@@ -183,7 +183,7 @@ export function PortalIntroAvatar({
       muted={false}
       controls={true}
       aspectRatio="16:9"
-      className="w-full max-w-2xl mx-auto shadow-2xl"
+      className="w-full max-w-2xl mx-auto shadow-2xl border-4 border-purple-500 rounded-xl overflow-hidden"
       onComplete={onComplete}
     />
   );
