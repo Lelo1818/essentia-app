@@ -84,7 +84,8 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
       toggleAudio();
     }
     
-    onClose?.();
+    // Navegar para o Guru IA (AI Therapist) após completar
+    window.location.href = '/purpose#therapist';
   };
 
   // Mostrar vídeo introdutório primeiro
@@ -97,6 +98,7 @@ export function Breathing446({ onClose, videoSrc = "/assets/inner-awakening.mp4"
           posterUrl="https://placehold.co/1280x720/8b5cf6/white?text=Desperte+Sua+Coragem"
           videoUrl={desperteCoragemVideo}
           onComplete={() => setVideoWatched(true)}
+          onClose={onClose}
         />
       </div>
     );

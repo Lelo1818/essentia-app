@@ -220,6 +220,12 @@ export default function Purpose() {
   
   useEffect(() => {
     trackPageView('/purpose');
+    
+    // Ler hash da URL para abrir tab específica
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['journey', 'transition', 'avatar', 'breathing', 'rituals', 'wheel', 'biometric', 'therapist', 'inspiration', 'community', 'profile'].includes(hash)) {
+      setActiveTab(hash);
+    }
   }, []);
   
   // Mostrar onboarding se não foi completado

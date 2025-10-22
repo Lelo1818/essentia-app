@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { soundManager } from '@/lib/sound';
 
@@ -9,6 +9,7 @@ interface MediaPlayerProps {
   posterUrl?: string;
   videoUrl?: string;
   onComplete?: () => void;
+  onClose?: () => void;
 }
 
 export function MediaPlayer({ 
@@ -16,7 +17,8 @@ export function MediaPlayer({
   title = 'Portal do Despertar',
   posterUrl = 'https://placehold.co/1280x720/6366f1/white?text=Portal+do+Despertar',
   videoUrl,
-  onComplete 
+  onComplete,
+  onClose
 }: MediaPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -148,6 +150,21 @@ export function MediaPlayer({
         playsInline
         data-testid="video-player"
       />
+
+      {/* Close Button (Top Right) */}
+      {onClose && (
+        <div className="absolute top-4 right-4 z-20">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="text-white hover:bg-white/20 bg-black/40 backdrop-blur-sm"
+            onClick={onClose}
+            data-testid="button-close-video"
+          >
+            <X className="w-6 h-6" />
+          </Button>
+        </div>
+      )}
 
       {/* Controls Overlay */}
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
