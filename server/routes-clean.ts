@@ -14,6 +14,7 @@ import {
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
+import { analyzeFEMECoherence, extractFEMEFromCheckin } from "./feme-coherence";
 import multer from "multer";
 import * as fs from 'fs/promises';
 import Anthropic from '@anthropic-ai/sdk';
@@ -119,6 +120,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching FEME checkins:", error);
       res.status(500).json({ message: "Failed to fetch checkins" });
+    }
+  });
+
+  // FEME Coherence Analysis - Sistema científico de coerência biológica
+  app.get('/api/feme/coherence', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Busca último checkin FEME do usuário
+      const checkins = await storage.getFemeCheckinsByUserId(user.id);
+      
+      if (checkins.length === 0) {
+        return res.status(404).json({ 
+          message: "No FEME checkin found. Please complete a check-in first." 
+        });
+      }
+
+      // Pega o checkin mais recente (ordena por data descrescente e pega o primeiro)
+      const sortedCheckins = [...checkins].sort((a, b) => 
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      const latestCheckin = sortedCheckins[0];
+      
+      // Extrai dimensões FEME
+      const dimensions = extractFEMEFromCheckin(latestCheckin);
+      
+      // Analisa coerência
+      const coherenceAnalysis = analyzeFEMECoherence(dimensions);
+      
+      res.json({
+        ...coherenceAnalysis,
+        basedOnCheckin: {
+          id: latestCheckin.id,
+          createdAt: latestCheckin.createdAt,
+          dimensions
+        }
+      });
+    } catch (error) {
+      console.error("Error analyzing FEME coherence:", error);
+      res.status(500).json({ message: "Failed to analyze coherence" });
     }
   });
 
