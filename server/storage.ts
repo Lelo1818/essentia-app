@@ -859,26 +859,36 @@ class MemStorage implements IStorage {
       messages = messages.filter(m => m.sessionId === sessionId);
     }
     
-    return messages.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+    return messages.sort((a, b) => {
+      const aTime = a.createdAt ? a.createdAt.getTime() : 0;
+      const bTime = b.createdAt ? b.createdAt.getTime() : 0;
+      return aTime - bTime;
+    });
   }
 
   async getRecentSessions(userId: number, limit: number = 5): Promise<string[]> {
     const messages = Array.from(this.chatMessagesMap.values())
       .filter(m => m.userId === userId && m.sessionId);
     
-    const sessionIds = [...new Set(messages.map(m => m.sessionId!))];
+    const sessionIds = Array.from(new Set(messages.map(m => m.sessionId!)));
     
     // Pega a última mensagem de cada sessão para ordenar por data
     const sessionsWithDates = sessionIds.map(sessionId => {
       const sessionMessages = messages.filter(m => m.sessionId === sessionId);
-      const lastMessage = sessionMessages.sort((a, b) => 
-        b.createdAt.getTime() - a.createdAt.getTime()
-      )[0];
+      const lastMessage = sessionMessages.sort((a, b) => {
+        const aTime = a.createdAt ? a.createdAt.getTime() : 0;
+        const bTime = b.createdAt ? b.createdAt.getTime() : 0;
+        return bTime - aTime;
+      })[0];
       return { sessionId, lastMessageDate: lastMessage.createdAt };
     });
     
     return sessionsWithDates
-      .sort((a, b) => b.lastMessageDate.getTime() - a.lastMessageDate.getTime())
+      .sort((a, b) => {
+        const aTime = a.lastMessageDate ? a.lastMessageDate.getTime() : 0;
+        const bTime = b.lastMessageDate ? b.lastMessageDate.getTime() : 0;
+        return bTime - aTime;
+      })
       .slice(0, limit)
       .map(s => s.sessionId);
   }

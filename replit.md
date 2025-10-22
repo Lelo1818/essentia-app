@@ -71,10 +71,11 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Página**: `/coherence` - experiência completa com hero section, informações educacionais sobre coerência e campo de ressonância
 -   **Arquivos**: server/feme-coherence.ts, client/src/components/coherence-compass.tsx, client/src/pages/coherence.tsx
 
-### Sistema de Histórico do Guru (Outubro 22, 2025)
+### Sistema de Histórico do Guru (Outubro 22, 2025) ⚠️ BACKEND ONLY
+-   **Status**: Backend completo, frontend NÃO implementado
 -   **Tabela chat_messages**: Armazena todo histórico de conversas com o Guru (AI Therapist)
 -   **Campos**: userId, role (user/assistant), content, sessionId (para agrupar conversas), createdAt
--   **Endpoints**:
+-   **Endpoints Funcionando**:
     -   POST `/api/guru/messages` - salva mensagem (user ou assistant)
     -   GET `/api/guru/messages?sessionId=X` - busca mensagens de uma sessão específica ou todas do usuário
     -   GET `/api/guru/sessions` - lista 5 sessões mais recentes ordenadas por última atividade
@@ -82,6 +83,7 @@ The ecosystem comprises five main applications, sharing common infrastructure:
     -   createChatMessage - salva mensagem no banco
     -   getChatMessagesByUserId - busca mensagens com filtro opcional por sessionId
     -   getRecentSessions - retorna IDs das sessões mais recentes
+-   **Pendente**: Modificar client/src/components/purpose/ai-therapist.tsx para integrar com endpoints
 -   **Arquivos**: shared/schema.ts, server/storage.ts, server/routes-clean.ts
 
 ### UX Improvements
@@ -99,9 +101,11 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **⚠️ PENDENTE - Cache Mobile**: Código funcionando em desktop, mas iPhone do usuário com cache persistente/PWA impedindo atualizações. Aguardando teste em outro device para confirmar correções.
 
 ### Known Issues (Outubro 22, 2025)
--   **Mobile Cache Blocker**: iPhone específico do usuário com cache extremamente persistente. Tentativas: limpar Safari, modo privado, remover dados. Desktop funciona perfeitamente. Código mobile correto, aguardando validação em outro device.
--   **Menu Scroll Mobile**: Implementado com offset, mas não visível no device do usuário (cache issue).
--   **Vídeos Tamanho Mobile**: Aumentados para lg:max-w-5xl (MediaPlayer) e lg:max-w-7xl (VideoPortal), mas não visível no device do usuário (cache issue).
+-   **CRITICAL - Mobile não carrega atualizações**: Testado em 2 iPhones diferentes (usuário + esposa), nenhuma atualização aparece. Não é cache de dispositivo específico - é problema estrutural no código ou deploy.
+-   **Menu Scroll Mobile**: Implementado com offset, mas não funciona em mobile.
+-   **Vídeos Tamanho Mobile**: Aumentados para lg:, mas não aplicados em mobile.
+-   **Histórico do Guru**: Backend 100% implementado (endpoints, storage, schema), mas FALTA frontend - componente AI Therapist ainda não integrado com os endpoints.
+-   **Bússola de Coerência**: Sistema científico implementado em /coherence mas não integrado com FEME Compass existente em /purpose.
 
 ### Documentation
 -   **ARUAN_VIDEOS_GUIDE.md**: Guia completo de todos os vídeos Aruan com especificações técnicas, uso no app, e status de integração.
