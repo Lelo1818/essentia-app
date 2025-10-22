@@ -55,6 +55,40 @@ import {
 
 import despertarInteriorVideo from "@assets/Despertar Interior_1760814881524.mp4";
 
+// Componente de bússola FEME que busca dados reais da API
+function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
+  const { data: femeCheckins = [] } = useQuery<any[]>({
+    queryKey: ['/api/feme/checkins'],
+  });
+
+  // Pegar último check-in FEME
+  const latestCheckin = femeCheckins[0];
+  
+  const femeValues = latestCheckin ? {
+    fisico: latestCheckin.fisico || 5,
+    energetico: latestCheckin.energetico || 5,
+    mental: latestCheckin.mental || 5,
+    espiritual: latestCheckin.espiritual || 5,
+  } : {
+    fisico: 5,
+    energetico: 5,
+    mental: 5,
+    espiritual: 5,
+  };
+
+  const coherence = latestCheckin?.coerencia 
+    ? Math.round(latestCheckin.coerencia * 100) 
+    : 50;
+
+  return (
+    <FEMECompass 
+      values={femeValues}
+      coherence={coherence}
+      onHarmonize={onHarmonize}
+    />
+  );
+}
+
 // Componente dinâmico de conquistas
 function AchievementsSection() {
   // Buscar conquistas do usuário
@@ -313,18 +347,9 @@ export default function Purpose() {
       </Card>
 
       {/* FEME COMPASS - BÚSSOLA DE AUTOCONHECIMENTO */}
-      <FEMECompass
-        values={{ 
-          fisico: 7, 
-          energetico: 6, 
-          mental: 5, 
-          espiritual: 7 
-        }}
-        coherence={68}
-        onHarmonize={() => setLocation('/breathing-446')}
-      />
+      <FEMECompassLive onHarmonize={() => setLocation('/breathing-446')} />
 
-      {/* PORTAL UAU - DESTAQUE */}
+      {/* PORTAL DO DESPERTAR - DESTAQUE */}
       <Card 
         className="relative overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-300 group border-2 border-yellow-400"
         onClick={() => {

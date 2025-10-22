@@ -13,9 +13,9 @@ interface MediaPlayerProps {
 
 export function MediaPlayer({ 
   assetKey, 
-  title = 'Portal UAU',
-  posterUrl = 'https://placehold.co/1280x720/6366f1/white?text=Portal+UAU',
-  videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  title = 'Portal do Despertar',
+  posterUrl = 'https://placehold.co/1280x720/6366f1/white?text=Portal+do+Despertar',
+  videoUrl,
   onComplete 
 }: MediaPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);

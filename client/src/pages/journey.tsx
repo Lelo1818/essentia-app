@@ -155,6 +155,7 @@ export default function JourneyPage() {
             <MediaPlayer
               assetKey="portal_despertar"
               title="Portal do Despertar"
+              videoUrl={portalClarezaVideo}
               onComplete={handleVideoComplete}
             />
             
