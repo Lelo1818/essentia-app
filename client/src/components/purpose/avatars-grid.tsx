@@ -102,23 +102,12 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
   const [hasPlayed, setHasPlayed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Quando ativa/desativa este avatar
+  // Pausar outros vídeos quando este é ativado
   useEffect(() => {
     if (!videoRef.current) return;
 
-    if (isActive && !isPlaying) {
-      // Ativar vídeo com som
-      videoRef.current.muted = false;
-      setIsMuted(false);
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-        setHasPlayed(true);
-      }).catch(err => {
-        console.debug("Play failed:", err);
-      });
-    } else if (!isActive && isPlaying) {
-      // Pausar e resetar quando outro avatar é ativado
+    // Se NÃO está ativo e estava tocando, pausar
+    if (!isActive && isPlaying) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
       setIsPlaying(false);
@@ -127,10 +116,29 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
 
   const handleCardClick = () => {
     if (!isActive) {
-      // Ativar este avatar (pausará os outros)
+      // Ativar este avatar E tocar vídeo (só se nunca tocou antes)
       soundManager.play("ui_click");
       onActivate();
+      
+      // Aguardar um pouco para dar tempo do onActivate processar
+      if (!hasPlayed) {
+        setTimeout(() => playVideo(), 100);
+      }
     }
+  };
+
+  const playVideo = () => {
+    if (!videoRef.current) return;
+    
+    videoRef.current.muted = false;
+    setIsMuted(false);
+    videoRef.current.currentTime = 0;
+    videoRef.current.play().then(() => {
+      setIsPlaying(true);
+      setHasPlayed(true);
+    }).catch(err => {
+      console.debug("Play failed:", err);
+    });
   };
 
   const handleVideoEnd = () => {
@@ -143,9 +151,12 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
     e.stopPropagation();
     if (videoRef.current && isActive) {
       videoRef.current.currentTime = 0;
-      videoRef.current.play();
-      setIsPlaying(true);
-      soundManager.play("ui_click");
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+        soundManager.play("ui_click");
+      }).catch(err => {
+        console.debug("Replay failed:", err);
+      });
     }
   };
 
