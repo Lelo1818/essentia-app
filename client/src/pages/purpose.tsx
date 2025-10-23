@@ -375,8 +375,8 @@ export default function Purpose() {
 
       <div className="max-w-7xl mx-auto px-3 py-4 lg:p-6 space-y-4 lg:space-y-6 no-transform">
       {/* Header */}
-      <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50 hero-blue lg:min-h-0 lg:max-h-none">
-        <CardHeader className="p-4 lg:p-6">
+      <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
+        <CardHeader className="p-4 lg:p-6 hero-blue-mobile">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
             <div className="flex-1">
               <CardTitle className="flex items-center text-xl lg:text-2xl">
@@ -429,21 +429,21 @@ export default function Purpose() {
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Compass className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Jornada</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Jornada</span>
             </TabsTrigger>
             <TabsTrigger 
               value="breathing" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-green-400 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Brain className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Respiração</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Respiração</span>
             </TabsTrigger>
             <TabsTrigger 
               value="rituals" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-yellow-400 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Star className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Rituais</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Rituais</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -451,21 +451,21 @@ export default function Purpose() {
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Heart className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[88px]">Seu Guru</span>
+              <span className="text-[13px] leading-tight truncate max-w-[88px]">Seu Guru</span>
             </TabsTrigger>
             <TabsTrigger 
               value="wheel" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Target className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Roda</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Roda</span>
             </TabsTrigger>
             <TabsTrigger 
               value="avatar" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <User className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Avatar</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Avatar</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -473,21 +473,21 @@ export default function Purpose() {
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <TrendingUp className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Transição</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Transição</span>
             </TabsTrigger>
             <TabsTrigger 
               value="inspiration" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-pink-300 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Heart className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Inspiração</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Inspiração</span>
             </TabsTrigger>
             <TabsTrigger 
               value="community" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-blue-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Users className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Comunidade</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Comunidade</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -495,14 +495,14 @@ export default function Purpose() {
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-red-300 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <Brain className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Biometria</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Biometria</span>
             </TabsTrigger>
             <TabsTrigger 
               value="profile" 
               className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-gray-400 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
             >
               <User className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[10px] leading-tight truncate max-w-[80px]">Perfil</span>
+              <span className="text-[13px] leading-tight truncate max-w-[80px]">Perfil</span>
             </TabsTrigger>
           </TabsList>
         </div>

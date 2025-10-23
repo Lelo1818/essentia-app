@@ -148,17 +148,19 @@
   transform: none !important;
 }
 
-/* Faixa hero azul - altura fixa (mobile) */
-.hero-blue {
-  min-height: 64px;
-  max-height: 64px;
-  display: flex;
-  align-items: center;
-}
-
-.hero-title {
-  font-size: 16px;
-  line-height: 1.2;
+/* Faixa hero azul - altura fixa (APENAS mobile) */
+@media (max-width: 1023px) {
+  .hero-blue-mobile {
+    min-height: 64px;
+    max-height: 64px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .hero-title {
+    font-size: 16px;
+    line-height: 1.2;
+  }
 }
 
 /* Página com dvh para mobile iOS */
