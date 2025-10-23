@@ -99,6 +99,7 @@ import BreathPage from "@/pages/breath";
 import PointsPage from "@/pages/points";
 import PortalsPage from "@/pages/portals";
 import CoherencePage from "@/pages/coherence";
+import AvatarsPage from "@/pages/avatars";
 
 
 
@@ -130,6 +131,7 @@ function Router() {
       <Route path="/points" component={PointsPage} />
       <Route path="/portals" component={PortalsPage} />
       <Route path="/coherence" component={CoherencePage} />
+      <Route path="/avatars" component={AvatarsPage} />
       <Route path="/ecosystem" component={EcosystemApp} />
       <Route path="/ecosystem-selector" component={EcosystemSelector} />
       <Route path="/flow-dashboard" component={Dashboard} />
@@ -208,7 +210,7 @@ function App() {
   const [location] = useLocation();
   
   // Rotas que NÃO devem mostrar navegação do Flow
-  const standaloneRoutes = ['/thera', '/purpose', '/journey', '/breath', '/points', '/essentia-final', '/essentia-mega', '/portal-uau', '/breathing-446'];
+  const standaloneRoutes = ['/thera', '/purpose', '/journey', '/breath', '/points', '/essentia-final', '/essentia-mega', '/portal-uau', '/breathing-446', '/avatars', '/portals', '/coherence'];
   const isStandalone = standaloneRoutes.some(route => location.startsWith(route));
   
   return (
