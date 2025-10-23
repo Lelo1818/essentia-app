@@ -338,7 +338,8 @@ const state3 = getState();
 1. `shared/schema.ts` → +3 tabelas (entries, coherenceLogs, femeState)
 2. `server/storage.ts` → +7 métodos na interface IStorage
 3. `server/routes-clean.ts` → +4 endpoints + helper getStateSnapshot
-4. `client/src/App.tsx` → +useEffect para initIntegrationEngine
+4. `client/src/App.tsx` → +useEffect para initIntegrationEngine, removido QueryClientProvider duplicado
+5. `client/src/main.tsx` → +QueryClientProvider wrapper (posição correta)
 
 ### Database:
 ```sql
@@ -412,6 +413,9 @@ CREATE TABLE feme_state (...);
 ### Auth:
 - 🔒 401 errors em logs → esperado sem autenticação
 - 🔒 Endpoints Integration Engine exigem `isAuthenticated`
+
+### RESOLVIDO (23/10 17:38 UTC):
+- ✅ QueryClientProvider error → movido de App.tsx para main.tsx (wrapper correto)
 
 ---
 
