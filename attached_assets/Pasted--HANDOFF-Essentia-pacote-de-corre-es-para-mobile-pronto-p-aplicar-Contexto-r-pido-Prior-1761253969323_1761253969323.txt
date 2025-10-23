@@ -1,0 +1,78 @@
+[HANDOFF] Essentia – pacote de correções para mobile (pronto p/ aplicar)
+
+Contexto rápido
+- Prioridade: fazer o mobile ficar liso (iOS/Android): vídeos dos avatares, tabs “sticky” sem tarjas/estouro, e página de respiração com UX clara.
+- Escopo: apenas frontend (React/Tailwind). Nada invasivo no backend.
+
+Resumo do que foi ajustado
+1) Avatares (vídeos HeyGen) — correção de mobile autoplay e performance
+   - Autoplay com fallback: tenta tocar com som; se o navegador bloquear, re-tenta automaticamente em “muted”.
+   - playsInline + preload="metadata" + poster, para evitar fullscreen no iOS e melhorar first paint.
+   - IntersectionObserver: pausa o vídeo quando sai da viewport (economia de bateria / não “vaza” áudio).
+   - Aspect Ratio consistente (9/16) via CSS; removeu estalos/“jank” com aceleração de hardware.
+   - Tipografia dos badges/legendas levemente reduzida p/ não quebrar em telas estreitas.
+
+   Arquivo:  
+   - client/src/components/purpose/avatars-grid.tsx
+
+2) Tabs “sticky” (mobile) — sem tarjas e sem estourar largura
+   - Offset dinâmico da bússola (lê --compass-h em runtime + escuta de resize).
+   - Scroll para o conteúdo com compensação correta (sem “pular”).
+   - Bordas e fonte dos botões mobile suavizadas (border → mais leve; font 12px).
+
+   Arquivo:
+   - client/src/pages/purpose.tsx (ajustes no useLayoutEffect/useEffect e nas classes das Tabs)
+
+3) Respiração 4-4-6 — header claro e layout responsivo
+   - Título + instrução curta acima do componente.
+   - Mantém o componente existente; só adiciona a moldura de UX.
+
+   Arquivo:
+   - client/src/pages/breathing-446.tsx
+
+4) CSS utilitário — pequenos reforços para mobile
+   - Aceleração de GPU nos <video> e padding compacto de botões em telas ≤420px.
+   - Variável --compass-h default mantida e utilizada.
+
+   Arquivo:
+   - client/src/index.css
+
+Como aplicar (duas formas)
+
+Opção A — Substituição direta (mais simples)
+- Substituir o conteúdo dos 4 arquivos abaixo pelos conteúdos ajustados (já versionados no nosso branch interno):
+  1) client/src/components/purpose/avatars-grid.tsx
+  2) client/src/pages/purpose.tsx
+  3) client/src/pages/breathing-446.tsx
+  4) client/src/index.css
+- Depois: pnpm i && pnpm run build
+
+Opção B — Patch (se preferir git apply)
+- Criar 4 patches a partir do diff do branch (ou me sinalizar que quer os .patch aqui no chat que eu colo).
+- Executar: git apply <patch> (na raiz do repo) e depois pnpm i && pnpm run build.
+
+Checklist de QA (faça no celular real)
+[Avatares]
+- Abrir “Avatar 3D” → tocar em um avatar:
+  ☐ Vídeo inicia; se bloquear, volta em “muted” e toca mesmo assim.  
+  ☐ Ao rolar a página para longe do card, o vídeo pausa sozinho.  
+  ☐ Sem “tarja” ou corte estranho; poster carrega rápido.  
+  ☐ Botão de som/mute funciona quando ativo.  
+
+[Tabs sticky]
+- Em /purpose, trocar entre abas no mobile:
+  ☐ Não aparece faixa/tarja colorida “comendo” o conteúdo.  
+  ☐ O scroll vai para o início do conteúdo com offset correto (nada fica escondido atrás do menu).  
+  ☐ Os botões não estouram a largura; não “vazam” para fora.
+
+[Respiração 4-4-6]
+- Em /breathing-446:
+  ☐ Ver título “Respiração 4-4-6” e instrução “Inspire 4s • Segure 4s • Expire 6s — 6 ciclos. Fones recomendados 🎧”.  
+  ☐ Layout coerente em 320–375–414 px de largura.
+
+Observações técnicas
+- Não há mudança de API.  
+- Tailwind intacto; apenas classes utilitárias.  
+- Se usar iOS < 16, o autoplay pode exigir “muted” no primeiro play — já tratamos com fallback automático.
+
+Se der qualquer conflito de merge, me sinaliza as linhas conflitantes que eu mando o bloco exato para colar. 
