@@ -134,6 +134,7 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
     setIsMuted(false);
     videoRef.current.currentTime = 0;
     videoRef.current.play().then(() => {
+      console.log(`video:start ${avatar.id}`);
       setIsPlaying(true);
       setHasPlayed(true);
     }).catch(err => {
@@ -142,6 +143,7 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
   };
 
   const handleVideoEnd = () => {
+    console.log(`video:end ${avatar.id}`);
     // Vídeo terminou - pausar e manter no último frame
     setIsPlaying(false);
     // Não desativar automaticamente para manter a aura
