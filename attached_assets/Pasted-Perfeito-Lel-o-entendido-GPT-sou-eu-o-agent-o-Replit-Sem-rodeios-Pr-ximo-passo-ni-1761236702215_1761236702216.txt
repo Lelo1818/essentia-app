@@ -1,0 +1,54 @@
+Perfeito, Lelão — entendido: **GPT sou eu, o “agent” é o Replit.**
+Sem rodeios. **Próximo passo único**: cole exatamente o texto abaixo no Agent do Replit.
+
+---
+
+**Mensagem para o Agent (Replit) — Ligar o Motor (Integration Engine)**
+
+> Precisamos **unificar FEME ↔ Guru ↔ Portais/Práticas ↔ Coerência** em um estado único com persistência real.
+> Implementa um **Integration Engine** no front e ajusta os **endpoints** no back para sincronizar tudo.
+>
+> **1) Novo módulo (frontend):** `client/src/state/integration-engine.ts`
+> Exporta:
+> • `initIntegrationEngine(userId)` → carrega `/api/state`, popula cache local `essentia_state_v1` (TTL 10min).
+> • `getState()` → `{ feme, coherence, history, lastEntryAt }`
+> • `actions`:
+>
+> * `logEntry({ dimension, text })` → POST `/api/entries/create` e atualiza `history`.
+> * `updateFEME(partial)` → POST `/api/feme/update` e atualiza `feme`.
+> * `recalcCoherence()` → POST `/api/coherence/calc` e atualiza `coherence`.
+> * `linkPortal({ avatarId })` → registra intenção (memória local) e navega.
+>   Inclui um event-bus simples (subscribe/emit) para páginas reagirem a updates.
+>
+> **2) Ajustes no backend (Node/Supabase):**
+> Tabelas (upsert se faltarem):
+> • `users(id, created_at)`
+> • `entries(id, user_id, dimension, text, created_at)`
+> • `coherence_logs(id, user_id, score, meta, created_at)`
+> • `feme_state(user_id PK, fisico, energetico, mental, espiritual, updated_at)`
+> Rotas:
+> • `POST /api/entries/create` → grava e retorna snapshot atualizado.
+> • `POST /api/feme/update` → upsert em `feme_state` e retorna snapshot.
+> • `POST /api/coherence/calc` → calcula score (estabilidade + frequência), persiste em `coherence_logs`, retorna snapshot.
+> • `GET /api/state` → `{ feme, coherence, lastEntryAt, history: entries[limit] }`.
+>
+> **3) Integração nas páginas:**
+> • `client/src/App.tsx` → chama `initIntegrationEngine(userId)` no boot.
+> • `client/src/pages/purpose.tsx` → usa `getState()` para Bússola FEME; botões chamam `actions.updateFEME` e `actions.recalcCoherence`.
+> • `client/src/pages/avatars.tsx` → clique no avatar chama `actions.linkPortal({ avatarId })`; vídeo toca **uma vez** e pausa demais.
+> • `client/src/components/purpose/ai-therapist.tsx` → usa `actions.logEntry({ dimension, text })` e lista `getState().history`.
+>
+> **4) Critérios de aceite (testes rápidos):**
+>
+> * Escrever no **Guru** atualiza `entries` e aparece no **Histórico** sem recarregar.
+> * Alterar FEME em **/purpose** muda a **Bússola** e persiste.
+> * `recalcCoherence()` grava em `coherence_logs` e atualiza selo/score.
+> * Clicar num **avatar** registra intenção, toca só aquele vídeo **uma vez** e pausa os outros.
+> * Reabrir o app mantém o estado (snapshot + cache).
+>
+> **Faz os commits por etapa** (engine → endpoints → páginas) e me retorna o **diff** + instruções de teste.
+
+---
+
+Manda isso.
+Quando o Agent responder, me repassa **e eu te digo apenas o próximo passo**.

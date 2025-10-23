@@ -2,6 +2,8 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { db } from "./db";
+import { desc, eq } from "drizzle-orm";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import path from "path";
 import fs from "fs";
@@ -10,7 +12,9 @@ import {
   insertIncomeSchema, insertExpenseSchema, insertBudgetSchema, 
   insertGoalSchema, insertAchievementSchema,
   insertFemeCheckinSchema, insertBreathSessionSchema, insertUserEventSchema,
-  insertPortalReflectionSchema, insertChatMessageSchema
+  insertPortalReflectionSchema, insertChatMessageSchema,
+  insertEntrySchema, insertCoherenceLogSchema, insertFemeStateSchema,
+  entries, coherenceLogs, femeState
 } from "@shared/schema";
 import { z } from "zod";
 import { analyzeTextWithAI, generateDetailedStudyPlan } from "./anthropic";
@@ -336,6 +340,214 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching sessions:", error);
       res.status(500).json({ message: "Failed to fetch sessions" });
+    }
+  });
+
+  // ============================================
+  // INTEGRATION ENGINE ENDPOINTS
+  // ============================================
+
+  // Helper function to get integrated state snapshot
+  async function getStateSnapshot(userId: number) {
+    // Get FEME state (or create default if doesn't exist)
+    let femeData = await db.select().from(femeState).where(eq(femeState.userId, userId)).limit(1);
+    if (!femeData.length) {
+      // Create default FEME state
+      await db.insert(femeState).values({
+        userId,
+        fisico: 5,
+        energetico: 5,
+        mental: 5,
+        espiritual: 5,
+      });
+      femeData = await db.select().from(femeState).where(eq(femeState.userId, userId)).limit(1);
+    }
+
+    // Get latest coherence log
+    const coherenceData = await db.select()
+      .from(coherenceLogs)
+      .where(eq(coherenceLogs.userId, userId))
+      .orderBy(desc(coherenceLogs.createdAt))
+      .limit(1);
+
+    // Get recent entries (history)
+    const historyData = await db.select()
+      .from(entries)
+      .where(eq(entries.userId, userId))
+      .orderBy(desc(entries.createdAt))
+      .limit(50);
+
+    return {
+      feme: femeData[0],
+      coherence: coherenceData.length > 0 ? {
+        score: parseFloat(coherenceData[0].score),
+        meta: coherenceData[0].meta,
+        calculatedAt: coherenceData[0].createdAt?.toISOString(),
+      } : null,
+      history: historyData.map(e => ({
+        id: e.id,
+        dimension: e.dimension,
+        text: e.text,
+        createdAt: e.createdAt?.toISOString() || '',
+      })),
+      lastEntryAt: historyData.length > 0 && historyData[0].createdAt 
+        ? historyData[0].createdAt.toISOString() 
+        : null,
+    };
+  }
+
+  // POST /api/entries/create - Create entry and return snapshot
+  app.post('/api/entries/create', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const validatedData = insertEntrySchema.parse({
+        userId: user.id,
+        dimension: req.body.dimension,
+        text: req.body.text,
+      });
+
+      await db.insert(entries).values(validatedData);
+      const snapshot = await getStateSnapshot(user.id);
+      
+      res.status(201).json(snapshot);
+    } catch (error) {
+      console.error("Error creating entry:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create entry" });
+    }
+  });
+
+  // POST /api/feme/update - Upsert FEME state and return snapshot
+  app.post('/api/feme/update', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const { fisico, energetico, mental, espiritual } = req.body;
+
+      // Check if state exists
+      const existing = await db.select()
+        .from(femeState)
+        .where(eq(femeState.userId, user.id))
+        .limit(1);
+
+      if (existing.length > 0) {
+        // Update existing
+        await db.update(femeState)
+          .set({
+            ...(fisico !== undefined && { fisico }),
+            ...(energetico !== undefined && { energetico }),
+            ...(mental !== undefined && { mental }),
+            ...(espiritual !== undefined && { espiritual }),
+            updatedAt: new Date(),
+          })
+          .where(eq(femeState.userId, user.id));
+      } else {
+        // Insert new
+        await db.insert(femeState).values({
+          userId: user.id,
+          fisico: fisico ?? 5,
+          energetico: energetico ?? 5,
+          mental: mental ?? 5,
+          espiritual: espiritual ?? 5,
+        });
+      }
+
+      const snapshot = await getStateSnapshot(user.id);
+      res.json(snapshot);
+    } catch (error) {
+      console.error("Error updating FEME:", error);
+      res.status(500).json({ message: "Failed to update FEME" });
+    }
+  });
+
+  // POST /api/coherence/calc - Calculate coherence and return snapshot
+  app.post('/api/coherence/calc', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Get current FEME state
+      const currentFeme = await db.select()
+        .from(femeState)
+        .where(eq(femeState.userId, user.id))
+        .limit(1);
+
+      if (!currentFeme.length) {
+        return res.status(400).json({ message: "No FEME state found. Please update FEME first." });
+      }
+
+      // Calculate coherence score (simplified version - use your existing logic from feme-coherence.ts if needed)
+      const { fisico, energetico, mental, espiritual } = currentFeme[0];
+      const avg = (fisico + energetico + mental + espiritual) / 4;
+      const variance = [fisico, energetico, mental, espiritual]
+        .reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / 4;
+      const coherenceScore = Math.max(0, 100 - (variance * 10)); // 0-100 scale
+
+      // Get recent entries for frequency analysis
+      const recentEntries = await db.select()
+        .from(entries)
+        .where(eq(entries.userId, user.id))
+        .orderBy(desc(entries.createdAt))
+        .limit(10);
+
+      const meta = {
+        fisico,
+        energetico,
+        mental,
+        espiritual,
+        average: avg,
+        variance,
+        recentActivityCount: recentEntries.length,
+        pattern: variance < 1 ? 'balanced' : variance < 5 ? 'moderate' : 'chaotic',
+      };
+
+      // Save coherence log
+      await db.insert(coherenceLogs).values({
+        userId: user.id,
+        score: coherenceScore.toFixed(2),
+        meta,
+      });
+
+      const snapshot = await getStateSnapshot(user.id);
+      res.json(snapshot);
+    } catch (error) {
+      console.error("Error calculating coherence:", error);
+      res.status(500).json({ message: "Failed to calculate coherence" });
+    }
+  });
+
+  // GET /api/state - Get full integrated state
+  app.get('/api/state', isAuthenticated, async (req: any, res) => {
+    try {
+      const replitId = req.user.claims.sub;
+      const user = await storage.getUserByReplitId(replitId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const snapshot = await getStateSnapshot(user.id);
+      res.json(snapshot);
+    } catch (error) {
+      console.error("Error fetching state:", error);
+      res.status(500).json({ message: "Failed to fetch state" });
     }
   });
 

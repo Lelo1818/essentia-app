@@ -554,3 +554,52 @@ export const insertChatMessageSchema = createInsertSchema(chatMessages).omit({
   createdAt: true,
 });
 
+// Integration Engine Tables
+// Entries - Histórico de entradas/conversas em todas dimensões
+export const entries = pgTable("entries", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  dimension: varchar("dimension", { length: 50 }).notNull(), // fisico, energetico, mental, espiritual, geral
+  text: text("text").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type Entry = typeof entries.$inferSelect;
+export type InsertEntry = typeof entries.$inferInsert;
+export const insertEntrySchema = createInsertSchema(entries).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Coherence Logs - Registros de cálculos de coerência
+export const coherenceLogs = pgTable("coherence_logs", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  score: decimal("score", { precision: 5, scale: 2 }).notNull(), // 0.00-100.00
+  meta: jsonb("meta"), // Detalhes do cálculo (padrões, relações, etc)
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type CoherenceLog = typeof coherenceLogs.$inferSelect;
+export type InsertCoherenceLog = typeof coherenceLogs.$inferInsert;
+export const insertCoherenceLogSchema = createInsertSchema(coherenceLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
+// FEME State - Estado atual do FEME de cada usuário (upsert)
+export const femeState = pgTable("feme_state", {
+  userId: integer("user_id").primaryKey().references(() => users.id).notNull(),
+  fisico: integer("fisico").default(5).notNull(),
+  energetico: integer("energetico").default(5).notNull(),
+  mental: integer("mental").default(5).notNull(),
+  espiritual: integer("espiritual").default(5).notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export type FemeState = typeof femeState.$inferSelect;
+export type InsertFemeState = typeof femeState.$inferInsert;
+export const insertFemeStateSchema = createInsertSchema(femeState).omit({
+  updatedAt: true,
+});
+

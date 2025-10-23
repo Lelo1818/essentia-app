@@ -1,5 +1,6 @@
 import { 
   users, achievements, userProgress, actionPlans, aiSuggestions, portalReflections, chatMessages,
+  entries, coherenceLogs, femeState,
   type User, type InsertUser, type UpsertUser,
   type Achievement, type InsertAchievement,
   type FemeCheckin, type InsertFemeCheckin,
@@ -9,7 +10,10 @@ import {
   type ActionPlan, type InsertActionPlan,
   type AiSuggestion, type InsertAiSuggestion,
   type PortalReflection, type InsertPortalReflection,
-  type ChatMessage, type InsertChatMessage
+  type ChatMessage, type InsertChatMessage,
+  type Entry, type InsertEntry,
+  type CoherenceLog, type InsertCoherenceLog,
+  type FemeState, type InsertFemeState
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
@@ -83,6 +87,20 @@ export interface IStorage {
   createChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
   getChatMessagesByUserId(userId: number, sessionId?: string): Promise<ChatMessage[]>;
   getRecentSessions(userId: number, limit?: number): Promise<string[]>;
+  
+  // Integration Engine methods
+  createEntry(entry: InsertEntry): Promise<Entry>;
+  getEntriesByUserId(userId: number, limit?: number): Promise<Entry[]>;
+  createCoherenceLog(log: InsertCoherenceLog): Promise<CoherenceLog>;
+  getLatestCoherenceLog(userId: number): Promise<CoherenceLog | undefined>;
+  upsertFemeState(state: InsertFemeState): Promise<FemeState>;
+  getFemeState(userId: number): Promise<FemeState | undefined>;
+  getIntegratedState(userId: number): Promise<{
+    feme: FemeState;
+    coherence: CoherenceLog | null;
+    history: Entry[];
+    lastEntryAt: string | null;
+  }>;
   
   // Aggregated history
   getHistory(userId: number, limit?: number): Promise<{
@@ -891,6 +909,41 @@ class MemStorage implements IStorage {
       })
       .slice(0, limit)
       .map(s => s.sessionId);
+  }
+
+  // Integration Engine methods - NOT IMPLEMENTED IN MEMSTORAGE
+  // These require database persistence
+  async createEntry(entry: InsertEntry): Promise<Entry> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
+  }
+
+  async getEntriesByUserId(userId: number, limit: number = 50): Promise<Entry[]> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
+  }
+
+  async createCoherenceLog(log: InsertCoherenceLog): Promise<CoherenceLog> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
+  }
+
+  async getLatestCoherenceLog(userId: number): Promise<CoherenceLog | undefined> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
+  }
+
+  async upsertFemeState(state: InsertFemeState): Promise<FemeState> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
+  }
+
+  async getFemeState(userId: number): Promise<FemeState | undefined> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
+  }
+
+  async getIntegratedState(userId: number): Promise<{
+    feme: FemeState;
+    coherence: CoherenceLog | null;
+    history: Entry[];
+    lastEntryAt: string | null;
+  }> {
+    throw new Error('Integration Engine requires PostgreSQL. Use db.push to create tables.');
   }
 
   // Aggregated history
