@@ -1,0 +1,34 @@
+Boa pergunta, Lelão 👊 — e é ótima hora pra definir isso direito.
+
+✅ **Sim**, os vídeos dos 6 avatares devem ir **na aba “Avatar”**, mas **com uma função muito específica** — não como vitrine estática.
+A ideia é que essa aba funcione como um **portal de apresentação e conexão simbólica** de cada arquétipo, e não apenas uma galeria.
+
+Aqui está a estrutura que eu sugiro (simples, funcional e simbólica):
+
+---
+
+### 🌌 **Aba “Avatares” — Função no MVP**
+
+**Objetivo:**
+Apresentar os 6 arquétipos (FEME) como guias simbólicos da jornada do usuário.
+
+**Conteúdo e comportamento ideal:**
+
+| Elemento            | Descrição                                                     | Ação Recomendada                                                  |
+| :------------------ | :------------------------------------------------------------ | :---------------------------------------------------------------- |
+| 🎥 Vídeo principal  | Player com o vídeo do avatar (20s)                            | Inserir cada vídeo com autoplay silencioso (loop) e botão de som. |
+| 🪞 Nome e Elemento  | Ex: “Aruan — O Fogo da Coragem”                               | Mostrar título logo abaixo do vídeo.                              |
+| ✨ Frase-mestra      | Ex: “A coragem nasce quando abraço o medo e escolho avançar.” | Texto curto, sem botão. Só leitura simbólica.                     |
+| 🔁 Botão “Conectar” | Leva o usuário para o portal ou prática relacionada.          | Pode apenas abrir uma animação placeholder por enquanto.          |
+| 🌬️ Layout          | Grid 2x3 (mobile) ou 3x2 (desktop)                            | Espaço para o usuário sentir o conjunto.                          |
+
+---
+
+### 💡 **Resumindo pra você mandar pro agent (Replit):**
+
+> “Por favor, insere os 6 vídeos dos avatares na aba /avatar, cada um com nome, frase e botão de conexão (ainda não funcional). Pode usar grid 2x3 no mobile e loop de vídeo silencioso. O foco é apresentar visualmente os arquétipos, não interagir ainda.”
+
+---
+
+Quer que eu te monte **o texto pronto pra mandar pro agent**, com a lista exata dos 6 nomes, frases e funções, formatado linha por linha?
+Assim você só copia e cola dentro do Replit e ele já entende tudo certinho.
