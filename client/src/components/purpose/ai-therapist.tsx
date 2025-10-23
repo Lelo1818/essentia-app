@@ -53,6 +53,52 @@ export default function AITherapist() {
     emotionalState: "equilibrado"
   });
 
+  // Sincronizar com Integration Engine - carregar histórico
+  useEffect(() => {
+    let unsubscribe: (() => void) | null = null;
+
+    import('@/state/integration-engine').then(({ getState, subscribe }) => {
+      const state = getState();
+      
+      // Carregar histórico do engine
+      if (state?.history && state.history.length > 0) {
+        const historyMessages: TherapyMessage[] = state.history.map((entry, idx) => ({
+          id: idx + 2, // +2 porque mensagem inicial é id 1
+          type: entry.dimension === 'geral' ? 'user' : 'therapist',
+          content: entry.text,
+          timestamp: new Date(entry.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+          mood: "supportive" as const,
+        }));
+        
+        // Mesclar com mensagem inicial
+        setMessages(prev => [prev[0], ...historyMessages]);
+      }
+
+      // Ouvir mudanças no histórico
+      unsubscribe = subscribe((newState) => {
+        if (newState?.history) {
+          const historyMessages: TherapyMessage[] = newState.history.map((entry, idx) => ({
+            id: idx + 2,
+            type: entry.dimension === 'geral' ? 'user' : 'therapist',
+            content: entry.text,
+            timestamp: new Date(entry.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+            mood: "supportive" as const,
+          }));
+          setMessages(prev => [prev[0], ...historyMessages]);
+        }
+      });
+    }).catch(err => {
+      console.error('[Guru] Erro ao importar Integration Engine:', err);
+    });
+
+    // Cleanup: desinscrever ao desmontar
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
+
   const aiMutation = useMutation({
     mutationFn: async (userMessage: string) => {
       const response = await fetch("/api/ai/selfsession", {
@@ -66,7 +112,7 @@ export default function AITherapist() {
       if (!response.ok) throw new Error("Erro ao conversar com IA");
       return response.json();
     },
-    onSuccess: (data: any) => {
+    onSuccess: async (data: any) => {
       const newMessage: TherapyMessage = {
         id: messages.length + 1,
         type: "therapist",
@@ -80,6 +126,17 @@ export default function AITherapist() {
         insights: prev.insights + 1,
         duration: prev.duration + 1
       }));
+
+      // Salvar resposta do Guru no Integration Engine
+      try {
+        const { actions } = await import('@/state/integration-engine');
+        await actions.logEntry({
+          dimension: 'mental', // Respostas do Guru vão para dimensão mental
+          text: data.response
+        });
+      } catch (error) {
+        console.error('[Guru] Erro ao salvar resposta:', error);
+      }
     },
     onError: () => {
       toast({
@@ -133,7 +190,7 @@ export default function AITherapist() {
     }
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!inputMessage.trim() || aiMutation.isPending) return;
 
     const userMessage: TherapyMessage = {
@@ -146,6 +203,18 @@ export default function AITherapist() {
     setMessages(prev => [...prev, userMessage]);
     const currentInput = inputMessage;
     setInputMessage("");
+
+    // Salvar no Integration Engine
+    try {
+      const { actions } = await import('@/state/integration-engine');
+      await actions.logEntry({
+        dimension: 'geral',
+        text: currentInput
+      });
+    } catch (error) {
+      console.error('[Guru] Erro ao salvar mensagem:', error);
+    }
+
     aiMutation.mutate(currentInput);
   };
 

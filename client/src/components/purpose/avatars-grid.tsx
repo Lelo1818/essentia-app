@@ -159,9 +159,17 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
     }
   };
 
-  const handleConnect = (e: React.MouseEvent) => {
+  const handleConnect = async (e: React.MouseEvent) => {
     e.stopPropagation();
     soundManager.play("ui_success");
+    
+    // Registrar portal linking no Integration Engine
+    try {
+      const { actions } = await import('@/state/integration-engine');
+      await actions.linkPortal({ avatarId: avatar.id });
+    } catch (error) {
+      console.error('[Avatar] Erro ao registrar portal linking:', error);
+    }
     
     if (avatar.link) {
       setLocation(avatar.link);

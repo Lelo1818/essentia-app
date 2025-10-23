@@ -56,36 +56,75 @@ import {
 
 import despertarInteriorVideo from "@assets/Despertar Interior_1760814881524.mp4";
 
-// Componente de bússola FEME que busca dados reais da API
+// Componente de bússola FEME integrado ao Integration Engine
 function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
-  const { data: femeCheckins = [] } = useQuery<any[]>({
-    queryKey: ['/api/feme/checkins'],
-  });
+  const [femeState, setFemeState] = useState({ fisico: 5, energetico: 5, mental: 5, espiritual: 5 });
+  const [coherence, setCoherence] = useState(50);
+  const [isCalculating, setIsCalculating] = useState(false);
 
-  // Pegar último check-in FEME
-  const latestCheckin = femeCheckins[0];
-  
-  const femeValues = latestCheckin ? {
-    fisico: latestCheckin.fisico || 5,
-    energetico: latestCheckin.energetico || 5,
-    mental: latestCheckin.mental || 5,
-    espiritual: latestCheckin.espiritual || 5,
-  } : {
-    fisico: 5,
-    energetico: 5,
-    mental: 5,
-    espiritual: 5,
+  // Sincronizar com Integration Engine
+  useEffect(() => {
+    let unsubscribe: (() => void) | null = null;
+
+    // Importação dinâmica para evitar problemas de inicialização
+    import('@/state/integration-engine').then(({ getState, subscribe }) => {
+      const state = getState();
+      if (state?.feme) {
+        setFemeState({
+          fisico: state.feme.fisico || 5,
+          energetico: state.feme.energetico || 5,
+          mental: state.feme.mental || 5,
+          espiritual: state.feme.espiritual || 5,
+        });
+      }
+      if (state?.coherence?.score != null) {
+        setCoherence(Math.round(state.coherence.score));
+      }
+
+      // Ouvir mudanças no engine
+      unsubscribe = subscribe((newState) => {
+        if (newState?.feme) {
+          setFemeState({
+            fisico: newState.feme.fisico || 5,
+            energetico: newState.feme.energetico || 5,
+            mental: newState.feme.mental || 5,
+            espiritual: newState.feme.espiritual || 5,
+          });
+        }
+        if (newState?.coherence?.score != null) {
+          setCoherence(Math.round(newState.coherence.score));
+        }
+      });
+    }).catch(err => {
+      console.error('[FEME] Erro ao importar Integration Engine:', err);
+    });
+
+    // Cleanup: desinscrever ao desmontar
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
+
+  // Handler para calcular coerência
+  const handleCalculateCoherence = async () => {
+    setIsCalculating(true);
+    try {
+      const { actions } = await import('@/state/integration-engine');
+      await actions.recalcCoherence();
+    } catch (error) {
+      console.error('[FEME] Erro ao calcular coerência:', error);
+    } finally {
+      setIsCalculating(false);
+    }
   };
-
-  const coherence = latestCheckin?.coerencia 
-    ? Math.round(latestCheckin.coerencia * 100) 
-    : 50;
 
   return (
     <FEMECompass 
-      values={femeValues}
+      values={femeState}
       coherence={coherence}
-      onHarmonize={onHarmonize}
+      onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
     />
   );
 }
