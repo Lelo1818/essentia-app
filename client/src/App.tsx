@@ -7,6 +7,8 @@ import Navigation from "@/components/layout/navigation";
 import MobileNavigation from "@/components/layout/mobile-navigation";
 import { FloatingAIAssistant, ScrollToTop, LiveStats } from "@/components/enhanced/floating-elements";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
+import { initIntegrationEngine } from "@/state/integration-engine";
 import Landing from "@/pages/Landing";
 import Dashboard from "@/pages/dashboard";
 import Income from "@/pages/income";
@@ -208,6 +210,17 @@ function Router() {
 
 function App() {
   const [location] = useLocation();
+  const { user } = useAuth();
+  
+  // Initialize Integration Engine when user is authenticated
+  useEffect(() => {
+    if (user?.id) {
+      console.log('[Integration Engine] Initializing for user:', user.id);
+      initIntegrationEngine(user.id).catch(err => {
+        console.error('[Integration Engine] Failed to initialize:', err);
+      });
+    }
+  }, [user?.id]);
   
   // Rotas que NÃO devem mostrar navegação do Flow
   const standaloneRoutes = ['/thera', '/purpose', '/journey', '/breath', '/points', '/essentia-final', '/essentia-mega', '/portal-uau', '/breathing-446', '/avatars', '/portals', '/coherence'];
