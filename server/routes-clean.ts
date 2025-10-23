@@ -1905,17 +1905,6 @@ Seja direto e prático. Foco em insights acionáveis.`;
     ]);
   });
 
-  // Download endpoint - TEMPORARY
-  app.get("/download/essentia-project.tar.gz", (req, res) => {
-    const filePath = path.join(process.cwd(), 'essentia-project.tar.gz');
-    res.download(filePath, 'essentia-project.tar.gz', (err) => {
-      if (err) {
-        console.error('Download error:', err);
-        res.status(500).send('Erro ao baixar arquivo');
-      }
-    });
-  });
-
   const httpServer = createServer(app);
   return httpServer;
 }
