@@ -1,0 +1,173 @@
+Essentia – FIX MOBILE (menu sticky, FEME, harmonizar, vídeo)
+1) client/src/pages/purpose.tsx
+A) Substituir inteiro o componente FEMECompassLive por este:
+function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
+  const [femeState, setFemeState] = useState({ fisico: 5, energetico: 5, mental: 5, espiritual: 5 });
+  const [coherence, setCoherence] = useState(50);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  useEffect(() => {
+    let unsubscribe: (() => void) | null = null;
+    import('@/state/integration-engine').then(({ getState, subscribe }) => {
+      const state = getState();
+      if (state?.feme) {
+        setFemeState({
+          fisico: state.feme.fisico ?? 5,
+          energetico: state.feme.energetico ?? 5,
+          mental: state.feme.mental ?? 5,
+          espiritual: state.feme.espiritual ?? 5,
+        });
+      }
+      if (state?.coherence?.score != null) setCoherence(Math.round(state.coherence.score));
+      unsubscribe = subscribe((s) => {
+        if (s?.feme) {
+          setFemeState({
+            fisico: s.feme.fisico ?? 5,
+            energetico: s.feme.energetico ?? 5,
+            mental: s.feme.mental ?? 5,
+            espiritual: s.feme.espiritual ?? 5,
+          });
+        }
+        if (s?.coherence?.score != null) setCoherence(Math.round(s.coherence.score));
+      });
+    }).catch(err => console.error('[FEME] Integration Engine import error:', err));
+    return () => { unsubscribe?.(); };
+  }, []);
+
+  const handleFemeChange = async (vals: Partial<typeof femeState>) => {
+    try {
+      const { actions } = await import('@/state/integration-engine');
+      await actions.updateFeme({
+        fisico: vals.fisico ?? femeState.fisico,
+        energetico: vals.energetico ?? femeState.energetico,
+        mental: vals.mental ?? femeState.mental,
+        espiritual: vals.espiritual ?? femeState.espiritual,
+      });
+    } catch (err) {
+      console.error('[FEME] updateFeme error:', err);
+    }
+  };
+
+  const handleCalculateCoherence = async () => {
+    setIsCalculating(true);
+    try {
+      const { actions } = await import('@/state/integration-engine');
+      await actions.recalcCoherence();
+      onHarmonize?.(); // navegar após calcular
+    } catch (error) {
+      console.error('[FEME] recalcCoherence error:', error);
+    } finally {
+      setIsCalculating(false);
+    }
+  };
+
+  return (
+    <FEMECompass
+      values={femeState}
+      coherence={coherence}
+      onChange={handleFemeChange}
+      onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
+    />
+  );
+}
+
+B) Atualizar cálculo do sticky offset (no Purpose()):
+useLayoutEffect(() => {
+  const setH = () => {
+    const h = compassRef.current?.offsetHeight ?? 64;
+    document.documentElement.style.setProperty('--compass-h', `${h + 12}px`);
+  };
+  setH();
+  window.addEventListener('resize', setH);
+  return () => window.removeEventListener('resize', setH);
+}, []);
+
+C) Trocar o menu mobile por uma barra horizontal sticky (substituir o bloco “MENU NAVEGAÇÃO - MOBILE STICKY”):
+<div className="lg:hidden sticky-menu">
+  <div className="sticky-menu-inner">
+    <TabsList className="tabs-scroll">
+      <TabsTrigger value="journey" className="tab-pill"><Compass className="icon" /><span>Jornada</span></TabsTrigger>
+      <TabsTrigger value="breathing" className="tab-pill green"><Brain className="icon" /><span>Respiração</span></TabsTrigger>
+      <TabsTrigger value="rituals" className="tab-pill yellow"><Star className="icon" /><span>Rituais</span></TabsTrigger>
+      <TabsTrigger value="therapist" className="tab-pill"><Heart className="icon" /><span>Seu Guru</span></TabsTrigger>
+      <TabsTrigger value="wheel" className="tab-pill"><Target className="icon" /><span>Roda</span></TabsTrigger>
+      <TabsTrigger value="avatar" className="tab-pill"><User className="icon" /><span>Avatar</span></TabsTrigger>
+      <TabsTrigger value="transition" className="tab-pill"><TrendingUp className="icon" /><span>Transição</span></TabsTrigger>
+      <TabsTrigger value="inspiration" className="tab-pill"><Heart className="icon" /><span>Inspiração</span></TabsTrigger>
+      <TabsTrigger value="community" className="tab-pill"><Users className="icon" /><span>Comunidade</span></TabsTrigger>
+      <TabsTrigger value="biometric" className="tab-pill"><Brain className="icon" /><span>Biometria</span></TabsTrigger>
+      <TabsTrigger value="profile" className="tab-pill gray"><User className="icon" /><span>Perfil</span></TabsTrigger>
+    </TabsList>
+  </div>
+</div>
+
+D) Garantir navegação ao harmonizar:
+<div ref={compassRef}>
+  <FEMECompassLive onHarmonize={() => setLocation('/breathing-446')} />
+</div>
+
+E) Fechar vídeo volta pra Jornada (no VideoPortal):
+{showVideo && (
+  <VideoPortal
+    videoSrc={despertarInteriorVideo}
+    title="Despertar Interior"
+    onClose={() => { setShowVideo(false); setActiveTab('journey'); setLocation('/purpose#journey'); }}
+  />
+)}
+
+2) client/src/index.css
+
+Adicionar no final do arquivo:
+
+:root { --compass-h: 96px; }
+
+.sticky-menu {
+  position: sticky;
+  top: var(--compass-h, 96px);
+  z-index: 50;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(1.2) blur(6px);
+  -webkit-backdrop-filter: saturate(1.2) blur(6px);
+  border-bottom: 1px solid rgba(17,24,39,0.06);
+}
+
+.sticky-menu-inner { padding: 6px 10px; }
+
+.tabs-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs-scroll::-webkit-scrollbar { display: none; }
+
+.tab-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid #d6bcfa;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 12px;
+  line-height: 1;
+}
+.tab-pill.green { border-color: #86efac; }
+.tab-pill.yellow { border-color: #fde68a; }
+.tab-pill.gray { border-color: #d1d5db; }
+
+.tab-pill[data-state="active"] {
+  color: #fff;
+  background: #7c3aed;
+  border-color: #7c3aed;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.25);
+}
+
+.tab-pill .icon { width: 18px; height: 18px; }
+
+video { transform: translateZ(0); -webkit-transform: translateZ(0); }
+
+
+Observação técnica: garanta que o wrapper da página não tenha overflow: hidden/auto/scroll, senão o position: sticky não funciona.

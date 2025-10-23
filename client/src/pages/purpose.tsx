@@ -62,66 +62,49 @@ function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
   const [coherence, setCoherence] = useState(50);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Sincronizar com Integration Engine
   useEffect(() => {
     let unsubscribe: (() => void) | null = null;
-
-    // Importação dinâmica para evitar problemas de inicialização
     import('@/state/integration-engine').then(({ getState, subscribe }) => {
       const state = getState();
       if (state?.feme) {
         setFemeState({
-          fisico: state.feme.fisico || 5,
-          energetico: state.feme.energetico || 5,
-          mental: state.feme.mental || 5,
-          espiritual: state.feme.espiritual || 5,
+          fisico: state.feme.fisico ?? 5,
+          energetico: state.feme.energetico ?? 5,
+          mental: state.feme.mental ?? 5,
+          espiritual: state.feme.espiritual ?? 5,
         });
       }
-      if (state?.coherence?.score != null) {
-        setCoherence(Math.round(state.coherence.score));
-      }
-
-      // Ouvir mudanças no engine
-      unsubscribe = subscribe((newState) => {
-        if (newState?.feme) {
+      if (state?.coherence?.score != null) setCoherence(Math.round(state.coherence.score));
+      unsubscribe = subscribe((s) => {
+        if (s?.feme) {
           setFemeState({
-            fisico: newState.feme.fisico || 5,
-            energetico: newState.feme.energetico || 5,
-            mental: newState.feme.mental || 5,
-            espiritual: newState.feme.espiritual || 5,
+            fisico: s.feme.fisico ?? 5,
+            energetico: s.feme.energetico ?? 5,
+            mental: s.feme.mental ?? 5,
+            espiritual: s.feme.espiritual ?? 5,
           });
         }
-        if (newState?.coherence?.score != null) {
-          setCoherence(Math.round(newState.coherence.score));
-        }
+        if (s?.coherence?.score != null) setCoherence(Math.round(s.coherence.score));
       });
-    }).catch(err => {
-      console.error('[FEME] Erro ao importar Integration Engine:', err);
-    });
-
-    // Cleanup: desinscrever ao desmontar
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
+    }).catch(err => console.error('[FEME] Integration Engine import error:', err));
+    return () => { unsubscribe?.(); };
   }, []);
 
-  // Handler para calcular coerência
   const handleCalculateCoherence = async () => {
     setIsCalculating(true);
     try {
       const { actions } = await import('@/state/integration-engine');
       await actions.recalcCoherence();
+      onHarmonize?.(); // navegar após calcular
     } catch (error) {
-      console.error('[FEME] Erro ao calcular coerência:', error);
+      console.error('[FEME] recalcCoherence error:', error);
     } finally {
       setIsCalculating(false);
     }
   };
 
   return (
-    <FEMECompass 
+    <FEMECompass
       values={femeState}
       coherence={coherence}
       onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
@@ -261,13 +244,13 @@ export default function Purpose() {
   
   // Calcular altura da Bússola para sticky menu
   useLayoutEffect(() => {
-    const updateH = () => {
+    const setH = () => {
       const h = compassRef.current?.offsetHeight ?? 64;
       document.documentElement.style.setProperty('--compass-h', `${h + 12}px`);
     };
-    updateH();
-    window.addEventListener('resize', updateH);
-    return () => window.removeEventListener('resize', updateH);
+    setH();
+    window.addEventListener('resize', setH);
+    return () => window.removeEventListener('resize', setH);
   }, []);
   
   // Scroll automático para conteúdo da aba quando muda (mobile)
@@ -427,90 +410,21 @@ export default function Purpose() {
         <FEMECompassLive onHarmonize={() => setLocation('/breathing-446')} />
       </div>
       
-      {/* MENU NAVEGAÇÃO - MOBILE STICKY (abaixo da Bússola) */}
-      <div className="lg:hidden sticky-menu no-transform mt-2">
-        <div className="sticky-menu-inner px-3">
-          <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0 h-12">
-            <TabsTrigger 
-              value="journey" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Compass className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Jornada</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="breathing" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-green-400 data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:border-green-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Brain className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Respiração</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="rituals" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-yellow-400 data-[state=active]:bg-yellow-500 data-[state=active]:text-white data-[state=active]:border-yellow-500 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Star className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Rituais</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="therapist" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Heart className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[88px]">Seu Guru</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="wheel" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Target className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Roda</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="avatar" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <User className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Avatar</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="transition" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <TrendingUp className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Transição</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="inspiration" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-pink-300 data-[state=active]:bg-pink-600 data-[state=active]:text-white data-[state=active]:border-pink-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Heart className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Inspiração</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="community" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-blue-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-blue-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Users className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Comunidade</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="biometric" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-red-300 data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=active]:border-red-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <Brain className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Biometria</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="profile" 
-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-gray-400 data-[state=active]:bg-gray-700 data-[state=active]:text-white data-[state=active]:border-gray-700 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
-            >
-              <User className="w-[18px] h-[18px] shrink-0" />
-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Perfil</span>
-            </TabsTrigger>
+      {/* MENU NAVEGAÇÃO - MOBILE STICKY (barra horizontal scrollável) */}
+      <div className="lg:hidden sticky-menu">
+        <div className="sticky-menu-inner">
+          <TabsList className="tabs-scroll">
+            <TabsTrigger value="journey" className="tab-pill"><Compass className="icon" /><span>Jornada</span></TabsTrigger>
+            <TabsTrigger value="breathing" className="tab-pill green"><Brain className="icon" /><span>Respiração</span></TabsTrigger>
+            <TabsTrigger value="rituals" className="tab-pill yellow"><Star className="icon" /><span>Rituais</span></TabsTrigger>
+            <TabsTrigger value="therapist" className="tab-pill"><Heart className="icon" /><span>Seu Guru</span></TabsTrigger>
+            <TabsTrigger value="wheel" className="tab-pill"><Target className="icon" /><span>Roda</span></TabsTrigger>
+            <TabsTrigger value="avatar" className="tab-pill"><User className="icon" /><span>Avatar</span></TabsTrigger>
+            <TabsTrigger value="transition" className="tab-pill"><TrendingUp className="icon" /><span>Transição</span></TabsTrigger>
+            <TabsTrigger value="inspiration" className="tab-pill"><Heart className="icon" /><span>Inspiração</span></TabsTrigger>
+            <TabsTrigger value="community" className="tab-pill"><Users className="icon" /><span>Comunidade</span></TabsTrigger>
+            <TabsTrigger value="biometric" className="tab-pill"><Brain className="icon" /><span>Biometria</span></TabsTrigger>
+            <TabsTrigger value="profile" className="tab-pill gray"><User className="icon" /><span>Perfil</span></TabsTrigger>
           </TabsList>
         </div>
       </div>
@@ -969,7 +883,7 @@ export default function Purpose() {
         <VideoPortal
           videoSrc={despertarInteriorVideo}
           title="Despertar Interior"
-          onClose={() => setShowVideo(false)}
+          onClose={() => { setShowVideo(false); setActiveTab('journey'); setLocation('/purpose#journey'); }}
         />
       )}
       </div>
