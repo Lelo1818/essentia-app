@@ -488,10 +488,14 @@
 
 :root { --compass-h: 96px; }
 
+.page, .page * {
+  transform: none !important;
+}
+
 .sticky-menu {
   position: sticky;
-  top: var(--compass-h, 96px);
-  z-index: 50;
+  top: calc(var(--compass-h, 80px) + 8px);
+  z-index: 40;
   background: rgba(255,255,255,0.92);
   backdrop-filter: saturate(1.2) blur(6px);
   -webkit-backdrop-filter: saturate(1.2) blur(6px);
@@ -533,5 +537,14 @@
 }
 
 .tab-pill .icon { width: 18px; height: 18px; }
+
+@media (max-width: 420px) {
+  .sticky-menu .sticky-menu-inner button {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    height: 44px;
+    font-size: 12px;
+  }
+}
 
 video { transform: translateZ(0); -webkit-transform: translateZ(0); }

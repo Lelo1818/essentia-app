@@ -42,6 +42,7 @@ import AppShowcase from "@/components/ecosystem/app-showcase";
 import { useKeyboardShortcuts, FINANCIAL_SHORTCUTS } from "@/hooks/useKeyboardShortcuts";
 import { Trophy, Medal, Target, TrendingUp, Zap, Calendar, Calculator, DollarSign, Camera, Gift, Percent, Plane, BookOpen } from "lucide-react";
 import { AmbientPlayer } from "@/components/audio/ambient-player";
+import { BuildId } from "@/components/ui/build-id";
 
 import type { FinancialSummary } from "@/types";
 
@@ -523,6 +524,8 @@ export default function Dashboard() {
           console.log("AI Action:", action, data);
         }}
       />
+      
+      <BuildId />
     </div>
   );
 }

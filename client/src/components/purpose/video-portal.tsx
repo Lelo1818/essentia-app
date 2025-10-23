@@ -100,18 +100,19 @@ export function VideoPortal({ videoSrc, title, onClose }: VideoPortalProps) {
       className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 lg:p-4"
       data-testid="video-portal-overlay"
     >
-      <div className="relative w-full lg:max-w-7xl aspect-video bg-black rounded-lg lg:rounded-2xl overflow-hidden shadow-2xl">
-        {/* Video */}
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          className="w-full h-full object-contain"
-          onClick={togglePlay}
-          data-testid="video-player"
-        />
+      <div className="w-full max-w-none px-4">
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black">
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            className="w-full h-full object-cover"
+            onClick={togglePlay}
+            playsInline
+            data-testid="video-player"
+          />
 
-        {/* Título - Overlay superior */}
-        <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-6">
+          {/* Título - Overlay superior */}
+          <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-white" data-testid="video-title">
               {title}
@@ -128,79 +129,80 @@ export function VideoPortal({ videoSrc, title, onClose }: VideoPortalProps) {
           </div>
         </div>
 
-        {/* Controles - Overlay inferior */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-          {/* Barra de progresso */}
-          <div
-            className="w-full h-2 bg-white/30 rounded-full cursor-pointer mb-4 overflow-hidden"
-            onClick={handleProgressClick}
-            data-testid="video-progress-bar"
-          >
+          {/* Controles - Overlay inferior */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+            {/* Barra de progresso */}
             <div
-              className="h-full bg-purple-500 transition-all"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-
-          {/* Botões de controle */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={togglePlay}
-                className="text-white hover:bg-white/20"
-                data-testid={isPlaying ? "button-pause" : "button-play"}
-              >
-                {isPlaying ? (
-                  <Pause className="w-6 h-6 fill-current" />
-                ) : (
-                  <Play className="w-6 h-6 fill-current" />
-                )}
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleMute}
-                className="text-white hover:bg-white/20"
-                data-testid={isMuted ? "button-unmute" : "button-mute"}
-              >
-                {isMuted ? (
-                  <VolumeX className="w-6 h-6" />
-                ) : (
-                  <Volume2 className="w-6 h-6" />
-                )}
-              </Button>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleFullscreen}
-              className="text-white hover:bg-white/20"
-              data-testid="button-fullscreen"
+              className="w-full h-2 bg-white/30 rounded-full cursor-pointer mb-4 overflow-hidden"
+              onClick={handleProgressClick}
+              data-testid="video-progress-bar"
             >
-              {isFullscreen ? (
-                <Minimize className="w-6 h-6" />
-              ) : (
-                <Maximize className="w-6 h-6" />
-              )}
-            </Button>
-          </div>
-        </div>
+              <div
+                className="h-full bg-purple-500 transition-all"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
 
-        {/* Play button central quando pausado */}
-        {!isPlaying && (
-          <div
-            className="absolute inset-0 flex items-center justify-center cursor-pointer"
-            onClick={togglePlay}
-          >
-            <div className="w-24 h-24 bg-purple-500/90 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-              <Play className="w-12 h-12 text-white fill-current ml-2" />
+            {/* Botões de controle */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={togglePlay}
+                  className="text-white hover:bg-white/20"
+                  data-testid={isPlaying ? "button-pause" : "button-play"}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-6 h-6 fill-current" />
+                  ) : (
+                    <Play className="w-6 h-6 fill-current" />
+                  )}
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={toggleMute}
+                  className="text-white hover:bg-white/20"
+                  data-testid={isMuted ? "button-unmute" : "button-mute"}
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-6 h-6" />
+                  ) : (
+                    <Volume2 className="w-6 h-6" />
+                  )}
+                </Button>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleFullscreen}
+                className="text-white hover:bg-white/20"
+                data-testid="button-fullscreen"
+              >
+                {isFullscreen ? (
+                  <Minimize className="w-6 h-6" />
+                ) : (
+                  <Maximize className="w-6 h-6" />
+                )}
+              </Button>
             </div>
           </div>
-        )}
+
+          {/* Play button central quando pausado */}
+          {!isPlaying && (
+            <div
+              className="absolute inset-0 flex items-center justify-center cursor-pointer"
+              onClick={togglePlay}
+            >
+              <div className="w-24 h-24 bg-purple-500/90 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                <Play className="w-12 h-12 text-white fill-current ml-2" />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

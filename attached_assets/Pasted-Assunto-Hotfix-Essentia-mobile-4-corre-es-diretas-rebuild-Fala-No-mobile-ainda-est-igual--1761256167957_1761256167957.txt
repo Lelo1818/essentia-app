@@ -1,0 +1,157 @@
+Assunto: Hotfix Essentia (mobile) – 4 correções diretas + rebuild
+
+Fala! No mobile ainda está igual ao build anterior. Seguem correções objetivas com trechos de código para colar:
+
+1) “Harmonizar” não abre o vídeo (bug real)
+
+Hoje o FEMECompassLive ignora o onHarmonize recebido do pai. Resultado: recalcula coerência, mas não navega para a tela de respiração/vídeo.
+
+Patch (client/src/pages/purpose.tsx)
+
+ANTES
+
+<FEMECompass 
+  values={femeState}
+  coherence={coherence}
+  onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
+/>
+
+
+DEPOIS
+
+<FEMECompass 
+  values={femeState}
+  coherence={coherence}
+  onChange={async (next) => {
+    const { actions } = await import('@/state/integration-engine');
+    await actions.updateFeme(next); // salva mudanças do FEME
+  }}
+  onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
+/>
+
+
+E dentro de handleCalculateCoherence chame o callback para navegar:
+
+const handleCalculateCoherence = async () => {
+  setIsCalculating(true);
+  try {
+    const { actions } = await import('@/state/integration-engine');
+    await actions.recalcCoherence();
+    onHarmonize?.(); // <—— aciona navegação (ex.: /breathing-446)
+  } catch (e) {
+    console.error('[FEME] Erro ao calcular coerência:', e);
+  } finally {
+    setIsCalculating(false);
+  }
+};
+
+
+Efeito: ao tocar “Harmonizar”, recalcula e abre o vídeo como esperado.
+
+2) Alterar FEME não muda nada
+
+O componente não estava persistindo as mudanças. O patch do item 1 já adiciona onChange chamando actions.updateFeme(next).
+Se o FEMECompass expõe outro nome de prop (ex.: onValuesChange), ajuste para ele.
+
+3) Menu de abas não fica sticky e ocupa muito
+
+O position: sticky quebra se algum ancestral tem transform ou overflow diferente. Simplifica o sticky no mobile e evita ancestrais com transform/overflow que quebrem isso.
+
+Patch (CSS global – client/src/index.css)
+/* STICKY MENU – garante que nada acima “quebre” o sticky */
+.page, .page * {
+  /* não force transform nos containers acima do sticky */
+  transform: none !important;
+}
+
+.sticky-menu {
+  position: sticky;
+  top: calc(var(--compass-h, 80px) + 8px);
+  z-index: 40;
+}
+
+/* Botões mais compactos no mobile */
+@media (max-width: 420px) {
+  .sticky-menu .sticky-menu-inner button {
+    padding-left: .25rem;
+    padding-right: .25rem;
+    height: 44px;       /* não passa do “safe” */
+    font-size: 12px;
+  }
+}
+
+Patch (JSX – onde está o sticky do mobile, em purpose.tsx)
+
+ANTES
+
+<div className="lg:hidden sticky-menu no-transform mt-2">
+
+
+DEPOIS
+
+<div className="lg:hidden sticky-menu mt-2">
+
+
+Removemos no-transform e deixamos o CSS acima garantir o sticky.
+O --compass-h já está sendo setado via useLayoutEffect; mantenha.
+
+4) Vídeos “pequenos” (letterbox) e não voltam
+
+O player está com área útil pequena. Deixa o container responsivo e ocupa a largura.
+
+Patch (client/src/components/purpose/video-portal.tsx ou componente equivalente)
+<div className="w-full max-w-none px-4">
+  <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+    <video
+      className="w-full h-full object-cover"
+      playsInline
+      controls
+      // poster="... opcional ..."
+      // src={...}
+    />
+  </div>
+</div>
+
+
+E no botão de fechar/voltar, garante a âncora para voltar ao conteúdo certo:
+
+onClose={() => {
+  setShowVideo(false);
+  setLocation('/purpose#journey'); // ou a hash/rota correta
+}}
+
+Build/Deploy (provável causa de “nada mudou”)
+
+Parece que estamos vendo o build antigo no ambiente. Faz um rebuild completo do client e reinicia o server:
+
+# na raiz do projeto
+rm -rf client/dist
+pnpm --filter client build
+
+# reinicia o server para trocar o bundle servido
+# (o app está fixo na porta 5000)
+pkill node || true
+pnpm start
+
+
+Dica: coloca um ID de build visível para validarmos no celular (exibir no rodapé):
+
+.env: VITE_BUILD_ID=$(date +%Y%m%d%H%M)
+
+Em algum lugar do app: import.meta.env.VITE_BUILD_ID
+
+QA rápido no iPhone (checklist)
+
+Abre /purpose → altera FEME (4 sliders) → valores persistem? (sim)
+
+Toca Harmonizar → recalcula → abre vídeo imediatamente.
+
+Rola a página → o menu de abas fica colado (sticky) e sem tarja.
+
+Abre Portal do Despertar → vídeo ocupa toda a largura (aspect-video).
+
+Fecha vídeo → volta para /purpose#journey no mesmo ponto.
+
+Rodapé mostra BUILD_ID novo (confirma que é o bundle novo).
+
+Obrigado!

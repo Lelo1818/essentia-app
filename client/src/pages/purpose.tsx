@@ -55,6 +55,7 @@ import {
 } from "lucide-react";
 
 import despertarInteriorVideo from "@assets/Despertar Interior_1760814881524.mp4";
+import { BuildId } from "@/components/ui/build-id";
 
 // Componente de bússola FEME integrado ao Integration Engine
 function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
@@ -107,6 +108,10 @@ function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
     <FEMECompass
       values={femeState}
       coherence={coherence}
+      onChange={async (next) => {
+        const { actions } = await import('@/state/integration-engine');
+        await actions.updateFEME(next);
+      }}
       onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
     />
   );
@@ -888,6 +893,8 @@ export default function Purpose() {
       )}
       </div>
       </Tabs>
+      
+      <BuildId />
     </div>
   );
 }

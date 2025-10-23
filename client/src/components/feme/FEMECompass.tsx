@@ -17,6 +17,7 @@ interface FEMEValues {
 interface FEMECompassProps {
   values?: FEMEValues;
   coherence?: number;
+  onChange?: (values: Partial<FEMEValues>) => void;
   onHarmonize?: () => void;
 }
 
@@ -30,6 +31,7 @@ interface Microcopy {
 export function FEMECompass({
   values = { fisico: 6, energetico: 7, mental: 5, espiritual: 6 },
   coherence = 68,
+  onChange,
   onHarmonize
 }: FEMECompassProps) {
   const [microcopy, setMicrocopy] = useState<Microcopy | null>(null);
