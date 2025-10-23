@@ -485,3 +485,17 @@
     display: none;
   }
 }
+
+/* Evita "jank" em vídeos dentro de grid */
+video {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Botões compactos no mobile para tabs */
+@media (max-width: 420px) {
+  .sticky-menu .sticky-menu-inner button {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}

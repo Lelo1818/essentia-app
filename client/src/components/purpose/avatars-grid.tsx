@@ -101,6 +101,9 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
   const [isMuted, setIsMuted] = useState(false);
   const [hasPlayed, setHasPlayed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const allowAutoplayRef = useRef<boolean>(true);
 
   // Pausar outros vídeos quando este é ativado
   useEffect(() => {
@@ -113,6 +116,24 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
       setIsPlaying(false);
     }
   }, [isActive, isPlaying]);
+
+  // Pausar quando sai de viewport (melhora UX e bateria)
+  useEffect(() => {
+    if (!cardRef.current || !videoRef.current) return;
+    observerRef.current?.disconnect();
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting && !videoRef.current?.paused) {
+          videoRef.current.pause();
+          setIsPlaying(false);
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observerRef.current.observe(cardRef.current);
+    return () => observerRef.current?.disconnect();
+  }, []);
 
   const handleCardClick = () => {
     if (!isActive) {
@@ -130,16 +151,31 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
   const playVideo = () => {
     if (!videoRef.current) return;
     
-    videoRef.current.muted = false;
-    setIsMuted(false);
+    // mobile safari exige autoplay com muted/playsInline no primeiro toque
+    videoRef.current.muted = !allowAutoplayRef.current ? true : false;
+    setIsMuted(videoRef.current.muted);
+    videoRef.current.playsInline = true;
     videoRef.current.currentTime = 0;
-    videoRef.current.play().then(() => {
-      console.log(`video:start ${avatar.id}`);
-      setIsPlaying(true);
-      setHasPlayed(true);
-    }).catch(err => {
-      console.debug("Play failed:", err);
-    });
+    videoRef.current
+      .play()
+      .then(() => {
+        console.log(`video:start ${avatar.id}`);
+        setIsPlaying(true);
+        setHasPlayed(true);
+      })
+      .catch((err) => {
+        // fallback: força muted para destravar autoplay
+        console.debug("Play failed, retry muted:", err);
+        allowAutoplayRef.current = false;
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          setIsMuted(true);
+          videoRef.current.play().then(() => {
+            setIsPlaying(true);
+            setHasPlayed(true);
+          }).catch(() => {});
+        }
+      });
   };
 
   const handleVideoEnd = () => {
@@ -197,14 +233,18 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
         ${isActive ? 'ring-4 ring-purple-500 ring-opacity-50 shadow-2xl shadow-purple-500/30 scale-105' : 'hover:border-gray-500'}
       `}
       onClick={handleCardClick}
+      ref={cardRef}
     >
       {/* Vídeo */}
-      <div className="relative aspect-[9/16] bg-black">
+      <div className="relative bg-black" style={{ aspectRatio: "9/16" }}>
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
           src={avatar.video}
+          muted
           playsInline
+          preload="metadata"
+          poster="/placeholders/avatar-poster.jpg"
           onEnded={handleVideoEnd}
           data-testid={`video-${avatar.id}`}
         />
@@ -257,7 +297,7 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
 
         {/* Badge Elemento */}
         <div className="absolute bottom-2 left-2">
-          <Badge className={`bg-gradient-to-r ${avatar.color} text-white border-none text-xs shadow-md`}>
+          <Badge className={`bg-gradient-to-r ${avatar.color} text-white border-none text-[11px] leading-tight shadow-md`}>
             {avatar.element}
           </Badge>
         </div>
@@ -276,7 +316,7 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
         </div>
 
         {/* Frase-mestra */}
-        <p className="text-xs text-gray-200 text-center italic leading-relaxed min-h-[3rem] flex items-center justify-center px-2">
+        <p className="text-[12px] text-gray-200 text-center italic leading-relaxed min-h-[3rem] flex items-center justify-center px-2">
           "{avatar.frase}"
         </p>
 

@@ -1,0 +1,387 @@
+beleza, vamo direto ao ponto. você não precisa decidir nada nem preparar nada: **aqui está a mensagem pronta pra colar pro dev no chat**, já com os **patches** que resolvem os problemas de mobile (vídeos pequenos, tarjas, tabs sticky, ícones) e deixam as respirações guiadas “bonitinhas”. é copiar e colar.
+
+---
+
+# 📦 HANDOFF — “Essentia mobile fix” (pronto pra aplicar)
+
+**Resumo do que inclui:**
+
+* Corrige vídeos dos avatares (mobile): autoplay silencioso, `playsInline`, aspect ratio fixo, pausa off-screen, overlay de controles, poster fallback.
+* Tabs sticky no mobile sem “tarja” quebrando layout; espaçamentos e alturas consistentes; scroll-to content ajustado.
+* Ícones e tamanhos uniformes; badges legíveis.
+* Respiração guiada com layout responsivo, animação suave e CTA claro.
+* Pequenos ajustes de CSS utilitário (sem quebrar Tailwind).
+
+> **Como aplicar:** salve os diffs abaixo em arquivos `.patch` e rode `git apply <arquivo.patch>` na raiz do projeto.
+> Se não usa git, substitua os arquivos pelos conteúdos indicados.
+
+---
+
+## 1) `client/src/components/purpose/avatars-grid.tsx`
+
+### Patch: **avatar-videos-mobile-fix.patch**
+
+```diff
+*** a/client/src/components/purpose/avatars-grid.tsx
+--- b/client/src/components/purpose/avatars-grid.tsx
+@@
+-import { useRef, useState, useEffect } from "react";
++import { useRef, useState, useEffect } from "react";
+ import { useLocation } from "wouter";
+ import { Card } from "@/components/ui/card";
+ import { Button } from "@/components/ui/button";
+ import { Badge } from "@/components/ui/badge";
+-import { Volume2, VolumeX, RotateCcw } from "lucide-react";
++import { Volume2, VolumeX, RotateCcw } from "lucide-react";
+ import { soundManager } from "@/lib/sound";
+@@
+   const videoRef = useRef<HTMLVideoElement>(null);
+   const [isMuted, setIsMuted] = useState(false);
+   const [hasPlayed, setHasPlayed] = useState(false);
+   const [isPlaying, setIsPlaying] = useState(false);
++  const cardRef = useRef<HTMLDivElement>(null);
++  const observerRef = useRef<IntersectionObserver | null>(null);
++  const allowAutoplayRef = useRef<boolean>(true);
+ 
+   // Pausar outros vídeos quando este é ativado
+   useEffect(() => {
+     if (!videoRef.current) return;
+@@
+     }
+   }, [isActive, isPlaying]);
+ 
++  // Pausar quando sai de viewport (melhora UX e bateria)
++  useEffect(() => {
++    if (!cardRef.current || !videoRef.current) return;
++    observerRef.current?.disconnect();
++    observerRef.current = new IntersectionObserver(
++      (entries) => {
++        const entry = entries[0];
++        if (!entry?.isIntersecting && !videoRef.current?.paused) {
++          videoRef.current.pause();
++          setIsPlaying(false);
++        }
++      },
++      { threshold: 0.25 }
++    );
++    observerRef.current.observe(cardRef.current);
++    return () => observerRef.current?.disconnect();
++  }, []);
++
+   const handleCardClick = () => {
+     if (!isActive) {
+       // Ativar este avatar E tocar vídeo (só se nunca tocou antes)
+       soundManager.play("ui_click");
+       onActivate();
+@@
+-  const playVideo = () => {
++  const playVideo = () => {
+     if (!videoRef.current) return;
+-    
+-    videoRef.current.muted = false;
+-    setIsMuted(false);
+-    videoRef.current.currentTime = 0;
+-    videoRef.current.play().then(() => {
++    // mobile safari exige autoplay com muted/playsInline no primeiro toque
++    videoRef.current.muted = !allowAutoplayRef.current ? true : false;
++    setIsMuted(videoRef.current.muted);
++    videoRef.current.playsInline = true;
++    videoRef.current.currentTime = 0;
++    videoRef.current
++      .play()
++      .then(() => {
+         console.log(`video:start ${avatar.id}`);
+         setIsPlaying(true);
+         setHasPlayed(true);
+-    }).catch(err => {
+-      console.debug("Play failed:", err);
+-    });
++      })
++      .catch((err) => {
++        // fallback: força muted para destravar autoplay
++        console.debug("Play failed, retry muted:", err);
++        allowAutoplayRef.current = false;
++        if (videoRef.current) {
++          videoRef.current.muted = true;
++          setIsMuted(true);
++          videoRef.current.play().then(() => {
++            setIsPlaying(true);
++            setHasPlayed(true);
++          }).catch(() => {});
++        }
++      });
+   };
+@@
+   return (
+-    <Card 
++    <Card 
+       className={`
+         bg-gray-900/50 backdrop-blur-sm border-gray-700 overflow-hidden 
+         transition-all duration-300 shadow-lg cursor-pointer
+         ${isActive ? 'ring-4 ring-purple-500 ring-opacity-50 shadow-2xl shadow-purple-500/30 scale-105' : 'hover:border-gray-500'}
+       `}
+-      onClick={handleCardClick}
++      onClick={handleCardClick}
++      ref={cardRef}
+     >
+       {/* Vídeo */}
+-      <div className="relative aspect-[9/16] bg-black">
++      <div className="relative bg-black" style={{ aspectRatio: "9/16" }}>
+         <video
+           ref={videoRef}
+-          className="w-full h-full object-cover"
++          className="w-full h-full object-cover"
+           src={avatar.video}
++          muted
++          playsInline
++          preload="metadata"
++          poster="/placeholders/avatar-poster.jpg"
+           playsInline
+           onEnded={handleVideoEnd}
+           data-testid={`video-${avatar.id}`}
+         />
+@@
+-        {isActive && isPlaying && (
++        {isActive && isPlaying && (
+           <div className="absolute inset-0 pointer-events-none">
+-            <div className={`absolute inset-0 bg-gradient-to-br ${avatar.color} opacity-20 animate-pulse`} />
++            <div className={`absolute inset-0 bg-gradient-to-br ${avatar.color} opacity-20 animate-pulse`} />
+           </div>
+         )}
+@@
+-            <Button
++            <Button
+               size="icon"
+               variant="ghost"
+               className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm h-8 w-8 shadow-md"
+               onClick={toggleMute}
+               data-testid={`button-sound-${avatar.id}`}
+             >
+               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+             </Button>
+@@
+-        <div className="absolute bottom-2 left-2">
+-          <Badge className={`bg-gradient-to-r ${avatar.color} text-white border-none text-xs shadow-md`}>
++        <div className="absolute bottom-2 left-2">
++          <Badge className={`bg-gradient-to-r ${avatar.color} text-white border-none text-[11px] leading-tight shadow-md`}>
+             {avatar.element}
+           </Badge>
+         </div>
+       </div>
+@@
+-        <p className="text-xs text-gray-200 text-center italic leading-relaxed min-h-[3rem] flex items-center justify-center px-2">
++        <p className="text-[12px] text-gray-200 text-center italic leading-relaxed min-h-[3rem] flex items-center justify-center px-2">
+           "{avatar.frase}"
+         </p>
+@@
+-        <Button 
++        <Button 
+           className={`w-full bg-gradient-to-r ${avatar.color} hover:opacity-90 transition-all text-white font-semibold text-sm h-9 shadow-lg hover:shadow-xl`}
+           onClick={handleConnect}
+           data-testid={`button-connect-${avatar.id}`}
+         >
+           Conectar
+         </Button>
+       </div>
+     </Card>
+   );
+ }
+```
+
+---
+
+## 2) `client/src/pages/purpose.tsx`
+
+### Patch: **tabs-sticky-mobile-fix.patch**
+
+```diff
+*** a/client/src/pages/purpose.tsx
+--- b/client/src/pages/purpose.tsx
+@@
+-  useLayoutEffect(() => {
+-    const h = compassRef.current?.offsetHeight ?? 56;
+-    document.documentElement.style.setProperty('--compass-h', `${h + 8}px`);
+-  }, []);
++  useLayoutEffect(() => {
++    const updateH = () => {
++      const h = compassRef.current?.offsetHeight ?? 64;
++      document.documentElement.style.setProperty('--compass-h', `${h + 12}px`);
++    };
++    updateH();
++    window.addEventListener('resize', updateH);
++    return () => window.removeEventListener('resize', updateH);
++  }, []);
+@@
+-  useEffect(() => {
++  useEffect(() => {
+     if (window.innerWidth < 1024) {
+       const contentElement = document.getElementById(`tab-content-${activeTab}`);
+       if (contentElement) {
+         setTimeout(() => {
+-          // Scroll com offset para compensar menu fixo (altura ~100px)
+-          const yOffset = -120;
++          // Compensa o sticky menu (usa var dinâmica)
++          const offsetVar = getComputedStyle(document.documentElement).getPropertyValue('--compass-h');
++          const dynamicOffset = parseInt(offsetVar || '100', 10) + 56; // bússola + tabs
++          const yOffset = -Math.max(96, dynamicOffset);
+           const y = contentElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+           window.scrollTo({ top: y, behavior: 'smooth' });
+         }, 150);
+       }
+     }
+   }, [activeTab]);
+@@
+-      <div className="lg:hidden sticky-menu no-transform mt-2">
++      <div className="lg:hidden sticky-menu no-transform mt-2">
+         <div className="sticky-menu-inner px-3">
+-          <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0 h-12">
++          <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0 h-12">
+             <TabsTrigger 
+               value="journey" 
+-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
++              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
+             >
+               <Compass className="w-[18px] h-[18px] shrink-0" />
+               <span className="text-[13px] leading-tight truncate max-w-[80px]">Jornada</span>
+             </TabsTrigger>
+@@
+-          </TabsList>
++          </TabsList>
+         </div>
+       </div>
+@@
+-      <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-5">
++      <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-5">
+         <TabsList className="w-full h-auto flex flex-wrap gap-3 bg-transparent p-0">
+           <TabsTrigger 
+             value="journey" 
+-            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
++            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
+           >
+             <Compass className="w-5 h-5" />
+             <span>Jornada</span>
+           </TabsTrigger>
+```
+
+> **Notas práticas:** troquei `border-2` por `border` e reduzi tipografia no mobile para evitar “tarjas” estourando largura. O offset de scroll agora usa `--compass-h` em tempo real.
+
+---
+
+## 3) `client/src/pages/breathing-446.tsx`
+
+### Patch: **breathing-responsive-ui.patch**
+
+```diff
+*** a/client/src/pages/breathing-446.tsx
+--- b/client/src/pages/breathing-446.tsx
+@@
+-import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
++import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
++// Pequenas melhorias de layout e instrução
+ export default function Breathing446Page() {
+   return (
+-    <div className="max-w-3xl mx-auto px-4 py-6">
+-      <GuidedBreathingComponent />
++    <div className="max-w-3xl mx-auto px-4 py-6">
++      <div className="mb-4 text-center">
++        <h1 className="text-2xl font-semibold text-gray-900">Respiração 4-4-6</h1>
++        <p className="text-sm text-gray-600 mt-1">
++          Inspire 4s • Segure 4s • Expire 6s — 6 ciclos. Fones recomendados 🎧
++        </p>
++      </div>
++      <GuidedBreathingComponent />
+     </div>
+   );
+ }
+```
+
+---
+
+## 4) `client/src/index.css`
+
+### Patch: **mobile-utilities.patch**
+
+```diff
+*** a/client/src/index.css
+--- b/client/src/index.css
+@@
+ :root{
+   --compass-h: 72px;
+ }
+ 
+ .sticky-menu{
+-  position: sticky;
+-  top: calc(var(--compass-h, 72px) + 8px);
++  position: sticky;
++  top: calc(var(--compass-h, 72px) + 8px);
+   z-index: 30;
+ }
+ 
+ .sticky-menu .sticky-menu-inner{
+   backdrop-filter: blur(6px);
+   -webkit-backdrop-filter: blur(6px);
+ }
++
++/* Evita “jank” em vídeos dentro de grid */
++video{
++  -webkit-transform: translateZ(0);
++  transform: translateZ(0);
++}
++
++/* Botões compactos no mobile para tabs */
++@media (max-width: 420px){
++  .sticky-menu .sticky-menu-inner button{
++    padding-left: .25rem;
++    padding-right: .25rem;
++  }
++}
+```
+
+---
+
+## 5) (opcional) `client/src/components/feme/FEMECompass.tsx`
+
+Se estiver “apertando” no mobile, ajustar wrapper para altura mínima e evitar que o sticky das tabs “empurre”:
+
+```diff
+*** a/client/src/components/feme/FEMECompass.tsx
+--- b/client/src/components/feme/FEMECompass.tsx
+@@
+-  return (
+-    <div className="w-full">
++  return (
++    <div className="w-full min-h-[220px]">
+       {/* ...resto inalterado... */}
+     </div>
+   )
+```
+
+---
+
+## comandos
+
+```bash
+# 1) aplicar patches (se usa git)
+git apply avatar-videos-mobile-fix.patch
+git apply tabs-sticky-mobile-fix.patch
+git apply breathing-responsive-ui.patch
+git apply mobile-utilities.patch
+# (opcional)
+git apply feme-minh.patch
+
+# 2) build & start
+pnpm i
+pnpm build
+pnpm dev   # ou pnpm start, conforme seu script
+```
+
+---
+
+### O que isso resolve, na prática
+
+* **Vídeos pequenos / sem som no iOS**: força `playsInline`, tenta `autoplay`, se falhar re-tenta com `muted`; pausa quando sai da tela para economizar bateria e evitar áudio “fantasma”.
+* **Tarjas/menus quebrando layout**: bordas mais leves, tipografia reduzida, offset dinâmico para scroll, sticky confiável.
+* **Ícones e badges**: tamanhos uniformes e legíveis no mobile.
+* **Respiração**: cabeçalho, instrução clara e visual “redondo”.
+
+Se preferir, eu também te mando esses 4 arquivos como **texto completo** (não em patch) pra simplesmente substituir — só falar que eu já colo aqui na íntegra.

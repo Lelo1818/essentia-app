@@ -1,0 +1,267 @@
+boa. se você clicar em copiar **dessa minha próxima caixa única**, ele copia tudo — inteirinho — e você cola no chat do cara de uma vez. pra evitar qualquer risco de cortar, juntei tudo num bloco só.
+
+cole **exatamente** o texto abaixo pro dev:
+
+```
+[HANDOFF] Essentia — mobile fix pronto para aplicar
+
+Resumo:
+- Vídeos dos avatares corrigidos no mobile (autoplay/playsInline/muted fallback, pausa off-screen, poster).
+- Tabs sticky no mobile sem “tarjas”; tipografia/bordas ajustadas; scroll com offset dinâmico.
+- Ícones/badges uniformes e legíveis.
+- Respiração 4-4-6 com header/instrução e layout responsivo.
+- CSS utilitário leve, sem quebrar Tailwind.
+
+Como aplicar (via patch):
+1) Salvar cada trecho abaixo como arquivo .patch na raiz do repo
+2) Executar:  git apply <nome-do-patch>
+3) Instalar & rodar:  pnpm i && pnpm build && pnpm dev
+
+— avatar-videos-mobile-fix.patch —
+*** a/client/src/components/purpose/avatars-grid.tsx
+--- b/client/src/components/purpose/avatars-grid.tsx
+@@
+ import { useRef, useState, useEffect } from "react";
+ import { useLocation } from "wouter";
+ import { Card } from "@/components/ui/card";
+ import { Button } from "@/components/ui/button";
+ import { Badge } from "@/components/ui/badge";
+ import { Volume2, VolumeX, RotateCcw } from "lucide-react";
+ import { soundManager } from "@/lib/sound";
+@@
+   const videoRef = useRef<HTMLVideoElement>(null);
+   const [isMuted, setIsMuted] = useState(false);
+   const [hasPlayed, setHasPlayed] = useState(false);
+   const [isPlaying, setIsPlaying] = useState(false);
++  const cardRef = useRef<HTMLDivElement>(null);
++  const observerRef = useRef<IntersectionObserver | null>(null);
++  const allowAutoplayRef = useRef<boolean>(true);
+@@
+   useEffect(() => {
+     if (!videoRef.current) return;
+     if (!isActive && isPlaying) {
+       videoRef.current.pause();
+       videoRef.current.currentTime = 0;
+       setIsPlaying(false);
+     }
+   }, [isActive, isPlaying]);
++
++  // Pausa quando sai da viewport
++  useEffect(() => {
++    if (!cardRef.current || !videoRef.current) return;
++    observerRef.current?.disconnect();
++    observerRef.current = new IntersectionObserver((entries) => {
++      const entry = entries[0];
++      if (!entry?.isIntersecting && !videoRef.current?.paused) {
++        videoRef.current.pause();
++        setIsPlaying(false);
++      }
++    }, { threshold: 0.25 });
++    observerRef.current.observe(cardRef.current);
++    return () => observerRef.current?.disconnect();
++  }, []);
+@@
+   const playVideo = () => {
+     if (!videoRef.current) return;
+-    videoRef.current.muted = false;
+-    setIsMuted(false);
++    videoRef.current.muted = !allowAutoplayRef.current ? true : false;
++    setIsMuted(videoRef.current.muted);
++    videoRef.current.playsInline = true;
+     videoRef.current.currentTime = 0;
+-    videoRef.current.play().then(() => {
++    videoRef.current.play().then(() => {
+       console.log(`video:start ${avatar.id}`);
+       setIsPlaying(true);
+       setHasPlayed(true);
+-    }).catch(err => {
+-      console.debug("Play failed:", err);
+-    });
++    }).catch((err) => {
++      console.debug("Play failed, retry muted:", err);
++      allowAutoplayRef.current = false;
++      if (videoRef.current) {
++        videoRef.current.muted = true;
++        setIsMuted(true);
++        videoRef.current.play().then(() => {
++          setIsPlaying(true);
++          setHasPlayed(true);
++        }).catch(() => {});
++      }
++    });
+   };
+@@
+-    <Card 
++    <Card 
+       className={`
+         bg-gray-900/50 backdrop-blur-sm border-gray-700 overflow-hidden 
+         transition-all duration-300 shadow-lg cursor-pointer
+         ${isActive ? 'ring-4 ring-purple-500 ring-opacity-50 shadow-2xl shadow-purple-500/30 scale-105' : 'hover:border-gray-500'}
+       `}
+-      onClick={handleCardClick}
++      onClick={handleCardClick}
++      ref={cardRef}
+     >
+-      <div className="relative aspect-[9/16] bg-black">
++      <div className="relative bg-black" style={{ aspectRatio: "9/16" }}>
+         <video
+           ref={videoRef}
+           className="w-full h-full object-cover"
+           src={avatar.video}
++          muted
++          playsInline
++          preload="metadata"
++          poster="/placeholders/avatar-poster.jpg"
+           playsInline
+           onEnded={handleVideoEnd}
+           data-testid={`video-${avatar.id}`}
+         />
+@@
+-          <Badge className={`bg-gradient-to-r ${avatar.color} text-white border-none text-xs shadow-md`}>
++          <Badge className={`bg-gradient-to-r ${avatar.color} text-white border-none text-[11px] leading-tight shadow-md`}>
+             {avatar.element}
+           </Badge>
+         </div>
+       </div>
+@@
+-        <p className="text-xs text-gray-200 text-center italic leading-relaxed min-h-[3rem] flex items-center justify-center px-2">
++        <p className="text-[12px] text-gray-200 text-center italic leading-relaxed min-h-[3rem] flex items-center justify-center px-2">
+           "{avatar.frase}"
+         </p>
+```
+
+— tabs-sticky-mobile-fix.patch —
+*** a/client/src/pages/purpose.tsx
+--- b/client/src/pages/purpose.tsx
+@@
+useLayoutEffect(() => {
+
+* const h = compassRef.current?.offsetHeight ?? 56;
+* document.documentElement.style.setProperty('--compass-h', `${h + 8}px`);
+
+- const updateH = () => {
+- ```
+   const h = compassRef.current?.offsetHeight ?? 64;
+  ```
+- ```
+   document.documentElement.style.setProperty('--compass-h', `${h + 12}px`);
+  ```
+- };
+- updateH();
+- window.addEventListener('resize', updateH);
+- return () => window.removeEventListener('resize', updateH);
+  }, []);
+  @@
+  useEffect(() => {
+  if (window.innerWidth < 1024) {
+  const contentElement = document.getElementById(`tab-content-${activeTab}`);
+  if (contentElement) {
+  setTimeout(() => {
+
+* ```
+       const yOffset = -120;
+  ```
+
+- ```
+       const offsetVar = getComputedStyle(document.documentElement).getPropertyValue('--compass-h');
+  ```
+- ```
+       const dynamicOffset = parseInt(offsetVar || '100', 10) + 56;
+  ```
+- ```
+       const yOffset = -Math.max(96, dynamicOffset);
+       const y = contentElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+       window.scrollTo({ top: y, behavior: 'smooth' });
+     }, 150);
+   }
+  ```
+
+  }
+  }, [activeTab]);
+  @@
+
+* ```
+       <TabsTrigger 
+  ```
+
+- ```
+       <TabsTrigger 
+         value="journey" 
+  ```
+
+* ```
+         className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
+  ```
+
+- ```
+         className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[12px] leading-none"
+       >
+  ```
+
+— breathing-responsive-ui.patch —
+*** a/client/src/pages/breathing-446.tsx
+--- b/client/src/pages/breathing-446.tsx
+@@
+import { GuidedBreathingComponent } from "@/components/purpose/guided-breathing";
+export default function Breathing446Page() {
+return ( <div className="max-w-3xl mx-auto px-4 py-6">
+
+* ```
+   <GuidedBreathingComponent />
+  ```
+
+- ```
+   <div className="mb-4 text-center">
+  ```
+- ```
+     <h1 className="text-2xl font-semibold text-gray-900">Respiração 4-4-6</h1>
+  ```
+- ```
+     <p className="text-sm text-gray-600 mt-1">
+  ```
+- ```
+       Inspire 4s • Segure 4s • Expire 6s — 6 ciclos. Fones recomendados 🎧
+  ```
+- ```
+     </p>
+  ```
+- ```
+   </div>
+  ```
+- ```
+   <GuidedBreathingComponent />
+  ```
+
+     </div>
+   );
+
+}
+
+— mobile-utilities.patch —
+*** a/client/src/index.css
+--- b/client/src/index.css
+@@
+:root{
+--compass-h: 72px;
+}
+.sticky-menu{
+position: sticky;
+top: calc(var(--compass-h, 72px) + 8px);
+z-index: 30;
+}
+.sticky-menu .sticky-menu-inner{
+backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+}
++video{ -webkit-transform: translateZ(0); transform: translateZ(0); }
++@media (max-width: 420px){
+
+* .sticky-menu .sticky-menu-inner button{ padding-left:.25rem; padding-right:.25rem; }
+  +}
+
+```
+
+Se preferir substituir arquivos ao invés de patch, me avisa e eu envio cada arquivo completo.
+```
+
+se seu chat tiver limite e cortar (raro, mas acontece), é só mandar em duas mensagens: primeiro o “Resumo/Como aplicar” + **um** patch, depois os demais patches.
