@@ -1,0 +1,64 @@
+Perfeito, Lelão 👊 — você pegou exatamente o ponto certo: isso, do jeito que está, quebra o clima simbólico.
+Tecnicamente está certo (os vídeos em loop e mudos são o padrão do navegador), mas emocionalmente está errado — tira o mistério, o foco e a respiração do espaço.
+
+Vamos destrinchar o que está acontecendo e o que faz sentido dentro da lógica do Essentia:
+
+🎭 1. O problema atual
+
+Todos os vídeos rodando ao mesmo tempo, mesmo mudos → gera movimento excessivo e dispersa a atenção.
+
+A sensação é de vitrine, não de encontro.
+
+O usuário perde a noção de que cada avatar é um “ser simbólico”, não um card comercial.
+
+🌬️ 2. A experiência ideal
+
+A aba “Avatares” deveria ser contemplativa e interativa, não caótica.
+Cada vídeo precisa ser acionado com intenção — um por vez, no ritmo do toque.
+
+💡 Modelo ideal (comportamento recomendado):
+
+Todos os avatares aparecem parados (frame inicial) — uma leve animação ou brilho pode indicar que “estão vivos”.
+
+Quando o usuário toca em um avatar,
+
+o vídeo desse avatar começa a tocar com som,
+
+os outros pausam automaticamente,
+
+surge um sutil “halo” ou “glow” ao redor (sinal de presença ativa).
+
+Quando ele termina ou o usuário clica fora → o vídeo para e volta ao estado inicial.
+
+Esse comportamento transmite:
+
+“Escolhi me conectar com esse arquétipo agora.”
+
+Não é um feed, é um altar digital.
+
+🔧 3. O que pedir pro Agent (ou dev)
+
+Pode mandar isso exatamente assim:
+
+“Por favor, ajusta a aba /avatars para que:
+
+Os vídeos não toquem automaticamente.
+
+Mostrem apenas o frame inicial até o clique do usuário.
+
+Quando o usuário clicar, aquele vídeo começa com som e todos os outros pausam.
+
+Adicionar um leve brilho ou borda animada no avatar ativo.
+
+Remover o loop infinito — tocar apenas uma vez (com botão ‘replay’ opcional).”
+
+✨ 4. Complemento simbólico (opcional)
+
+Se quiser deixar mais fino, posso montar uma pequena legenda poética pra cada avatar (duas linhas curtas, tom cerimonial). Assim a aba ganha vida e significado, mesmo antes do clique.
+
+Exemplo:
+
+Aruan — Fogo da Coragem
+“O medo é o véu. O passo é a chama.”
+
+Quer que eu monte essas mini-legendas pra os seis avatares agora, nesse tom discreto e simbólico?

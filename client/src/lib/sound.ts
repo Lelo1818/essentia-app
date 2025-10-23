@@ -19,6 +19,7 @@ class SoundManager {
   async initialize() {
     if (this.initialized) return;
 
+    // Try to load from files first
     const soundFiles: Record<SoundName, string> = {
       ui_click: '/audio/ui_click.mp3',
       ui_success: '/audio/ui_success.mp3',
@@ -35,6 +36,13 @@ class SoundManager {
         const audio = new Audio(path);
         audio.volume = 0.3;
         audio.preload = 'auto';
+        
+        // Test if file actually loads
+        audio.addEventListener('error', () => {
+          console.debug(`Audio file ${name} not found, using Web Audio fallback`);
+          this.sounds.delete(name);
+        }, { once: true });
+        
         this.sounds.set(name, audio);
       } catch (error) {
         console.warn(`Failed to load sound: ${name}`, error);
@@ -42,6 +50,36 @@ class SoundManager {
     }
 
     this.initialized = true;
+  }
+
+  // Generate sound using Web Audio API as fallback
+  private generateSound(type: 'click' | 'success') {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      if (type === 'click') {
+        // Quick tick
+        oscillator.frequency.value = 800;
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.08);
+      } else {
+        // Bell-like success
+        oscillator.frequency.value = 523.25; // C5
+        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      }
+    } catch (error) {
+      console.debug('Web Audio API not available:', error);
+    }
   }
 
   play(name: SoundName) {
@@ -58,7 +96,13 @@ class SoundManager {
     if (sound) {
       sound.currentTime = 0;
       sound.play().catch(err => {
-        console.debug('Sound play failed (autoplay policy):', err);
+        console.debug('Sound play failed, using Web Audio fallback:', err);
+        // Fallback to Web Audio API
+        if (name === 'ui_click') {
+          this.generateSound('click');
+        } else if (name === 'ui_success') {
+          this.generateSound('success');
+        }
       });
       this.lastPlayTime.set(name, now);
 
@@ -66,6 +110,14 @@ class SoundManager {
       if (name === 'ui_click') {
         this.trackEvent('ui_click_played');
       }
+    } else {
+      // No sound file, use Web Audio directly
+      if (name === 'ui_click') {
+        this.generateSound('click');
+      } else if (name === 'ui_success') {
+        this.generateSound('success');
+      }
+      this.lastPlayTime.set(name, now);
     }
   }
 

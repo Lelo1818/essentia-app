@@ -135,7 +135,7 @@ export function MediaPlayer({
     soundManager.play('ui_click');
     
     if (cta === 'feme_checkin') {
-      window.location.href = '/purpose';
+      window.location.href = '/purpose#avatars';
     }
   };
 

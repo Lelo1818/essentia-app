@@ -29,18 +29,24 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 
 ## Recent Changes (October 2025)
 
-### Sistema dos 6 Avatares - COMPLETO (Outubro 23, 2025) 🌟
--   **Página Principal**: `/avatars` - Grid interativo com os 6 guardiões da jornada
--   **6 Vídeos HeyGen Recebidos**:
-    -   Aruan - O Guardião do Propósito (Espírito) - roxo/índigo
-    -   Sofia - A Luz da Clareza (Mental) - azul/ciano
-    -   Nara - A Cura da Terra (Físico) - verde/esmeralda
-    -   Kael - O Sopro da Sabedoria (Energético) - âmbar/laranja
-    -   Amaya - A Voz da Intuição (Espiritual) - violeta/roxo
-    -   Aruan - O Fogo da Coragem (Transformação) - vermelho/laranja
--   **UX**: Grid responsivo (1/2/3 colunas), modal de vídeo fullscreen, tracking de eventos
--   **Próximos Passos**: Integrar cada avatar em suas experiências específicas (Sofia no AI Therapist, Nara no FEME Físico, Kael em Breath, Amaya em Portal Intuição)
--   **Arquivos**: client/src/pages/avatars.tsx, AVATARS_SYSTEM.md (documentação completa)
+### Sistema dos 6 Avatares - COMPLETO + UX Melhorias (Outubro 23, 2025) 🌟
+-   **Página Principal**: Aba "Avatar" em `/purpose#avatars` - Grid interativo com os 6 guardiões
+-   **6 Vídeos HeyGen Integrados**:
+    -   Aruan - O Guardião do Propósito (Espírito) - roxo/índigo → /journey
+    -   Sofia - A Luz da Clareza (Mental) - azul/ciano → /purpose#therapist (Seu Guru)
+    -   Nara - A Cura da Terra (Físico) - verde/esmeralda → /purpose#feme
+    -   Kael - O Sopro da Sabedoria (Energético) - âmbar/laranja → /breath
+    -   Amaya - A Voz da Intuição (Espiritual) - violeta/roxo → /portals?open=intuicao
+    -   Aruan - O Fogo da Coragem (Transformação) - vermelho/laranja → /breathing-446
+-   **UX Implementadas (23/10)**:
+    -   ✅ Som ativado após 1º toque do usuário (global)
+    -   ✅ Microsons de feedback via Web Audio API (clique, sucesso) com fallback sintetizado
+    -   ✅ Botão "Conectar" funcional - navega para experiência específica de cada guardião
+    -   ✅ Texto visível (background cinza escuro, cards estilizados)
+    -   ✅ Amaya abre apenas Portal da Intuição (não todos os portais)
+    -   ✅ Retorno após vídeo completo vai para /purpose#avatars (não dashboard)
+-   **Sistema de Som**: Web Audio API com fallback - gera sons sintetizados quando arquivos MP3 falham
+-   **Arquivos**: client/src/components/purpose/avatars-grid.tsx, client/src/lib/sound.ts, AVATARS_SYSTEM.md
 
 ## Recent Changes (October 2025)
 
@@ -115,12 +121,13 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 -   **Arquivos modificados**: purpose.tsx, App-purpose.tsx, ai-therapist.tsx, MediaPlayer.tsx, video-portal.tsx.
 -   **⚠️ PENDENTE - Cache Mobile**: Código funcionando em desktop, mas iPhone do usuário com cache persistente/PWA impedindo atualizações. Aguardando teste em outro device para confirmar correções.
 
-### Known Issues (Outubro 22, 2025)
+### Known Issues (Outubro 23, 2025)
 -   **CRITICAL - Mobile não carrega atualizações**: Testado em 2 iPhones diferentes (usuário + esposa), nenhuma atualização aparece. Não é cache de dispositivo específico - é problema estrutural no código ou deploy.
 -   **Menu Scroll Mobile**: Implementado com offset, mas não funciona em mobile.
 -   **Vídeos Tamanho Mobile**: Aumentados para lg:, mas não aplicados em mobile.
 -   **Histórico do Guru**: Backend 100% implementado (endpoints, storage, schema), mas FALTA frontend - componente AI Therapist ainda não integrado com os endpoints.
 -   **Bússola de Coerência**: Sistema científico implementado em /coherence mas não integrado com FEME Compass existente em /purpose.
+-   **Avatar 3D**: Usuário mencionou necessidade de alterar avatar 3D - aguardando especificação de qual avatar e como alterar.
 
 ### Documentation
 -   **ARUAN_VIDEOS_GUIDE.md**: Guia completo de todos os vídeos Aruan com especificações técnicas, uso no app, e status de integração.

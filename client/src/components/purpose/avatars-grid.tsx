@@ -74,7 +74,7 @@ const avatars: Avatar[] = [
     color: "from-violet-600 to-purple-500",
     video: amayaVideo,
     frase: "A intuição sussurra. O medo grita. Escolha quem ouvir.",
-    link: "/portals"
+    link: "/portals?open=intuicao"
   },
   {
     id: "aruan-fogo",

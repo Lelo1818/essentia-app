@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, Sparkles, Heart, RefreshCw, Eye } from 'lucide-react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,15 @@ type PortalType = 'clareza' | 'gratidao' | 'recomeco' | 'intuicao' | null;
 
 export default function PortalsPage() {
   const [activePortal, setActivePortal] = useState<PortalType>(null);
+
+  // Auto-open portal from URL params
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const openPortal = params.get('open') as PortalType;
+    if (openPortal && ['clareza', 'gratidao', 'recomeco', 'intuicao'].includes(openPortal)) {
+      setActivePortal(openPortal);
+    }
+  }, []);
 
   const portals = [
     {

@@ -78,9 +78,9 @@ export function IntuitionPortal({ onClose }: IntuitionPortalProps) {
           }),
         });
 
-        // Close after 2 seconds
+        // Close and return to avatars tab after 2 seconds
         setTimeout(() => {
-          onClose();
+          window.location.href = '/purpose#avatars';
         }, 2000);
       }
     } catch (error) {
