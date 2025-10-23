@@ -29,6 +29,21 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 
 ## Recent Changes (October 2025)
 
+### Sistema dos 6 Avatares - COMPLETO (Outubro 23, 2025) 🌟
+-   **Página Principal**: `/avatars` - Grid interativo com os 6 guardiões da jornada
+-   **6 Vídeos HeyGen Recebidos**:
+    -   Aruan - O Guardião do Propósito (Espírito) - roxo/índigo
+    -   Sofia - A Luz da Clareza (Mental) - azul/ciano
+    -   Nara - A Cura da Terra (Físico) - verde/esmeralda
+    -   Kael - O Sopro da Sabedoria (Energético) - âmbar/laranja
+    -   Amaya - A Voz da Intuição (Espiritual) - violeta/roxo
+    -   Aruan - O Fogo da Coragem (Transformação) - vermelho/laranja
+-   **UX**: Grid responsivo (1/2/3 colunas), modal de vídeo fullscreen, tracking de eventos
+-   **Próximos Passos**: Integrar cada avatar em suas experiências específicas (Sofia no AI Therapist, Nara no FEME Físico, Kael em Breath, Amaya em Portal Intuição)
+-   **Arquivos**: client/src/pages/avatars.tsx, AVATARS_SYSTEM.md (documentação completa)
+
+## Recent Changes (October 2025)
+
 ### Aruan Avatar System - MVP Completo
 -   **AruanGuidance Component**: Sistema de guia pós-exercício onde Aruan aparece após completar rituais/respirações sugerindo próximo passo. Este é o "motor" do app - conecta experiências e guia o usuário na jornada.
 -   **6 Vídeos HeyGen Integrados**:
@@ -109,6 +124,7 @@ The ecosystem comprises five main applications, sharing common infrastructure:
 
 ### Documentation
 -   **ARUAN_VIDEOS_GUIDE.md**: Guia completo de todos os vídeos Aruan com especificações técnicas, uso no app, e status de integração.
+-   **AVATARS_SYSTEM.md**: Documentação completa do sistema dos 6 avatares, incluindo filosofia, simbologia, integração técnica e roadmap.
 
 ## External Dependencies
 -   **Brazilian Market Integrations**: Pelando, Méliuz, Americanas, and readiness for Open Banking APIs.
