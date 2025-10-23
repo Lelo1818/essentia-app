@@ -52,7 +52,7 @@ export const queryClient = new QueryClient({
     queries: {
       queryFn: ({ queryKey }) => {
         const url = Array.isArray(queryKey) ? queryKey[0] : queryKey;
-        return fetch(url).then(res => {
+        return fetch(url, { credentials: 'include' }).then(res => {
           if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
           return res.json();
         });

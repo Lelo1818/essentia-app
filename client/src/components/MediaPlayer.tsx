@@ -107,6 +107,12 @@ export function MediaPlayer({
         setHasReportedQuartile(prev => ({ ...prev, complete: true }));
         soundManager.play('ui_success');
         setShowCTA(true);
+        
+        // Redirecionar automaticamente para a aba Avatar após delay
+        setTimeout(() => {
+          window.location.href = '/purpose#avatars';
+        }, 3000);
+        
         onComplete?.();
       }
     };

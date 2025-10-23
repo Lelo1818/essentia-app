@@ -326,48 +326,7 @@ export default function Purpose() {
       <QuickNavButton />
       
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-      <div className="max-w-7xl mx-auto px-3 py-4 lg:p-6 space-y-4 lg:space-y-6">
-      {/* Header */}
-      <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
-        <CardHeader className="p-4 lg:p-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-            <div className="flex-1">
-              <CardTitle className="flex items-center text-xl lg:text-2xl">
-                <Compass className="w-5 h-5 lg:w-6 lg:h-6 mr-2 lg:mr-3 text-purple-600 shrink-0" />
-                <span className="break-words">Jornada de Propósito</span>
-              </CardTitle>
-              <p className="text-gray-600 mt-2 text-sm lg:text-base">
-                Bem-vindo de volta, Lelão. Sua clareza sobre propósito cresceu {userJourney.clarity}% em {userJourney.daysActive} dias.
-              </p>
-            </div>
-            <Badge className="bg-purple-100 text-purple-700 px-3 py-1 lg:px-4 lg:py-2 text-xs lg:text-sm shrink-0 self-start lg:self-auto">
-              {userJourney.stage}
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="p-4 lg:p-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-            <div className="text-center">
-              <div className="text-2xl lg:text-3xl font-bold text-purple-600">{userJourney.clarity}%</div>
-              <div className="text-xs lg:text-sm text-gray-600">Clareza</div>
-              <Progress value={userJourney.clarity} className="h-2 mt-2" />
-            </div>
-            <div className="text-center">
-              <div className="text-2xl lg:text-3xl font-bold text-blue-600">{userJourney.daysActive}</div>
-              <div className="text-xs lg:text-sm text-gray-600">Dias</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl lg:text-3xl font-bold text-green-600">{userJourney.achievements}</div>
-              <div className="text-xs lg:text-sm text-gray-600">Conquistas</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl lg:text-3xl">🎯</div>
-              <div className="text-xs lg:text-sm text-gray-600 break-words">{userJourney.nextMilestone}</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
+      
       {/* MENU NAVEGAÇÃO - MOBILE/TABLET (FIXO NO TOPO) */}
       <div className="lg:hidden sticky top-0 z-40 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-b-xl shadow-xl border-2 border-purple-400 p-3 mb-4">
         <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0">
@@ -453,6 +412,48 @@ export default function Purpose() {
           </TabsTrigger>
         </TabsList>
       </div>
+
+      <div className="max-w-7xl mx-auto px-3 py-4 lg:p-6 space-y-4 lg:space-y-6">
+      {/* Header */}
+      <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
+        <CardHeader className="p-4 lg:p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+            <div className="flex-1">
+              <CardTitle className="flex items-center text-xl lg:text-2xl">
+                <Compass className="w-5 h-5 lg:w-6 lg:h-6 mr-2 lg:mr-3 text-purple-600 shrink-0" />
+                <span className="break-words">Jornada de Propósito</span>
+              </CardTitle>
+              <p className="text-gray-600 mt-2 text-sm lg:text-base">
+                Bem-vindo de volta, Lelão. Sua clareza sobre propósito cresceu {userJourney.clarity}% em {userJourney.daysActive} dias.
+              </p>
+            </div>
+            <Badge className="bg-purple-100 text-purple-700 px-3 py-1 lg:px-4 lg:py-2 text-xs lg:text-sm shrink-0 self-start lg:self-auto">
+              {userJourney.stage}
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="p-4 lg:p-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl font-bold text-purple-600">{userJourney.clarity}%</div>
+              <div className="text-xs lg:text-sm text-gray-600">Clareza</div>
+              <Progress value={userJourney.clarity} className="h-2 mt-2" />
+            </div>
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl font-bold text-blue-600">{userJourney.daysActive}</div>
+              <div className="text-xs lg:text-sm text-gray-600">Dias</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl font-bold text-green-600">{userJourney.achievements}</div>
+              <div className="text-xs lg:text-sm text-gray-600">Conquistas</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl">🎯</div>
+              <div className="text-xs lg:text-sm text-gray-600 break-words">{userJourney.nextMilestone}</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* FEME COMPASS - BÚSSOLA DE AUTOCONHECIMENTO */}
       <FEMECompassLive onHarmonize={() => setLocation('/breathing-446')} />
