@@ -1,0 +1,128 @@
+**Mensagem para o Agent (Replit) — Correção MOBILE: menu “dançando”, tamanho e seção azul**
+
+> Corrigir agora os 4 pontos abaixo no **/purpose (mobile)**. Sem alterar outras telas.
+>
+> ---
+>
+> ### 1) Ordem e “sticky” do MENU (abaixo da Bússola)
+>
+> **Objetivo:** o menu aparece logo **abaixo da Bússola** e fica **sticky** ao rolar.
+>
+> **Ações:**
+>
+> * Em `client/src/pages/purpose.tsx`, renderizar o `<Menu/>` **logo após** o componente da Bússola.
+> * Criar classe `sticky-menu` e aplicar no wrapper do menu.
+> * Definir CSS com variável para a altura da Bússola.
+>
+> **Código (CSS global ou module):**
+>
+> ```css
+> .sticky-menu { position: sticky; top: var(--compass-h, 12px); z-index: 40; }
+> .sticky-menu-inner {
+>   height: 48px; /* mobile fixo */
+>   display: flex; align-items: center; gap: 8px;
+>   background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
+>   border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
+> }
+> /* evita que ancestral com transform quebre sticky */
+> .no-transform { transform: none !important; }
+> ```
+>
+> **Código (TSX – set da altura da Bússola):**
+>
+> ```tsx
+> // dentro de /purpose
+> const compassRef = useRef<HTMLDivElement>(null);
+> useLayoutEffect(() => {
+>   const h = compassRef.current?.offsetHeight ?? 56;
+>   document.documentElement.style.setProperty('--compass-h', `${h + 8}px`);
+> }, []);
+>
+> <div ref={compassRef}><FEMECompassLive /></div>
+> <div className="sticky-menu no-transform mt-2">
+>   <div className="sticky-menu-inner px-3">
+>     <Menu /> 
+>   </div>
+> </div>
+> ```
+>
+> ---
+>
+> ### 2) Tamanho do MENU (ficando “gigante”)
+>
+> **Objetivo:** padronizar altura e tipografia no mobile para não “crescer”.
+>
+> **Ações:**
+>
+> * No componente do menu, forçar dimensões fixas no mobile.
+>
+> **Código (Tailwind sugerido):**
+>
+> ```tsx
+> <nav className="h-12 min-h-12 max-h-12 w-full text-[13px] leading-none select-none">
+>   <ul className="flex items-center justify-between">
+>     {/* itens: ícone 18px + label truncada */}
+>     <li className="flex items-center gap-1 shrink-0">
+>       <Icon className="w-[18px] h-[18px]" />
+>       <span className="truncate max-w-[88px]">Seu Guru</span>
+>     </li>
+>     {/* ...demais itens */}
+>   </ul>
+> </nav>
+> ```
+>
+> ---
+>
+> ### 3) “Dança” após a faixa azul (“Boa tarde… 7 dias seguidos”)
+>
+> **Causa provável:** reflow por **100vh** no iOS, **auto-resize** de textos e/ou **transform** em ancestrais do sticky.
+>
+> **Correções obrigatórias:**
+>
+> * Trocar `100vh` por **`100dvh`** (ou `100svh`) na página para eliminar variação do URL bar do iOS.
+> * Fixar a **altura da faixa azul** para evitar “crescer/encolher”.
+> * Garantir que nenhum ancestral do menu sticky tenha `transform`, `filter` ou `perspective`.
+>
+> **Código (CSS global):**
+>
+> ```css
+> .page { min-height: 100dvh; overflow-x: hidden; }
+> .hero-blue {
+>   min-height: 64px; /* fixa */
+>   display: flex; align-items: center;
+> }
+> .hero-title { font-size: 16px; line-height: 1.2; }
+> ```
+>
+> **Ajustes TSX (onde a faixa azul é renderizada):**
+>
+> ```tsx
+> <section className="hero-blue px-4">
+>   <div className="hero-title">Boa tarde, continue sua jornada — 7 dias seguidos</div>
+> </section>
+> ```
+>
+> ---
+>
+> ### 4) Evitar “pulo” de layout / jitter
+>
+> **Ações obrigatórias adicionais:**
+>
+> * Remover `animate-*` e `transition-[height]` nessa seção no mobile.
+> * Garantir **largura/altura** em imagens/ícones (`width/height` ou Tailwind `w-[] h-[]`) para evitar CLS.
+> * Remover `overflow: auto` em containers pais — deixar o **scroll no body**.
+>
+> **Checklist (aplicar e confirmar):**
+>
+> * [ ] `min-h: 100dvh` na página.
+> * [ ] `hero-blue` com altura fixa e sem transições.
+> * [ ] `<Menu/>` com `h-12` e ícones `18px`.
+> * [ ] Nenhum ancestral do menu com `transform`.
+> * [ ] Sticky do menu funcionando ao rolar sem “dançar”.
+>
+> **Envie o diff** dos arquivos alterados (`purpose.tsx`, menu component, CSS) e confirme no iPhone que:
+>
+> 1. o menu aparece logo abaixo da Bússola;
+> 2. permanece sticky;
+> 3. não aumenta de tamanho;
+> 4. a página não “dança” após a faixa azul.
