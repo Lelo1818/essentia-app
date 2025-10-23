@@ -36,6 +36,7 @@ import BiometricSensors from "@/components/purpose/biometric-sensors";
 import AITherapist from "@/components/purpose/ai-therapist";
 import { VideoPortal } from "@/components/purpose/video-portal";
 import { FEMECompass } from "@/components/feme/FEMECompass";
+import AvatarsGrid from "@/components/purpose/avatars-grid";
 import { MegaOnboarding, useMegaOnboarding } from "@/components/purpose/mega-onboarding";
 import { SuggestionsHistory } from "@/components/purpose/suggestions-history";
 import { AuditOverlay } from "@/components/purpose/audit-overlay";
@@ -765,16 +766,7 @@ export default function Purpose() {
         </TabsContent>
 
         <TabsContent value="avatar" className="mt-6" id="tab-content-avatar">
-          <div className="grid lg:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-center">Avatar Místico Original</h3>
-              <Avatar3DDisplay />
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-center">Xamã Ancestral - Guia Espiritual</h3>
-              <ShamanAvatar isChanneling={activeTab === "avatar"} />
-            </div>
-          </div>
+          <AvatarsGrid />
         </TabsContent>
 
         <TabsContent value="breathing" className="mt-6" id="tab-content-breathing">
