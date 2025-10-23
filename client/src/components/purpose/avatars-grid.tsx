@@ -1,9 +1,9 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, RotateCcw } from "lucide-react";
 import { soundManager } from "@/lib/sound";
 
 // Import dos vídeos
@@ -22,7 +22,7 @@ interface Avatar {
   color: string;
   video: string;
   frase: string;
-  link?: string; // Link para experiência específica
+  link?: string;
 }
 
 const avatars: Avatar[] = [
@@ -88,90 +88,151 @@ const avatars: Avatar[] = [
   }
 ];
 
-// Estado global para ativar som após primeiro toque
-let globalFirstInteraction = false;
+interface AvatarCardProps {
+  avatar: Avatar;
+  isActive: boolean;
+  onActivate: () => void;
+  onDeactivate: () => void;
+}
 
-function AvatarCard({ avatar }: { avatar: Avatar }) {
+function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardProps) {
   const [, setLocation] = useLocation();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  // Quando ativa/desativa este avatar
   useEffect(() => {
-    // Auto-play com som APÓS primeira interação global
-    const handleFirstInteraction = () => {
-      if (!globalFirstInteraction && videoRef.current) {
-        globalFirstInteraction = true;
-        videoRef.current.muted = false;
-        setIsMuted(false);
-        videoRef.current.play();
-      }
-    };
+    if (!videoRef.current) return;
 
-    // Adicionar listener de primeira interação
-    document.addEventListener('click', handleFirstInteraction, { once: true });
-    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
-
-    // Auto-play inicial (muted)
-    if (videoRef.current) {
-      videoRef.current.play().catch(err => {
-        console.debug("Autoplay prevented:", err);
+    if (isActive && !isPlaying) {
+      // Ativar vídeo com som
+      videoRef.current.muted = false;
+      setIsMuted(false);
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+        setHasPlayed(true);
+      }).catch(err => {
+        console.debug("Play failed:", err);
       });
+    } else if (!isActive && isPlaying) {
+      // Pausar e resetar quando outro avatar é ativado
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+      setIsPlaying(false);
     }
+  }, [isActive, isPlaying]);
 
-    return () => {
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-    };
-  }, []);
+  const handleCardClick = () => {
+    if (!isActive) {
+      // Ativar este avatar (pausará os outros)
+      soundManager.play("ui_click");
+      onActivate();
+    }
+  };
 
-  const toggleMute = () => {
-    if (videoRef.current) {
+  const handleVideoEnd = () => {
+    // Vídeo terminou - pausar e manter no último frame
+    setIsPlaying(false);
+    // Não desativar automaticamente para manter a aura
+  };
+
+  const handleReplay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current && isActive) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setIsPlaying(true);
+      soundManager.play("ui_click");
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current && isActive) {
       const newMutedState = !isMuted;
       videoRef.current.muted = newMutedState;
       setIsMuted(newMutedState);
       soundManager.play("ui_click");
-      
-      // Se desmutou, garantir que está tocando
-      if (!newMutedState) {
-        videoRef.current.play();
-      }
     }
   };
 
-  const handleConnect = () => {
-    // Som de sino/pulsação ao conectar
+  const handleConnect = (e: React.MouseEvent) => {
+    e.stopPropagation();
     soundManager.play("ui_success");
     
-    // Navegar para experiência
     if (avatar.link) {
       setLocation(avatar.link);
     }
   };
 
   return (
-    <Card className="bg-gray-900/50 backdrop-blur-sm border-gray-700 overflow-hidden hover:border-gray-500 transition-all shadow-lg">
+    <Card 
+      className={`
+        bg-gray-900/50 backdrop-blur-sm border-gray-700 overflow-hidden 
+        transition-all duration-300 shadow-lg cursor-pointer
+        ${isActive ? 'ring-4 ring-purple-500 ring-opacity-50 shadow-2xl shadow-purple-500/30 scale-105' : 'hover:border-gray-500'}
+      `}
+      onClick={handleCardClick}
+    >
       {/* Vídeo */}
       <div className="relative aspect-[9/16] bg-black">
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
           src={avatar.video}
-          loop
-          muted={isMuted}
           playsInline
+          onEnded={handleVideoEnd}
           data-testid={`video-${avatar.id}`}
         />
         
-        {/* Botão de Som */}
-        <Button
-          size="icon"
-          variant="ghost"
-          className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm h-8 w-8 shadow-md"
-          onClick={toggleMute}
-          data-testid={`button-sound-${avatar.id}`}
-        >
-          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-        </Button>
+        {/* Overlay quando não ativo - mostra que pode clicar */}
+        {!isActive && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+            <div className="text-white text-center">
+              <div className="text-4xl mb-2">▶️</div>
+              <p className="text-sm font-medium">Clique para ativar</p>
+            </div>
+          </div>
+        )}
+
+        {/* Aura brilhante quando ativo */}
+        {isActive && isPlaying && (
+          <div className="absolute inset-0 pointer-events-none">
+            <div className={`absolute inset-0 bg-gradient-to-br ${avatar.color} opacity-20 animate-pulse`} />
+          </div>
+        )}
+        
+        {/* Controles (só aparecem quando ativo) */}
+        {isActive && (
+          <>
+            {/* Botão de Som */}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm h-8 w-8 shadow-md"
+              onClick={toggleMute}
+              data-testid={`button-sound-${avatar.id}`}
+            >
+              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            </Button>
+
+            {/* Botão Replay (aparece quando terminou) */}
+            {hasPlayed && !isPlaying && (
+              <Button
+                size="icon"
+                variant="ghost"
+                className="absolute top-2 left-2 bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm h-8 w-8 shadow-md"
+                onClick={handleReplay}
+                data-testid={`button-replay-${avatar.id}`}
+              >
+                <RotateCcw className="w-4 h-4" />
+              </Button>
+            )}
+          </>
+        )}
 
         {/* Badge Elemento */}
         <div className="absolute bottom-2 left-2">
@@ -212,10 +273,20 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
 }
 
 export default function AvatarsGrid() {
+  const [activeAvatarId, setActiveAvatarId] = useState<string | null>(null);
+
   useEffect(() => {
     // Som de entrada suave ao carregar a aba
     soundManager.play("ui_click");
   }, []);
+
+  const handleActivateAvatar = (id: string) => {
+    setActiveAvatarId(id);
+  };
+
+  const handleDeactivateAvatar = () => {
+    setActiveAvatarId(null);
+  };
 
   return (
     <div className="space-y-6 pb-8">
@@ -225,14 +296,20 @@ export default function AvatarsGrid() {
           Os 6 Guardiões da Jornada
         </h2>
         <p className="text-base lg:text-lg text-gray-700 dark:text-purple-200 max-w-2xl mx-auto">
-          Conheça os mestres que guiam sua transformação
+          Escolha um guardião para ouvir sua mensagem
         </p>
       </div>
 
       {/* Grid 2x3 (mobile) / 3x2 (desktop) */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 px-2">
         {avatars.map((avatar) => (
-          <AvatarCard key={avatar.id} avatar={avatar} />
+          <AvatarCard 
+            key={avatar.id} 
+            avatar={avatar}
+            isActive={activeAvatarId === avatar.id}
+            onActivate={() => handleActivateAvatar(avatar.id)}
+            onDeactivate={handleDeactivateAvatar}
+          />
         ))}
       </div>
 
@@ -240,6 +317,11 @@ export default function AvatarsGrid() {
       <div className="text-center px-4">
         <p className="text-gray-600 dark:text-purple-300 text-sm">
           💫 Cada avatar representa uma dimensão da sua jornada FEME
+        </p>
+        <p className="text-gray-500 dark:text-purple-400 text-xs mt-2 italic">
+          {activeAvatarId 
+            ? "Clique em outro avatar para mudar de guardião" 
+            : "Clique em um avatar para ouvir sua sabedoria"}
         </p>
       </div>
     </div>
