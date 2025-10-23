@@ -1,6 +1,4 @@
 import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "@/components/layout/navigation";
@@ -227,32 +225,30 @@ function App() {
   const isStandalone = standaloneRoutes.some(route => location.startsWith(route));
   
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="min-h-screen bg-gray-50">
-          {!isStandalone && <Navigation />}
-          <main className={isStandalone ? "" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8"}>
-            <Router />
-          </main>
-          {!isStandalone && <MobileNavigation />}
-          <Toaster />
-          
-          {/* Mobile Touch Optimization */}
-          <style>{`
-            @media (max-width: 768px) {
-              * { 
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: transparent;
-              }
-              button, a, [role="button"] {
-                min-height: 44px;
-                min-width: 44px;
-              }
+    <TooltipProvider>
+      <div className="min-h-screen bg-gray-50">
+        {!isStandalone && <Navigation />}
+        <main className={isStandalone ? "" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8"}>
+          <Router />
+        </main>
+        {!isStandalone && <MobileNavigation />}
+        <Toaster />
+        
+        {/* Mobile Touch Optimization */}
+        <style>{`
+          @media (max-width: 768px) {
+            * { 
+              touch-action: manipulation;
+              -webkit-tap-highlight-color: transparent;
             }
-          `}</style>
-        </div>
-      </TooltipProvider>
-    </QueryClientProvider>
+            button, a, [role="button"] {
+              min-height: 44px;
+              min-width: 44px;
+            }
+          }
+        `}</style>
+      </div>
+    </TooltipProvider>
   );
 }
 
