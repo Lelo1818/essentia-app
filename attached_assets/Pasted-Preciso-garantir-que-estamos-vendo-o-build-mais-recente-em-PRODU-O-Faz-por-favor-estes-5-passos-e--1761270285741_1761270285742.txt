@@ -1,0 +1,77 @@
+Preciso garantir que estamos vendo o build mais recente em PRODUÇÃO. Faz por favor estes 5 passos e me confirma:
+
+Rebuild de produção do client
+
+# na raiz do projeto
+npm run build --workspaces --if-present
+# ou, se for monorepo com client/
+cd client && npm run build
+
+
+Subir o servidor em modo produção
+
+# garantir NODE_ENV=production pra usar o serveStatic
+NODE_ENV=production npm run start
+# (ou o comando start que você usa aí no Replit)
+
+
+(Patch simples pra vermos a versão no ar)
+
+Adicionar no topo de client/src/main.tsx ou client/src/App.tsx:
+
+// @ts-ignore
+window.__BUILD_ID__ = import.meta.env.VITE_BUILD_ID || new Date().toISOString();
+console.log("[BUILD]", window.__BUILD_ID__);
+
+
+E no rodapé do layout (qualquer lugar visível), renderizar:
+
+<div style={{fontSize: 10, opacity: 0.6, textAlign: 'center', padding: 8}}>
+  build: {String((window as any).__BUILD_ID__ || 'dev')}
+</div>
+
+
+No replit/env de build, setar um id:
+
+# exemplo
+VITE_BUILD_ID=prod-2025-10-23-22h npm run build
+
+
+Cache/PWA
+
+Garantir que não há service worker antigo. Se tiver PWA, forçar unregister no client/src/main.tsx:
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+}
+
+
+Já temos estes headers no server: Cache-Control: no-cache, no-store, must-revalidate ✅
+
+Validação
+
+Abrir https://financial-flow-rymerlelo.replit.app
+ em aba anônima do celular.
+
+Ver no rodapé build: ... e no console [BUILD] ....
+
+Se o build id não aparecer/atualizar, é cache. Testar novamente em aba privada.
+
+PS – 3 ajustes funcionais pra aplicar junto (curtinhos):
+
+Harmonizar → Respiração: em FEMECompassLive, após actions.recalcCoherence(), navegar:
+
+await actions.recalcCoherence();
+setLocation('/breathing-446');
+
+
+Persistir FEME no onChange: quando mudar fisico/energético/mental/espiritual, chamar:
+
+await fetch('/api/feme/update', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ userId: 1, ...values }) });
+
+
+Menu sticky mobile: garantir classe do container .sticky-menu permanece dentro da página de Purpose e não é desmontada ao trocar de aba.
+
+Obrigado! Quando isso estiver no ar, me manda um print do build: no rodapé. A partir daí eu consigo validar tudo do mobile. 🙏
+
+fim da mensagem

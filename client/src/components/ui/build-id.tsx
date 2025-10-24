@@ -1,9 +1,9 @@
-const BUILD_ID = "202510232152";
-
 export function BuildId() {
+  const buildId = (window as any).__BUILD_ID__ || 'dev';
+  
   return (
-    <div className="text-xs text-gray-400 text-center py-2">
-      Build {BUILD_ID}
+    <div style={{ fontSize: 10, opacity: 0.6, textAlign: 'center', padding: 8 }}>
+      build: {String(buildId)}
     </div>
   );
 }

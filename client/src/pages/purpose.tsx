@@ -96,7 +96,7 @@ function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
     try {
       const { actions } = await import('@/state/integration-engine');
       await actions.recalcCoherence();
-      onHarmonize?.(); // navegar após calcular
+      setLocation('/breathing-446'); // navegar para respiração após calcular
     } catch (error) {
       console.error('[FEME] recalcCoherence error:', error);
     } finally {
@@ -111,6 +111,16 @@ function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
       onChange={async (next) => {
         const { actions } = await import('@/state/integration-engine');
         await actions.updateFEME(next);
+        // Persistir no backend
+        try {
+          await fetch('/api/feme/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: 1, fisico: next.fisico, energetico: next.energetico, mental: next.mental, espiritual: next.espiritual })
+          });
+        } catch (err) {
+          console.error('[FEME] Erro ao persistir:', err);
+        }
       }}
       onHarmonize={isCalculating ? undefined : handleCalculateCoherence}
     />
