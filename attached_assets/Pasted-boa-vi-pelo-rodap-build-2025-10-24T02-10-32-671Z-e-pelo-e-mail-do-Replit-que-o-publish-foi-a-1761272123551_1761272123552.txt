@@ -1,0 +1,196 @@
+boa! vi pelo rodapé (“build: 2025-10-24T02:10:32.671Z”) e pelo e-mail do Replit que o publish foi. agora vamos direto ao ponto: abaixo está **exatamente** o que você pode colar pro dev no chat (sem rodeio) + os patches de código prontos pra aplicar.
+
+---
+
+# mensagem pronta pra mandar pra ele
+
+> **Assunto:** Ajustes mobile pendentes – patches prontos
+>
+> Publiquei e o build atual está `2025-10-24T02:10:32.671Z`. No iPhone ainda temos estes problemas:
+>
+> 1. “Jornada de Propósito” aparece estourado/duplicado (pills sobrepondo).
+> 2. Menu de abas (pills) não está **sticky** e está alto demais.
+> 3. Botão **Harmonizar** (FEME) não abre a respiração.
+> 4. Alterar FEME (físico/energético/mental/espiritual) não reflete estado.
+> 5. Vídeos dos portais abrem pequenos e não voltam corretamente.
+>
+> Abaixo vão **patches cirúrgicos** (copy-paste) pra corrigir tudo isso.
+> Aplicar e publicar:
+>
+> * `client/src/pages/purpose.tsx` (sticky + navegação harmonizar)
+> * `client/src/index.css` (CSS do sticky e compactação)
+> * `client/src/components/purpose/avatars-grid.tsx` (vídeo melhor no mobile)
+> * `client/src/state/integration-engine.ts` (garantir persistência FEME + refresh)
+> * `client/src/components/purpose/video-portal.tsx` (full e voltar)
+>
+> Depois do publish, validar no iPhone:
+>
+> * pills fixas no scroll (sem quebrar em 2 linhas),
+> * “Harmonizar” leva pra `/breathing-446`,
+> * FEME muda e persiste,
+> * vídeos em tela cheia com retorno.
+
+---
+
+# patches
+
+### 1) `client/src/pages/purpose.tsx`
+
+* deixa o menu **sticky**, compacta as pills e garante navegação no **Harmonizar** após recalcular coerência.
+
+```diff
+@@
+- function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
++ function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
+@@
+-  const handleCalculateCoherence = async () => {
++  const handleCalculateCoherence = async () => {
+     setIsCalculating(true);
+     try {
+       const { actions } = await import('@/state/integration-engine');
+-      await actions.recalcCoherence();
++      await actions.recalcCoherence();
++      // navega para respiração ao terminar o recálculo
++      onHarmonize?.();
+     } catch (error) {
+       console.error('[FEME] Erro ao calcular coerência:', error);
+     } finally {
+       setIsCalculating(false);
+     }
+   };
+@@
+-      <div className="lg:hidden sticky-menu no-transform mt-2">
+-        <div className="sticky-menu-inner px-3">
+-          <TabsList className="w-full grid grid-cols-3 gap-2 bg-transparent p-0 h-12">
++      <div className="lg:hidden mt-2">
++        <div className="sticky-menu-inner-mobile">
++          <TabsList className="tabs-pills-mobile">
+@@
+-              className="flex flex-col items-center gap-0.5 px-1 py-1 rounded-lg bg-white border-2 border-purple-300 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 data-[state=active]:shadow-lg text-gray-800 font-medium h-full text-[13px] leading-none"
++              className="pill"
+             >
+               <Compass className="w-[18px] h-[18px] shrink-0" />
+-              <span className="text-[13px] leading-tight truncate max-w-[80px]">Jornada</span>
++              <span className="pill-label">Jornada</span>
+             </TabsTrigger>
+@@
+```
+
+*(repita a mesma troca de `className` para TODAS as `TabsTrigger` mobile: use `className="pill"` e o texto dentro de `<span className="pill-label">`)*
+
+* desktop: diminui bordas (evita “tarjas”) e não usa transform (preserva o sticky mobile).
+
+```diff
+@@
+-      <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border-2 border-purple-400 p-5">
+-        <TabsList className="w-full h-auto flex flex-wrap gap-3 bg-transparent p-0">
++      <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl shadow-lg border border-purple-300 p-4">
++        <TabsList className="w-full h-auto flex flex-wrap gap-2 bg-transparent p-0">
+@@
+-            className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white/80 hover:bg-purple-100 border-2 border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-semibold text-gray-800 data-[state=active]:shadow-md transition-all"
++            className="flex-1 min-w-[110px] flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-white/80 hover:bg-purple-100 border border-purple-200 data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:border-purple-600 font-medium text-gray-800 transition-all"
+```
+
+### 2) `client/src/index.css`
+
+* CSS utilitário para **sticky** e pills compactas (evita quebrar em 2 linhas e “duplicidade” visual).
+
+```css
+/* --- Mobile sticky pills --- */
+.sticky-menu-inner-mobile{
+  position: sticky;
+  top: calc(var(--compass-h, 64px) + 8px);
+  z-index: 30;
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+  backdrop-filter: blur(6px);
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(147, 51, 234, .25);
+}
+
+/* lista (wouter TabsList) */
+.tabs-pills-mobile{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 6px;
+  background: transparent;
+  padding: 0;
+  height: auto;
+}
+
+/* cada pill */
+.pill{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap: 2px;
+  height: 40px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,.12);
+  border-radius:12px;
+  font-size:12px;
+  line-height:14px;
+  color:#1f2937;
+}
+.pill[data-state="active"]{
+  background:#6d28d9; color:#fff; border-color:#6d28d9;
+  box-shadow: 0 4px 12px rgba(109,40,217,.25);
+}
+.pill-label{ 
+  font-size:12px; line-height:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:88px;
+}
+
+/* vídeo mais suave no iOS */
+video{ -webkit-transform:translateZ(0); transform:translateZ(0); }
+@media (max-width:420px){
+  .pill{ height:38px; }
+  .pill-label{ max-width:80px; }
+}
+```
+
+### 3) `client/src/components/purpose/avatars-grid.tsx`
+
+* melhora o player embutido no mobile (tela maior) e mantém pause fora do viewport.
+
+```diff
+-      <div className="relative aspect-[9/16] bg-black">
++      <div className="relative bg-black" style={{ aspectRatio: "9/16" }}>
+         <video
+           ref={videoRef}
+-          className="w-full h-full object-cover"
++          className="w-full h-full object-cover"
+           src={avatar.video}
++          preload="metadata"
++          playsInline
+           onEnded={handleVideoEnd}
++          poster="/placeholders/avatar-poster.jpg"
+           data-testid={`video-${avatar.id}`}
+         />
+```
+
+*(se ainda não estiver, mantenha o `IntersectionObserver` pra pausar fora da tela.)*
+
+### 4) `client/src/state/integration-engine.ts`
+
+* garante **persistência FEME** e **refresh** do estado logo após salvar.
+
+```diff
+ class IntegrationEngine {
+@@
+-  async updateFeme(partial: Partial<FEMEState>) {
+-    if (!this.userId) return;
+-    const next = { ...(this.state?.feme||{}), ...partial };
+-    await apiRequest('POST', '/api/feme/update', { userId: this.userId, ...next });
+-    // atualiza local e emite
+-    this.state = { ...(this.state as EssentiaState), feme: next };
+-    this.emit();
+-  }
++  async updateFeme(partial: Partial<FEMEState>) {
++    if (!this.userId) return;
++    const next = { ...(this.state?.feme||{}), ...partial };
++    await apiRequest('POST', '/api/feme/update', { userId: this.userId, ...next });
++    // força refresh do estado unificado
++    const fresh = await apiRequest('GET', `/api/state?userId=${this.userId}`);
++    this.state = fresh;
++    this.saveToCache();
++    this.emit();
++
+```

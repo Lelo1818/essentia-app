@@ -97,15 +97,15 @@ export function VideoPortal({ videoSrc, title, onClose }: VideoPortalProps) {
   return (
     <div 
       ref={containerRef}
-      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 lg:p-4"
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-0"
       data-testid="video-portal-overlay"
     >
-      <div className="w-full max-w-none px-4">
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black">
+      <div className="w-full h-full lg:w-auto lg:h-auto lg:max-w-5xl lg:px-4">
+        <div className="relative w-full h-full lg:aspect-video lg:rounded-xl overflow-hidden bg-black">
           <video
             ref={videoRef}
             src={videoSrc}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain lg:object-cover"
             onClick={togglePlay}
             playsInline
             data-testid="video-player"

@@ -96,7 +96,8 @@ function FEMECompassLive({ onHarmonize }: { onHarmonize?: () => void }) {
     try {
       const { actions } = await import('@/state/integration-engine');
       await actions.recalcCoherence();
-      setLocation('/breathing-446'); // navegar para respiração após calcular
+      // navega para respiração ao terminar o recálculo
+      onHarmonize?.();
     } catch (error) {
       console.error('[FEME] recalcCoherence error:', error);
     } finally {
@@ -426,20 +427,20 @@ export default function Purpose() {
       </div>
       
       {/* MENU NAVEGAÇÃO - MOBILE STICKY (barra horizontal scrollável) */}
-      <div className="lg:hidden sticky-menu">
-        <div className="sticky-menu-inner">
-          <TabsList className="tabs-scroll">
-            <TabsTrigger value="journey" className="tab-pill"><Compass className="icon" /><span>Jornada</span></TabsTrigger>
-            <TabsTrigger value="breathing" className="tab-pill green"><Brain className="icon" /><span>Respiração</span></TabsTrigger>
-            <TabsTrigger value="rituals" className="tab-pill yellow"><Star className="icon" /><span>Rituais</span></TabsTrigger>
-            <TabsTrigger value="therapist" className="tab-pill"><Heart className="icon" /><span>Seu Guru</span></TabsTrigger>
-            <TabsTrigger value="wheel" className="tab-pill"><Target className="icon" /><span>Roda</span></TabsTrigger>
-            <TabsTrigger value="avatar" className="tab-pill"><User className="icon" /><span>Avatar</span></TabsTrigger>
-            <TabsTrigger value="transition" className="tab-pill"><TrendingUp className="icon" /><span>Transição</span></TabsTrigger>
-            <TabsTrigger value="inspiration" className="tab-pill"><Heart className="icon" /><span>Inspiração</span></TabsTrigger>
-            <TabsTrigger value="community" className="tab-pill"><Users className="icon" /><span>Comunidade</span></TabsTrigger>
-            <TabsTrigger value="biometric" className="tab-pill"><Brain className="icon" /><span>Biometria</span></TabsTrigger>
-            <TabsTrigger value="profile" className="tab-pill gray"><User className="icon" /><span>Perfil</span></TabsTrigger>
+      <div className="lg:hidden sticky-menu-mobile">
+        <div className="sticky-menu-inner-mobile">
+          <TabsList className="tabs-pills-mobile-scroll">
+            <TabsTrigger value="journey" className="pill-mobile"><Compass className="icon" /><span className="pill-label">Jornada</span></TabsTrigger>
+            <TabsTrigger value="breathing" className="pill-mobile"><Brain className="icon" /><span className="pill-label">Respiração</span></TabsTrigger>
+            <TabsTrigger value="rituals" className="pill-mobile"><Star className="icon" /><span className="pill-label">Rituais</span></TabsTrigger>
+            <TabsTrigger value="therapist" className="pill-mobile"><Heart className="icon" /><span className="pill-label">Seu Guru</span></TabsTrigger>
+            <TabsTrigger value="wheel" className="pill-mobile"><Target className="icon" /><span className="pill-label">Roda</span></TabsTrigger>
+            <TabsTrigger value="avatar" className="pill-mobile"><User className="icon" /><span className="pill-label">Avatar</span></TabsTrigger>
+            <TabsTrigger value="transition" className="pill-mobile"><TrendingUp className="icon" /><span className="pill-label">Transição</span></TabsTrigger>
+            <TabsTrigger value="inspiration" className="pill-mobile"><Heart className="icon" /><span className="pill-label">Inspiração</span></TabsTrigger>
+            <TabsTrigger value="community" className="pill-mobile"><Users className="icon" /><span className="pill-label">Comunidade</span></TabsTrigger>
+            <TabsTrigger value="biometric" className="pill-mobile"><Brain className="icon" /><span className="pill-label">Biometria</span></TabsTrigger>
+            <TabsTrigger value="profile" className="pill-mobile"><User className="icon" /><span className="pill-label">Perfil</span></TabsTrigger>
           </TabsList>
         </div>
       </div>

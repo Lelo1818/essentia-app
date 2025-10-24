@@ -137,10 +137,12 @@ class IntegrationEngine {
         ...partial
       });
 
-      this.state = updatedState;
+      // Força refresh do estado unificado para garantir sincronização
+      const fresh = await apiRequest('GET', `/api/state?userId=${this.userId}`);
+      this.state = fresh;
       this.saveToCache();
       this.emit();
-      return updatedState;
+      return fresh;
     } catch (error) {
       console.error('Failed to update FEME:', error);
       throw error;

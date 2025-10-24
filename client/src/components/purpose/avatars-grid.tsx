@@ -240,6 +240,7 @@ function AvatarCard({ avatar, isActive, onActivate, onDeactivate }: AvatarCardPr
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
+          style={{ WebkitTransform: "translateZ(0)", transform: "translateZ(0)" }}
           src={avatar.video}
           muted
           playsInline
