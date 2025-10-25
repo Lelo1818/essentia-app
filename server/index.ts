@@ -44,4 +44,3 @@ app.get("/", (req: Request, res: Response) => {
 
 // ✅ ESSENCIAL: transforma o Express em função serverless
 export const handler = serverless(app);
-
