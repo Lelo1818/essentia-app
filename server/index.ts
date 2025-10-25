@@ -8,7 +8,7 @@ import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 
-// Configuração do Vite + rotas
+// Configurações do Vite e rotas
 setupVite(app);
 serveStatic(app);
 log(app);
@@ -17,10 +17,10 @@ registerEcosystemRoutes(app);
 registerPurposeRoutes(app);
 registerEduRoutes(app);
 
-// Rota de teste — confirma se o backend está vivo
 app.get("/", (req: Request, res: Response) => {
   res.send("✅ Essentia backend is alive!");
 });
 
-// ESSENCIAL: transforma o Express em função serverless (para Vercel)
+// Exporta o handler serverless
+export default app;
 export const handler = serverless(app);
