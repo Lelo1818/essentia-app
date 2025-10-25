@@ -1,23 +1,27 @@
-import serverless from "serverless-http";
 import express, { Request, Response } from "express";
-import { registerEcosystemRoutes } from "../server/routes-ecosystem";
-import { registerPurposeRoutes } from "../server/routes-purpose";
-import { registerEduRoutes } from "../server/routes-edu";
-import { setupVite, serveStatic, log } from "../server/vite";
+import serverless from "serverless-http";
+import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 
-setupVite(app);
-serveStatic(app);
-log(app);
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
 
-registerEcosystemRoutes(app);
-registerPurposeRoutes(app);
-registerEduRoutes(app);
-
+// Rota principal
 app.get("/", (req: Request, res: Response) => {
-  res.send("✅ Essentia backend is alive!");
+  res.status(200).send("✅ Essentia backend is alive and running on Vercel!");
 });
 
-export const handler = serverless(app);
+// Rota de teste
+app.get("/ping", (req: Request, res: Response) => {
+  res.status(200).json({
+    message: "pong",
+    time: new Date().toISOString(),
+  });
+});
+
+// Exporta para Vercel
 export default app;
+export const handler = serverless(app);
