@@ -3,17 +3,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist/public",
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/api/(.*)", "dest": "/api/index.js" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ],
   "functions": {
     "api/**/*.js": {
