@@ -1,10 +1,14 @@
 {
   "version": 2,
   "functions": {
+    "vercel-build.js": { "runtime": "nodejs20.x" },
     "api-hello.js": { "runtime": "nodejs20.x" }
   },
   "routes": [
+    { "src": "^/api/test$", "dest": "/vercel-build.js" },
     { "src": "^/api/hello$", "dest": "/api-hello.js" },
     { "src": "^/$", "dest": "/public/index.html" }
   ]
 }
+
+
