@@ -3,21 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Essentia 🌱</title>
+  <title>Essentia – Desperte Seu Propósito 🌱</title>
   <style>
     body {
-      background: linear-gradient(160deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #0b132b, #1c2541, #3a506b);
+      color: #fff;
       text-align: center;
-      margin-top: 20%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-    h1 { font-size: 2.2em; margin-bottom: 0.3em; }
-    p { color: #bde3f2; }
+    h1 {
+      font-size: 2.4em;
+      margin-bottom: 0.3em;
+    }
+    h2 {
+      font-weight: 300;
+      color: #a9d6e5;
+      margin-bottom: 1.2em;
+    }
+    button {
+      background: #5bc0be;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-size: 1.1em;
+      cursor: pointer;
+      color: #0b132b;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: #3a506b;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.85em;
+      color: #778da9;
+    }
   </style>
 </head>
 <body>
-  <h1>✨ Essentia está ativo!</h1>
-  <p>O motor responde em <a href="/api/hello" style="color:#8fd3f4;">/api/hello</a></p>
+  <h1>✨ Bem-vindo à Jornada Essentia</h1>
+  <h2>Propósito, Presença e Energia Viva</h2>
+  <button onclick="startJourney()">Começar minha jornada</button>
+
+  <footer>Versão MVP – motor ativo em <a href="/api/hello" style="color:#8fd3f4;">/api/hello</a></footer>
+
+  <script>
+    async function startJourney() {
+      try {
+        const res = await fetch('/api/hello');
+        const data = await res.json();
+        alert(data.message + " 🌿");
+      } catch (e) {
+        alert("Motor indisponível no momento. Tente novamente.");
+      }
+    }
+  </script>
 </body>
 </html>
