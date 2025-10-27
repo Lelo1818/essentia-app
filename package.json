@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": "22.x" },
+  "engines": { "node": "20.x" },
   "scripts": {
     "build": "echo 'Build not required for API-only project'",
     "start": "node api/hello.js"
@@ -12,6 +12,3 @@
     "@vercel/node": "3.1.6"
   }
 }
-
-
-
