@@ -8,7 +8,7 @@
     "dev": "node api/index.js",
     "build": "echo 'Build not required for API-only project'"
   },
-    "dependencies": {
+  "dependencies": {
     "express": "^4.18.2",
     "openai": "^4.0.0"
   },
@@ -18,4 +18,5 @@
   "author": "Marcelo Rymer (Lelão)",
   "license": "ISC"
 }
+
 
