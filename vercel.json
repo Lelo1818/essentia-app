@@ -1,22 +1,10 @@
 {
   "version": 2,
   "functions": {
-    "api/hello.js": {
-      "runtime": "nodejs20.x"
-    },
-    "api/**/*.js": {
-      "runtime": "nodejs20.x"
-    }
+    "api-hello.js": { "runtime": "nodejs20.x" }
   },
-  "builds": [
-    { "src": "api/hello.js", "use": "@vercel/node@3.1.6" },
-    { "src": "public/**", "use": "@vercel/static" }
-  ],
   "routes": [
-    { "src": "^/api/hello$", "dest": "/api/hello.js" },
-    { "src": "^/api/(.*)$", "dest": "/api/$1.js" },
+    { "src": "^/api/hello$", "dest": "/api-hello.js" },
     { "src": "^/$", "dest": "/public/index.html" }
   ]
 }
-
-
