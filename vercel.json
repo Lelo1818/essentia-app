@@ -1,17 +1,14 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node@2.15.10" },
+    { "src": "public/**/*", "use": "@vercel/static" }
+  ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "src": "/", "dest": "/public/index.html" },
-    { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
+
 
 
