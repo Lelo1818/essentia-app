@@ -1,17 +1,18 @@
 {
-  "version": 3,
-  "framework": null,
-  "buildCommand": "npm install && npm run build || echo 'No build step'",
-  "outputDirectory": "public",
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node@2.15.10" },
+    { "src": "public/**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ],
   "functions": {
     "api/**/*.js": {
       "runtime": "nodejs22.x"
     }
-  },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "src": "/(.*)", "dest": "/public/$1" }
-  ]
+  }
 }
 
 
