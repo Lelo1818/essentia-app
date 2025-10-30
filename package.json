@@ -1,18 +1,19 @@
 {
   "name": "essentia-app",
   "version": "1.0.0",
-  "description": "Essentia App - Stable Deploy",
+  "description": "Essentia App — propósito, presença e energia viva.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
+    "start": "node server.js",
+    "build": "echo 'build step not required for static/api project'"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "@vercel/node": "3.1.7"
   },
-    "node": "18.x"
-  }
+  "devDependencies": {},
+  "license": "MIT"
 }
+
 
 
 
